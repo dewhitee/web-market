@@ -1,11 +1,12 @@
 Entities:
     ... Main ...
-    1) Client: _Client_ID_, Name, Surname, Phone number, E-mail, Login, Password 
-    2) Product: 
-    3) Storage
-    4) Transaction
-    5) Catalog
-    6) Delivery
+    1) Client: _Client_ID_, Name, Surname, Phone number, E-mail, Registered (bool)
+    2) Profile: _Login_, Password, Date of registration
+    3) Product: _Product_ID_, Title, Type, Description, Cost, Discount
+    4) Storage: _Storage_ID_, Address, list of products stored, count of products stored
+    5) Transaction: _Transaction_ID_, Choosen Products, Date of delivery, Time of delivery, Cost, 
+    6) Catalog: _Catalog_ID_, Types of products, count of products
+    7) Delivery: _Delivery_ID_, cost, state (reached client or not)
     ... Map related ...
-    7) ...
     8) ...
+    9) ...
