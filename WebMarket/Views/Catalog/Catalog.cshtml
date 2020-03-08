@@ -76,14 +76,30 @@
     </div>
 </div>
 
-<table class="table table-bordered">
-    <thead class="thead-dark">
+<table class="table table-bordered table-sm table-striped table-hover">
+    <thead class="thead-light">
         <tr>
             <th scope="col">#</th>
-            <th scope="col">Product Name</th>
-            <th scope="col">Type</th>
-            <th scope="col">Cost</th>
-            <th scope="col">Discount</th>
+            <th scope="col">
+                <a class="text-dark" asp-area="" asp-controller="Catalog" asp-action="SortByName">Product Name
+                    <i class="fas fa-sort ml-1"></i>
+                </a>
+            </th>
+            <th scope="col">
+                <a class="text-dark" asp-area="" asp-controller="Catalog" asp-action="SortByType">Type
+                    <i class="fas fa-sort ml-1"></i>
+                </a>
+            </th>
+            <th scope="col">
+                <a class="text-dark" asp-area="" asp-controller="Catalog" asp-action="SortByPrice">Price
+                    <i class="fas fa-sort ml-1"></i>
+                </a>
+            </th>
+            <th scope="col">
+                <a class="text-dark" asp-area="" asp-controller="Catalog" asp-action="SortByDiscount">Discount
+                    <i class="fas fa-sort ml-1"></i>
+                </a>
+            </th>
         </tr>
     </thead>
     <tbody>

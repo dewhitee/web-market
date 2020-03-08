@@ -97,6 +97,27 @@ namespace WebMarket.Controllers
             return RedirectToAction("Catalog");
         }
 
+        public IActionResult SortByName()
+        {
+            CatalogViewModel.ListOfProducts.Sort(Product.CompareByName);
+            return RedirectToAction("Catalog");
+        }
+        public IActionResult SortByType()
+        {
+            CatalogViewModel.ListOfProducts.Sort(Product.CompareByType);
+            return RedirectToAction("Catalog");
+        }
+        public IActionResult SortByPrice()
+        {
+            CatalogViewModel.ListOfProducts.Sort(Product.CompareByPrice);
+            return RedirectToAction("Catalog");
+        }
+        public IActionResult SortByDiscount()
+        {
+            CatalogViewModel.ListOfProducts.Sort(Product.CompareByDiscount);
+            return RedirectToAction("Catalog");
+        }
+
         public IActionResult Index()
         {
             return View();
