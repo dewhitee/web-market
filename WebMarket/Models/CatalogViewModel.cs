@@ -17,10 +17,32 @@ namespace WebMarket.Models
             public int CostFractional { get; set; }
             public float Discount { get; set; }
             public string Description { get; set; }
+
+            public string PriceString { get => Price > 0 ? Price.ToString() + "€" : "free"; }
+
         }
 
         public static List<Product> ListOfProducts = new List<Product>();
         public List<Product> Products { get; set; }
         public Product ToAdd { get; set; }
+
+        public static bool ContainsID(int ID)
+        {
+            foreach (var i in ListOfProducts)
+            {
+                if (i.ID == ID)
+                    return true;
+            }
+            return false;
+        }
+        public static bool ContainsName(string Name)
+        {
+            foreach (var i in ListOfProducts)
+            {
+                if (i.Name == Name)
+                    return true;
+            }
+            return false;
+        }
     }
 }

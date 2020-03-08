@@ -78,19 +78,23 @@ namespace WebMarket.Controllers
         {
             int integralCost = (int)Math.Truncate(productCost);
             int fractionalCost = (int)(productCost - integralCost);
-            CatalogViewModel.ListOfProducts.Add(new Product
+
+            if (!CatalogViewModel.ContainsName(productName))
             {
-                Name = productName,
-                Type = productType,
-                Price = productCost,
-                CostIntegral = integralCost,
-                CostFractional = fractionalCost,
-                Discount = productDiscount,
-                Description = "test description"
-            });
+                CatalogViewModel.ListOfProducts.Add(new Product
+                {
+                    Name = productName,
+                    Type = productType,
+                    Price = productCost,
+                    CostIntegral = integralCost,
+                    CostFractional = fractionalCost,
+                    Discount = productDiscount,
+                    Description = "test description"
+                });
+            }
             //return Ok();
-            return RedirectToAction("Catalog");
             //return View();
+            return RedirectToAction("Catalog");
         }
 
         public IActionResult Index()
