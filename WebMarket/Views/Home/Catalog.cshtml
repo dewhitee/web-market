@@ -1,9 +1,12 @@
-﻿
+﻿@model CatalogViewModel
 @{
     ViewData["Title"] = "Catalog";
 }
 
-<h1>@ViewData["Title"]</h1>
+<div class="text-center">
+    <h1 class="display-4">@ViewData["Title"]</h1>
+</div>
+
 @*<div class="container">
     <div class="row">
         <div class="col-sm">
@@ -49,6 +52,13 @@
             <td>Game</td>
             <td>14,99€</td>
             <td>0%</td>
+        </tr>
+        <tr>
+            <th scope="row">@Model.Products[0].ProductIndex</th>
+            <td>@Model.Products[0].ProductName</td>
+            <td>@Model.Products[0].ProductType</td>
+            <td>@Model.Products[0].CostIntegral.@Model.Products[0].CostFractional€</td>
+            <td>@Model.Products[0].Discount%</td>
         </tr>
     </tbody>
 </table>

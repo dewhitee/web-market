@@ -18,6 +18,6 @@ namespace WebMarket.Models
             public string Description { get; set; }
         }
 
-        List<Product> Products { get; set; }
+        public List<Product> Products { get; set; }
     }
 }
