@@ -9,15 +9,18 @@ namespace WebMarket.Models
     {
         public class Product
         {
-            public int ProductIndex { get; set; }
-            public string ProductName { get; set; }
-            public string ProductType { get; set; }
+            public int ID { get; set; }
+            public string Name { get; set; }
+            public string Type { get; set; }
+            public decimal Price { get; set; }
             public int CostIntegral { get; set; }
             public int CostFractional { get; set; }
             public float Discount { get; set; }
             public string Description { get; set; }
         }
 
+        public static List<Product> ListOfProducts = new List<Product>();
         public List<Product> Products { get; set; }
+        public Product ToAdd { get; set; }
     }
 }

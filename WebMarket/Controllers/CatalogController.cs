@@ -1,35 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using WebMarket.Models;
 
 namespace WebMarket.Controllers
 {
     using Product = CatalogViewModel.Product;
 
-    public class HomeController : Controller
+    public class CatalogController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
-
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
         public IActionResult Catalog()
         {
             //return View();
@@ -93,10 +74,28 @@ namespace WebMarket.Controllers
             return View(new CatalogViewModel { Products = products });
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        public IActionResult AddProduct(string productName, string productType, decimal productCost, float productDiscount)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            int integralCost = (int)Math.Truncate(productCost);
+            int fractionalCost = (int)(productCost - integralCost);
+            CatalogViewModel.ListOfProducts.Add(new Product
+            {
+                Name = productName,
+                Type = productType,
+                Price = productCost,
+                CostIntegral = integralCost,
+                CostFractional = fractionalCost,
+                Discount = productDiscount,
+                Description = "test description"
+            });
+            //return Ok();
+            return RedirectToAction("Catalog");
+            //return View();
+        }
+
+        public IActionResult Index()
+        {
+            return View();
         }
     }
 }

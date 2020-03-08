@@ -135,4 +135,4 @@ D:\ASP.NET PROJECTS\WebMarket\WebMarket\bin\Debug\netcoreapp3.1\zh-Hans\Microsof
 D:\ASP.NET PROJECTS\WebMarket\WebMarket\bin\Debug\netcoreapp3.1\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
 D:\ASP.NET PROJECTS\WebMarket\WebMarket\obj\Debug\netcoreapp3.1\WebMarket.MvcApplicationPartsAssemblyInfo.cs
 D:\ASP.NET PROJECTS\WebMarket\WebMarket\obj\Debug\netcoreapp3.1\WebMarket.MvcApplicationPartsAssemblyInfo.cache
-D:\ASP.NET PROJECTS\WebMarket\WebMarket\obj\Debug\netcoreapp3.1\Razor\Views\Home\Catalog.cshtml.g.cs
+D:\ASP.NET PROJECTS\WebMarket\WebMarket\obj\Debug\netcoreapp3.1\Razor\Views\Catalog\Catalog.cshtml.g.cs

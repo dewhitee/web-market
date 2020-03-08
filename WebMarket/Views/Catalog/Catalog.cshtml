@@ -1,0 +1,101 @@
+﻿@model CatalogViewModel
+@{
+    ViewData["Title"] = "Catalog";
+}
+
+<div class="text-center">
+    <h1 class="display-4">@ViewData["Title"]</h1>
+</div>
+
+@*<div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <a href="">First column</a>
+            </div>
+            <div class="col-sm">
+                <a href="">Second column</a>
+            </div>
+            <div class="col-sm">
+                <a href="">Third column</a>
+            </div>
+        </div>
+    </div>*@
+
+<div style="padding-bottom:1em">
+    <button type="button" class="btn btn-outline-primary" data-toggle="collapse" data-target="#addButtonCollapse" aria-expanded="false" aria-controls="addButtonCollapse">Add Product</button>
+</div>
+
+<div class="row">
+    <div class="col">
+        <div class="collapse multi-collapse" id="addButtonCollapse">
+            <div class="card card-body">
+
+                <form asp-controller="Catalog" asp-area="" asp-action="AddProduct" method="post">
+
+                    <div class="form-group">
+                        <label for="productName">Product name</label>
+                        <input type="text" class="form-control" name="productName" id="productName" placeholder="Enter product name" required/>
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label for="productType">Type</label>
+                        <select name="productType" id="productType" class="form-control">
+                            <option selected>Choose type</option>
+                            <option>Game</option>
+                            <option>Software</option>
+                        </select>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-auto">
+                            <label for="productCost">Cost</label>
+                            <div class="input-group mb-2">
+                                <input type="text" class="form-control" name="productCost" id="productCost" placeholder="10.99" required>
+                                <div class="input-group-append">
+                                    <div class="input-group-text">€</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <label for="productDiscount">Discount</label>
+                            <div class="input-group mb-2">
+                                <input type="text" class="form-control" name="productDiscount" id="productDiscount" placeholder="20" required>
+                                <div class="input-group-append">
+                                    <div class="input-group-text">%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-success" type="submit">Submit product</button>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<table class="table table-bordered">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Product Name</th>
+            <th scope="col">Type</th>
+            <th scope="col">Cost</th>
+            <th scope="col">Discount</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < CatalogViewModel.ListOfProducts.Count; i++)
+        {
+            <tr>
+                <th scope="row">@i</th>
+                <td>@CatalogViewModel.ListOfProducts[i].Name</td>
+                <td>@CatalogViewModel.ListOfProducts[i].Type</td>
+                <td>@CatalogViewModel.ListOfProducts[i].Price@*@Model.Products[i].CostIntegral.@Model.Products[i].CostFractional*@€</td>
+                <td>@CatalogViewModel.ListOfProducts[i].Discount%</td>
+            </tr>
+        }
+    </tbody>
+</table>
