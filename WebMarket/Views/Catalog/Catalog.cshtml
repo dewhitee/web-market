@@ -25,6 +25,7 @@
     <button type="button" class="btn btn-outline-primary" data-toggle="collapse" data-target="#addButtonCollapse" aria-expanded="false" aria-controls="addButtonCollapse">Add Product</button>
 </div>
 
+@*Add a product div container*@
 <div class="row">
     <div class="col">
         <div class="collapse multi-collapse" id="addButtonCollapse">
@@ -34,7 +35,7 @@
 
                     <div class="form-group">
                         <label for="productName">Product name</label>
-                        <input type="text" class="form-control" name="productName" id="productName" placeholder="Enter product name" required/>
+                        <input type="text" class="form-control" name="productName" id="productName" placeholder="Enter product name" required />
                     </div>
 
                     <div class="form-group col-md-4">
@@ -67,6 +68,11 @@
                         </div>
                     </div>
 
+                    <div class="form-group">
+                        <label for="productLink">Product link</label>
+                        <input type="text" class="form-control" name="productLink" id="productLink" placeholder="Enter product link"/>
+                    </div>
+
                     <button class="btn btn-success" type="submit">Submit product</button>
 
                 </form>
@@ -76,7 +82,7 @@
     </div>
 </div>
 
-<table class="table table-bordered table-sm table-striped table-hover">
+<table class="table table-light table-striped table-hover">
     <thead class="thead-light">
         <tr>
             <th scope="col">#</th>
@@ -103,14 +109,22 @@
         </tr>
     </thead>
     <tbody>
-        @for (int i = 0; i < CatalogViewModel.ListOfProducts.Count; i++)
+       @for (int i = 0; i < CatalogViewModel.ListOfProducts.Count; i++)
         {
             <tr>
                 <th scope="row">@i</th>
-                <td>@CatalogViewModel.ListOfProducts[i].Name</td>
-                <td>@CatalogViewModel.ListOfProducts[i].Type</td>
-                <td>@CatalogViewModel.ListOfProducts[i].PriceString@*@Model.Products[i].CostIntegral.@Model.Products[i].CostFractional*@</td>
-                <td>@CatalogViewModel.ListOfProducts[i].Discount%</td>
+                <td class=@CatalogViewModel.ListOfProducts[i].GetPriceTableClassString()>
+                    @CatalogViewModel.ListOfProducts[i].Name
+                </td>
+                <td class=@CatalogViewModel.ListOfProducts[i].GetPriceTableClassString()>
+                    @CatalogViewModel.ListOfProducts[i].Type
+                </td>
+                <td class=@CatalogViewModel.ListOfProducts[i].GetPriceTableClassString()>
+                    @CatalogViewModel.ListOfProducts[i].PriceString
+                </td>
+                <td class=@CatalogViewModel.ListOfProducts[i].GetPriceTableClassString()>
+                    @CatalogViewModel.ListOfProducts[i].DiscountString
+                </td>
             </tr>
         }
     </tbody>

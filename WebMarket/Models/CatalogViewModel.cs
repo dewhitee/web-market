@@ -18,28 +18,32 @@ namespace WebMarket.Models
             public int CostFractional { get; set; }
             public float Discount { get; set; }
             public string Description { get; set; }
+            public string Link { get; set; }
 
             public string PriceString { get => Price > 0 ? Price.ToString() + "€" : "free"; }
+            public string DiscountString { get => Discount > 0 ? Discount.ToString() + "%" : "no"; }
+
+            public static string CheckTypeString(string type)
+            {
+                if (type == "Choose type")
+                    return "No type specified";
+                else return type;
+            }
+
+            public string GetPriceTableClassString()
+            {
+                if (Price == 0)
+                    return "bg-primary";
+                if (Price < 10)
+                    return "bg-success";
+                if (Price > 250)
+                    return "bg-danger";
+                return "";
+            }
 
             public static int CompareByName(Product x, Product y)
             {
                 return x.Name.CompareTo(y.Name);
-                //if (x.Name == null)
-                //{
-                //    return y.Name == null ? 0 : -1;
-                //}
-                //else
-                //{
-                //    if (y.Name == null)
-                //    {
-                //        return 1;
-                //    }
-                //    else
-                //    {
-                //        int retval = x.Name.Length.CompareTo(y.Name.Length);
-                //        return retval != 0 ? retval : x.Name.CompareTo(y.Name);
-                //    }
-                //}
             }
             public static int CompareByType(Product x, Product y)
             {
