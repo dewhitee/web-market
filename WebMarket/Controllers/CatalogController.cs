@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using Microsoft.AspNetCore.Mvc;
 using WebMarket.Models;
 
@@ -11,8 +13,11 @@ namespace WebMarket.Controllers
 
     public class CatalogController : Controller
     {
+        private readonly string saveProductsFilePath = @"D:\ASP.NET PROJECTS\WebMarket\data\products.dew";
+
         public IActionResult Catalog()
         {
+            LoadProducts();
             return View();
         }
 
@@ -35,9 +40,36 @@ namespace WebMarket.Controllers
                     Link = productLink
                 });
             }
-            //return Ok();
-            //return View();
+            SaveProducts();
             return RedirectToAction("Catalog");
+        }
+
+        public IActionResult SaveProducts()
+        {
+            //byte[] bytes = null;
+            BinaryFormatter bf = new BinaryFormatter();
+            Stream stream = new FileStream(saveProductsFilePath, FileMode.Open, FileAccess.Write);
+            //using (MemoryStream ms = new MemoryStream())
+            //{
+            //    bf.Serialize(ms, CatalogViewModel.ListOfProducts);
+            //    bytes = ms.ToArray();
+            //}
+            //System.IO.File.WriteAllBytes(saveProductsFilePath, bytes);
+
+            bf.Serialize(stream, CatalogViewModel.ListOfProducts);
+            stream.Close();
+
+            return Ok();
+        }
+
+        public IActionResult LoadProducts()
+        {
+            BinaryFormatter bf = new BinaryFormatter();
+            Stream stream = new FileStream(saveProductsFilePath, FileMode.Open, FileAccess.Read);
+            CatalogViewModel.ListOfProducts = (List<Product>)bf.Deserialize(stream);
+            stream.Close();
+
+            return Ok();
         }
 
         public IActionResult SortByName()

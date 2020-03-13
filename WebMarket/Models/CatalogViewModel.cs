@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace WebMarket.Models
 {
+    [Serializable]
     public class CatalogViewModel
     {
+        [Serializable]
         public class Product
         {
             public int ID { get; set; }
@@ -55,11 +57,12 @@ namespace WebMarket.Models
             }
             public static int CompareByDiscount(Product x, Product y)
             {
-                return x.Discount.CompareTo(y.Discount);
+                return y.Discount.CompareTo(x.Discount);
             }
         }
 
         public static List<Product> ListOfProducts = new List<Product>();
+
         public List<Product> Products { get; set; }
         public Product ToAdd { get; set; }
 
