@@ -96,6 +96,12 @@ namespace WebMarket.Controllers
             SaveProducts();
             return RedirectToAction("Catalog");
         }
+        public IActionResult SortByFinalPrice()
+        {
+            CatalogViewModel.ListOfProducts.Sort(Product.CompareByFinalPrice);
+            SaveProducts();
+            return RedirectToAction("Catalog");
+        }
 
         public IActionResult Index()
         {

@@ -22,6 +22,8 @@ namespace WebMarket.Models
             public string Description { get; set; }
             public string Link { get; set; }
 
+            public decimal FinalPrice { get => Price - (Price * (decimal)Discount * 0.01M); }
+            public string FinalPriceString { get => FinalPrice > 0 ? FinalPrice.ToString("0.##") + "€" : "free"; }
             public string PriceString { get => Price > 0 ? Price.ToString() + "€" : "free"; }
             public string DiscountString { get => Discount > 0 ? Discount.ToString() + "%" : "no"; }
 
@@ -58,6 +60,10 @@ namespace WebMarket.Models
             public static int CompareByDiscount(Product x, Product y)
             {
                 return y.Discount.CompareTo(x.Discount);
+            }
+            public static int CompareByFinalPrice(Product x, Product y)
+            {
+                return x.FinalPrice.CompareTo(y.FinalPrice);
             }
         }
 
