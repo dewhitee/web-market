@@ -87,28 +87,38 @@
         <tr>
             <th scope="col">#</th>
             <th scope="col">
-                <a class="text-dark" asp-area="" asp-controller="Catalog" asp-action="SortByName">Product Name
+                <a class="text-dark" asp-area="" asp-controller="Catalog" asp-action="SortByName">
+                    Product Name
                     <i class="fas fa-sort ml-1"></i>
                 </a>
             </th>
             <th scope="col">
-                <a class="text-dark" asp-area="" asp-controller="Catalog" asp-action="SortByType">Type
+                <a class="text-dark" asp-area="" asp-controller="Catalog" asp-action="SortByType">
+                    Type
                     <i class="fas fa-sort ml-1"></i>
                 </a>
             </th>
             <th scope="col">
-                <a class="text-dark" asp-area="" asp-controller="Catalog" asp-action="SortByPrice">Price
+                <a class="text-dark" asp-area="" asp-controller="Catalog" asp-action="SortByPrice">
+                    Price
                     <i class="fas fa-sort ml-1"></i>
                 </a>
             </th>
             <th scope="col">
-                <a class="text-dark" asp-area="" asp-controller="Catalog" asp-action="SortByDiscount">Discount
+                <a class="text-dark" asp-area="" asp-controller="Catalog" asp-action="SortByDiscount">
+                    Discount
                     <i class="fas fa-sort ml-1"></i>
                 </a>
             </th>
             <th scope="col">
-                <a class="text-dark" asp-area="" asp-controller="Catalog" asp-action="SortByFinalPrice">Final
+                <a class="text-dark" asp-area="" asp-controller="Catalog" asp-action="SortByFinalPrice">
+                    Final
                     <i class="fas fa-sort ml-1"></i>
+                </a>
+            </th>
+            <th scope="col">
+                <a class="text-dark">
+                    Link
                 </a>
             </th>
         </tr>
@@ -116,22 +126,28 @@
     <tbody>
        @for (int i = 0; i < CatalogViewModel.ListOfProducts.Count; i++)
         {
+           string tdClassString = CatalogViewModel.ListOfProducts[i].GetPriceTableClassString();
             <tr>
                 <th scope="row">@i</th>
-                <td class=@CatalogViewModel.ListOfProducts[i].GetPriceTableClassString()>
+                <td class=@tdClassString>
                     @CatalogViewModel.ListOfProducts[i].Name
                 </td>
-                <td class=@CatalogViewModel.ListOfProducts[i].GetPriceTableClassString()>
+                <td class=@tdClassString>
                     @CatalogViewModel.ListOfProducts[i].Type
                 </td>
-                <td class=@CatalogViewModel.ListOfProducts[i].GetPriceTableClassString()>
+                <td class=@tdClassString>
                     @CatalogViewModel.ListOfProducts[i].PriceString
                 </td>
-                <td class=@CatalogViewModel.ListOfProducts[i].GetPriceTableClassString()>
+                <td class=@tdClassString>
                     @CatalogViewModel.ListOfProducts[i].DiscountString
                 </td>
-                <td class=@CatalogViewModel.ListOfProducts[i].GetPriceTableClassString()>
+                <td class=@tdClassString>
                     @CatalogViewModel.ListOfProducts[i].FinalPriceString
+                </td>
+                <td class=@tdClassString>
+                    <a href=@CatalogViewModel.ListOfProducts[i].Link class="text-dark">
+                        @CatalogViewModel.ListOfProducts[i].LinkTableString
+                    </a>
                 </td>
             </tr>
         }

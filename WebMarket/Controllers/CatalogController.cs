@@ -72,6 +72,11 @@ namespace WebMarket.Controllers
             return Ok();
         }
 
+        //public IActionResult LoadLink()
+        //{
+            
+        //}
+
         public IActionResult SortByName()
         {
             CatalogViewModel.ListOfProducts.Sort(Product.CompareByName);

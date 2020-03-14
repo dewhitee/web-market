@@ -26,6 +26,7 @@ namespace WebMarket.Models
             public string FinalPriceString { get => FinalPrice > 0 ? FinalPrice.ToString("0.##") + "€" : "free"; }
             public string PriceString { get => Price > 0 ? Price.ToString() + "€" : "free"; }
             public string DiscountString { get => Discount > 0 ? Discount.ToString() + "%" : "no"; }
+            public string LinkTableString { get => string.IsNullOrWhiteSpace(Link) ? "no link" : "yes"; }
 
             public static string CheckTypeString(string type)
             {
@@ -36,11 +37,11 @@ namespace WebMarket.Models
 
             public string GetPriceTableClassString()
             {
-                if (Price == 0)
+                if (Price == 0 || FinalPrice == 0)
                     return "bg-primary";
-                if (Price < 10)
+                if (Price < 10 || FinalPrice < 10 || Discount > 50)
                     return "bg-success";
-                if (Price > 250)
+                if (Price > 250 || FinalPrice > 250)
                     return "bg-danger";
                 return "";
             }
