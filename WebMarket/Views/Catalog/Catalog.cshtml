@@ -4,7 +4,7 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">@ViewData["Title"]</h1>
+    <h1 class="display-3">@ViewData["Title"]</h1>
 </div>
 
 @*<div class="container">
@@ -40,6 +40,7 @@
 <div class="row">
     <div class="col">
         <div class="collapse multi-collapse" id="addButtonCollapse">
+            <h2 class="display-4 text-center">Adding</h2>
             <div class="card card-body">
 
                 <form asp-controller="Catalog" asp-area="" asp-action="AddProduct" method="post">
@@ -81,7 +82,7 @@
 
                     <div class="form-group">
                         <label for="productLink">Product link</label>
-                        <input type="text" class="form-control" name="productLink" id="productLink" placeholder="Enter product link"/>
+                        <input type="text" class="form-control" name="productLink" id="productLink" placeholder="Enter product link" />
                     </div>
 
                     <button class="btn btn-success" type="submit">Submit product</button>
@@ -96,6 +97,7 @@
 <div class="row">
     <div class="col">
         <div class="collapse multi-collapse" id="buyProductCollapse">
+            <h2 class="display-4 text-center">Buying</h2>
             <div class="card card-body">
                 <form asp-controller="Catalog" asp-area="" asp-action="BuyProduct" method="post">
                     <div class="form-group">
@@ -112,6 +114,7 @@
 <div class="row">
     <div class="col">
         <div class="collapse multi-collapse" id="sellProductCollapse">
+            <h2 class="display-4 text-center">Selling</h2>
             <div class="card card-body">
                 <form asp-controller="Catalog" asp-area="" asp-action="SellProduct" method="post">
                     <div class="form-group">
@@ -124,6 +127,8 @@
         </div>
     </div>
 </div>
+
+<div style="padding-bottom:1em"></div>
 
 <table class="table table-light table-striped table-hover">
     <thead class="thead-light">
@@ -168,9 +173,9 @@
         </tr>
     </thead>
     <tbody>
-       @for (int i = 0; i < CatalogViewModel.ListOfProducts.Count; i++)
+        @for (int i = 0; i < CatalogViewModel.ListOfProducts.Count; i++)
         {
-           string tdClassString = CatalogViewModel.ListOfProducts[i].GetPriceTableClassString();
+            string tdClassString = CatalogViewModel.ListOfProducts[i].GetPriceTableClassString();
             <tr>
                 <th scope="row">@i</th>
                 <th scope="row">

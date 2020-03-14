@@ -39,8 +39,10 @@ namespace WebMarket.Models
 
             public string GetPriceTableClassString()
             {
-                if (Price == 0 || FinalPrice == 0)
+                if (AddedToCart)
                     return "bg-primary";
+                if (Price == 0 || FinalPrice == 0)
+                    return "bg-success";
                 if (Price < 10 || FinalPrice < 10 || Discount > 50)
                     return "bg-success";
                 if (Price > 250 || FinalPrice > 250)
