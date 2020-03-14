@@ -21,12 +21,14 @@ namespace WebMarket.Models
             public float Discount { get; set; }
             public string Description { get; set; }
             public string Link { get; set; }
+            public bool AddedToCart { get; set; }
 
             public decimal FinalPrice { get => Price - (Price * (decimal)Discount * 0.01M); }
             public string FinalPriceString { get => FinalPrice > 0 ? FinalPrice.ToString("0.##") + "€" : "free"; }
             public string PriceString { get => Price > 0 ? Price.ToString() + "€" : "free"; }
             public string DiscountString { get => Discount > 0 ? Discount.ToString() + "%" : "no"; }
             public string LinkTableString { get => string.IsNullOrWhiteSpace(Link) ? "no link" : "yes"; }
+            public string AddToCartString { get => AddedToCart ? "Bought" : "+"; }
 
             public static string CheckTypeString(string type)
             {
@@ -68,7 +70,43 @@ namespace WebMarket.Models
             }
         }
 
+        [Serializable]
+        public class User
+        {
+            public decimal Money { get; set; }
+            public string MoneyString { get => Money.ToString() + "€"; }
+
+            public void BuyProduct(Product product)
+            {
+                if (Money >= product.FinalPrice && !product.AddedToCart)
+                {
+                    // todo: add and save product to profile
+                    Money -= product.FinalPrice;
+                    product.AddedToCart = true;
+                    Console.WriteLine($"{product.Name} is bought!");
+                }
+                else
+                {
+                    Console.WriteLine("User don't have enough money or product is already bought!");
+                }
+            }
+            public void SellProduct(Product product)
+            {
+                if (product.AddedToCart)
+                {
+                    Money += product.FinalPrice;
+                    product.AddedToCart = false;
+                    Console.WriteLine($"{product.Name} is sold!");
+                }
+            }
+            public void AddInitMoney()
+            {
+                Money = 100M;
+            }
+        }
+
         public static List<Product> ListOfProducts = new List<Product>();
+        public static User CurrentUser = new User();
 
         public List<Product> Products { get; set; }
         public Product ToAdd { get; set; }
@@ -82,11 +120,11 @@ namespace WebMarket.Models
             }
             return false;
         }
-        public static bool ContainsName(string Name)
+        public static bool ContainsName(string name)
         {
             foreach (var i in ListOfProducts)
             {
-                if (i.Name == Name)
+                if (i.Name == name)
                     return true;
             }
             return false;

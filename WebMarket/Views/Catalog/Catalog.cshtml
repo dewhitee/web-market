@@ -21,9 +21,20 @@
         </div>
     </div>*@
 
-<div style="padding-bottom:1em">
+<div class="float-right">
+    <h2>@CatalogViewModel.CurrentUser.MoneyString</h2>
+</div>
+<div style="padding-bottom:1em"></div>
+<div class="d-inline" @*style="padding-bottom:1em"*@>
     <button type="button" class="btn btn-outline-primary" data-toggle="collapse" data-target="#addButtonCollapse" aria-expanded="false" aria-controls="addButtonCollapse">Add Product</button>
 </div>
+<div class="d-inline" @*style="padding-bottom:1em"*@>
+    <button type="button" class="btn btn-outline-primary" data-toggle="collapse" data-target="#buyProductCollapse" aria-expanded="false" aria-controls="buyProductCollapse">Buy Product</button>
+</div>
+<div class="d-inline" @*style="padding-bottom:1em"*@>
+    <button type="button" class="btn btn-outline-primary" data-toggle="collapse" data-target="#sellProductCollapse" aria-expanded="false" aria-controls="sellProductCollapse">Sell Product</button>
+</div>
+<div style="padding-bottom:1em"></div>
 
 @*Add a product div container*@
 <div class="row">
@@ -82,10 +93,43 @@
     </div>
 </div>
 
+<div class="row">
+    <div class="col">
+        <div class="collapse multi-collapse" id="buyProductCollapse">
+            <div class="card card-body">
+                <form asp-controller="Catalog" asp-area="" asp-action="BuyProduct" method="post">
+                    <div class="form-group">
+                        <label for="productName">Product name</label>
+                        <input type="text" class="form-control" name="productName" id="productName" placeholder="Enter product name" required />
+                    </div>
+                    <button class="btn btn-success" type="submit">Submit buying product</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        <div class="collapse multi-collapse" id="sellProductCollapse">
+            <div class="card card-body">
+                <form asp-controller="Catalog" asp-area="" asp-action="SellProduct" method="post">
+                    <div class="form-group">
+                        <label for="productName">Product name</label>
+                        <input type="text" class="form-control" name="productName" id="productName" placeholder="Enter product name" required />
+                    </div>
+                    <button class="btn btn-success" type="submit">Submit selling product</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <table class="table table-light table-striped table-hover">
     <thead class="thead-light">
         <tr>
             <th scope="col">#</th>
+            <th scope="col">Add</th>
             <th scope="col">
                 <a class="text-dark" asp-area="" asp-controller="Catalog" asp-action="SortByName">
                     Product Name
@@ -129,6 +173,11 @@
            string tdClassString = CatalogViewModel.ListOfProducts[i].GetPriceTableClassString();
             <tr>
                 <th scope="row">@i</th>
+                <th scope="row">
+                    <a class="text-dark" name="productAdded" asp-area="" asp-controller="Catalog" asp-action="AddToCart">
+                        @CatalogViewModel.ListOfProducts[i].AddToCartString
+                    </a>
+                </th>
                 <td class=@tdClassString>
                     @CatalogViewModel.ListOfProducts[i].Name
                 </td>

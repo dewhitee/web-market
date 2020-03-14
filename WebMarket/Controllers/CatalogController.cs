@@ -10,14 +10,17 @@ using WebMarket.Models;
 namespace WebMarket.Controllers
 {
     using Product = CatalogViewModel.Product;
+    using User = CatalogViewModel.User;
 
     public class CatalogController : Controller
     {
         private readonly string saveProductsFilePath = @"D:\ASP.NET PROJECTS\WebMarket\data\products.dew";
+        private readonly string saveUserFilePath = @"D:\ASP.NET PROJECTS\WebMarket\data\user.dew";
 
         public IActionResult Catalog()
         {
             LoadProducts();
+            LoadUser();
             return View();
         }
 
@@ -44,6 +47,42 @@ namespace WebMarket.Controllers
             return RedirectToAction("Catalog");
         }
 
+        public IActionResult BuyProduct(string productName)
+        {
+            Console.WriteLine("Buying Product...");
+            Product toBuy = new Product();
+            foreach (var product in CatalogViewModel.ListOfProducts)
+            {
+                if (product.Name == productName)
+                {
+                    toBuy = product;
+                    CatalogViewModel.CurrentUser.BuyProduct(toBuy);
+                    break;
+                }
+            }
+            SaveUser();
+            SaveProducts();
+            return RedirectToAction("Catalog");
+        }
+
+        public IActionResult SellProduct(string productName)
+        {
+            Console.WriteLine("Selling Product...");
+            Product toSell = new Product();
+            foreach (var product in CatalogViewModel.ListOfProducts)
+            {
+                if (product.Name == productName)
+                {
+                    toSell = product;
+                    CatalogViewModel.CurrentUser.SellProduct(toSell);
+                    break;
+                }
+            }
+            SaveUser();
+            SaveProducts();
+            return RedirectToAction("Catalog");
+        }
+
         public IActionResult SaveProducts()
         {
             //byte[] bytes = null;
@@ -61,6 +100,16 @@ namespace WebMarket.Controllers
 
             return Ok();
         }
+        public IActionResult SaveUser()
+        {
+            BinaryFormatter bf = new BinaryFormatter();
+            Stream stream = new FileStream(saveUserFilePath, FileMode.Open, FileAccess.Write);
+
+            bf.Serialize(stream, CatalogViewModel.CurrentUser);
+            stream.Close();
+
+            return Ok();
+        }
 
         public IActionResult LoadProducts()
         {
@@ -71,10 +120,26 @@ namespace WebMarket.Controllers
 
             return Ok();
         }
+        public IActionResult LoadUser()
+        {
+            BinaryFormatter bf = new BinaryFormatter();
+            Stream stream = new FileStream(saveUserFilePath, FileMode.Open, FileAccess.Read);
+            CatalogViewModel.CurrentUser = (User)bf.Deserialize(stream);
+            stream.Close();
+
+            return Ok();
+        }
+
+        public IActionResult AddToCart(Product productAdded)
+        {
+            productAdded.AddedToCart = true;
+            SaveProducts();
+            return RedirectToAction("Catalog");
+        }
 
         //public IActionResult LoadLink()
         //{
-            
+
         //}
 
         public IActionResult SortByName()
