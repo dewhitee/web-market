@@ -253,6 +253,25 @@ namespace WebMarket.Models
             }
             return "btn btn-success";
         }
+
+        public static string GetSubmitBuyingButtonText()
+        {
+            var product = GetSelectedBuyProduct();
+            if (!string.IsNullOrWhiteSpace(product.Name))
+            {
+                return "Submit buying product";
+            }
+            return "Find";
+        }
+        public static string GetSubmitSellingButtonText()
+        {
+            var product = GetSelectedSellProduct();
+            if (!string.IsNullOrWhiteSpace(product.Name))
+            {
+                return "Submit selling product";
+            }
+            return "Find";
+        }
         //public string GetSellProductButtonClassString()
         //{
         //    var product = GetSelectedSellProduct();

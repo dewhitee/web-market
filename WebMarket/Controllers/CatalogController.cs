@@ -50,19 +50,52 @@ namespace WebMarket.Controllers
         public IActionResult BuyProduct(string productName)
         {
             Console.WriteLine("Buying Product...");
-            Product toBuy = new Product();
+            if (CatalogViewModel.GetSubmitBuyingButtonText() == "Find")
+            {
+                FindAndBuyProduct(productName);
+                return RedirectToAction("Catalog");
+            }
+            //Product toBuy = new Product();
+            //foreach (var product in CatalogViewModel.ListOfProducts)
+            //{
+            //    if (product.Name == productName)
+            //    {
+            //        toBuy = product;
+            //        CatalogViewModel.CurrentUser.BuyProduct(toBuy);
+            //        break;
+            //    }
+            //}
+            Buy(productName);
+            SaveUser();
+            SaveProducts();
+            return RedirectToAction("Catalog");
+
+        }
+        private void Buy(string productName)
+        {
             foreach (var product in CatalogViewModel.ListOfProducts)
             {
                 if (product.Name == productName)
                 {
-                    toBuy = product;
-                    CatalogViewModel.CurrentUser.BuyProduct(toBuy);
+                    CatalogViewModel.CurrentUser.BuyProduct(product);
+                    break;
+                }
+            }
+        }
+
+        private void FindAndBuyProduct(string productName)
+        {
+            foreach (var product in CatalogViewModel.ListOfProducts)
+            {
+                product.AddedToCart = false;
+                if (product.Name == productName && !product.IsBought)
+                {
+                    product.AddedToCart = true;
                     break;
                 }
             }
             SaveUser();
             SaveProducts();
-            return RedirectToAction("Catalog");
         }
 
         public IActionResult SellProduct(string productName)

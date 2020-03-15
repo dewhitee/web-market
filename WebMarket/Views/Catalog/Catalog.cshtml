@@ -104,7 +104,9 @@
                         <label for="productName">Product name</label>
                         <input type="text" class="form-control" name="productName" id="productName" placeholder="Enter product name" value="@CatalogViewModel.GetSelectedBuyProductName()" required />
                     </div>
-                    <button class="@CatalogViewModel.GetSubmitBuyingButtonClassString()" type="submit">Submit buying product</button>
+                    <button class="@CatalogViewModel.GetSubmitBuyingButtonClassString()" type="submit">
+                        @CatalogViewModel.GetSubmitBuyingButtonText()
+                    </button>
                 </form>
                 <p class="text-md-right">
                     <mark>@CatalogViewModel.GetSelectedBuyProductPriceSentence()</mark>
@@ -124,7 +126,9 @@
                         <label for="productName">Product name</label>
                         <input type="text" class="form-control" name="productName" id="productName" placeholder="Enter product name" value="@CatalogViewModel.GetSelectedSellProductName()" required />
                     </div>
-                    <button class="btn btn-success" type="submit">Submit selling product</button>
+                    <button class="btn btn-success" type="submit">
+                        @CatalogViewModel.GetSubmitSellingButtonText()
+                    </button>
                 </form>
                 <p class="text-md-right">
                     <mark>@CatalogViewModel.GetSelectedSellProductPriceSentence()</mark>
