@@ -150,7 +150,7 @@ namespace WebMarket.Models
         {
             foreach (var product in ListOfProducts)
             {
-                if (product.AddedToCart)
+                if (product.AddedToCart && !product.IsBought)
                     return product.Name;
             }
             return "";
@@ -170,7 +170,7 @@ namespace WebMarket.Models
         {
             foreach (var product in ListOfProducts)
             {
-                if (product.AddedToCart)
+                if (product.AddedToCart && !product.IsBought)
                     return product;
             }
             return new Product();
@@ -184,6 +184,32 @@ namespace WebMarket.Models
                     return product;
             }
             return new Product();
+        }
+
+        public static string GetSelectedSellProductPriceSentence()
+        {
+            var product = GetSelectedSellProduct();
+            if (!string.IsNullOrWhiteSpace(product.Name))
+            {
+                return CurrentUser.MoneyString + " + " + product.FinalPriceString + string.Format(" = {0}€", (CurrentUser.Money + product.FinalPrice).ToString("0.##"));
+            }
+            else
+            {
+                return "You have not selected any product to sell!";
+            }
+        }
+        public static string GetSelectedBuyProductPriceSentence()
+        {
+            var product = GetSelectedBuyProduct();
+            var finalCost = CurrentUser.Money - product.FinalPrice;
+            if (!string.IsNullOrWhiteSpace(product.Name))
+            {
+                return CurrentUser.MoneyString + " - " + product.FinalPriceString + string.Format(" = {0}€", finalCost.ToString("0.##")) + (finalCost < 0 ? " (You don't have enough money!)" : "");
+            }
+            else
+            {
+                return "You have not selected any product to buy!";
+            }
         }
     }
 }
