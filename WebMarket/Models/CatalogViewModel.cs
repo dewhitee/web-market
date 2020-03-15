@@ -41,6 +41,8 @@ namespace WebMarket.Models
 
             public string GetPriceTableClassString()
             {
+                if (AddedToCart)
+                    return "bg-dark text-white";
                 if (IsBought)
                     return "bg-primary";
                 if (Price == 0 || FinalPrice == 0)
@@ -55,7 +57,7 @@ namespace WebMarket.Models
             public string GetAddToCartButtonClassString()
             {
                 if (AddedToCart)
-                    return "btn btn-secondary";
+                    return "btn btn-dark";
                 else if (!IsBought)
                     return "btn btn-success";
                 else
@@ -158,7 +160,7 @@ namespace WebMarket.Models
         {
             foreach (var product in ListOfProducts)
             {
-                if (product.IsBought)
+                if (product.IsBought && product.AddedToCart)
                     return product.Name;
             }
             return "";
