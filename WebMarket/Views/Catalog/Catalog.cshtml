@@ -102,7 +102,7 @@
                 <form asp-controller="Catalog" asp-area="" asp-action="BuyProduct" method="post">
                     <div class="form-group">
                         <label for="productName">Product name</label>
-                        <input type="text" class="form-control" name="productName" id="productName" placeholder="Enter product name" value="@CatalogViewModel.GetSelectedBuyProduct()" required />
+                        <input type="text" class="form-control" name="productName" id="productName" placeholder="Enter product name" value="@CatalogViewModel.GetSelectedBuyProductName()" required />
                     </div>
                     <button class="btn btn-success" type="submit">Submit buying product</button>
                 </form>
@@ -119,10 +119,16 @@
                 <form asp-controller="Catalog" asp-area="" asp-action="SellProduct" method="post">
                     <div class="form-group">
                         <label for="productName">Product name</label>
-                        <input type="text" class="form-control" name="productName" id="productName" placeholder="Enter product name" value="@CatalogViewModel.GetSelectedSellProduct()" required />
+                        <input type="text" class="form-control" name="productName" id="productName" placeholder="Enter product name" value="@CatalogViewModel.GetSelectedSellProductName()" required />
                     </div>
                     <button class="btn btn-success" type="submit">Submit selling product</button>
                 </form>
+                @{
+                    string str = CatalogViewModel.CurrentUser.MoneyString + " - " + CatalogViewModel.GetSelectedSellProduct().FinalPriceString + string.Format(" = {0}€", CatalogViewModel.CurrentUser.Money - CatalogViewModel.GetSelectedSellProduct().FinalPrice);
+                }
+                <p class="text-md-right">
+                    @str
+                </p>
             </div>
         </div>
     </div>

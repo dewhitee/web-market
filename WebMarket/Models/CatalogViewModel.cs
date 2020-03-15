@@ -146,7 +146,7 @@ namespace WebMarket.Models
             return false;
         }
 
-        public static string GetSelectedBuyProduct()
+        public static string GetSelectedBuyProductName()
         {
             foreach (var product in ListOfProducts)
             {
@@ -156,7 +156,7 @@ namespace WebMarket.Models
             return "";
         }
 
-        public static string GetSelectedSellProduct()
+        public static string GetSelectedSellProductName()
         {
             foreach (var product in ListOfProducts)
             {
@@ -164,6 +164,26 @@ namespace WebMarket.Models
                     return product.Name;
             }
             return "";
+        }
+
+        public static Product GetSelectedBuyProduct()
+        {
+            foreach (var product in ListOfProducts)
+            {
+                if (product.AddedToCart)
+                    return product;
+            }
+            return new Product();
+        }
+
+        public static Product GetSelectedSellProduct()
+        {
+            foreach (var product in ListOfProducts)
+            {
+                if (product.IsBought && product.AddedToCart)
+                    return product;
+            }
+            return new Product();
         }
     }
 }
