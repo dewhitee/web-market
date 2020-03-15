@@ -90,7 +90,7 @@ namespace WebMarket.Models
         public class User
         {
             public decimal Money { get; set; }
-            public string MoneyString { get => Money.ToString() + "€"; }
+            public string MoneyString { get => Money.ToString("0.##") + "€"; }
 
             public void BuyProduct(Product product)
             {

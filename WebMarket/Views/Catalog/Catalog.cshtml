@@ -124,11 +124,11 @@
                     <button class="btn btn-success" type="submit">Submit selling product</button>
                 </form>
                 @{
-                    string str = CatalogViewModel.CurrentUser.MoneyString + " - " + CatalogViewModel.GetSelectedSellProduct().FinalPriceString + string.Format(" = {0}€", CatalogViewModel.CurrentUser.Money - CatalogViewModel.GetSelectedSellProduct().FinalPrice);
+                    string str = CatalogViewModel.CurrentUser.MoneyString + " - " + CatalogViewModel.GetSelectedSellProduct().FinalPriceString + string.Format(" = {0}€", (CatalogViewModel.CurrentUser.Money - CatalogViewModel.GetSelectedSellProduct().FinalPrice).ToString("0.##"));
                 }
                 <p class="text-md-right">
-                    @str
-                </p>
+                    <mark>@str</mark>
+</p>
             </div>
         </div>
     </div>
