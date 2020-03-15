@@ -130,9 +130,23 @@ namespace WebMarket.Controllers
             return Ok();
         }
 
-        public IActionResult AddToCart(Product productAdded)
+        public IActionResult AddToCart(string productName, int productIndex)
         {
-            productAdded.AddedToCart = true;
+            ///productAdded.AddedToCart = true;
+            //foreach (var product in CatalogViewModel.ListOfProducts)
+            //{
+            //    product.AddedToCart = false;
+            //    if (product.Name == productName)
+            //    {
+            //        product.AddedToCart = true;
+            //        break;
+            //    }
+            //}
+            for (int i = 0; i < CatalogViewModel.ListOfProducts.Count; i++)
+            {
+                CatalogViewModel.ListOfProducts[i].AddedToCart = false;
+            }
+            CatalogViewModel.ListOfProducts[productIndex].AddedToCart = true;
             SaveProducts();
             return RedirectToAction("Catalog");
         }

@@ -102,7 +102,7 @@
                 <form asp-controller="Catalog" asp-area="" asp-action="BuyProduct" method="post">
                     <div class="form-group">
                         <label for="productName">Product name</label>
-                        <input type="text" class="form-control" name="productName" id="productName" placeholder="Enter product name" required />
+                        <input type="text" class="form-control" name="productName" id="productName" placeholder="Enter product name" value="@CatalogViewModel.GetSelectedBuyProduct()" required />
                     </div>
                     <button class="btn btn-success" type="submit">Submit buying product</button>
                 </form>
@@ -119,7 +119,7 @@
                 <form asp-controller="Catalog" asp-area="" asp-action="SellProduct" method="post">
                     <div class="form-group">
                         <label for="productName">Product name</label>
-                        <input type="text" class="form-control" name="productName" id="productName" placeholder="Enter product name" required />
+                        <input type="text" class="form-control" name="productName" id="productName" placeholder="Enter product name" value="@CatalogViewModel.GetSelectedSellProduct()" required />
                     </div>
                     <button class="btn btn-success" type="submit">Submit selling product</button>
                 </form>
@@ -176,12 +176,18 @@
         @for (int i = 0; i < CatalogViewModel.ListOfProducts.Count; i++)
         {
             string tdClassString = CatalogViewModel.ListOfProducts[i].GetPriceTableClassString();
+            string buttonClassString = CatalogViewModel.ListOfProducts[i].GetAddToCartButtonClassString();
             <tr>
                 <th scope="row">@i</th>
                 <th scope="row">
-                    <a class="text-dark" name="productAdded" asp-area="" asp-controller="Catalog" asp-action="AddToCart">
-                        @CatalogViewModel.ListOfProducts[i].AddToCartString
-                    </a>
+                    <form asp-controller="Catalog" asp-action="AddToCart" method="post">
+                        <input type="hidden" class="form-control" name="productName" id="productName" value=@CatalogViewModel.ListOfProducts[i].Name />
+                        <input type="hidden" class="form-control" name="productIndex" id="productIndex" value=@i />
+                        @*<a class="text-dark" name="productName" asp-area="" asp-controller="Catalog" asp-action="AddToCart">
+                            @CatalogViewModel.ListOfProducts[i].IsBoughtString
+                        </a>*@
+                    <button class="@CatalogViewModel.ListOfProducts[i].GetAddToCartButtonClassString()" type="submit">@CatalogViewModel.ListOfProducts[i].IsBoughtString</button>
+                    </form>
                 </th>
                 <td class=@tdClassString>
                     @CatalogViewModel.ListOfProducts[i].Name

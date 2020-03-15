@@ -21,6 +21,7 @@ namespace WebMarket.Models
             public float Discount { get; set; }
             public string Description { get; set; }
             public string Link { get; set; }
+            public bool IsBought { get; set; }
             public bool AddedToCart { get; set; }
 
             public decimal FinalPrice { get => Price - (Price * (decimal)Discount * 0.01M); }
@@ -28,7 +29,8 @@ namespace WebMarket.Models
             public string PriceString { get => Price > 0 ? Price.ToString() + "€" : "free"; }
             public string DiscountString { get => Discount > 0 ? Discount.ToString() + "%" : "no"; }
             public string LinkTableString { get => string.IsNullOrWhiteSpace(Link) ? "no link" : "yes"; }
-            public string AddToCartString { get => AddedToCart ? "Bought" : "+"; }
+            public string IsBoughtString { get => IsBought ? "Bought" : "+"; }
+            public string IsAddedToCartString { get => AddedToCart ? "Added" : "+"; }
 
             public static string CheckTypeString(string type)
             {
@@ -39,7 +41,7 @@ namespace WebMarket.Models
 
             public string GetPriceTableClassString()
             {
-                if (AddedToCart)
+                if (IsBought)
                     return "bg-primary";
                 if (Price == 0 || FinalPrice == 0)
                     return "bg-success";
@@ -48,6 +50,16 @@ namespace WebMarket.Models
                 if (Price > 250 || FinalPrice > 250)
                     return "bg-danger";
                 return "";
+            }
+
+            public string GetAddToCartButtonClassString()
+            {
+                if (AddedToCart)
+                    return "btn btn-secondary";
+                else if (!IsBought)
+                    return "btn btn-success";
+                else
+                    return "btn btn-primary";
             }
 
             public static int CompareByName(Product x, Product y)
@@ -80,11 +92,11 @@ namespace WebMarket.Models
 
             public void BuyProduct(Product product)
             {
-                if (Money >= product.FinalPrice && !product.AddedToCart)
+                if (Money >= product.FinalPrice && !product.IsBought)
                 {
                     // todo: add and save product to profile
                     Money -= product.FinalPrice;
-                    product.AddedToCart = true;
+                    product.IsBought = true;
                     Console.WriteLine($"{product.Name} is bought!");
                 }
                 else
@@ -94,10 +106,10 @@ namespace WebMarket.Models
             }
             public void SellProduct(Product product)
             {
-                if (product.AddedToCart)
+                if (product.IsBought)
                 {
                     Money += product.FinalPrice;
-                    product.AddedToCart = false;
+                    product.IsBought = false;
                     Console.WriteLine($"{product.Name} is sold!");
                 }
             }
@@ -130,6 +142,26 @@ namespace WebMarket.Models
                     return true;
             }
             return false;
+        }
+
+        public static string GetSelectedBuyProduct()
+        {
+            foreach (var product in ListOfProducts)
+            {
+                if (product.AddedToCart)
+                    return product.Name;
+            }
+            return "";
+        }
+
+        public static string GetSelectedSellProduct()
+        {
+            foreach (var product in ListOfProducts)
+            {
+                if (product.IsBought)
+                    return product.Name;
+            }
+            return "";
         }
     }
 }
