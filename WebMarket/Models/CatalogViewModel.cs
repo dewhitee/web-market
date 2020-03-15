@@ -44,24 +44,40 @@ namespace WebMarket.Models
                 if (AddedToCart)
                     return "bg-dark text-white";
                 if (IsBought)
-                    return "bg-primary";
+                    return "bg-primary text-dark";
                 if (Price == 0 || FinalPrice == 0)
-                    return "bg-success";
+                    return "bg-success text-dark";
                 if (Price < 10 || FinalPrice < 10 || Discount > 50)
-                    return "bg-success";
+                    return "bg-success text-dark";
                 if (Price > 250 || FinalPrice > 250)
-                    return "bg-danger";
+                    return "bg-danger text-dark";
                 return "";
+            }
+
+            public string GetProductTableLinkClassString()
+            {
+                if (AddedToCart)
+                    return "text-white";
+                else
+                    return "text-dark";
             }
 
             public string GetAddToCartButtonClassString()
             {
                 if (AddedToCart)
-                    return "btn btn-dark";
+                    return "btn btn-outline-light";
                 else if (!IsBought)
-                    return "btn btn-success";
+                    return "btn btn-outline-success";
                 else
                     return "btn btn-primary";
+            }
+            
+            public string GetTableHeaderClassString()
+            {
+                if (AddedToCart)
+                    return "bg-dark text-white";
+                else
+                    return "";
             }
 
             public static int CompareByName(Product x, Product y)
@@ -211,5 +227,43 @@ namespace WebMarket.Models
                 return "You have not selected any product to buy!";
             }
         }
+
+        public static string GetBuyProductButtonClassString()
+        {
+            var product = GetSelectedBuyProduct();
+            var finalCost = CurrentUser.Money - product.FinalPrice;
+            if (!string.IsNullOrWhiteSpace(product.Name))
+            {
+                if (finalCost < 0)
+                    return "btn btn-danger";
+            }
+            return "btn btn-outline-primary";
+        }
+        public static string GetSubmitBuyingButtonClassString()
+        {
+            var product = GetSelectedBuyProduct();
+            var finalCost = CurrentUser.Money - product.FinalPrice;
+            if (!string.IsNullOrWhiteSpace(product.Name))
+            {
+                if (finalCost < 0)
+                {
+                    
+                    return "btn btn-danger disabled";
+                }
+            }
+            return "btn btn-success";
+        }
+        //public string GetSellProductButtonClassString()
+        //{
+        //    var product = GetSelectedSellProduct();
+        //    if (!string.IsNullOrWhiteSpace(product.Name))
+        //    {
+        //        return CurrentUser.MoneyString + " + " + product.FinalPriceString + string.Format(" = {0}€", (CurrentUser.Money + product.FinalPrice).ToString("0.##"));
+        //    }
+        //    else
+        //    {
+        //        return "You have not selected any product to sell!";
+        //    }
+        //}
     }
 }

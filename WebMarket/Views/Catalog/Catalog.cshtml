@@ -29,7 +29,7 @@
     <button type="button" class="btn btn-outline-primary" data-toggle="collapse" data-target="#addButtonCollapse" aria-expanded="false" aria-controls="addButtonCollapse">Add Product</button>
 </div>
 <div class="d-inline" @*style="padding-bottom:1em"*@>
-    <button type="button" class="btn btn-outline-primary" data-toggle="collapse" data-target="#buyProductCollapse" aria-expanded="false" aria-controls="buyProductCollapse">Buy Product</button>
+    <button type="button" class="@CatalogViewModel.GetBuyProductButtonClassString()" data-toggle="collapse" data-target="#buyProductCollapse" aria-expanded="false" aria-controls="buyProductCollapse">Buy Product</button>
 </div>
 <div class="d-inline" @*style="padding-bottom:1em"*@>
     <button type="button" class="btn btn-outline-primary" data-toggle="collapse" data-target="#sellProductCollapse" aria-expanded="false" aria-controls="sellProductCollapse">Sell Product</button>
@@ -104,7 +104,7 @@
                         <label for="productName">Product name</label>
                         <input type="text" class="form-control" name="productName" id="productName" placeholder="Enter product name" value="@CatalogViewModel.GetSelectedBuyProductName()" required />
                     </div>
-                    <button class="btn btn-success" type="submit">Submit buying product</button>
+                    <button class="@CatalogViewModel.GetSubmitBuyingButtonClassString()" type="submit">Submit buying product</button>
                 </form>
                 <p class="text-md-right">
                     <mark>@CatalogViewModel.GetSelectedBuyProductPriceSentence()</mark>
@@ -183,9 +183,11 @@
         {
             string tdClassString = CatalogViewModel.ListOfProducts[i].GetPriceTableClassString();
             string buttonClassString = CatalogViewModel.ListOfProducts[i].GetAddToCartButtonClassString();
+            var linkClass = CatalogViewModel.ListOfProducts[i].GetProductTableLinkClassString();
+            var thClass = CatalogViewModel.ListOfProducts[i].GetTableHeaderClassString();
             <tr>
-                <th scope="row">@i</th>
-                <th scope="row">
+                <th scope="row" class="@thClass">@i</th>
+                <th scope="row" class="@thClass">
                     <form asp-controller="Catalog" asp-action="AddToCart" method="post">
                         <input type="hidden" class="form-control" name="productName" id="productName" value=@CatalogViewModel.ListOfProducts[i].Name />
                         <input type="hidden" class="form-control" name="productIndex" id="productIndex" value=@i />
@@ -211,9 +213,9 @@
                     @CatalogViewModel.ListOfProducts[i].FinalPriceString
                 </td>
                 <td class="@tdClassString">
-                    <a href=@CatalogViewModel.ListOfProducts[i].Link class="text-dark">
-                        @CatalogViewModel.ListOfProducts[i].LinkTableString
-                    </a>
+                    <a href=@CatalogViewModel.ListOfProducts[i].Link class="@linkClass">
+                        <ins><strong>@CatalogViewModel.ListOfProducts[i].LinkTableString</strong></ins>
+</a>
                 </td>
             </tr>
         }
