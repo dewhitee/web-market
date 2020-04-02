@@ -24,6 +24,8 @@ namespace WebMarket.Models
             public bool IsBought { get; set; }
             public bool AddedToCart { get; set; }
 
+            public DateTime AddedDate { get; set; }
+
             public decimal FinalPrice { get => Price - (Price * (decimal)Discount * 0.01M); }
             public string FinalPriceString { get => FinalPrice > 0 ? FinalPrice.ToString("0.##") + "€" : "free"; }
             public string PriceString { get => Price > 0 ? Price.ToString() + "€" : "free"; }

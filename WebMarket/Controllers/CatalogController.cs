@@ -40,7 +40,8 @@ namespace WebMarket.Controllers
                     CostFractional = fractionalCost,
                     Discount = productDiscount,
                     Description = "test description",
-                    Link = productLink
+                    Link = productLink,
+                    AddedDate = DateTime.Today
                 });
             }
             SaveProducts();

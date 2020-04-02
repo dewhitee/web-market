@@ -271,15 +271,25 @@
         <div class="col col-lg-4" style="padding-bottom: 2em">
             <div class="card h-100">
                 <div class="card-header"><h3>@CatalogViewModel.ListOfProducts[i].Name</h3></div>
-                <img src="..." class="card-img-top" alt="...">
+                <img src="https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg" alt="Cat Lawyer Is Real And He Is Everything Right Now | Above the Law" class="card-img-top">
                 <div class="card-body">
-                    <h5 class="card-title">@CatalogViewModel.ListOfProducts[i].FinalPriceString</h5>
+                    <h5 class="card-title">
+                        @if (CatalogViewModel.ListOfProducts[i].Price != CatalogViewModel.ListOfProducts[i].FinalPrice)
+                        {
+                            <font color="red"><del>@CatalogViewModel.ListOfProducts[i].PriceString</del></font>
+                        }
+                        @CatalogViewModel.ListOfProducts[i].FinalPriceString
+                    </h5>
                     <p class="card-text">@CatalogViewModel.ListOfProducts[i].Description</p>
-                    <p><a href="#" class="btn btn-primary">Action</a> <a href="#" class="btn">Action</a></p>
                 </div>
-                @*<div class="card-footer">
-                        <small class="text-muted">Last updated 3 mins ago</small>
-                    </div>*@
+                <div class="card-footer">
+                    <form asp-controller="Catalog" asp-action="AddToCart" method="post">
+                        <input type="hidden" class="form-control" name="productName" id="productName" value=@CatalogViewModel.ListOfProducts[i].Name />
+                        <input type="hidden" class="form-control" name="productIndex" id="productIndex" value=@i />
+                        <button class="@CatalogViewModel.ListOfProducts[i].GetAddToCartButtonClassString()" type="submit">@CatalogViewModel.ListOfProducts[i].IsBoughtString</button>
+                    </form>
+                    <small class="text-muted">Added @CatalogViewModel.ListOfProducts[i].AddedDate.ToShortDateString()</small>
+                </div>
             </div>
         </div>
     }
