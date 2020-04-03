@@ -86,6 +86,11 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="productImageLink">Product Image link</label>
+                        <input type="text" class="form-control" name="productImageLink" id="productImageLink" placeholder="Enter product image link" />
+                    </div>
+
+                    <div class="form-group">
                         <label for="productLink">Product link</label>
                         <input type="text" class="form-control" name="productLink" id="productLink" placeholder="Enter product link" />
                     </div>
@@ -285,35 +290,61 @@
                     var thClass = product.GetTableHeaderClassString();
                     <div class="col col-lg-4" style="padding-bottom: 2em">
                         <div class="card h-100">
-                            <div class="card-header @product.GetTableHeaderClassString()">
+                            @*<div class="card-header @product.GetTableHeaderClassString()">
                                 <h3>@product.Name</h3>
-                            </div>
-                            <img src="https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg" alt="Cat Lawyer Is Real And He Is Everything Right Now | Above the Law" class="card-img-top">
+                            </div>*@
+                            <img src="@product.CardImageLink" alt="Cat Lawyer Is Real And He Is Everything Right Now | Above the Law" class="card-img-top">
                             <div class="card-body">
                                 <h4 class="card-title">
-                                    @product.FinalPriceString
-                                    <sup>
-                                        @if (product.Price != product.FinalPrice)
-                                        {
-                                            <font color="red"><del>@product.PriceString</del></font><sup> -@product.DiscountSupString</sup>
-                                        }
-                                    </sup>
+                                    @*@product.FinalPriceString
+        <sup>
+            @if (product.Price != product.FinalPrice)
+            {
+                <font color="red"><del>@product.PriceString</del></font><sup> -@product.DiscountSupString</sup>
+            }
+        </sup>*@
+                                    @product.Name
                                 </h4>
                                 <p class="card-text">@product.Description</p>
                             </div>
                             <div class="card-footer @product.GetTableHeaderClassString()">
+
+                                @*<div class="float-right">*@
+                                    <h3>
+                                        @product.FinalPriceString
+                                        <sup>
+                                            @if (product.Price != product.FinalPrice)
+                                            {
+                                                <font color="red" style="font-weight:400"><del>@product.PriceString</del></font><sup> -@product.DiscountSupString</sup>
+                                            }
+                                        </sup>
+                                    </h3>
+                                    @*<h2>@CatalogViewModel.CurrentUser.MoneyString</h2>*@
+                                    @*<form asp-controller="Catalog" asp-action="OpenProductWindow" method="post">
+                                                <input type="hidden" class="form-control" name="productName" id="productName" value=@product.Name />
+                                                <input type="hidden" class="form-control" name="productIndex" id="productIndex" value=@i />
+                                                <button class="@product.GetAddToCartButtonClassString()" type="submit">Open</button>
+                                            </form>
+                                        *@
+                                @*</div>*@
+                                <div class="float-right">
                                 <form asp-controller="Catalog" asp-action="AddToCart" method="post">
                                     <input type="hidden" class="form-control" name="productName" id="productName" value=@product.Name />
                                     <input type="hidden" class="form-control" name="productIndex" id="productIndex" value=@i />
                                     <button class="@product.GetAddToCartButtonClassString()" type="submit">@product.IsBoughtString</button>
                                 </form>
+                                </div>
                                 <small class="@linkClass">
                                     Link:
                                     <a href="@product.Link">
                                         @product.Link
                                     </a>
-                                </small><br />
-                                <small class="text-warning @product.GetProductTableLinkClassString()">Added @product.AddedDate.ToShortDateString()</small>
+                                </small>
+                                <br />
+                                <small class="text-warning @product.GetProductTableLinkClassString()">
+                                    Added @product.AddedDate.ToShortDateString()
+                                </small>
+                            
                             </div>
                         </div>
                     </div>

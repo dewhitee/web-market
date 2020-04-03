@@ -27,6 +27,7 @@ namespace WebMarket.Models
             public float Discount { get; set; }
             public string Description { get; set; }
             public string Link { get; set; }
+            public string CardImageLink { get; set; }
             public bool IsBought { get; set; }
             public bool AddedToCart { get; set; }
 

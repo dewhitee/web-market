@@ -32,7 +32,8 @@ namespace WebMarket.Controllers
             return RedirectToAction("Catalog");
         }
 
-        public IActionResult AddProduct(string productName, string productType, decimal productCost, float productDiscount, string productDescription, string productLink)
+        public IActionResult AddProduct(string productName, string productType, decimal productCost, float productDiscount, string productDescription,
+            string productImageLink, string productLink)
         {
             int integralCost = (int)Math.Truncate(productCost);
             int fractionalCost = (int)(productCost - integralCost);
@@ -48,6 +49,7 @@ namespace WebMarket.Controllers
                     CostFractional = fractionalCost,
                     Discount = productDiscount,
                     Description = productDescription.Length > 0 ? productDescription : "test description",
+                    CardImageLink = productImageLink.Length > 0 ? productImageLink : "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg",
                     Link = productLink,
                     AddedDate = DateTime.Today
                 });
