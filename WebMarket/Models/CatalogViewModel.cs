@@ -64,7 +64,7 @@ namespace WebMarket.Models
 
             public string GetProductTableLinkClassString()
             {
-                if (AddedToCart)
+                if (AddedToCart || IsBought)
                     return "text-white";
                 else
                     return "text-dark";

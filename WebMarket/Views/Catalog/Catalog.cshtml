@@ -299,13 +299,13 @@
                                     <input type="hidden" class="form-control" name="productIndex" id="productIndex" value=@i />
                                     <button class="@CatalogViewModel.ListOfProducts[i].GetAddToCartButtonClassString()" type="submit">@CatalogViewModel.ListOfProducts[i].IsBoughtString</button>
                                 </form>
-                                <small class="text-muted @CatalogViewModel.ListOfProducts[i].GetProductTableLinkClassString()">
+                                <small class="@CatalogViewModel.ListOfProducts[i].GetProductTableLinkClassString()">
                                     Link:
                                     <a href="@CatalogViewModel.ListOfProducts[i].Link">
                                         @CatalogViewModel.ListOfProducts[i].Link
                                     </a>
                                 </small><br />
-                                <small class="text-muted">Added @CatalogViewModel.ListOfProducts[i].AddedDate.ToShortDateString()</small>
+                                <small class="text-warning @CatalogViewModel.ListOfProducts[i].GetProductTableLinkClassString()">Added @CatalogViewModel.ListOfProducts[i].AddedDate.ToShortDateString()</small>
                             </div>
                         </div>
                     </div>
