@@ -73,7 +73,11 @@ namespace WebMarket.Models
             public string GetAddToCartButtonClassString()
             {
                 if (AddedToCart)
-                    return "btn btn-outline-light";
+                {
+                    //if (ViewVariant != CatalogViewVariant.Main)
+                        return "btn btn-outline-light";
+                    //else return "btn btn-outline-dark";
+                }
                 else if (!IsBought)
                     return "btn btn-outline-success";
                 else
@@ -83,9 +87,15 @@ namespace WebMarket.Models
             public string GetTableHeaderClassString()
             {
                 if (AddedToCart)
+                {
+                    //if ()
                     return "bg-dark text-white";
-                else
-                    return "";
+                }
+                else if (IsBought)
+                {
+                    return "bg-primary text-white";
+                }
+                else return "";
             }
 
             public static int CompareByName(Product x, Product y)

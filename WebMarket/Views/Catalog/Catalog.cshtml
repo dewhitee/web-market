@@ -279,7 +279,7 @@
                     var thClass = CatalogViewModel.ListOfProducts[i].GetTableHeaderClassString();
                     <div class="col col-lg-4" style="padding-bottom: 2em">
                         <div class="card h-100">
-                            <div class="card-header"><h3>@CatalogViewModel.ListOfProducts[i].Name</h3></div>
+                            <div class="card-header @CatalogViewModel.ListOfProducts[i].GetTableHeaderClassString()"><h3>@CatalogViewModel.ListOfProducts[i].Name</h3></div>
                             <img src="https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg" alt="Cat Lawyer Is Real And He Is Everything Right Now | Above the Law" class="card-img-top">
                             <div class="card-body">
                                 <h5 class="card-title">
@@ -291,7 +291,7 @@
                                 </h5>
                                 <p class="card-text">@CatalogViewModel.ListOfProducts[i].Description</p>
                             </div>
-                            <div class="card-footer">
+                            <div class="card-footer @CatalogViewModel.ListOfProducts[i].GetTableHeaderClassString()">
                                 <form asp-controller="Catalog" asp-action="AddToCart" method="post">
                                     <input type="hidden" class="form-control" name="productName" id="productName" value=@CatalogViewModel.ListOfProducts[i].Name />
                                     <input type="hidden" class="form-control" name="productIndex" id="productIndex" value=@i />
