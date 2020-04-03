@@ -3,6 +3,13 @@
     ViewData["Title"] = "Catalog";
 }
 
+@*<script>
+    function onCardClick(cardIndex) {
+        const card = document.getElementById("card_" + cardIndex);
+        if (card.click())
+    }
+</script>*@
+
 <div class="text-center">
     <h1 class="display-3">@ViewData["Title"]</h1>
 </div>
@@ -288,66 +295,69 @@
                     string buttonClassString = product.GetAddToCartButtonClassString();
                     var linkClass = product.GetProductTableLinkClassString();
                     var thClass = product.GetTableHeaderClassString();
-                    <div class="col col-lg-4" style="padding-bottom: 2rem">
+                <div class="col col-lg-4" id="card_@i" style="padding-bottom: 2rem; transform:rotate(0);">
+                    <a href="@product.Link" class="text-dark stretched-link">
                         <div class="card h-100">
                             @*<div class="card-header @product.GetTableHeaderClassString()">
-                                <h3>@product.Name</h3>
-                            </div>*@
+                    <h3>@product.Name</h3>
+                </div>*@
                             <img src="@product.CardImageLink" alt="Cat Lawyer Is Real And He Is Everything Right Now | Above the Law" class="card-img-top">
+
                             <div class="card-body">
                                 <h4 class="card-title">
                                     @*@product.FinalPriceString
-        <sup>
-            @if (product.Price != product.FinalPrice)
-            {
-                <font color="red"><del>@product.PriceString</del></font><sup> -@product.DiscountSupString</sup>
-            }
-        </sup>*@
+                        <sup>
+                            @if (product.Price != product.FinalPrice)
+                            {
+                                <font color="red"><del>@product.PriceString</del></font><sup> -@product.DiscountSupString</sup>
+                            }
+                        </sup>*@
                                     @product.Name
                                 </h4>
                                 <p class="card-text">@product.Description</p>
-                            </div>
-                            <div class="card-footer @product.GetTableHeaderClassString()">
-
-                                @*<div class="float-right">*@
-                                    <h3>
-                                        @product.FinalPriceString
-                                        <sup>
-                                            @if (product.Price != product.FinalPrice)
-                                            {
-                                                <font color="red" style="font-weight:400"><del>@product.PriceString</del></font><sup> -@product.DiscountSupString</sup>
-                                            }
-                                        </sup>
-                                    </h3>
-                                    @*<h2>@CatalogViewModel.CurrentUser.MoneyString</h2>*@
-                                    @*<form asp-controller="Catalog" asp-action="OpenProductWindow" method="post">
-                                                <input type="hidden" class="form-control" name="productName" id="productName" value=@product.Name />
-                                                <input type="hidden" class="form-control" name="productIndex" id="productIndex" value=@i />
-                                                <button class="@product.GetAddToCartButtonClassString()" type="submit">Open</button>
-                                            </form>
-                                        *@
-                                @*</div>*@
-                                <div class="float-right">
-                                <form asp-controller="Catalog" asp-action="AddToCart" method="post">
-                                    <input type="hidden" class="form-control" name="productName" id="productName" value=@product.Name />
-                                    <input type="hidden" class="form-control" name="productIndex" id="productIndex" value=@i />
-                                    <button class="@product.GetAddToCartButtonClassString()" type="submit">@product.IsBoughtString</button>
-                                </form>
-                                </div>
                                 <small class="@linkClass">
                                     Link:
                                     <a href="@product.Link">
                                         @product.Link
                                     </a>
                                 </small>
-                                <br />
+                            </div>
+
+                            <div class="card-footer @product.GetTableHeaderClassString()">
+
+                                @*<div class="float-right">*@
+                                <h3>
+                                    @product.FinalPriceString
+                                    <sup>
+                                        @if (product.Price != product.FinalPrice)
+                                        {
+                                            <font color="red" style="font-weight:400"><del>@product.PriceString</del></font><sup> -@product.DiscountSupString</sup>
+                                        }
+                                    </sup>
+                                </h3>
+                                @*<h2>@CatalogViewModel.CurrentUser.MoneyString</h2>*@
+                                @*<form asp-controller="Catalog" asp-action="OpenProductWindow" method="post">
+                        <input type="hidden" class="form-control" name="productName" id="productName" value=@product.Name />
+                        <input type="hidden" class="form-control" name="productIndex" id="productIndex" value=@i />
+                        <button class="@product.GetAddToCartButtonClassString()" type="submit">Open</button>
+                    </form>
+                                *@
+                                @*</div>*@
+                                <div class="float-right">
+                                    <form asp-controller="Catalog" asp-action="AddToCart" method="post">
+                                        <input type="hidden" class="form-control" name="productName" id="productName" value=@product.Name />
+                                        <input type="hidden" class="form-control" name="productIndex" id="productIndex" value=@i />
+                                        <button class="@product.GetAddToCartButtonClassString()" type="submit">@product.IsBoughtString</button>
+                                    </form>
+                                </div>
                                 <small class="text-warning @product.GetProductTableLinkClassString()">
                                     Added @product.AddedDate.ToShortDateString()
                                 </small>
-                            
+
                             </div>
                         </div>
-                    </div>
+                    </a>
+                </div>
                 }
             </div>
             break;
