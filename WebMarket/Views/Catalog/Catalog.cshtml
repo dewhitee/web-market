@@ -295,32 +295,29 @@
                     string buttonClassString = product.GetAddToCartButtonClassString();
                     var linkClass = product.GetProductTableLinkClassString();
                     var thClass = product.GetTableHeaderClassString();
-                <div class="col col-lg-4" id="card_@i" style="padding-bottom: 2rem; transform:rotate(0);">
-                    <a href="@product.Link" class="text-dark stretched-link">
+                <div class="col col-lg-4" id="card_@i" style="padding-bottom: 2rem;">
+                    @*<a href="@product.Link" class="text-dark ">*@
                         <div class="card h-100">
                             @*<div class="card-header @product.GetTableHeaderClassString()">
                     <h3>@product.Name</h3>
                 </div>*@
-                            <img src="@product.CardImageLink" alt="Cat Lawyer Is Real And He Is Everything Right Now | Above the Law" class="card-img-top">
-
-                            <div class="card-body">
+                            <div style="transform:rotate(0);">
+                                <a href="@product.Link" class="stretched-link">
+                                <img src="@product.CardImageLink" alt="Cat Lawyer Is Real And He Is Everything Right Now | Above the Law" class="card-img-top">
+                                </a>
+                            </div>
+                            <div class="card-body" style="transform:rotate(0);">
                                 <h4 class="card-title">
-                                    @*@product.FinalPriceString
-                        <sup>
-                            @if (product.Price != product.FinalPrice)
-                            {
-                                <font color="red"><del>@product.PriceString</del></font><sup> -@product.DiscountSupString</sup>
-                            }
-                        </sup>*@
                                     @product.Name
                                 </h4>
                                 <p class="card-text">@product.Description</p>
-                                <small class="@linkClass">
-                                    Link:
-                                    <a href="@product.Link">
-                                        @product.Link
-                                    </a>
-                                </small>
+                                @*<small class="@linkClass">
+                                         Link:
+                                         <a href="@product.Link">
+                                             @product.Link
+                                         </a>
+                                      </small>*@
+                                <a href="@product.Link" class="stretched-link"></a>
                             </div>
 
                             <div class="card-footer @product.GetTableHeaderClassString()">
@@ -356,7 +353,7 @@
 
                             </div>
                         </div>
-                    </a>
+                    @*</a>*@
                 </div>
                 }
             </div>
