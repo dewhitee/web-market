@@ -9,6 +9,12 @@ namespace WebMarket.Models
     [Serializable]
     public class CatalogViewModel
     {
+        public enum CatalogViewVariant
+        {
+            Main,
+            Table,
+        }
+
         [Serializable]
         public class Product
         {
@@ -73,7 +79,7 @@ namespace WebMarket.Models
                 else
                     return "btn btn-primary";
             }
-            
+
             public string GetTableHeaderClassString()
             {
                 if (AddedToCart)
@@ -144,6 +150,8 @@ namespace WebMarket.Models
 
         public List<Product> Products { get; set; }
         public Product ToAdd { get; set; }
+
+        public static CatalogViewVariant ViewVariant { get; set; }
 
         public static bool ContainsID(int ID)
         {

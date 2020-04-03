@@ -24,6 +24,14 @@ namespace WebMarket.Controllers
             return View();
         }
 
+        public IActionResult ChangeView(CatalogViewModel.CatalogViewVariant viewVariant)
+        {
+            CatalogViewModel.ViewVariant = viewVariant == CatalogViewModel.CatalogViewVariant.Main ?
+                CatalogViewModel.CatalogViewVariant.Table : CatalogViewModel.CatalogViewVariant.Main;
+
+            return RedirectToAction("Catalog");
+        }
+
         public IActionResult AddProduct(string productName, string productType, decimal productCost, float productDiscount, string productLink)
         {
             int integralCost = (int)Math.Truncate(productCost);

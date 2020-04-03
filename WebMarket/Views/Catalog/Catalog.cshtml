@@ -140,158 +140,180 @@
 
 <div style="padding-bottom:1em"></div>
 
-<table class="table table-light table-striped table-hover">
-    <thead class="thead-light">
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Add</th>
-            <th scope="col">
-                <a class="text-dark" asp-area="" asp-controller="Catalog" asp-action="SortByName">
-                    Product Name
-                    <i class="fas fa-sort ml-1"></i>
-                </a>
-            </th>
-            <th scope="col">
-                <a class="text-dark" asp-area="" asp-controller="Catalog" asp-action="SortByType">
-                    Type
-                    <i class="fas fa-sort ml-1"></i>
-                </a>
-            </th>
-            <th scope="col">
-                <a class="text-dark" asp-area="" asp-controller="Catalog" asp-action="SortByPrice">
-                    Price
-                    <i class="fas fa-sort ml-1"></i>
-                </a>
-            </th>
-            <th scope="col">
-                <a class="text-dark" asp-area="" asp-controller="Catalog" asp-action="SortByDiscount">
-                    Discount
-                    <i class="fas fa-sort ml-1"></i>
-                </a>
-            </th>
-            <th scope="col">
-                <a class="text-dark" asp-area="" asp-controller="Catalog" asp-action="SortByFinalPrice">
-                    Final
-                    <i class="fas fa-sort ml-1"></i>
-                </a>
-            </th>
-            <th scope="col">
-                <a class="text-dark">
-                    Link
-                </a>
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @for (int i = 0; i < CatalogViewModel.ListOfProducts.Count; i++)
+
+
+@switch (CatalogViewModel.ViewVariant)
+{
+    case CatalogViewModel.CatalogViewVariant.Table:
         {
-            string tdClassString = CatalogViewModel.ListOfProducts[i].GetPriceTableClassString();
-            string buttonClassString = CatalogViewModel.ListOfProducts[i].GetAddToCartButtonClassString();
-            var linkClass = CatalogViewModel.ListOfProducts[i].GetProductTableLinkClassString();
-            var thClass = CatalogViewModel.ListOfProducts[i].GetTableHeaderClassString();
-            <tr>
-                <th scope="row" class="@thClass">@i</th>
-                <th scope="row" class="@thClass">
-                    <form asp-controller="Catalog" asp-action="AddToCart" method="post">
-                        <input type="hidden" class="form-control" name="productName" id="productName" value=@CatalogViewModel.ListOfProducts[i].Name />
-                        <input type="hidden" class="form-control" name="productIndex" id="productIndex" value=@i />
-                        @*<a class="text-dark" name="productName" asp-area="" asp-controller="Catalog" asp-action="AddToCart">
-                                @CatalogViewModel.ListOfProducts[i].IsBoughtString
-                            </a>*@
-                        <button class="@CatalogViewModel.ListOfProducts[i].GetAddToCartButtonClassString()" type="submit">@CatalogViewModel.ListOfProducts[i].IsBoughtString</button>
-                    </form>
-                </th>
-                <td class="@tdClassString">
-                    @CatalogViewModel.ListOfProducts[i].Name
-                </td>
-                <td class="@tdClassString">
-                    @CatalogViewModel.ListOfProducts[i].Type
-                </td>
-                <td class="@tdClassString">
-                    @CatalogViewModel.ListOfProducts[i].PriceString
-                </td>
-                <td class="@tdClassString">
-                    @CatalogViewModel.ListOfProducts[i].DiscountString
-                </td>
-                <td class="@tdClassString">
-                    @CatalogViewModel.ListOfProducts[i].FinalPriceString
-                </td>
-                <td class="@tdClassString">
-                    <a href=@CatalogViewModel.ListOfProducts[i].Link class="@linkClass">
-                        <ins><strong>@CatalogViewModel.ListOfProducts[i].LinkTableString</strong></ins>
-                    </a>
-                </td>
-            </tr>
+            <table class="table table-light table-striped table-hover">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Add</th>
+                        <th scope="col">
+                            <a class="text-dark" asp-area="" asp-controller="Catalog" asp-action="SortByName">
+                                Product Name
+                                <i class="fas fa-sort ml-1"></i>
+                            </a>
+                        </th>
+                        <th scope="col">
+                            <a class="text-dark" asp-area="" asp-controller="Catalog" asp-action="SortByType">
+                                Type
+                                <i class="fas fa-sort ml-1"></i>
+                            </a>
+                        </th>
+                        <th scope="col">
+                            <a class="text-dark" asp-area="" asp-controller="Catalog" asp-action="SortByPrice">
+                                Price
+                                <i class="fas fa-sort ml-1"></i>
+                            </a>
+                        </th>
+                        <th scope="col">
+                            <a class="text-dark" asp-area="" asp-controller="Catalog" asp-action="SortByDiscount">
+                                Discount
+                                <i class="fas fa-sort ml-1"></i>
+                            </a>
+                        </th>
+                        <th scope="col">
+                            <a class="text-dark" asp-area="" asp-controller="Catalog" asp-action="SortByFinalPrice">
+                                Final
+                                <i class="fas fa-sort ml-1"></i>
+                            </a>
+                        </th>
+                        <th scope="col">
+                            <a class="text-dark">
+                                Link
+                            </a>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < CatalogViewModel.ListOfProducts.Count; i++)
+                    {
+                        string tdClassString = CatalogViewModel.ListOfProducts[i].GetPriceTableClassString();
+                        string buttonClassString = CatalogViewModel.ListOfProducts[i].GetAddToCartButtonClassString();
+                        var linkClass = CatalogViewModel.ListOfProducts[i].GetProductTableLinkClassString();
+                        var thClass = CatalogViewModel.ListOfProducts[i].GetTableHeaderClassString();
+                        <tr>
+                            <th scope="row" class="@thClass">@i</th>
+                            <th scope="row" class="@thClass">
+                                <form asp-controller="Catalog" asp-action="AddToCart" method="post">
+                                    <input type="hidden" class="form-control" name="productName" id="productName" value=@CatalogViewModel.ListOfProducts[i].Name />
+                                    <input type="hidden" class="form-control" name="productIndex" id="productIndex" value=@i />
+                                    @*<a class="text-dark" name="productName" asp-area="" asp-controller="Catalog" asp-action="AddToCart">
+                                            @CatalogViewModel.ListOfProducts[i].IsBoughtString
+                                        </a>*@
+                                    <button class="@CatalogViewModel.ListOfProducts[i].GetAddToCartButtonClassString()" type="submit">@CatalogViewModel.ListOfProducts[i].IsBoughtString</button>
+                                </form>
+                            </th>
+                            <td class="@tdClassString">
+                                @CatalogViewModel.ListOfProducts[i].Name
+                            </td>
+                            <td class="@tdClassString">
+                                @CatalogViewModel.ListOfProducts[i].Type
+                            </td>
+                            <td class="@tdClassString">
+                                @CatalogViewModel.ListOfProducts[i].PriceString
+                            </td>
+                            <td class="@tdClassString">
+                                @CatalogViewModel.ListOfProducts[i].DiscountString
+                            </td>
+                            <td class="@tdClassString">
+                                @CatalogViewModel.ListOfProducts[i].FinalPriceString
+                            </td>
+                            <td class="@tdClassString">
+                                <a href=@CatalogViewModel.ListOfProducts[i].Link class="@linkClass">
+                                    <ins><strong>@CatalogViewModel.ListOfProducts[i].LinkTableString</strong></ins>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            break;
         }
-    </tbody>
-</table>
+    case CatalogViewModel.CatalogViewVariant.Main:
+        {
+            @*<div class="row-fluid">
+                    <ul class="thumbnails">
+                        <li class="span4">
+                            <div class="thumbnail">
+                                <img data-src="holder.js/300x200" alt="300x200" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAADICAYAAABS39xVAAAJVklEQVR4Xu3bT2sUaRSF8VJRISLEnS4EF1npLub7fwJ1pxtduDMrEURBhMxQA9W8U3kr3Un6T+7hN8ue7up7nnPzUFVW3/v+/fs/g/8QQACBAgTuEVaBloyIAAL/ESAsi4AAAmUIEFaZqgyKAAKEZQcQQKAMAcIqU5VBEUCAsOwAAgiUIUBYZaoyKAIIEJYdQACBMgQIq0xVBkUAAcKyAwggUIYAYZWpyqAIIEBYdgABBMoQIKwyVRkUAQQIyw4ggEAZAoRVpiqDIoAAYdkBBBAoQ4CwylRlUAQQICw7gAACZQgQVpmqDIoAAoRlBxBAoAwBwipTlUERQICw7AACCJQhQFhlqjIoAggQlh1AAIEyBAirTFUGRQABwrIDCCBQhgBhlanKoAggQFh2AAEEyhAgrDJVGRQBBAjLDiCAQBkChFWmKoMigABh2QEEEChDgLDKVGVQBBAgLDuAAAJlCBBWmaoMigAChGUHEECgDAHCKlOVQRFAgLDsAAIIlCFAWGWqMigCCBCWHUAAgTIECKtMVQZFAAHCsgMIIFCGAGGVqcqgCCBAWHYAAQTKECCsMlUZFAEECMsOIIBAGQKEVaYqgyKAAGHZAQQQKEOAsMpUZVAEECAsO4AAAmUIEFaZqgyKAAKEZQcQQKAMAcIqU5VBEUCAsOwAAgiUIUBYZaoyKAIIEJYdQACBMgQIq0xVBkUAAcKyAwggUIYAYZWpyqAIIEBYdgABBMoQIKwyVRkUAQQIyw4ggEAZAoRVpiqDIoAAYdkBBBAoQ4CwylRlUAQQICw7gAACZQgQVpmqDIoAAoRlBxBAoAwBwipTlUERQICw7AACCJQhQFhlqjIoAggQlh1AAIEyBAirTFUGRQABwrIDCCBQhgBhlanKoAggQFh2AAEEyhAgrDJVGRQBBAjLDiCAQBkChFWmKoMigABh2QEEEChDgLDKVGVQBBAgLDuAAAJlCBBWmaoMigAChGUHEECgDAHCKlOVQRFAgLDsAAIIlCFAWGWqMigCCBCWHUAAgTIECKtMVQZFAAHCsgMIIFCGAGGVqWr9oD9//hw+fPgw/P37d/Xmk5OT4dWrV5c+/PXr1+HLly+r14+Ojoa3b98Ojx8/vvTejx8/Dt++fVu9fnx8PJydna0faOEdf/78Gd6/fz/8/v179Y6HDx8Op6enw9OnT//3qXmm+/fvD69fvx6eP39+q0w3Ht4HD0qAsA6Kf3tffn5+Pnz69Gm4uLi4dNAXL14Mb968Wb0+F9D0P3rSevfu3fDjx49Lx7yptHpSnQ4+l9FSpp60rpNpe9Qdad8ECGvfxHf0fZNYpj/mZ8+erc5i2rOXVhiTdFoxtHLrvd6emS2dvV0VsRXL9PneTOMxpkzT/I8ePVplauV6nUw7wu+weyJAWHsCvcuvaf9g2z/kSQ6tsCbhzM9SJjms+3x7OTcJr5VYe+bVvj6KcBTUdCk4P5uby2nkNV3ethLtzX+dTLvswbF3T4Cwds/4IN9wHYmNA/bk1pNYe+bTSmd+hvfkyZOVcJbuT7Vg5sL69evX6hK3PZNrz/qm13uzL2U6SBm+dGsECGtrKO/OgdrLrqUzmfnr02d6l5Tz+1VzuYw3yluRjMd+8ODBMEpz/G/dpeP8s+PN//Em//iPAlfd15rOvJbEOs/Uu1F/d1ozySYECGsTSsXeM79R3gpj0z/u9h7YJsJqz2haXOtuzs9vwk8SWrrM691X2zQTYRVb5M64hFW/w8UEvTOMTf+4byKsuXzWXQrO39+e9RFW8GLeIhph3QLeXf9o71/Pdims+VnWVc92rZMbYd317TrMfIR1GO57+darhDU/+5nfuF56hGDppvv4eu+5qd79q/mDo70zsaXHJ3o33Xv31Nx038uK7f1LCGvvyLf/hUvPUbXCWndv6DaPNYyJek+vj6/3ZNTeY9vkCXePNWx/Z6oekbCqNtfM3YqpFcD8UYPxpvN1HrK8zoOj82euxscapp/+LD2bddXPbNozOQ+OBizpliIQ1pZAHvow898GtvPs+qc5vWe+xu+fHhLtPSqxxKsVrp/mHHqr7t73E9bd6+TGEx3qx8/tJd7SQ57jDfiXL18Onz9/7v7ecQo9v0T04+cbr0PkBwkrslahEMgkQFiZvUqFQCQBwoqsVSgEMgkQVmavUiEQSYCwImsVCoFMAoSV2atUCEQSIKzIWoVCIJMAYWX2KhUCkQQIK7JWoRDIJEBYmb1KhUAkAcKKrFUoBDIJEFZmr1IhEEmAsCJrFQqBTAKEldmrVAhEEiCsyFqFQiCTAGFl9ioVApEECCuyVqEQyCRAWJm9SoVAJAHCiqxVKAQyCRBWZq9SIRBJgLAiaxUKgUwChJXZq1QIRBIgrMhahUIgkwBhZfYqFQKRBAgrslahEMgkQFiZvUqFQCQBwoqsVSgEMgkQVmavUiEQSYCwImsVCoFMAoSV2atUCEQSIKzIWoVCIJMAYWX2KhUCkQQIK7JWoRDIJEBYmb1KhUAkAcKKrFUoBDIJEFZmr1IhEEmAsCJrFQqBTAKEldmrVAhEEiCsyFqFQiCTAGFl9ioVApEECCuyVqEQyCRAWJm9SoVAJAHCiqxVKAQyCRBWZq9SIRBJgLAiaxUKgUwChJXZq1QIRBIgrMhahUIgkwBhZfYqFQKRBAgrslahEMgkQFiZvUqFQCQBwoqsVSgEMgkQVmavUiEQSYCwImsVCoFMAoSV2atUCEQSIKzIWoVCIJMAYWX2KhUCkQQIK7JWoRDIJEBYmb1KhUAkAcKKrFUoBDIJEFZmr1IhEEmAsCJrFQqBTAKEldmrVAhEEiCsyFqFQiCTAGFl9ioVApEECCuyVqEQyCRAWJm9SoVAJAHCiqxVKAQyCRBWZq9SIRBJgLAiaxUKgUwChJXZq1QIRBIgrMhahUIgkwBhZfYqFQKRBAgrslahEMgkQFiZvUqFQCQBwoqsVSgEMgkQVmavUiEQSYCwImsVCoFMAoSV2atUCEQSIKzIWoVCIJMAYWX2KhUCkQQIK7JWoRDIJEBYmb1KhUAkAcKKrFUoBDIJEFZmr1IhEEmAsCJrFQqBTAKEldmrVAhEEiCsyFqFQiCTAGFl9ioVApEECCuyVqEQyCRAWJm9SoVAJAHCiqxVKAQyCRBWZq9SIRBJgLAiaxUKgUwChJXZq1QIRBIgrMhahUIgk8C/FhryK89Z50sAAAAASUVORK5CYII=" style="width: 300px; height: 200px;">
+                                <div class="caption">
+                                    <h3>Thumbnail label</h3>
+                                    <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                                    <p><a href="#" class="btn btn-primary">Action</a> <a href="#" class="btn">Action</a></p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="span4">
+                            <div class="thumbnail">
+                                <img data-src="holder.js/300x200" alt="300x200" src="data:image/png;base64,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" style="width: 300px; height: 200px;">
+                                <div class="caption">
+                                    <h3>Thumbnail label</h3>
+                                    <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                                    <p><a href="#" class="btn btn-primary">Action</a> <a href="#" class="btn">Action</a></p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="span4">
+                            <div class="thumbnail">
+                                <img data-src="holder.js/300x200" alt="300x200" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAADICAYAAABS39xVAAAJVklEQVR4Xu3bT2sUaRSF8VJRISLEnS4EF1npLub7fwJ1pxtduDMrEURBhMxQA9W8U3kr3Un6T+7hN8ue7up7nnPzUFVW3/v+/fs/g/8QQACBAgTuEVaBloyIAAL/ESAsi4AAAmUIEFaZqgyKAAKEZQcQQKAMAcIqU5VBEUCAsOwAAgiUIUBYZaoyKAIIEJYdQACBMgQIq0xVBkUAAcKyAwggUIYAYZWpyqAIIEBYdgABBMoQIKwyVRkUAQQIyw4ggEAZAoRVpiqDIoAAYdkBBBAoQ4CwylRlUAQQICw7gAACZQgQVpmqDIoAAoRlBxBAoAwBwipTlUERQICw7AACCJQhQFhlqjIoAggQlh1AAIEyBAirTFUGRQABwrIDCCBQhgBhlanKoAggQFh2AAEEyhAgrDJVGRQBBAjLDiCAQBkChFWmKoMigABh2QEEEChDgLDKVGVQBBAgLDuAAAJlCBBWmaoMigAChGUHEECgDAHCKlOVQRFAgLDsAAIIlCFAWGWqMigCCBCWHUAAgTIECKtMVQZFAAHCsgMIIFCGAGGVqcqgCCBAWHYAAQTKECCsMlUZFAEECMsOIIBAGQKEVaYqgyKAAGHZAQQQKEOAsMpUZVAEECAsO4AAAmUIEFaZqgyKAAKEZQcQQKAMAcIqU5VBEUCAsOwAAgiUIUBYZaoyKAIIEJYdQACBMgQIq0xVBkUAAcKyAwggUIYAYZWpyqAIIEBYdgABBMoQIKwyVRkUAQQIyw4ggEAZAoRVpiqDIoAAYdkBBBAoQ4CwylRlUAQQICw7gAACZQgQVpmqDIoAAoRlBxBAoAwBwipTlUERQICw7AACCJQhQFhlqjIoAggQlh1AAIEyBAirTFUGRQABwrIDCCBQhgBhlanKoAggQFh2AAEEyhAgrDJVGRQBBAjLDiCAQBkChFWmKoMigABh2QEEEChDgLDKVGVQBBAgLDuAAAJlCBBWmaoMigAChGUHEECgDAHCKlOVQRFAgLDsAAIIlCFAWGWqMigCCBCWHUAAgTIECKtMVQZFAAHCsgMIIFCGAGGVqWr9oD9//hw+fPgw/P37d/Xmk5OT4dWrV5c+/PXr1+HLly+r14+Ojoa3b98Ojx8/vvTejx8/Dt++fVu9fnx8PJydna0faOEdf/78Gd6/fz/8/v179Y6HDx8Op6enw9OnT//3qXmm+/fvD69fvx6eP39+q0w3Ht4HD0qAsA6Kf3tffn5+Pnz69Gm4uLi4dNAXL14Mb968Wb0+F9D0P3rSevfu3fDjx49Lx7yptHpSnQ4+l9FSpp60rpNpe9Qdad8ECGvfxHf0fZNYpj/mZ8+erc5i2rOXVhiTdFoxtHLrvd6emS2dvV0VsRXL9PneTOMxpkzT/I8ePVplauV6nUw7wu+weyJAWHsCvcuvaf9g2z/kSQ6tsCbhzM9SJjms+3x7OTcJr5VYe+bVvj6KcBTUdCk4P5uby2nkNV3ethLtzX+dTLvswbF3T4Cwds/4IN9wHYmNA/bk1pNYe+bTSmd+hvfkyZOVcJbuT7Vg5sL69evX6hK3PZNrz/qm13uzL2U6SBm+dGsECGtrKO/OgdrLrqUzmfnr02d6l5Tz+1VzuYw3yluRjMd+8ODBMEpz/G/dpeP8s+PN//Em//iPAlfd15rOvJbEOs/Uu1F/d1ozySYECGsTSsXeM79R3gpj0z/u9h7YJsJqz2haXOtuzs9vwk8SWrrM691X2zQTYRVb5M64hFW/w8UEvTOMTf+4byKsuXzWXQrO39+e9RFW8GLeIhph3QLeXf9o71/Pdims+VnWVc92rZMbYd317TrMfIR1GO57+darhDU/+5nfuF56hGDppvv4eu+5qd79q/mDo70zsaXHJ3o33Xv31Nx038uK7f1LCGvvyLf/hUvPUbXCWndv6DaPNYyJek+vj6/3ZNTeY9vkCXePNWx/Z6oekbCqNtfM3YqpFcD8UYPxpvN1HrK8zoOj82euxscapp/+LD2bddXPbNozOQ+OBizpliIQ1pZAHvow898GtvPs+qc5vWe+xu+fHhLtPSqxxKsVrp/mHHqr7t73E9bd6+TGEx3qx8/tJd7SQ57jDfiXL18Onz9/7v7ecQo9v0T04+cbr0PkBwkrslahEMgkQFiZvUqFQCQBwoqsVSgEMgkQVmavUiEQSYCwImsVCoFMAoSV2atUCEQSIKzIWoVCIJMAYWX2KhUCkQQIK7JWoRDIJEBYmb1KhUAkAcKKrFUoBDIJEFZmr1IhEEmAsCJrFQqBTAKEldmrVAhEEiCsyFqFQiCTAGFl9ioVApEECCuyVqEQyCRAWJm9SoVAJAHCiqxVKAQyCRBWZq9SIRBJgLAiaxUKgUwChJXZq1QIRBIgrMhahUIgkwBhZfYqFQKRBAgrslahEMgkQFiZvUqFQCQBwoqsVSgEMgkQVmavUiEQSYCwImsVCoFMAoSV2atUCEQSIKzIWoVCIJMAYWX2KhUCkQQIK7JWoRDIJEBYmb1KhUAkAcKKrFUoBDIJEFZmr1IhEEmAsCJrFQqBTAKEldmrVAhEEiCsyFqFQiCTAGFl9ioVApEECCuyVqEQyCRAWJm9SoVAJAHCiqxVKAQyCRBWZq9SIRBJgLAiaxUKgUwChJXZq1QIRBIgrMhahUIgkwBhZfYqFQKRBAgrslahEMgkQFiZvUqFQCQBwoqsVSgEMgkQVmavUiEQSYCwImsVCoFMAoSV2atUCEQSIKzIWoVCIJMAYWX2KhUCkQQIK7JWoRDIJEBYmb1KhUAkAcKKrFUoBDIJEFZmr1IhEEmAsCJrFQqBTAKEldmrVAhEEiCsyFqFQiCTAGFl9ioVApEECCuyVqEQyCRAWJm9SoVAJAHCiqxVKAQyCRBWZq9SIRBJgLAiaxUKgUwChJXZq1QIRBIgrMhahUIgkwBhZfYqFQKRBAgrslahEMgkQFiZvUqFQCQBwoqsVSgEMgkQVmavUiEQSYCwImsVCoFMAoSV2atUCEQSIKzIWoVCIJMAYWX2KhUCkQQIK7JWoRDIJEBYmb1KhUAkAcKKrFUoBDIJEFZmr1IhEEmAsCJrFQqBTAKEldmrVAhEEiCsyFqFQiCTAGFl9ioVApEECCuyVqEQyCRAWJm9SoVAJAHCiqxVKAQyCRBWZq9SIRBJgLAiaxUKgUwChJXZq1QIRBIgrMhahUIgk8C/FhryK89Z50sAAAAASUVORK5CYII=" style="width: 300px; height: 200px;">
+                                <div class="caption">
+                                    <h3>Thumbnail label</h3>
+                                    <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                                    <p><a href="#" class="btn btn-primary">Action</a> <a href="#" class="btn">Action</a></p>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>*@
 
-@*<div class="row-fluid">
-        <ul class="thumbnails">
-            <li class="span4">
-                <div class="thumbnail">
-                    <img data-src="holder.js/300x200" alt="300x200" src="data:image/png;base64,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" style="width: 300px; height: 200px;">
-                    <div class="caption">
-                        <h3>Thumbnail label</h3>
-                        <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                        <p><a href="#" class="btn btn-primary">Action</a> <a href="#" class="btn">Action</a></p>
+            <div class="row row-cols-1 row-cols-md-3">
+                @for (int i = 0; i < CatalogViewModel.ListOfProducts.Count; i++)
+                {
+                    string tdClassString = CatalogViewModel.ListOfProducts[i].GetPriceTableClassString();
+                    string buttonClassString = CatalogViewModel.ListOfProducts[i].GetAddToCartButtonClassString();
+                    var linkClass = CatalogViewModel.ListOfProducts[i].GetProductTableLinkClassString();
+                    var thClass = CatalogViewModel.ListOfProducts[i].GetTableHeaderClassString();
+                    <div class="col col-lg-4" style="padding-bottom: 2em">
+                        <div class="card h-100">
+                            <div class="card-header"><h3>@CatalogViewModel.ListOfProducts[i].Name</h3></div>
+                            <img src="https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg" alt="Cat Lawyer Is Real And He Is Everything Right Now | Above the Law" class="card-img-top">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    @if (CatalogViewModel.ListOfProducts[i].Price != CatalogViewModel.ListOfProducts[i].FinalPrice)
+                                    {
+                                        <font color="red"><del>@CatalogViewModel.ListOfProducts[i].PriceString</del></font>
+                                    }
+                                    @CatalogViewModel.ListOfProducts[i].FinalPriceString
+                                </h5>
+                                <p class="card-text">@CatalogViewModel.ListOfProducts[i].Description</p>
+                            </div>
+                            <div class="card-footer">
+                                <form asp-controller="Catalog" asp-action="AddToCart" method="post">
+                                    <input type="hidden" class="form-control" name="productName" id="productName" value=@CatalogViewModel.ListOfProducts[i].Name />
+                                    <input type="hidden" class="form-control" name="productIndex" id="productIndex" value=@i />
+                                    <button class="@CatalogViewModel.ListOfProducts[i].GetAddToCartButtonClassString()" type="submit">@CatalogViewModel.ListOfProducts[i].IsBoughtString</button>
+                                </form>
+                                <small class="text-muted">Added @CatalogViewModel.ListOfProducts[i].AddedDate.ToShortDateString()</small>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </li>
-            <li class="span4">
-                <div class="thumbnail">
-                    <img data-src="holder.js/300x200" alt="300x200" src="data:image/png;base64,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" style="width: 300px; height: 200px;">
-                    <div class="caption">
-                        <h3>Thumbnail label</h3>
-                        <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                        <p><a href="#" class="btn btn-primary">Action</a> <a href="#" class="btn">Action</a></p>
-                    </div>
-                </div>
-            </li>
-            <li class="span4">
-                <div class="thumbnail">
-                    <img data-src="holder.js/300x200" alt="300x200" src="data:image/png;base64,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" style="width: 300px; height: 200px;">
-                    <div class="caption">
-                        <h3>Thumbnail label</h3>
-                        <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                        <p><a href="#" class="btn btn-primary">Action</a> <a href="#" class="btn">Action</a></p>
-                    </div>
-                </div>
-            </li>
-        </ul>
-    </div>*@
-
-<div class="row row-cols-1 row-cols-md-3">
-    @for (int i = 0; i < CatalogViewModel.ListOfProducts.Count; i++)
-    {
-        string tdClassString = CatalogViewModel.ListOfProducts[i].GetPriceTableClassString();
-        string buttonClassString = CatalogViewModel.ListOfProducts[i].GetAddToCartButtonClassString();
-        var linkClass = CatalogViewModel.ListOfProducts[i].GetProductTableLinkClassString();
-        var thClass = CatalogViewModel.ListOfProducts[i].GetTableHeaderClassString();
-        <div class="col col-lg-4" style="padding-bottom: 2em">
-            <div class="card h-100">
-                <div class="card-header"><h3>@CatalogViewModel.ListOfProducts[i].Name</h3></div>
-                <img src="https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg" alt="Cat Lawyer Is Real And He Is Everything Right Now | Above the Law" class="card-img-top">
-                <div class="card-body">
-                    <h5 class="card-title">
-                        @if (CatalogViewModel.ListOfProducts[i].Price != CatalogViewModel.ListOfProducts[i].FinalPrice)
-                        {
-                            <font color="red"><del>@CatalogViewModel.ListOfProducts[i].PriceString</del></font>
-                        }
-                        @CatalogViewModel.ListOfProducts[i].FinalPriceString
-                    </h5>
-                    <p class="card-text">@CatalogViewModel.ListOfProducts[i].Description</p>
-                </div>
-                <div class="card-footer">
-                    <form asp-controller="Catalog" asp-action="AddToCart" method="post">
-                        <input type="hidden" class="form-control" name="productName" id="productName" value=@CatalogViewModel.ListOfProducts[i].Name />
-                        <input type="hidden" class="form-control" name="productIndex" id="productIndex" value=@i />
-                        <button class="@CatalogViewModel.ListOfProducts[i].GetAddToCartButtonClassString()" type="submit">@CatalogViewModel.ListOfProducts[i].IsBoughtString</button>
-                    </form>
-                    <small class="text-muted">Added @CatalogViewModel.ListOfProducts[i].AddedDate.ToShortDateString()</small>
-                </div>
+                }
             </div>
-        </div>
-    }
-</div>
+            break;
+        }
+}
 
+<div style="padding-bottom:1em"></div>
+<div class="d-inline" @*style="padding-bottom:1em"*@>
+    <form asp-controller="Catalog" asp-action="ChangeView" method="post">
+        <input type="hidden" class="form-control" name="viewVariant" id="viewVariant" value=@CatalogViewModel.ViewVariant />
+        @*<a class="text-dark" name="productName" asp-area="" asp-controller="Catalog" asp-action="AddToCart">
+                @CatalogViewModel.ListOfProducts[i].IsBoughtString
+            </a>*@
+        <button type="submit" class="btn btn-outline-primary">Change View</button>
+    </form>
+</div>
