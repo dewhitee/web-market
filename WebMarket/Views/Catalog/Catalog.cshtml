@@ -11,17 +11,24 @@
 </script>*@
 
 <style>
-    .overflower {
-        display: inline-block;
+
+    .card-description {
+        /*white-space: nowrap;*/
         overflow: hidden;
-
-        box-sizing: border-box;
-        max-width: 100%;
-        height: 1.5em;
-        line-height: 1.5em;
-
-        white-space: nowrap;
         text-overflow: ellipsis;
+        max-height: 100px;
+    }
+
+    /*https://www.kizu.ru/flexible-overflow/*/
+    .overflower {
+        /*display: block;*/
+        /*overflow: auto;*/
+        /*box-sizing: border-box;*/
+        /*max-width: 100%;
+        height: 1em;
+        line-height: 1em;
+        white-space: nowrap;
+        text-overflow: ellipsis;*/
     }
 
     .overflower-long {
@@ -119,7 +126,7 @@
 
                     <div class="form-group">
                         <label for="productDescription">Product Description</label>
-                        <textarea class="form-control" name="productDescription" id="productDescription" rows="3" placeholder="Enter product description"></textarea>
+                        <textarea class="form-control" maxlength="255" name="productDescription" id="productDescription" rows="3" placeholder="Enter product description"></textarea>
                     </div>
 
                     <div class="form-group">
@@ -293,12 +300,12 @@
                 <div class="col col-lg-4" id="card_@i" style="padding-bottom: 2rem;">
                     @*<a href="@product.Link" class="text-dark ">*@
                         <div class="card h-100">
-                            @*<div class="card-header @product.GetTableHeaderClassString()">
-                    <h3>@product.Name</h3>
-                </div>*@
+                            <div class="card-header @product.GetTableHeaderClassString()">
+                                <h5 style="font-weight:300">@product.Type</h5>
+                            </div>
                             <div style="transform:rotate(0);">
                                 <a href="@product.Link" class="stretched-link">
-                                <img src="@product.CardImageLink" alt="Cat Lawyer Is Real And He Is Everything Right Now | Above the Law" class="card-img-top">
+                                <img src="@product.GetCardImageSrc()" alt="Cat Lawyer Is Real And He Is Everything Right Now | Above the Law" class="card-img-top">
                                 </a>
                             </div>
                             <div class="card-body" style="transform:rotate(0);">
@@ -306,7 +313,7 @@
                                     @product.Name
                                 </h4>
                                 <div class="overflower" aria-hidden="true">
-                                    <p class="card-text">@product.Description</p>
+                                    <p class="card-text card-description">@product.Description</p>
                                 </div>
                                 @*<small class="@linkClass">
                                          Link:

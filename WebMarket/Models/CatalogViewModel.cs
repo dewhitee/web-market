@@ -42,6 +42,15 @@ namespace WebMarket.Models
             public string IsBoughtString { get => IsBought ? "Bought" : "+"; }
             public string IsAddedToCartString { get => AddedToCart ? "Added" : "+"; }
 
+            public string GetCardImageSrc()
+            {
+                if (CardImageLink != null)
+                {
+                    return CardImageLink.Length > 0 ? CardImageLink : "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg";
+                }
+                else return "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg";
+            }
+
             public static string CheckTypeString(string type)
             {
                 if (type == "Choose type")
