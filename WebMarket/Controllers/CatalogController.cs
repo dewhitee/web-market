@@ -32,7 +32,7 @@ namespace WebMarket.Controllers
             return RedirectToAction("Catalog");
         }
 
-        public IActionResult AddProduct(string productName, string productType, decimal productCost, float productDiscount, string productLink)
+        public IActionResult AddProduct(string productName, string productType, decimal productCost, float productDiscount, string productDescription, string productLink)
         {
             int integralCost = (int)Math.Truncate(productCost);
             int fractionalCost = (int)(productCost - integralCost);
@@ -47,7 +47,7 @@ namespace WebMarket.Controllers
                     CostIntegral = integralCost,
                     CostFractional = fractionalCost,
                     Discount = productDiscount,
-                    Description = "test description",
+                    Description = productDescription.Length > 0 ? productDescription : "test description",
                     Link = productLink,
                     AddedDate = DateTime.Today
                 });

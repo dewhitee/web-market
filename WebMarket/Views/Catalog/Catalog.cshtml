@@ -81,6 +81,11 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="productDescription">Product Description</label>
+                        <input type="text" class="form-control" name="productDescription" id="productDescription" placeholder="Enter product description" />
+                    </div>
+
+                    <div class="form-group">
                         <label for="productLink">Product link</label>
                         <input type="text" class="form-control" name="productLink" id="productLink" placeholder="Enter product link" />
                     </div>
@@ -273,39 +278,42 @@
             <div class="row row-cols-1 row-cols-md-3">
                 @for (int i = 0; i < CatalogViewModel.ListOfProducts.Count; i++)
                 {
-                    string tdClassString = CatalogViewModel.ListOfProducts[i].GetPriceTableClassString();
-                    string buttonClassString = CatalogViewModel.ListOfProducts[i].GetAddToCartButtonClassString();
-                    var linkClass = CatalogViewModel.ListOfProducts[i].GetProductTableLinkClassString();
-                    var thClass = CatalogViewModel.ListOfProducts[i].GetTableHeaderClassString();
+                    var product = CatalogViewModel.ListOfProducts[i];
+                    string tdClassString = product.GetPriceTableClassString();
+                    string buttonClassString = product.GetAddToCartButtonClassString();
+                    var linkClass = product.GetProductTableLinkClassString();
+                    var thClass = product.GetTableHeaderClassString();
                     <div class="col col-lg-4" style="padding-bottom: 2em">
                         <div class="card h-100">
-                            <div class="card-header @CatalogViewModel.ListOfProducts[i].GetTableHeaderClassString()">
-                                <h3>@CatalogViewModel.ListOfProducts[i].Name</h3>
+                            <div class="card-header @product.GetTableHeaderClassString()">
+                                <h3>@product.Name</h3>
                             </div>
                             <img src="https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg" alt="Cat Lawyer Is Real And He Is Everything Right Now | Above the Law" class="card-img-top">
                             <div class="card-body">
-                                <h5 class="card-title">
-                                    @if (CatalogViewModel.ListOfProducts[i].Price != CatalogViewModel.ListOfProducts[i].FinalPrice)
-                                    {
-                                        <font color="red"><del>@CatalogViewModel.ListOfProducts[i].PriceString</del></font>
-                                    }
-                                    @CatalogViewModel.ListOfProducts[i].FinalPriceString
-                                </h5>
-                                <p class="card-text">@CatalogViewModel.ListOfProducts[i].Description</p>
+                                <h4 class="card-title">
+                                    @product.FinalPriceString
+                                    <sup>
+                                        @if (product.Price != product.FinalPrice)
+                                        {
+                                            <font color="red"><del>@product.PriceString</del></font><sup> -@product.DiscountSupString</sup>
+                                        }
+                                    </sup>
+                                </h4>
+                                <p class="card-text">@product.Description</p>
                             </div>
-                            <div class="card-footer @CatalogViewModel.ListOfProducts[i].GetTableHeaderClassString()">
+                            <div class="card-footer @product.GetTableHeaderClassString()">
                                 <form asp-controller="Catalog" asp-action="AddToCart" method="post">
-                                    <input type="hidden" class="form-control" name="productName" id="productName" value=@CatalogViewModel.ListOfProducts[i].Name />
+                                    <input type="hidden" class="form-control" name="productName" id="productName" value=@product.Name />
                                     <input type="hidden" class="form-control" name="productIndex" id="productIndex" value=@i />
-                                    <button class="@CatalogViewModel.ListOfProducts[i].GetAddToCartButtonClassString()" type="submit">@CatalogViewModel.ListOfProducts[i].IsBoughtString</button>
+                                    <button class="@product.GetAddToCartButtonClassString()" type="submit">@product.IsBoughtString</button>
                                 </form>
-                                <small class="@CatalogViewModel.ListOfProducts[i].GetProductTableLinkClassString()">
+                                <small class="@linkClass">
                                     Link:
-                                    <a href="@CatalogViewModel.ListOfProducts[i].Link">
-                                        @CatalogViewModel.ListOfProducts[i].Link
+                                    <a href="@product.Link">
+                                        @product.Link
                                     </a>
                                 </small><br />
-                                <small class="text-warning @CatalogViewModel.ListOfProducts[i].GetProductTableLinkClassString()">Added @CatalogViewModel.ListOfProducts[i].AddedDate.ToShortDateString()</small>
+                                <small class="text-warning @product.GetProductTableLinkClassString()">Added @product.AddedDate.ToShortDateString()</small>
                             </div>
                         </div>
                     </div>

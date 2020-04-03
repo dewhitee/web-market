@@ -36,6 +36,7 @@ namespace WebMarket.Models
             public string FinalPriceString { get => FinalPrice > 0 ? FinalPrice.ToString("0.##") + "€" : "free"; }
             public string PriceString { get => Price > 0 ? Price.ToString() + "€" : "free"; }
             public string DiscountString { get => Discount > 0 ? Discount.ToString() + "%" : "no"; }
+            public string DiscountSupString { get => Discount > 0 ? Discount.ToString() + "%" : ""; }
             public string LinkTableString { get => string.IsNullOrWhiteSpace(Link) ? "no link" : "yes"; }
             public string IsBoughtString { get => IsBought ? "Bought" : "+"; }
             public string IsAddedToCartString { get => AddedToCart ? "Added" : "+"; }
