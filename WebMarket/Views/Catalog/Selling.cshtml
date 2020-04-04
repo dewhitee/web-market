@@ -1,15 +1,43 @@
 ﻿@model CatalogViewModel
 @{
-    ViewData["Title"] = "Buying";
+    ViewData["Title"] = "Selling";
 }
 
 <div class="float-right">
     <h2>@CatalogViewModel.CurrentUser.MoneyString</h2>
 </div>
-<h1>Buying</h1>
+<h1>Selling</h1>
 <br>
 @{
-    var product = CatalogViewModel.GetSelectedBuyProduct();
+    var product = CatalogViewModel.GetSelectedSellProduct();
+
+    <div class="float-left" style="padding-right:2em">
+        <div class="card bg-light mb-3" style="max-width: 18rem;">
+            <div class="card-header">About</div>
+            <div class="card-body">
+                <h5 class="card-title">Light card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>
+        </div>
+        <div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
+            <div class="card-header">Characteristics</div>
+            <div class="card-body">
+                <h5 class="card-title">Dark card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <ul>
+                    <li>
+                        first characteristic
+                    </li>
+                    <li>
+                        second characteristic
+                    </li>
+                    <li>
+                        third characteristic
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
 
     <div class="card h-100 hoverable-card" id="card_on_transaction">
         <div class="card-header @product.GetTableHeaderClassString()" id="card_on_transaction_header">
@@ -27,8 +55,6 @@
             <div class="overflower" aria-hidden="true">
                 <p class="card-text card-description">@product.Description</p>
             </div>
-
-            @*<a href="@product.Link" class="stretched-link"></a>*@
         </div>
 
         <div class="card-footer @product.GetTableHeaderClassString()" id="card_on_transaction_footer">
@@ -45,15 +71,15 @@
             </h3>
 
             <div class="float-right">
-                <form asp-controller="Catalog" asp-action="BuyProduct" method="post">
+                <form asp-controller="Catalog" asp-action="SellProduct" method="post">
                     <input type="hidden" class="form-control" name="productName" id="productName" value=@product.Name />
-                    <button class="@CatalogViewModel.GetBuyProductButtonClassString() btn-lg" type="submit" id="card_on_transaction_buy_button">Buy</button>
+                    <button class="btn btn-outline-primary btn-lg" type="submit" id="card_on_transaction_sell_button">Sell</button>
                 </form>
             </div>
             <br>
             <p class="text-md-left">
-                You will have: 
-                <mark>@CatalogViewModel.GetSelectedBuyProductPriceSentence()</mark>
+                You will have:
+                <mark>@CatalogViewModel.GetSelectedSellProductPriceSentence()</mark>
             </p>
             <small class="text-warning @product.GetProductTableLinkClassString()">
                 Added @product.AddedDate.ToShortDateString()
@@ -62,3 +88,4 @@
         </div>
     </div>
 }
+
