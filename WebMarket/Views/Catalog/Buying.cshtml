@@ -1,0 +1,56 @@
+﻿@model CatalogViewModel
+@{
+    ViewData["Title"] = "Buying";
+}
+
+<h1>Buying</h1>
+
+@{
+    var product = CatalogViewModel.GetSelectedBuyProduct();
+
+    <div class="card h-100 hoverable-card" id="card_on_transaction">
+        <div class="card-header @product.GetTableHeaderClassString()" id="card_on_transaction_header">
+            <h5 style="font-weight:300">@product.Type</h5>
+        </div>
+        <div style="transform:rotate(0);">
+            <a href="@product.Link" class="stretched-link">
+                <img src="@product.GetCardImageSrc()" alt="Cat Lawyer Is Real And He Is Everything Right Now | Above the Law" class="card-img-top">
+            </a>
+        </div>
+        <div class="card-body" style="transform:rotate(0);">
+            <h4 class="card-title">
+                @product.Name
+            </h4>
+            <div class="overflower" aria-hidden="true">
+                <p class="card-text card-description">@product.Description</p>
+            </div>
+
+            <a href="@product.Link" class="stretched-link"></a>
+        </div>
+
+        <div class="card-footer @product.GetTableHeaderClassString()" id="card_on_transaction_footer">
+
+            @*<div class="float-right">*@
+            <h3>
+                @product.FinalPriceString
+                <sup>
+                    @if (product.Price != product.FinalPrice)
+                    {
+                        <font color="red" style="font-weight:400"><del>@product.PriceString</del></font><sup> -@product.DiscountSupString</sup>
+                    }
+                </sup>
+            </h3>
+
+            <div class="float-right">
+                <form asp-controller="Catalog" asp-action="BuyProduct" method="post">
+                    <input type="hidden" class="form-control" name="productName" id="productName" value=@product.Name />
+                    <button class="@CatalogViewModel.GetBuyProductButtonClassString()" type="submit" id="card_on_transaction_buy_button">Buy</button>
+                </form>
+            </div>
+            <small class="text-warning @product.GetProductTableLinkClassString()">
+                Added @product.AddedDate.ToShortDateString()
+            </small>
+
+        </div>
+    </div>
+}
