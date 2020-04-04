@@ -43,6 +43,7 @@ namespace WebMarket.Controllers
             {
                 CatalogViewModel.ListOfProducts.Add(new Product
                 {
+                    ID = CatalogViewModel.Product.MakeNewID(),
                     Name = productName,
                     Type = Product.CheckTypeString(productType),
                     Price = productCost,
@@ -59,7 +60,7 @@ namespace WebMarket.Controllers
             return RedirectToAction("Catalog");
         }
 
-        public IActionResult BuyProduct(string productName)
+        public IActionResult BuyProduct(string productName, int productID)
         {
             Console.WriteLine("Buying Product...");
             if (CatalogViewModel.GetSubmitBuyingButtonText() == "Find")
@@ -77,17 +78,17 @@ namespace WebMarket.Controllers
             //        break;
             //    }
             //}
-            Buy(productName);
+            Buy(productName, productID);
             SaveUser();
             SaveProducts();
             return RedirectToAction("Catalog");
 
         }
-        private void Buy(string productName)
+        private void Buy(string productName, int productID)
         {
             foreach (var product in CatalogViewModel.ListOfProducts)
             {
-                if (product.Name == productName)
+                if (product.ID == productID || product.Name == productName)
                 {
                     CatalogViewModel.CurrentUser.BuyProduct(product);
                     break;
@@ -110,13 +111,13 @@ namespace WebMarket.Controllers
             SaveProducts();
         }
 
-        public IActionResult SellProduct(string productName)
+        public IActionResult SellProduct(string productName, int productID)
         {
             Console.WriteLine("Selling Product...");
             Product toSell = new Product();
             foreach (var product in CatalogViewModel.ListOfProducts)
             {
-                if (product.Name == productName)
+                if (product.ID == productID || product.Name == productName)
                 {
                     toSell = product;
                     CatalogViewModel.CurrentUser.SellProduct(toSell);

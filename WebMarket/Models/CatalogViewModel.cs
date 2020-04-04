@@ -41,6 +41,20 @@ namespace WebMarket.Models
             public string LinkTableString { get => string.IsNullOrWhiteSpace(Link) ? "no link" : "yes"; }
             public string IsBoughtString { get => IsBought ? "Bought" : "+"; }
             public string IsAddedToCartString { get => AddedToCart ? "Added" : "+"; }
+
+            public static int MakeNewID()
+            {
+                Random random = new Random();
+                int newID;
+                bool success;
+                do
+                {
+                    newID = random.Next(int.MinValue, int.MaxValue);
+                    success = ListOfProducts.Find(x => x.ID == newID) == null;
+                } while (!success);
+                return newID; 
+            }
+
             public string GetAddToCartButtonString()
             {
                 if (IsBought)
