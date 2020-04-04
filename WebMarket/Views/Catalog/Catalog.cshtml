@@ -19,10 +19,15 @@
     //})
     function onClickedCard(clicked_id) {
         $("#card_" + clicked_id).click(function () {
-            if ($("#card_" + clicked_id).hasClass("bg-dark text-white")) {
-                $("#card_" + clicked_id).removeClass("bg-dark text-white");
+            if ($("#card_header_" + clicked_id).hasClass("bg-dark text-white")) {
+                $("#card_header_" + clicked_id).removeClass("bg-dark text-white");
             }
-            else $("#card_" + clicked_id).addClass("bg-dark text-white");
+            else $("#card_header_" + clicked_id).addClass("bg-dark text-white");
+
+            if ($("#card_footer_" + clicked_id).hasClass("bg-dark text-white")) {
+                $("#card_footer_" + clicked_id).removeClass("bg-dark text-white");
+            }
+            else $("#card_footer_" + clicked_id).addClass("bg-dark text-white"); 
         })
     }
 </script>
@@ -34,6 +39,14 @@
         overflow: hidden;
         text-overflow: ellipsis;
         max-height: 100px;
+    }
+
+    .hoverable-card {
+        transition: 1s;
+    }
+
+    .hoverable-card:hover {
+        transform: scale(1.05);
     }
 
     /*https://www.kizu.ru/flexible-overflow/*/
@@ -314,7 +327,7 @@
                     var thClass = product.GetTableHeaderClassString();
                     <div class="col col-lg-4" style="padding-bottom: 2rem;">
                         @*<a href="@product.Link" class="text-dark ">*@
-                        <div class="card h-100" id="card_@i" >
+                        <div class="card h-100 hoverable-card" id="card_@i" >
                             <div class="card-header @product.GetTableHeaderClassString()" id="card_header_@i" onclick="onClickedCard(@i)">
                                 <h5 style="font-weight:300">@product.Type</h5>
                             </div>
@@ -363,7 +376,7 @@
                                     <form asp-controller="Catalog" asp-action="AddToCart" method="post">
                                         <input type="hidden" class="form-control" name="productName" id="productName" value=@product.Name />
                                         <input type="hidden" class="form-control" name="productIndex" id="productIndex" value=@i />
-                                        <button class="@product.GetAddToCartButtonClassString()" type="submit">@product.IsBoughtString</button>
+                                        <button class="@product.GetAddToCartButtonClassString()" type="submit" id="card_addtocart_button_@i">@product.GetAddToCartButtonString()</button>
                                     </form>
                                 </div>
                                 <small class="text-warning @product.GetProductTableLinkClassString()">

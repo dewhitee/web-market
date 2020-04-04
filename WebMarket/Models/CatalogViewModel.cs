@@ -41,6 +41,14 @@ namespace WebMarket.Models
             public string LinkTableString { get => string.IsNullOrWhiteSpace(Link) ? "no link" : "yes"; }
             public string IsBoughtString { get => IsBought ? "Bought" : "+"; }
             public string IsAddedToCartString { get => AddedToCart ? "Added" : "+"; }
+            public string GetAddToCartButtonString()
+            {
+                if (IsBought)
+                    return "Bought";
+                else if (AddedToCart)
+                    return "Selected";
+                else return "+";
+            }
 
             public string GetCardImageSrc()
             {
