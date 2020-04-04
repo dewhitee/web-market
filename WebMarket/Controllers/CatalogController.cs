@@ -206,7 +206,12 @@ namespace WebMarket.Controllers
             }
             CatalogViewModel.ListOfProducts[productIndex].AddedToCart = true;
 
-            CatalogViewModel.AddedToCartProducts.Add(CatalogViewModel.ListOfProducts[productIndex]);
+            if (!CatalogViewModel.AddedToCartProducts.Contains(CatalogViewModel.ListOfProducts[productIndex]))
+                CatalogViewModel.AddedToCartProducts.Add(CatalogViewModel.ListOfProducts[productIndex]);
+
+            // temporally will be redirecting to the Buying page
+            SaveProducts();
+            return RedirectToAction("Buying");
 
             SaveProducts();
             return RedirectToAction("Catalog");
@@ -250,6 +255,13 @@ namespace WebMarket.Controllers
 
         public IActionResult Index()
         {
+            return View();
+        }
+
+        public IActionResult Buying()
+        {
+            LoadProducts();
+            LoadUser();
             return View();
         }
     }
