@@ -49,7 +49,7 @@ namespace WebMarket.Models
                 bool success;
                 do
                 {
-                    newID = random.Next(int.MinValue, int.MaxValue);
+                    newID = random.Next(0, int.MaxValue);
                     success = ListOfProducts.Find(x => x.ID == newID) == null;
                 } while (!success);
                 return newID; 

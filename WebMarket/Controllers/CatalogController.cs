@@ -22,6 +22,8 @@ namespace WebMarket.Controllers
         {
             LoadProducts();
             LoadUser();
+            //UpdateAllExistedProducts();
+            //SaveProducts();
             return View();
         }
 
@@ -43,7 +45,7 @@ namespace WebMarket.Controllers
             {
                 CatalogViewModel.ListOfProducts.Add(new Product
                 {
-                    ID = CatalogViewModel.Product.MakeNewID(),
+                    ID = Product.MakeNewID(),
                     Name = productName,
                     Type = Product.CheckTypeString(productType),
                     Price = productCost,
@@ -262,6 +264,13 @@ namespace WebMarket.Controllers
             return RedirectToAction("Catalog");
         }
 
+        private void UpdateAllExistedProducts()
+        {
+            foreach (var prod in CatalogViewModel.ListOfProducts)
+            {
+                prod.ID = Product.MakeNewID();
+            }
+        }
         public IActionResult Index()
         {
             return View();
