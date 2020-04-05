@@ -111,10 +111,11 @@ namespace WebMarket.Models
                         return "btn btn-outline-light";
                     //else return "btn btn-outline-dark";
                 }
+                else if (CurrentUser.Money < FinalPrice)
+                    return "btn btn-outline-danger";
                 else if (!IsBought)
                     return "btn btn-outline-success";
-                else
-                    return "btn btn-primary";
+                else return "btn btn-primary";
             }
 
             public string GetTableHeaderClassString()

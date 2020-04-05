@@ -32,7 +32,25 @@
 
         //! then set this card as selected in C# code:
         //var tempVar = CatalogViewModel.ListOfProducts[ tempVar ];
-        
+    }
+
+    function onHoveredButton(hovered_id) {
+        let btn_id = "#card_addtocart_button_" + hovered_id;
+        if ($(btn_id).text() == "+") {
+            $(btn_id).text("Buy");
+        }
+        if ($(btn_id).text() == "Bought") {
+            $(btn_id).text("Sell");
+        }
+    }
+    function onHoveredButtonOut(hovered_id) {
+        let btn_id = "#card_addtocart_button_" + hovered_id;
+        if ($(btn_id).text() == "Buy") {
+            $(btn_id).text("+");
+        }
+        if ($(btn_id).text() == "Sell") {
+            $(btn_id).text("Bought");
+        }
     }
 </script>
 
@@ -43,6 +61,11 @@
         overflow: hidden;
         text-overflow: ellipsis;
         max-height: 100px;
+    }
+
+    .hoverable-btn {
+        min-width: 78px !important;
+        transition: 1s;
     }
 
     .hoverable-card {
@@ -380,7 +403,7 @@
                                     <form asp-controller="Catalog" asp-action="AddToCart" method="post">
                                         <input type="hidden" class="form-control" name="productName" id="productName" value=@product.Name />
                                         <input type="hidden" class="form-control" name="productIndex" id="productIndex" value=@i />
-                                        <button class="@product.GetAddToCartButtonClassString()" type="submit" id="card_addtocart_button_@i">@product.GetAddToCartButtonString()</button>
+                                        <button class="@product.GetAddToCartButtonClassString() hoverable-btn" type="submit" id="card_addtocart_button_@i" onmouseover="onHoveredButton(@i)" onmouseout="onHoveredButtonOut(@i)">@product.GetAddToCartButtonString()</button>
                                     </form>
                                 </div>
                                 <small class="text-warning @product.GetProductTableLinkClassString()">
