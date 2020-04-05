@@ -27,11 +27,35 @@
         //    if ($("#card_footer_" + clicked_id).hasClass("bg-dark text-white")) {
         //        $("#card_footer_" + clicked_id).removeClass("bg-dark text-white");
         //    }
-        //    else $("#card_footer_" + clicked_id).addClass("bg-dark text-white"); 
+        //    else $("#card_footer_" + clicked_id).addClass("bg-dark text-white");
         //})
 
         //! then set this card as selected in C# code:
         //var tempVar = CatalogViewModel.ListOfProducts[ tempVar ];
+    }
+
+    function addOnHoverDiv(hovered_id) {
+        let card_id = "#card_expand_" + hovered_id;
+
+        //$(card_id).after("<div class='expanded-div w-100 p-3'>");
+        //$(card_id).after("<a href='@@product.Link' class='expanded-a'>Add to favourites</p>");
+        //$(card_id).after("<p class='expanded-p w-100 p-3 text-muted'>Add to favourites</p>");
+        //$(card_id).after("<button class='expanded-btn w-50 p-3 btn btn-outline-primary'><img src='data/icons/shopping-cart' alt='noimg'></button>");
+        //$(card_id).after("<button class='expanded-btn w-50 p-3 btn btn-outline-primary'><img src='data/icons/shopping-cart' alt='noimg'></button>");
+        //$(card_id).after("</div>");
+    }
+    function onHoveredCard(hovered_id) {
+        //setTimeout(addOnHoverDiv, 1, hovered_id);
+    }
+    function onHoveredCardOut(hovered_id) {
+        //setTimeout(function () {
+        //    let card_id = "#card_expand_" + hovered_id;
+        //    $(".expanded-p").remove();
+        //    $(".expanded-a").remove();
+        //    $(".expanded-btn").remove();
+        //    $(".expanded-div").remove();
+        //}, 1);
+        //alert("HELLO!");
     }
 
     function onHoveredButton(hovered_id) {
@@ -55,6 +79,32 @@
 </script>
 
 <style>
+    img {
+        width: 100%;
+        max-width: 600px;
+        max-height: 400px;
+    }
+
+    .expanded-div {
+        
+        position: absolute;
+    }
+
+    .expanded-a {
+        position: absolute;
+        text-align: right;
+    }
+
+    .expanded-p {
+        padding-top: 2em;
+        position: absolute;
+        text-align: right;
+    }
+
+    .expanded-btn {
+        position: absolute;
+        text-align: center;
+    }
 
     .card-description {
         /*white-space: nowrap;*/
@@ -72,9 +122,9 @@
         transition: 1s;
     }
 
-    .hoverable-card:hover {
-        transform: scale(1.05);
-    }
+        .hoverable-card:hover {
+            transform: scale(1.05);
+        }
 
     /*https://www.kizu.ru/flexible-overflow/*/
     .overflower {
@@ -354,7 +404,7 @@
                     var thClass = product.GetTableHeaderClassString();
                     <div class="col col-lg-4" style="padding-bottom: 2rem;">
                         @*<a href="@product.Link" class="text-dark ">*@
-                        <div class="card h-100 hoverable-card" id="card_@i" >
+                        <div class="card h-100 hoverable-card" id="card_@i" onmouseover="onHoveredCard(@i)" onmouseout="onHoveredCardOut(@i)">
                             <div class="card-header @product.GetTableHeaderClassString()" id="card_header_@i" onclick="onClickedCard(@i)">
                                 <h5 style="font-weight:300">@product.Type</h5>
                             </div>
@@ -411,6 +461,7 @@
                                 </small>
 
                             </div>
+                            <div id="card_expand_@i"></div>
                         </div>
                         @*</a>*@
                     </div>
@@ -430,3 +481,6 @@
         <button type="submit" class="btn btn-outline-primary">Change View</button>
     </form>
 </div>
+
+Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
+
