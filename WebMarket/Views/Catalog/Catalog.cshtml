@@ -86,7 +86,6 @@
     }
 
     .expanded-div {
-        
         position: absolute;
     }
 
@@ -237,6 +236,14 @@
                     <div class="form-group">
                         <label for="productImageLink">Product Image link</label>
                         <input type="text" class="form-control" name="productImageLink" id="productImageLink" placeholder="Enter product image link" />
+                    </div>
+                    <div class="form-group">
+                        <label for="secondImageLink">Second product Image link</label>
+                        <input type="text" class="form-control" name="secondImageLink" id="secondImageLink" placeholder="Enter product second image link" />
+                    </div>
+                    <div class="form-group">
+                        <label for="thirdImageLink">Third product Image link</label>
+                        <input type="text" class="form-control" name="thirdImageLink" id="thirdImageLink" placeholder="Enter product third image link" />
                     </div>
 
                     <div class="form-group">
@@ -394,6 +401,34 @@
         }
     case CatalogViewModel.CatalogViewVariant.Main:
         {
+            <div class="float-right">
+                <div class="card bg-light mb-3" style="max-width: 18rem;">
+                    <div class="card-header">About</div>
+                    <div class="card-body">
+                        <h5 class="card-title">Light card title</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    </div>
+                </div>
+                <div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
+                    <div class="card-header">Characteristics</div>
+                    <div class="card-body">
+                        <h5 class="card-title">Dark card title</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <ul>
+                            <li>
+                                first characteristic
+                            </li>
+                            <li>
+                                second characteristic
+                            </li>
+                            <li>
+                                third characteristic
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid">
             <div class="row row-cols-1 row-cols-md-3">
                 @for (int i = 0; i < CatalogViewModel.ListOfProducts.Count; i++)
                 {
@@ -466,6 +501,7 @@
                         @*</a>*@
                     </div>
                 }
+            </div>
             </div>
             break;
         }

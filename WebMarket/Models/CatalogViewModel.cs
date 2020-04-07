@@ -28,6 +28,9 @@ namespace WebMarket.Models
             public string Description { get; set; }
             public string Link { get; set; }
             public string CardImageLink { get; set; }
+            public string FirstImageLink { get => CardImageLink; }
+            public string SecondImageLink { get; set; }
+            public string ThirdImageLink { get; set; }
             public bool IsBought { get; set; }
             public bool AddedToCart { get; set; }
 
@@ -69,6 +72,30 @@ namespace WebMarket.Models
                 if (CardImageLink != null)
                 {
                     return CardImageLink.Length > 0 ? CardImageLink : "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg";
+                }
+                else return "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg";
+            }
+            public string GetFirstImageSrc()
+            {
+                if (FirstImageLink != null)
+                {
+                    return FirstImageLink.Length > 0 ? FirstImageLink : "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg";
+                }
+                else return "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg";
+            }
+            public string GetSecondImageSrc()
+            {
+                if (SecondImageLink != null)
+                {
+                    return SecondImageLink.Length > 0 ? SecondImageLink : "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg";
+                }
+                else return "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg";
+            }
+            public string GetThirdImageSrc()
+            {
+                if (ThirdImageLink != null)
+                {
+                    return ThirdImageLink.Length > 0 ? ThirdImageLink : "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg";
                 }
                 else return "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg";
             }
