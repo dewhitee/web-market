@@ -244,6 +244,16 @@ namespace WebMarket.Models
             return false;
         }
 
+        public static Product GetProduct(string name)
+        {
+            foreach (var i in ListOfProducts)
+            {
+                if (i.Name == name)
+                    return i;
+            }
+            return null;
+        }
+
         public static string GetSelectedBuyProductName()
         {
             foreach (var product in ListOfProducts)
