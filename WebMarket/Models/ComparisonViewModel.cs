@@ -21,5 +21,10 @@ namespace WebMarket.Models
             return (LeftProduct.Discount > RightProduct.Discount) ? $"{LeftProduct.Name} has larger discount than {RightProduct.Name}"
                 : $"{LeftProduct.Name} has smaller discount than {RightProduct.Name}";
         }
+        public static string AddedDateComparisonText()
+        {
+            return (LeftProduct.AddedDate > RightProduct.AddedDate) ? $"{LeftProduct.Name} was added later than {RightProduct.Name}"
+                : $"{LeftProduct.Name} was added earlier than {RightProduct.Name}";
+        }
     }
 }
