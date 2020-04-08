@@ -3,12 +3,17 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace WebMarket.Models
 {
     [Serializable]
     public class CatalogViewModel
     {
+        private static readonly string addedToCartProductsFilePath = @"D:\ASP.NET PROJECTS\WebMarket\data\addedtocartproducts.dew";
+        private static readonly string saveProductsFilePath = @"D:\ASP.NET PROJECTS\WebMarket\data\products.dew";
+
         public enum CatalogViewVariant
         {
             Main,
@@ -363,6 +368,35 @@ namespace WebMarket.Models
                 return "Submit selling product";
             }
             return "Find";
+        }
+
+        public static void LoadProducts()
+        {
+            BinaryFormatter bf = new BinaryFormatter();
+            Stream stream = new FileStream(saveProductsFilePath, FileMode.Open, FileAccess.Read);
+            ListOfProducts = (List<Product>)bf.Deserialize(stream);
+            stream.Close();
+
+            BinaryFormatter addedToCartFormatter = new BinaryFormatter();
+            Stream addedToCartStream = new FileStream(addedToCartProductsFilePath, FileMode.Open, FileAccess.Read);
+            if (addedToCartStream.Length != 0)
+            {
+                AddedToCartProducts = (List<Product>)addedToCartFormatter?.Deserialize(addedToCartStream);
+            }
+            addedToCartStream.Close();
+        }
+        public static void SaveProducts()
+        {
+            BinaryFormatter bf = new BinaryFormatter();
+            Stream stream = new FileStream(saveProductsFilePath, FileMode.Open, FileAccess.Write);
+
+            bf.Serialize(stream, ListOfProducts);
+            stream.Close();
+
+            BinaryFormatter addedToCartFormatter = new BinaryFormatter();
+            Stream addedToCartStream = new FileStream(addedToCartProductsFilePath, FileMode.Open, FileAccess.Write);
+            addedToCartFormatter.Serialize(addedToCartStream, AddedToCartProducts);
+            addedToCartStream.Close();
         }
         //public string GetSellProductButtonClassString()
         //{

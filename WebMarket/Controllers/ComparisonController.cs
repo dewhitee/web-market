@@ -11,6 +11,7 @@ namespace WebMarket.Controllers
     {
         public IActionResult Comparison()
         {
+            CatalogViewModel.LoadProducts();
             return View();
         }
 

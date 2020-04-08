@@ -14,8 +14,6 @@ namespace WebMarket.Controllers
 
     public class CatalogController : Controller
     {
-        private readonly string addedToCartProductsFilePath = @"D:\ASP.NET PROJECTS\WebMarket\data\addedtocartproducts.dew";
-        private readonly string saveProductsFilePath = @"D:\ASP.NET PROJECTS\WebMarket\data\products.dew";
         private readonly string saveUserFilePath = @"D:\ASP.NET PROJECTS\WebMarket\data\user.dew";
 
         public IActionResult Catalog()
@@ -135,23 +133,7 @@ namespace WebMarket.Controllers
 
         public IActionResult SaveProducts()
         {
-            //byte[] bytes = null;
-            BinaryFormatter bf = new BinaryFormatter();
-            Stream stream = new FileStream(saveProductsFilePath, FileMode.Open, FileAccess.Write);
-            //using (MemoryStream ms = new MemoryStream())
-            //{
-            //    bf.Serialize(ms, CatalogViewModel.ListOfProducts);
-            //    bytes = ms.ToArray();
-            //}
-            //System.IO.File.WriteAllBytes(saveProductsFilePath, bytes);
-
-            bf.Serialize(stream, CatalogViewModel.ListOfProducts);
-            stream.Close();
-
-            BinaryFormatter addedToCartFormatter = new BinaryFormatter();
-            Stream addedToCartStream = new FileStream(addedToCartProductsFilePath, FileMode.Open, FileAccess.Write);
-            addedToCartFormatter.Serialize(addedToCartStream, CatalogViewModel.AddedToCartProducts);
-            addedToCartStream.Close();
+            CatalogViewModel.SaveProducts();
 
             return Ok();
         }
@@ -168,18 +150,7 @@ namespace WebMarket.Controllers
 
         public IActionResult LoadProducts()
         {
-            BinaryFormatter bf = new BinaryFormatter();
-            Stream stream = new FileStream(saveProductsFilePath, FileMode.Open, FileAccess.Read);
-            CatalogViewModel.ListOfProducts = (List<Product>)bf.Deserialize(stream);
-            stream.Close();
-
-            BinaryFormatter addedToCartFormatter = new BinaryFormatter();
-            Stream addedToCartStream = new FileStream(addedToCartProductsFilePath, FileMode.Open, FileAccess.Read);
-            if (addedToCartStream.Length != 0)
-            {
-                CatalogViewModel.AddedToCartProducts = (List<Product>)addedToCartFormatter?.Deserialize(addedToCartStream);
-            }
-            addedToCartStream.Close();
+            CatalogViewModel.LoadProducts();
 
             return Ok();
         }
