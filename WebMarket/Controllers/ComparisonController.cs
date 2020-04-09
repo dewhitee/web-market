@@ -4,11 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WebMarket.Models;
+using System.Web;
 
 namespace WebMarket.Controllers
 {
     public class ComparisonController : Controller
     {
+        [HttpGet]
         public IActionResult Comparison()
         {
             CatalogViewModel.LoadProducts();
@@ -21,5 +23,14 @@ namespace WebMarket.Controllers
             ComparisonViewModel.RightProduct = CatalogViewModel.GetProduct(rproductName);
             return RedirectToAction("Comparison");
         }
+
+        //[HttpPost]
+        //public JsonResult Comparison(string prefix)
+        //{
+        //    var ProductList = (from N in ComparisonViewModel.GetProductNames()
+        //                       where N.StartsWith(prefix)
+        //                       select new { N });
+        //    return Json(ProductList, JsonRequestBehavior.AllowGet);
+        //}
     }
 }

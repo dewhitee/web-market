@@ -3,6 +3,9 @@
     ViewData["Title"] = "Comparison";
 }
 
+<style>
+</style>
+
 <script>
     //$(document).ready(function () {
     //    $("#lproductName")
@@ -10,9 +13,9 @@
     function rfindSimilar() {
         var str = $("#rproductName").val();
         var products = @CatalogViewModel.ListOfProducts;
-        @*@{ 
+        @*@{
             @CatalogViewModel.AutocompleteProduct($("#rproductName").val());
-            
+
         }*@
     }
     function lfindSimilar() {
@@ -20,109 +23,7 @@
         //alert(str);
     }
 
-    function autocomplete(inp, arr) {
-        /*the autocomplete function takes two arguments,
-        the text field element and an array of possible autocompleted values:*/
-        var currentFocus;
-        /*execute a function when someone writes in the text field:*/
-        inp.addEventListener("input", function (e) {
-            var a, b, i, val = this.value;
-            /*close any already open lists of autocompleted values*/
-            closeAllLists();
-            if (!val) { return false; }
-            currentFocus = -1;
-            /*create a DIV element that will contain the items (values):*/
-            a = document.createElement("DIV");
-            a.setAttribute("id", this.id + "autocomplete-list");
-            a.setAttribute("class", "autocomplete-items");
-            /*append the DIV element as a child of the autocomplete container:*/
-            this.parentNode.appendChild(a);
-            /*for each item in the array...*/
-            for (i = 0; i < arr.length; i++) {
-                /*check if the item starts with the same letters as the text field value:*/
-                if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
-                    /*create a DIV element for each matching element:*/
-                    b = document.createElement("DIV");
-                    /*make the matching letters bold:*/
-                    b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
-                    b.innerHTML += arr[i].substr(val.length);
-                    /*insert a input field that will hold the current array item's value:*/
-                    b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
-                    /*execute a function when someone clicks on the item value (DIV element):*/
-                    b.addEventListener("click", function (e) {
-                        /*insert the value for the autocomplete text field:*/
-                        inp.value = this.getElementsByTagName("input")[0].value;
-                        /*close the list of autocompleted values,
-                        (or any other open lists of autocompleted values:*/
-                        closeAllLists();
-                    });
-                    a.appendChild(b);
-                }
-            }
-        });
-        /*execute a function presses a key on the keyboard:*/
-        inp.addEventListener("keydown", function (e) {
-            var x = document.getElementById(this.id + "autocomplete-list");
-            if (x) x = x.getElementsByTagName("div");
-            if (e.keyCode == 40) {
-                /*If the arrow DOWN key is pressed,
-                increase the currentFocus variable:*/
-                currentFocus++;
-                /*and and make the current item more visible:*/
-                addActive(x);
-            } else if (e.keyCode == 38) { //up
-                /*If the arrow UP key is pressed,
-                decrease the currentFocus variable:*/
-                currentFocus--;
-                /*and and make the current item more visible:*/
-                addActive(x);
-            } else if (e.keyCode == 13) {
-                /*If the ENTER key is pressed, prevent the form from being submitted,*/
-                e.preventDefault();
-                if (currentFocus > -1) {
-                    /*and simulate a click on the "active" item:*/
-                    if (x) x[currentFocus].click();
-                }
-            }
-        });
-        function addActive(x) {
-            /*a function to classify an item as "active":*/
-            if (!x) return false;
-            /*start by removing the "active" class on all items:*/
-            removeActive(x);
-            if (currentFocus >= x.length) currentFocus = 0;
-            if (currentFocus < 0) currentFocus = (x.length - 1);
-            /*add class "autocomplete-active":*/
-            x[currentFocus].classList.add("autocomplete-active");
-        }
-        function removeActive(x) {
-            /*a function to remove the "active" class from all autocomplete items:*/
-            for (var i = 0; i < x.length; i++) {
-                x[i].classList.remove("autocomplete-active");
-            }
-        }
-        function closeAllLists(elmnt) {
-            /*close all autocomplete lists in the document,
-            except the one passed as an argument:*/
-            var x = document.getElementsByClassName("autocomplete-items");
-            for (var i = 0; i < x.length; i++) {
-                if (elmnt != x[i] && elmnt != inp) {
-                    x[i].parentNode.removeChild(x[i]);
-                }
-            }
-        }
-        /*execute a function when someone clicks in the document:*/
-        document.addEventListener("click", function (e) {
-            closeAllLists(e.target);
-        });
-    }
-
-    autocomplete(document.getElementById("lproductName"), @ComparisonViewModel.GetProductNames());
-    autocomplete(document.getElementById("rproductName"), @ComparisonViewModel.GetProductNames());
 </script>
-
-<h1>Comparison</h1>
-
 <form autocomplete="off" asp-controller="Comparison" asp-area="" asp-action="FindProducts" method="post">
     <div class="form-group">
         <label for="lproductName">Left product name</label>
@@ -130,7 +31,7 @@
     </div>
     <div class="form-group">
         <label for="rproductName">Right product name</label>
-        <input type="text" class="form-control" name="rproductName" id="rproductName" placeholder="Enter product name" value="" onchange="lfindSimilar()" required />
+        <input type="text" class="form-control" name="rproductName" id="rproductName" placeholder="Enter product name" value="" @*onchange="lfindSimilar()"*@ required />
     </div>
     <button class="btn btn-primary" type="submit">Find</button>
 </form>
@@ -151,8 +52,8 @@
                         </div>
                         <div style="transform:rotate(0);">
                             @*<a href="@product.Link" class="stretched-link">
-                                <img src="@product.GetCardImageSrc()" alt="Cat Lawyer Is Real And He Is Everything Right Now | Above the Law" class="card-img-top">
-                            </a>*@
+                                    <img src="@product.GetCardImageSrc()" alt="Cat Lawyer Is Real And He Is Everything Right Now | Above the Law" class="card-img-top">
+                                </a>*@
                             <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                                 <ol class="carousel-indicators">
                                     <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -235,8 +136,8 @@
                         </div>
                         <div style="transform:rotate(0);">
                             @*<a href="@rightProduct.Link" class="stretched-link">
-                                <img src="@rightProduct.GetCardImageSrc()" alt="Cat Lawyer Is Real And He Is Everything Right Now | Above the Law" class="card-img-top">
-                            </a>*@
+                                    <img src="@rightProduct.GetCardImageSrc()" alt="Cat Lawyer Is Real And He Is Everything Right Now | Above the Law" class="card-img-top">
+                                </a>*@
                             <div id="carouselExampleIndicators2" class="carousel slide" data-ride="carousel">
                                 <ol class="carousel-indicators">
                                     <li data-target="#carouselExampleIndicators2" data-slide-to="0" class="active"></li>
@@ -302,13 +203,13 @@
                             <h5 style="font-weight:300">What people think about <strong>@leftProduct.Name</strong></h5>
                         </div>
                         <div class="card-body" style="transform:rotate(0);">
-                            @{ 
+                            @{
                                 if (leftProduct.Comments != null)
                                 {
                                     foreach (var comment in leftProduct.Comments)
                                     {
-                                    <p><strong>@comment.UserID</strong></p>
-                                    <p>@comment.Text</p>
+                                        <p><strong>@comment.UserID</strong></p>
+                                        <p>@comment.Text</p>
                                     }
                                 }
                             }
@@ -317,7 +218,7 @@
                     </div>
                 </div>
                 <div class="col col-lg-6" style="padding-top: 2rem;">
-                    <div class="card h-100 hoverable-card" id="card_on_transaction" >
+                    <div class="card h-100 hoverable-card" id="card_on_transaction">
                         <div class="card-header @rightProduct.GetTableHeaderClassString()" id="card_on_transaction_header">
                             <h5 style="font-weight:300">What people think about <strong>@rightProduct.Name</strong></h5>
                         </div>
@@ -330,3 +231,53 @@
         }
     </div>
 </div>
+
+@using Syncfusion.EJ2
+@using Syncfusion.EJ2.DropDowns
+@using EJ2MVCSampleBrowser.Models
+@using Newtonsoft.Json
+@section ControlsSection{
+    <div class="col-lg-12 control-section" style="height: 400px;">
+        <div class='control-wrapper'>
+            <div style='padding-top:70px;'>
+                @Html.EJS().AutoComplete("books").Placeholder("e.g. Node.js Succinctly").Filtering("filtering").DataSource((IEnumerable<BooksData>)ViewBag.data).Fields(new AutoCompleteFieldSettings { Value = "BookName" }).Render()
+            </div>
+        </div>
+    </div>
+
+    <script src="../Scripts/fuse.min.js"></script>
+    <script type="text/javascript">
+        function filtering(e) {
+            var options = {
+                keys: ['BookName'],
+                includeMatches: true,
+                findAllMatches: true
+            };
+            var fuse = new Fuse(@Html.Raw(JsonConvert.SerializeObject(ViewBag.data)), options);
+            var result = fuse.search(e.text);
+            var data = [];
+            for (var i = 0; i < result.length; i++) {
+                data.push(result[i].item);
+            }
+            e.updateData(data, null);
+            var popupElement = document.getElementById('books_popup');
+            var lists = popupElement.querySelectorAll('.e-list-item');
+            highlightSearch(lists, result);
+        }
+        function highlightSearch(listItems, result) {
+            if (result.length > 0) {
+                for (var i = 0; i < listItems.length; i++) {
+                    var innerHTML = listItems[i].innerHTML;
+                    for (var j = result[i].matches[0].indices.length - 1; j >= 0; j--) {
+                        var indexes = result[i].matches[0].indices[j];
+                        innerHTML = innerHTML.substring(0, indexes[0]) + '<span class="e-highlight">' +
+                            innerHTML.substring(indexes[0], (indexes[1] + 1)) + '</span>' + innerHTML.substring(indexes[1] + 1);
+                        listItems[i].innerHTML = innerHTML;
+                    }
+                }
+            }
+        }
+    </script>
+}
+
+
