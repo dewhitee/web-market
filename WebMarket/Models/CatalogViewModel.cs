@@ -38,6 +38,7 @@ namespace WebMarket.Models
             public string ThirdImageLink { get; set; }
             public bool IsBought { get; set; }
             public bool AddedToCart { get; set; }
+            public List<UserComment> Comments = new List<UserComment>();
 
             public DateTime AddedDate { get; set; }
 
@@ -189,6 +190,7 @@ namespace WebMarket.Models
         [Serializable]
         public class User
         {
+            public string Username { get; set; }
             public decimal Money { get; set; }
             public string MoneyString { get => Money.ToString("0.##") + "€"; }
 
@@ -219,6 +221,13 @@ namespace WebMarket.Models
             {
                 Money = 100M;
             }
+        }
+
+        [Serializable]
+        public class UserComment
+        {
+            public string Text { get; set; }
+            public int UserID { get; set; }
         }
 
         public static List<Product> ListOfProducts = new List<Product>();

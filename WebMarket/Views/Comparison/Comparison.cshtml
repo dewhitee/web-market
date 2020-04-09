@@ -190,10 +190,18 @@
                             <h5 style="font-weight:300">What people think about <strong>@leftProduct.Name</strong></h5>
                         </div>
                         <div class="card-body" style="transform:rotate(0);">
+                            @{ 
+                                if (leftProduct.Comments != null)
+                                {
+                                    foreach (var comment in leftProduct.Comments)
+                                    {
+                                    <p><strong>@comment.UserID</strong></p>
+                                    <p>@comment.Text</p>
+                                    }
+                                }
+                            }
                         </div>
 
-                        <div class="card-footer @leftProduct.GetTableHeaderClassString()" id="card_on_transaction_footer">
-                        </div>
                     </div>
                 </div>
                 <div class="col col-lg-6" style="padding-top: 2rem;">
@@ -204,8 +212,6 @@
                         <div class="card-body" style="transform:rotate(0);">
                         </div>
 
-                        <div class="card-footer @rightProduct.GetTableHeaderClassString()" id="card_on_transaction_footer">
-                        </div>
                     </div>
                 </div>
             }
