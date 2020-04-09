@@ -11,6 +11,8 @@ namespace WebMarket.Models
         public static CatalogViewModel.Product LeftProduct;
         public static CatalogViewModel.Product RightProduct;
 
+        private static List<string> ProductNames;
+
         public static string PriceComparisonText()
         {
             return (LeftProduct.Price > RightProduct.Price) ? $"{LeftProduct.Name} is more expensive than {RightProduct.Name}"
@@ -25,6 +27,18 @@ namespace WebMarket.Models
         {
             return (LeftProduct.AddedDate > RightProduct.AddedDate) ? $"{LeftProduct.Name} was added later than {RightProduct.Name}"
                 : $"{LeftProduct.Name} was added earlier than {RightProduct.Name}";
+        }
+        public static string[] GetProductNames()
+        {
+            if (ProductNames == null || ProductNames.Count() == 0)
+            {
+                ProductNames = new List<string>();
+                foreach (var i in CatalogViewModel.ListOfProducts)
+                {
+                    ProductNames.Add(i.Name);
+                }
+            }
+            return ProductNames.ToArray();
         }
     }
 }

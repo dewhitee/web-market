@@ -258,6 +258,16 @@ namespace WebMarket.Models
             return false;
         }
 
+        public static string AutocompleteProduct(string byName)
+        {
+            foreach (var i in ListOfProducts)
+            {
+                if (i.Name.Contains(byName))
+                    return i.Name;
+            }
+            return "";
+        }
+
         public static Product GetProduct(string name)
         {
             foreach (var i in ListOfProducts)
