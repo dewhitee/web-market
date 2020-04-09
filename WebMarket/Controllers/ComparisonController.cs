@@ -24,13 +24,13 @@ namespace WebMarket.Controllers
             return RedirectToAction("Comparison");
         }
 
-        //[HttpPost]
-        //public JsonResult Comparison(string prefix)
-        //{
-        //    var ProductList = (from N in ComparisonViewModel.GetProductNames()
-        //                       where N.StartsWith(prefix)
-        //                       select new { N });
-        //    return Json(ProductList, JsonRequestBehavior.AllowGet);
-        //}
+       [HttpPost]
+       public JsonResult Comparison(string prefix)
+       {
+           var ProductList = (from N in ComparisonViewModel.GetProductNames()
+                              where N.StartsWith(prefix)
+                              select new { N });
+           return Json(ProductList);
+       }
     }
 }
