@@ -438,7 +438,6 @@
                     var linkClass = product.GetProductTableLinkClassString();
                     var thClass = product.GetTableHeaderClassString();
                     <div class="col col-lg-4" style="padding-bottom: 2rem;">
-                        @*<a href="@product.Link" class="text-dark ">*@
                         <div class="card h-100 hoverable-card" id="card_@i" onmouseover="onHoveredCard(@i)" onmouseout="onHoveredCardOut(@i)">
                             <div class="card-header @product.GetTableHeaderClassString()" id="card_header_@i" onclick="onClickedCard(@i)">
                                 <h5 style="font-weight:300">@product.Type</h5>
@@ -455,18 +454,10 @@
                                 <div class="overflower" aria-hidden="true">
                                     <p class="card-text card-description">@product.Description</p>
                                 </div>
-                                @*<small class="@linkClass">
-                                       Link:
-                                       <a href="@product.Link">
-                                           @product.Link
-                                       </a>
-                                    </small>*@
                                 <a href="@product.Link" class="stretched-link"></a>
                             </div>
 
                             <div class="card-footer @product.GetTableHeaderClassString()" id="card_footer_@i" onclick="onClickedCard(@i)">
-
-                                @*<div class="float-right">*@
                                 <h3>
                                     @product.FinalPriceString
                                     <sup>
@@ -476,14 +467,6 @@
                                         }
                                     </sup>
                                 </h3>
-                                @*<h2>@CatalogViewModel.CurrentUser.MoneyString</h2>*@
-                                @*<form asp-controller="Catalog" asp-action="OpenProductWindow" method="post">
-                                        <input type="hidden" class="form-control" name="productName" id="productName" value=@product.Name />
-                                        <input type="hidden" class="form-control" name="productIndex" id="productIndex" value=@i />
-                                        <button class="@product.GetAddToCartButtonClassString()" type="submit">Open</button>
-                                    </form>
-                                *@
-                                @*</div>*@
                                 <div class="float-right">
                                     <form asp-controller="Catalog" asp-action="AddToCart" method="post">
                                         <input type="hidden" class="form-control" name="productName" id="productName" value=@product.Name />
