@@ -12,11 +12,14 @@ namespace WebMarket.Data
 {
     public class Userbase
     {
+        private static readonly string usernamesFilePath = @"D:\ASP.NET PROJECTS\WebMarket\data\allusernames.dew";
         private static readonly string userMoneyPartialPath = @"D:\ASP.NET PROJECTS\WebMarket\data\user_";
 
         public static SignInManager<IdentityUser> SignInManager { get; set; }
         public static UserManager<IdentityUser> UserManager { get; set; }
         public static ClaimsPrincipal User { get; set; }
+
+        private static List<string> Usernames;
 
         public static string MoneyFilePath { get => userMoneyPartialPath + (User.Identity.Name != null ? User.Identity.Name : "") + "_money.dew"; }
 
@@ -57,6 +60,20 @@ namespace WebMarket.Data
 
             stream.Close();
             return moneyValue;
+        }
+        private static List<string> GetUsernames()
+        {
+            if (!File.Exists(MoneyFilePath))
+                File.Create(MoneyFilePath);
+
+            BinaryFormatter bf = new BinaryFormatter();
+            Stream stream = new FileStream(usernamesFilePath, FileMode.Open, FileAccess.Read);
+            List<string> usernames = new List<string>();
+            if (stream.Length != 0)
+                usernames = (List<string>)bf.Deserialize(stream);
+
+            stream.Close();
+            return usernames;
         }
         public static void SaveMoney()
         {
