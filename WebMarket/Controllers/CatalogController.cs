@@ -137,27 +137,25 @@ namespace WebMarket.Controllers
         {
             Console.WriteLine("Adding comment");
             var product = CatalogViewModel.GetProduct(productID);
-            var comments = product?.Comments;
-            if (comments == null) // is needed for old products that do not have comments list instantiated
-                comments = new List<CatalogViewModel.UserComment>();
+            if (product.Comments == null) // is needed for old products that do not have comments list instantiated
+                product.Comments = new List<CatalogViewModel.UserComment>();
 
-            if (comments.Find(x => x.UserID == CatalogViewModel.CurrentUser.ID) == null)
+            if (product.Comments.Find(x => x.UserID == CatalogViewModel.CurrentUser.ID) == null)
             {
-                comments.Add(new CatalogViewModel.UserComment
+                product.Comments.Add(new CatalogViewModel.UserComment
                 {
                     Text = commentSection,
                     UserID = CatalogViewModel.CurrentUser.ID
                 });
             }
 
+            SaveProducts();
             if (!product.IsBought)
             {
-                SaveProducts();
                 return RedirectToAction("Buying");
             }
             else
             {
-                SaveProducts();
                 return RedirectToAction("Selling");
             }
         }
