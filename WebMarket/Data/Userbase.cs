@@ -51,12 +51,14 @@ namespace WebMarket.Data
         }
         public static async void InitCurrentUser()
         {
+            var id = UserManager.GetUserId(User);
             CatalogViewModel.CurrentUser = new CatalogViewModel.User
             {
                 Username = User.Identity.Name,
-                ID = UserManager.GetUserId(User),
+                ID = id,
                 Money = GetMoney()
             };
+            AddUserNameIDBinding(User.Identity.Name, id);
             //CatalogViewModel.CurrentUser.AddInitMoney();
             //SaveMoney();
             await Task.Delay(10);
@@ -75,10 +77,10 @@ namespace WebMarket.Data
             stream.Close();
             return moneyValue;
         }
-        private async static void LoadUsernames()
+        private static void LoadUsernames()
         {
-            if (!File.Exists(MoneyFilePath))
-                File.Create(MoneyFilePath);
+            if (!File.Exists(usernamesFilePath))
+                File.Create(usernamesFilePath);
 
             BinaryFormatter bf = new BinaryFormatter();
             Stream stream = new FileStream(usernamesFilePath, FileMode.Open, FileAccess.Read);
@@ -88,12 +90,12 @@ namespace WebMarket.Data
 
             stream.Close();
             Usernames = usernames;
-            await Task.Delay(10);
+            //await Task.Delay(10);
         }
-        public async static void LoadUserNameIDs()
+        public static void LoadUserNameIDs()
         {
-            if (!File.Exists(MoneyFilePath))
-                File.Create(MoneyFilePath);
+            if (!File.Exists(usernameidsFilePath))
+                File.Create(usernameidsFilePath);
 
             BinaryFormatter bf = new BinaryFormatter();
             Stream stream = new FileStream(usernameidsFilePath, FileMode.Open, FileAccess.Read);
@@ -103,7 +105,15 @@ namespace WebMarket.Data
 
             stream.Close();
             UserNameIDs = usernameids;
-            await Task.Delay(10);
+            //await Task.Delay(10);
+        }
+        private static void AddUserNameIDBinding(string username, string id)
+        {
+            var newBinding = new UserNameIDBinding() { name = username, id = id };
+            if (!UserNameIDs.Contains(newBinding))
+            {
+                UserNameIDs.Add(newBinding);
+            }
         }
         public static string GetUsername(string id)
         {

@@ -231,7 +231,7 @@
                                 {
                                     foreach (var comment in leftProduct.Comments)
                                     {
-                                        <p><strong>@comment.UserID</strong></p>
+                                        <p><strong>@WebMarket.Data.Userbase.GetUsername(comment.UserID)</strong></p>
                                         <p>@comment.Text</p>
                                     }
                                 }

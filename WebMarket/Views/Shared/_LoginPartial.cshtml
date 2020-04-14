@@ -3,8 +3,8 @@
 @inject UserManager<IdentityUser> UserManager
 
 @{
-    WebMarket.Data.Userbase.Set(SignInManager, UserManager, User);
     WebMarket.Data.Userbase.LoadData();
+    WebMarket.Data.Userbase.Set(SignInManager, UserManager, User);
 }
 
 <ul class="navbar-nav">
