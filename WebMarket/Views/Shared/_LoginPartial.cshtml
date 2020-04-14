@@ -2,7 +2,7 @@
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 
-@{WebMarket.Data.Userbase.Set(SignInManager, UserManager);}
+@{WebMarket.Data.Userbase.Set(SignInManager, UserManager, User);}
 
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
