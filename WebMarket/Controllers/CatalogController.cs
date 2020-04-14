@@ -11,8 +11,8 @@ using WebMarket.Data;
 
 namespace WebMarket.Controllers
 {
-    using Product = CatalogViewModel.Product;
-    using User = CatalogViewModel.User;
+    //using Product = CatalogViewModel.Product;
+    //using User = CatalogViewModel.User;
 
     public class CatalogController : Controller
     {
@@ -138,12 +138,12 @@ namespace WebMarket.Controllers
             Console.WriteLine("Adding comment");
             var product = CatalogViewModel.GetProduct(productID);
             if (product.Comments == null) // is needed for old products that do not have comments list instantiated
-                product.Comments = new List<CatalogViewModel.UserComment>();
+                product.Comments = new List<UserComment>();
 
             bool canAdd = product.OnlyOneCommentPerUser ? product.Comments.Find(x => x.UserID == CatalogViewModel.CurrentUser.ID) == null : true;
             if (canAdd)
             {
-                product.Comments.Add(new CatalogViewModel.UserComment
+                product.Comments.Add(new UserComment
                 {
                     Text = commentSection,
                     UserID = CatalogViewModel.CurrentUser.ID

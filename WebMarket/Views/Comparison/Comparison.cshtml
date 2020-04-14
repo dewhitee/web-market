@@ -47,6 +47,10 @@
     //}) 
 
 </script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+
 <form asp-controller="Comparison" asp-area="" asp-action="FindProducts" method="post">
     <div class="form-group">
         <label for="lproductName">Left product name</label>
@@ -233,6 +237,11 @@
                                     {
                                         <p><strong>@WebMarket.Data.Userbase.GetUsername(comment.UserID)</strong></p>
                                         <p>@comment.Text</p>
+                                        <span class="fade fa-star checked"></span>
+                                        <span class="fade fa-star checked"></span>
+                                        <span class="fade fa-star checked"></span>
+                                        <span class="fade fa-star checked"></span>
+                                        <span class="fade fa-star checked"></span>
                                         <hr />
                                     }
                                 }
@@ -258,6 +267,12 @@
                                     {
                                         <p><strong>@WebMarket.Data.Userbase.GetUsername(comment.UserID)</strong></p>
                                         <p>@comment.Text</p>
+                                        <i class="fa fa-star checked"></i>
+                                        <i class="fa fa-star checked"></i>
+                                        <i class="fa fa-star checked"></i>
+                                        <i class="fa fa-star checked"></i>
+                                        <i class="fa fa-star checked"></i>
+                                        <i class="fa fa-imdb"></i>
                                         <hr />
                                     }
                                 }

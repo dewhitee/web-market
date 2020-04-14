@@ -52,7 +52,7 @@ namespace WebMarket.Data
         public static async void InitCurrentUser()
         {
             var id = UserManager.GetUserId(User);
-            CatalogViewModel.CurrentUser = new CatalogViewModel.User
+            CatalogViewModel.CurrentUser = new User
             {
                 Username = User.Identity.Name,
                 ID = id,

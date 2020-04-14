@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebMarket.Data;
 
 namespace WebMarket.Models
 {
     public class ComparisonViewModel
     {
-        public static List<CatalogViewModel.Product> Products = new List<CatalogViewModel.Product>();
-        public static CatalogViewModel.Product LeftProduct;
-        public static CatalogViewModel.Product RightProduct;
+        public static List<Product> Products = new List<Product>();
+        public static Product LeftProduct;
+        public static Product RightProduct;
 
         private static List<string> ProductNames;
 
