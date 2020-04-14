@@ -131,6 +131,21 @@ namespace WebMarket.Controllers
             return RedirectToAction("Catalog");
         }
 
+        public IActionResult AddComment(string commentSection, int productID)
+        {
+            Console.WriteLine("Adding comment");
+            var product = CatalogViewModel.GetProduct(productID);
+            if (product?.Comments.Find(x => x.UserID == CatalogViewModel.CurrentUser.ID) == null)
+            {
+                product.Comments.Add(new CatalogViewModel.UserComment
+                {
+                    Text = commentSection,
+                    UserID = CatalogViewModel.CurrentUser.ID
+                });
+            }
+            return Ok();
+        }
+
         public IActionResult SaveProducts()
         {
             CatalogViewModel.SaveProducts();

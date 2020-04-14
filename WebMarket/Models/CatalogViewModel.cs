@@ -37,6 +37,7 @@ namespace WebMarket.Models
             public string SecondImageLink { get; set; }
             public string ThirdImageLink { get; set; }
             public bool IsBought { get; set; }
+            public bool OnlyRegisteredCanComment { get; set; }
             public bool AddedToCart { get; set; }
             public List<UserComment> Comments = new List<UserComment>();
 
@@ -191,6 +192,7 @@ namespace WebMarket.Models
         public class User
         {
             public string Username { get; set; }
+            public int ID { get; set; }
             public decimal Money { get; set; }
             public string MoneyString { get => Money.ToString("0.##") + "€"; }
 
@@ -221,6 +223,17 @@ namespace WebMarket.Models
             {
                 Money = 100M;
             }
+            public void ResetID()
+            {
+                Random random = new Random();
+                bool success;
+                do
+                {
+                    ID = random.Next(0, int.MaxValue);
+                    success = ListOfUsers.Find(x => x.ID == ID) == null;
+                } while (!success);
+                Console.WriteLine($"Your new ID is {ID}");
+            }
         }
 
         [Serializable]
@@ -231,6 +244,7 @@ namespace WebMarket.Models
         }
 
         public static List<Product> ListOfProducts = new List<Product>();
+        public static List<User> ListOfUsers = new List<User>();
         public static List<Product> AddedToCartProducts = new List<Product>();
         public static User CurrentUser = new User();
 
@@ -273,6 +287,16 @@ namespace WebMarket.Models
             foreach (var i in ListOfProducts)
             {
                 if (i.Name == name)
+                    return i;
+            }
+            return null;
+        }
+        
+        public static Product GetProduct(int id)
+        {
+            foreach (var i in ListOfProducts)
+            {
+                if (i.ID == id)
                     return i;
             }
             return null;

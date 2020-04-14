@@ -45,8 +45,8 @@
         </div>
         <div style="transform:rotate(0);">
             @*<a href="@product.Link" class="stretched-link">
-                <img src="@product.GetCardImageSrc()" alt="Cat Lawyer Is Real And He Is Everything Right Now | Above the Law" class="card-img-top">
-            </a>*@
+                    <img src="@product.GetCardImageSrc()" alt="Cat Lawyer Is Real And He Is Everything Right Now | Above the Law" class="card-img-top">
+                </a>*@
             <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                 <ol class="carousel-indicators">
                     <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -116,4 +116,15 @@
 
         </div>
     </div>
+    if (!product.OnlyRegisteredCanComment)
+    {
+    <form asp-controller="Catalog" asp-action="AddComment" method="post">
+        <div class="form-group">
+            <label for="commentSection">Your comment:</label>
+            <textarea class="form-control" maxlength="255" name="commentSection" id="commentSection" rows="3" placeholder="Enter comment"></textarea>
+            <input type="hidden" class="form-control" name="productID" id="productID" value=@product.ID />
+        </div>
+        <button class="btn btn-success" type="submit">Submit</button>
+    </form>
+    }
 }
