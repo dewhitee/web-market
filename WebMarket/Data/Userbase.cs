@@ -40,6 +40,8 @@ namespace WebMarket.Data
                 ID = UserManager.GetUserId(User),
                 Money = GetMoney()
             };
+            //CatalogViewModel.CurrentUser.AddInitMoney();
+            //SaveMoney();
             await Task.Delay(10);
         }
         private static decimal GetMoney()
@@ -55,6 +57,14 @@ namespace WebMarket.Data
 
             stream.Close();
             return moneyValue;
+        }
+        public static void SaveMoney()
+        {
+            BinaryFormatter bf = new BinaryFormatter();
+            Stream stream = new FileStream(MoneyFilePath, FileMode.Open, FileAccess.Write);
+
+            bf.Serialize(stream, CatalogViewModel.CurrentUser.Money);
+            stream.Close();
         }
     }
 }
