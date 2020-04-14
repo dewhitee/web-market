@@ -7,6 +7,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using WebMarket.Models;
+using WebMarket.Data;
 
 namespace WebMarket.Controllers
 {
@@ -17,14 +18,11 @@ namespace WebMarket.Controllers
     {
         private readonly string saveUserFilePath = @"D:\ASP.NET PROJECTS\WebMarket\data\user.dew";
 
-        SignInManager<IdentityUser> signInManager;
-        UserManager<IdentityUser> userManager;
-
         public IActionResult Catalog()
         {
             LoadProducts();
             LoadUser();
-            if (signInManager.IsSignedIn(User))
+            if (Userbase.SignInManager.IsSignedIn(User))
             {
                 Console.WriteLine($"Current name is {User.Identity.Name}");
                 CatalogViewModel.CurrentUser = new User { Username = User.Identity.Name };
