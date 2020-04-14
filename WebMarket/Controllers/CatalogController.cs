@@ -137,9 +137,13 @@ namespace WebMarket.Controllers
         {
             Console.WriteLine("Adding comment");
             var product = CatalogViewModel.GetProduct(productID);
-            if (product?.Comments.Find(x => x.UserID == CatalogViewModel.CurrentUser.ID) == null)
+            var comments = product?.Comments;
+            if (comments == null) // is needed for old products that do not have comments list instantiated
+                comments = new List<CatalogViewModel.UserComment>();
+
+            if (comments.Find(x => x.UserID == CatalogViewModel.CurrentUser.ID) == null)
             {
-                product.Comments.Add(new CatalogViewModel.UserComment
+                comments.Add(new CatalogViewModel.UserComment
                 {
                     Text = commentSection,
                     UserID = CatalogViewModel.CurrentUser.ID
@@ -161,6 +165,8 @@ namespace WebMarket.Controllers
 
             bf.Serialize(stream, CatalogViewModel.CurrentUser);
             stream.Close();
+
+            Userbase.SaveMoney();
 
             return Ok();
         }
