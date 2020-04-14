@@ -14,8 +14,8 @@ namespace WebMarket.Data
     {
         public struct UserNameIDBinding
         {
-            string id;
-            string name;
+            public string id;
+            public string name;
         }
 
         private static readonly string usernamesFilePath = @"D:\ASP.NET PROJECTS\WebMarket\data\allusernames.dew";
@@ -26,8 +26,8 @@ namespace WebMarket.Data
         public static UserManager<IdentityUser> UserManager { get; set; }
         public static ClaimsPrincipal User { get; set; }
 
-        private static List<string> Usernames;
-        private static List<UserNameIDBinding> userIDNameBindings;
+        public static List<string> Usernames { get; private set; }
+        public static List<UserNameIDBinding> UserNameIDs { get; private set; }
 
         public static string MoneyFilePath { get => userMoneyPartialPath + (User.Identity.Name != null ? User.Identity.Name : "") + "_money.dew"; }
 
@@ -42,6 +42,12 @@ namespace WebMarket.Data
             if (!File.Exists(MoneyFilePath))
                 File.Create(MoneyFilePath);
             InitCurrentUser();
+        }
+        public static async void LoadData()
+        {
+            LoadUsernames();
+            LoadUserNameIDs();
+            await Task.Delay(10);
         }
         public static async void InitCurrentUser()
         {
@@ -69,7 +75,7 @@ namespace WebMarket.Data
             stream.Close();
             return moneyValue;
         }
-        private static List<string> GetUsernames()
+        private async static void LoadUsernames()
         {
             if (!File.Exists(MoneyFilePath))
                 File.Create(MoneyFilePath);
@@ -81,9 +87,10 @@ namespace WebMarket.Data
                 usernames = (List<string>)bf.Deserialize(stream);
 
             stream.Close();
-            return usernames;
+            Usernames = usernames;
+            await Task.Delay(10);
         }
-        public static List<UserNameIDBinding> GetUserNameIDs()
+        public async static void LoadUserNameIDs()
         {
             if (!File.Exists(MoneyFilePath))
                 File.Create(MoneyFilePath);
@@ -95,7 +102,16 @@ namespace WebMarket.Data
                 usernameids = (List<UserNameIDBinding>)bf.Deserialize(stream);
 
             stream.Close();
-            return usernameids;
+            UserNameIDs = usernameids;
+            await Task.Delay(10);
+        }
+        public static string GetUsername(string id)
+        {
+            return UserNameIDs.Find(x => x.id == id).name;
+        }
+        public static string GetID(string username)
+        {
+            return UserNameIDs.Find(x => x.name == username).id;
         }
         public static void SaveMoney()
         {
