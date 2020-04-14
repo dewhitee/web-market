@@ -12,7 +12,14 @@ namespace WebMarket.Data
 {
     public class Userbase
     {
+        public struct UserNameIDBinding
+        {
+            string id;
+            string name;
+        }
+
         private static readonly string usernamesFilePath = @"D:\ASP.NET PROJECTS\WebMarket\data\allusernames.dew";
+        private static readonly string usernameidsFilePath = @"D:\ASP.NET PROJECTS\WebMarket\data\usernameids.dew";
         private static readonly string userMoneyPartialPath = @"D:\ASP.NET PROJECTS\WebMarket\data\user_";
 
         public static SignInManager<IdentityUser> SignInManager { get; set; }
@@ -20,6 +27,7 @@ namespace WebMarket.Data
         public static ClaimsPrincipal User { get; set; }
 
         private static List<string> Usernames;
+        private static List<UserNameIDBinding> userIDNameBindings;
 
         public static string MoneyFilePath { get => userMoneyPartialPath + (User.Identity.Name != null ? User.Identity.Name : "") + "_money.dew"; }
 
@@ -74,6 +82,20 @@ namespace WebMarket.Data
 
             stream.Close();
             return usernames;
+        }
+        public static List<UserNameIDBinding> GetUserNameIDs()
+        {
+            if (!File.Exists(MoneyFilePath))
+                File.Create(MoneyFilePath);
+
+            BinaryFormatter bf = new BinaryFormatter();
+            Stream stream = new FileStream(usernameidsFilePath, FileMode.Open, FileAccess.Read);
+            List<UserNameIDBinding> usernameids = new List<UserNameIDBinding>();
+            if (stream.Length != 0)
+                usernameids = (List<UserNameIDBinding>)bf.Deserialize(stream);
+
+            stream.Close();
+            return usernameids;
         }
         public static void SaveMoney()
         {
