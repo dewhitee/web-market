@@ -140,7 +140,8 @@ namespace WebMarket.Controllers
             if (product.Comments == null) // is needed for old products that do not have comments list instantiated
                 product.Comments = new List<CatalogViewModel.UserComment>();
 
-            if (product.Comments.Find(x => x.UserID == CatalogViewModel.CurrentUser.ID) == null)
+            bool canAdd = product.OnlyOneCommentPerUser ? product.Comments.Find(x => x.UserID == CatalogViewModel.CurrentUser.ID) == null : true;
+            if (canAdd)
             {
                 product.Comments.Add(new CatalogViewModel.UserComment
                 {

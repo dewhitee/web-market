@@ -38,6 +38,7 @@ namespace WebMarket.Models
             public string ThirdImageLink { get; set; }
             public bool IsBought { get; set; }
             public bool OnlyRegisteredCanComment { get; set; }
+            public bool OnlyOneCommentPerUser { get; set; }
             public bool AddedToCart { get; set; }
             public List<UserComment> Comments = new List<UserComment>();
 

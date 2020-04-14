@@ -233,6 +233,7 @@
                                     {
                                         <p><strong>@WebMarket.Data.Userbase.GetUsername(comment.UserID)</strong></p>
                                         <p>@comment.Text</p>
+                                        <hr />
                                     }
                                 }
                                 else
@@ -250,6 +251,21 @@
                             <h5 style="font-weight:300">What people think about <strong>@rightProduct.Name</strong></h5>
                         </div>
                         <div class="card-body" style="transform:rotate(0);">
+                            @{
+                                if (rightProduct.Comments != null)
+                                {
+                                    foreach (var comment in rightProduct.Comments)
+                                    {
+                                        <p><strong>@WebMarket.Data.Userbase.GetUsername(comment.UserID)</strong></p>
+                                        <p>@comment.Text</p>
+                                        <hr />
+                                    }
+                                }
+                                else
+                                {
+                                    <p><strong>We can't render comments as this product don't have any...</strong></p>
+                                }
+                            }
                         </div>
 
                     </div>

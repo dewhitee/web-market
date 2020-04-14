@@ -1,10 +1,11 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@using WebMarket.Data 
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 
 @{
-    WebMarket.Data.Userbase.LoadData();
-    WebMarket.Data.Userbase.Set(SignInManager, UserManager, User);
+    Userbase.LoadData();
+    Userbase.Set(SignInManager, UserManager, User);
 }
 
 <ul class="navbar-nav">
