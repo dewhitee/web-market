@@ -14,6 +14,8 @@ namespace WebMarket.Data
             SignInManager = signInManager;
             UserManager = userManager;
             User = user;
+            Console.WriteLine($"SignInManager = {SignInManager != null}, " +
+                $"UserManager = {UserManager != null}, User = {User != null}");
         }
         public static SignInManager<IdentityUser> SignInManager { get; set; }
         public static UserManager<IdentityUser> UserManager { get; set; }

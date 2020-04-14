@@ -22,11 +22,6 @@ namespace WebMarket.Controllers
         {
             LoadProducts();
             LoadUser();
-            if (Userbase.SignInManager != null && Userbase.SignInManager.IsSignedIn(User))
-            {
-                Console.WriteLine($"Current name is {User.Identity.Name}");
-                CatalogViewModel.CurrentUser = new User { Username = User.Identity.Name };
-            }
             //UpdateAllExistedProducts();
             //SaveProducts();
             return View();
