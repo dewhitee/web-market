@@ -149,7 +149,17 @@ namespace WebMarket.Controllers
                     UserID = CatalogViewModel.CurrentUser.ID
                 });
             }
-            return Ok();
+
+            if (!product.IsBought)
+            {
+                SaveProducts();
+                return RedirectToAction("Buying");
+            }
+            else
+            {
+                SaveProducts();
+                return RedirectToAction("Selling");
+            }
         }
 
         public IActionResult SaveProducts()
