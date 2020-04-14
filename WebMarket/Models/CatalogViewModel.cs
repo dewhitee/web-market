@@ -192,7 +192,7 @@ namespace WebMarket.Models
         public class User
         {
             public string Username { get; set; }
-            public int ID { get; set; }
+            public string ID { get; set; }
             public decimal Money { get; set; }
             public string MoneyString { get => Money.ToString("0.##") + "€"; }
 
@@ -229,7 +229,7 @@ namespace WebMarket.Models
                 bool success;
                 do
                 {
-                    ID = random.Next(0, int.MaxValue);
+                    ID = random.Next(0, int.MaxValue).ToString();
                     success = ListOfUsers.Find(x => x.ID == ID) == null;
                 } while (!success);
                 Console.WriteLine($"Your new ID is {ID}");
@@ -240,7 +240,7 @@ namespace WebMarket.Models
         public class UserComment
         {
             public string Text { get; set; }
-            public int UserID { get; set; }
+            public string UserID { get; set; }
         }
 
         public static List<Product> ListOfProducts = new List<Product>();

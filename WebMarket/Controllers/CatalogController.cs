@@ -173,11 +173,13 @@ namespace WebMarket.Controllers
         }
         public IActionResult LoadUser()
         {
-            BinaryFormatter bf = new BinaryFormatter();
-            Stream stream = new FileStream(saveUserFilePath, FileMode.Open, FileAccess.Read);
-            CatalogViewModel.CurrentUser = (User)bf.Deserialize(stream);
-            stream.Close();
-
+            if (CatalogViewModel.CurrentUser == null)
+            {
+                BinaryFormatter bf = new BinaryFormatter();
+                Stream stream = new FileStream(saveUserFilePath, FileMode.Open, FileAccess.Read);
+                CatalogViewModel.CurrentUser = (User)bf.Deserialize(stream);
+                stream.Close();
+            }
             return Ok();
         }
 
