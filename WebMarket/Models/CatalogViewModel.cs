@@ -423,9 +423,8 @@ namespace WebMarket.Models
             BinaryFormatter addedToCartFormatter = new BinaryFormatter();
             Stream addedToCartStream = new FileStream(addedToCartProductsFilePath, FileMode.Open, FileAccess.Read);
             if (addedToCartStream.Length != 0)
-            {
                 AddedToCartProducts = (List<Product>)addedToCartFormatter?.Deserialize(addedToCartStream);
-            }
+
             addedToCartStream.Close();
         }
         public static void SaveProducts()
