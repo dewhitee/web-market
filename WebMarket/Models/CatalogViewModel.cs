@@ -21,10 +21,6 @@ namespace WebMarket.Models
             Table,
         }
 
-        
-
-        
-
         public static List<Product> ListOfProducts = new List<Product>();
         public static List<User> ListOfUsers = new List<User>();
         public static List<Product> AddedToCartProducts = new List<Product>();
@@ -223,17 +219,5 @@ namespace WebMarket.Models
             addedToCartFormatter.Serialize(addedToCartStream, AddedToCartProducts);
             addedToCartStream.Close();
         }
-        //public string GetSellProductButtonClassString()
-        //{
-        //    var product = GetSelectedSellProduct();
-        //    if (!string.IsNullOrWhiteSpace(product.Name))
-        //    {
-        //        return CurrentUser.MoneyString + " + " + product.FinalPriceString + string.Format(" = {0}€", (CurrentUser.Money + product.FinalPrice).ToString("0.##"));
-        //    }
-        //    else
-        //    {
-        //        return "You have not selected any product to sell!";
-        //    }
-        //}
     }
 }
