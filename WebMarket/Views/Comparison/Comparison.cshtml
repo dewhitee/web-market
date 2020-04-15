@@ -267,11 +267,18 @@
                                     {
                                         <p><strong>@WebMarket.Data.Userbase.GetUsername(comment.UserID)</strong></p>
                                         <p>@comment.Text</p>
-                                        <i class="fa fa-star checked"></i>
-                                        <i class="fa fa-star checked"></i>
-                                        <i class="fa fa-star checked"></i>
-                                        <i class="fa fa-star checked"></i>
-                                        <i class="fa fa-star checked"></i>
+                                        for (int i = 0; i < 5; i++)
+                                        {
+                                            if (comment.Rate > i)
+                                            {
+                                                <i class="fa fa-star checked"></i>
+                                            }
+                                            else
+                                            {
+                                                <i class="fa fa-star"></i>
+                                            }
+
+                                        }
                                         <i class="fa fa-imdb"></i>
                                         <hr />
                                     }

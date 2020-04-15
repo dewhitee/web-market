@@ -12,9 +12,6 @@ namespace WebMarket.Models
     [Serializable]
     public class CatalogViewModel
     {
-        private static readonly string addedToCartProductsFilePath = @"D:\ASP.NET PROJECTS\WebMarket\data\addedtocartproducts.dew";
-        private static readonly string saveProductsFilePath = @"D:\ASP.NET PROJECTS\WebMarket\data\products.dew";
-
         public enum CatalogViewVariant
         {
             Main,
@@ -28,6 +25,10 @@ namespace WebMarket.Models
 
         public List<Product> Products { get; set; }
         public Product ToAdd { get; set; }
+
+        private static readonly string addedToCartProductsFilePath = @"D:\ASP.NET PROJECTS\WebMarket\data\addedtocartproducts.dew";
+        private static readonly string saveProductsFilePath = @"D:\ASP.NET PROJECTS\WebMarket\data\products.dew";
+
 
         public static CatalogViewVariant ViewVariant { get; set; }
 

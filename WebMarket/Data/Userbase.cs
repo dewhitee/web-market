@@ -18,10 +18,6 @@ namespace WebMarket.Data
             public string name;
         }
 
-        private static readonly string usernamesFilePath = @"D:\ASP.NET PROJECTS\WebMarket\data\allusernames.dew";
-        private static readonly string usernameidsFilePath = @"D:\ASP.NET PROJECTS\WebMarket\data\usernameids.dew";
-        private static readonly string userMoneyPartialPath = @"D:\ASP.NET PROJECTS\WebMarket\data\user_";
-
         public static SignInManager<IdentityUser> SignInManager { get; set; }
         public static UserManager<IdentityUser> UserManager { get; set; }
         public static ClaimsPrincipal User { get; set; }
@@ -31,6 +27,9 @@ namespace WebMarket.Data
 
         public static string MoneyFilePath { get => userMoneyPartialPath + (User.Identity.Name != null ? User.Identity.Name : "") + "_money.dew"; }
 
+        private static readonly string usernamesFilePath = @"D:\ASP.NET PROJECTS\WebMarket\data\allusernames.dew";
+        private static readonly string usernameidsFilePath = @"D:\ASP.NET PROJECTS\WebMarket\data\usernameids.dew";
+        private static readonly string userMoneyPartialPath = @"D:\ASP.NET PROJECTS\WebMarket\data\user_";
 
         public static void Set(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager, ClaimsPrincipal user)
         {
@@ -63,6 +62,37 @@ namespace WebMarket.Data
             //SaveMoney();
             await Task.Delay(10);
         }
+        public static void LoadUserNameIDs()
+        {
+            if (!File.Exists(usernameidsFilePath))
+                File.Create(usernameidsFilePath);
+
+            BinaryFormatter bf = new BinaryFormatter();
+            Stream stream = new FileStream(usernameidsFilePath, FileMode.Open, FileAccess.Read);
+            List<UserNameIDBinding> usernameids = new List<UserNameIDBinding>();
+            if (stream.Length != 0)
+                usernameids = (List<UserNameIDBinding>)bf.Deserialize(stream);
+
+            stream.Close();
+            UserNameIDs = usernameids;
+            //await Task.Delay(10);
+        }
+        public static string GetUsername(string id)
+        {
+            return UserNameIDs.Find(x => x.id == id).name;
+        }
+        public static string GetID(string username)
+        {
+            return UserNameIDs.Find(x => x.name == username).id;
+        }
+        public static void SaveMoney()
+        {
+            BinaryFormatter bf = new BinaryFormatter();
+            Stream stream = new FileStream(MoneyFilePath, FileMode.Open, FileAccess.Write);
+
+            bf.Serialize(stream, CatalogViewModel.CurrentUser.Money);
+            stream.Close();
+        }
         private static decimal GetMoney()
         {
             if (!File.Exists(MoneyFilePath))
@@ -92,21 +122,6 @@ namespace WebMarket.Data
             Usernames = usernames;
             //await Task.Delay(10);
         }
-        public static void LoadUserNameIDs()
-        {
-            if (!File.Exists(usernameidsFilePath))
-                File.Create(usernameidsFilePath);
-
-            BinaryFormatter bf = new BinaryFormatter();
-            Stream stream = new FileStream(usernameidsFilePath, FileMode.Open, FileAccess.Read);
-            List<UserNameIDBinding> usernameids = new List<UserNameIDBinding>();
-            if (stream.Length != 0)
-                usernameids = (List<UserNameIDBinding>)bf.Deserialize(stream);
-
-            stream.Close();
-            UserNameIDs = usernameids;
-            //await Task.Delay(10);
-        }
         private static void AddUserNameIDBinding(string username, string id)
         {
             var newBinding = new UserNameIDBinding() { name = username, id = id };
@@ -115,21 +130,6 @@ namespace WebMarket.Data
                 UserNameIDs.Add(newBinding);
             }
         }
-        public static string GetUsername(string id)
-        {
-            return UserNameIDs.Find(x => x.id == id).name;
-        }
-        public static string GetID(string username)
-        {
-            return UserNameIDs.Find(x => x.name == username).id;
-        }
-        public static void SaveMoney()
-        {
-            BinaryFormatter bf = new BinaryFormatter();
-            Stream stream = new FileStream(MoneyFilePath, FileMode.Open, FileAccess.Write);
 
-            bf.Serialize(stream, CatalogViewModel.CurrentUser.Money);
-            stream.Close();
-        }
     }
 }
