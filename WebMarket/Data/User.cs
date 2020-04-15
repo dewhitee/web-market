@@ -14,6 +14,14 @@ namespace WebMarket.Data
         public decimal Money { get; set; }
         public string MoneyString { get => Money.ToString("0.##") + "€"; }
 
+        public string Email { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Mobile { get; set; }
+        public string Address { get; set; }
+        public string City { get; set; }
+        public bool EmailConfirmed { get; set; }
+
         public void BuyProduct(Product product)
         {
             if (Money >= product.FinalPrice && !product.IsBought)
