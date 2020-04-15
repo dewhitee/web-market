@@ -124,26 +124,18 @@ namespace WebMarket.Models
         {
             var product = GetSelectedSellProduct();
             if (!string.IsNullOrWhiteSpace(product.Name))
-            {
                 return CurrentUser.MoneyString + " + " + product.FinalPriceString + string.Format(" = {0}€", (CurrentUser.Money + product.FinalPrice).ToString("0.##"));
-            }
             else
-            {
                 return "You have not selected any product to sell!";
-            }
         }
         public static string GetSelectedBuyProductPriceSentence()
         {
             var product = GetSelectedBuyProduct();
             var finalCost = CurrentUser.Money - product.FinalPrice;
             if (!string.IsNullOrWhiteSpace(product.Name))
-            {
                 return CurrentUser.MoneyString + " - " + product.FinalPriceString + string.Format(" = {0}€", finalCost.ToString("0.##")) + (finalCost < 0 ? " (You don't have enough money!)" : "");
-            }
             else
-            {
                 return "You have not selected any product to buy!";
-            }
         }
 
         public static string GetBuyProductButtonClassString()
@@ -164,10 +156,7 @@ namespace WebMarket.Models
             if (!string.IsNullOrWhiteSpace(product.Name))
             {
                 if (finalCost < 0)
-                {
-                    
                     return "btn btn-danger disabled";
-                }
             }
             return "btn btn-success";
         }
@@ -176,18 +165,16 @@ namespace WebMarket.Models
         {
             var product = GetSelectedBuyProduct();
             if (!string.IsNullOrWhiteSpace(product.Name))
-            {
                 return "Submit buying product";
-            }
+
             return "Find";
         }
         public static string GetSubmitSellingButtonText()
         {
             var product = GetSelectedSellProduct();
             if (!string.IsNullOrWhiteSpace(product.Name))
-            {
                 return "Submit selling product";
-            }
+
             return "Find";
         }
 
