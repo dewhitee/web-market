@@ -10,6 +10,6 @@ namespace WebMarket.Data
     {
         public string Text { get; set; }
         public string UserID { get; set; }
-        public byte Rate { get; set; }
+        public float Rate { get; set; }
     }
 }

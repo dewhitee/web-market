@@ -40,7 +40,7 @@ namespace WebMarket.Data
         public string IsAddedToCartString { get => AddedToCart ? "Added" : "+"; }
         public float GetRateAvg()
         {
-            uint sum = 0;
+            float sum = 0;
             foreach (var i in Comments)
             {
                 sum += i.Rate;

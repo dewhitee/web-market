@@ -133,7 +133,7 @@ namespace WebMarket.Controllers
             return RedirectToAction("Catalog");
         }
 
-        public IActionResult AddComment(string commentSection, int productID)
+        public IActionResult AddComment(string commentSection, int productID, float rating)
         {
             Console.WriteLine("Adding comment");
             var product = CatalogViewModel.GetProduct(productID);
@@ -146,7 +146,8 @@ namespace WebMarket.Controllers
                 product.Comments.Add(new UserComment
                 {
                     Text = commentSection,
-                    UserID = CatalogViewModel.CurrentUser.ID
+                    UserID = CatalogViewModel.CurrentUser.ID,
+                    Rate = rating
                 });
             }
 

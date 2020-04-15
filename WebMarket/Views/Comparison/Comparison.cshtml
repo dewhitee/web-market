@@ -48,8 +48,15 @@
 
 </script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+    .checked {
+        color: orange;
+    }
+    .not-checked {
+        color: #ddd;
+    }
+</style>
 
 <form asp-controller="Comparison" asp-area="" asp-action="FindProducts" method="post">
     <div class="form-group">
@@ -237,11 +244,18 @@
                                     {
                                         <p><strong>@WebMarket.Data.Userbase.GetUsername(comment.UserID)</strong></p>
                                         <p>@comment.Text</p>
-                                        <span class="fade fa-star checked"></span>
-                                        <span class="fade fa-star checked"></span>
-                                        <span class="fade fa-star checked"></span>
-                                        <span class="fade fa-star checked"></span>
-                                        <span class="fade fa-star checked"></span>
+                                        for (int i = 0; i < 5; i++)
+                                        {
+                                            if (comment.Rate > i)
+                                            {
+                                                <i class="fa fa-star checked"></i>
+                                            }
+                                            else
+                                            {
+                                                <i class="fa fa-star not-checked"></i>
+                                            }
+
+                                        }
                                         <hr />
                                     }
                                 }
@@ -269,17 +283,16 @@
                                         <p>@comment.Text</p>
                                         for (int i = 0; i < 5; i++)
                                         {
-                                            if (comment.Rate > i)
+                                            if (comment.Rate >= i+1)
                                             {
                                                 <i class="fa fa-star checked"></i>
                                             }
                                             else
                                             {
-                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star not-checked"></i>
                                             }
 
                                         }
-                                        <i class="fa fa-imdb"></i>
                                         <hr />
                                     }
                                 }
