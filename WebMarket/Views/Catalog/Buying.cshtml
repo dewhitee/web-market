@@ -118,13 +118,15 @@
     </div>
     if (!product.OnlyRegisteredCanComment)
     {
-    <form asp-controller="Catalog" asp-action="AddComment" method="post">
-        <div class="form-group">
-            <label for="commentSection">Your comment:</label>
-            <textarea class="form-control" maxlength="255" name="commentSection" id="commentSection" rows="3" placeholder="Enter comment"></textarea>
-            <input type="hidden" class="form-control" name="productID" id="productID" value=@product.ID />
-        </div>
-        <button class="btn btn-success" type="submit">Submit</button>
-    </form>
+        <form asp-controller="Catalog" asp-action="AddComment" method="post">
+            <div class="form-group">
+                <label for="commentSection">Your comment:</label>
+                <textarea class="form-control" maxlength="255" name="commentSection" id="commentSection" rows="3" placeholder="Enter comment"></textarea>
+                <input type="hidden" class="form-control" name="productID" id="productID" value=@product.ID />
+            </div>
+            <button class="btn btn-success" type="submit">Submit</button>
+        </form>
+
+        await Html.PartialAsync("_AddCommentPartial", new ViewDataDictionary(ViewData) { { "id", product.ID } });
     }
 }
