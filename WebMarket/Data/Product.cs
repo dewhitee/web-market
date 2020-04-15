@@ -40,14 +40,23 @@ namespace WebMarket.Data
         public string IsAddedToCartString { get => AddedToCart ? "Added" : "+"; }
         public float GetRateAvg()
         {
+            return GetRateSum() / Comments.Count;
+        }
+        public float GetRate()
+        {
+            float sum = GetRateSum();
+            float max = Comments.Count * 5f;
+            return sum / max;
+        }
+        public float GetRateSum()
+        {
             float sum = 0;
             foreach (var i in Comments)
             {
                 sum += i.Rate;
             }
-            return sum / Comments.Count;
+            return sum;
         }
-
         public static int MakeNewID()
         {
             Random random = new Random();
