@@ -26,13 +26,13 @@ namespace WebMarket.Data
 
         public void BuyProduct(Product product)
         {
-            Userbase.LoadUser();
+            //Userbase.LoadUser();
             if (Money >= product.FinalPrice && !product.IsBought)
             {
                 // todo: add and save product to profile
-                CatalogViewModel.CurrentUser.Money -= product.FinalPrice;
+                /*CatalogViewModel.CurrentUser.*/Money -= product.FinalPrice;
                 //product.IsBought = true;
-                CatalogViewModel.CurrentUser.BoughtProductIDs.Add(product.ID.ToString());
+                /*CatalogViewModel.CurrentUser.*/BoughtProductIDs.Add(product.ID.ToString());
                 Console.WriteLine($"{product.Name} is bought!");
             }
             else
@@ -43,12 +43,12 @@ namespace WebMarket.Data
         }
         public void SellProduct(Product product)
         {
-            Userbase.LoadUser();
+            //Userbase.LoadUser();
             if (product.IsBought)
             {
-                CatalogViewModel.CurrentUser.Money += product.FinalPrice;
+                /*CatalogViewModel.CurrentUser.*/Money += product.FinalPrice;
                 //product.IsBought = false;
-                CatalogViewModel.CurrentUser.BoughtProductIDs.Remove(product.ID.ToString());
+                /*CatalogViewModel.CurrentUser.*/BoughtProductIDs.Remove(product.ID.ToString());
                 Console.WriteLine($"{product.Name} is sold!");
             }
             Userbase.SaveUser();

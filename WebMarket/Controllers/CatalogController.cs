@@ -84,6 +84,7 @@ namespace WebMarket.Controllers
             {
                 if (product.ID == productID || product.Name == productName)
                 {
+                    LoadUser();
                     CatalogViewModel.CurrentUser.BuyProduct(product);
                     break;
                 }
@@ -114,6 +115,7 @@ namespace WebMarket.Controllers
                 if (product.ID == productID || product.Name == productName)
                 {
                     toSell = product;
+                    LoadUser();
                     CatalogViewModel.CurrentUser.SellProduct(toSell);
                     break;
                 }
