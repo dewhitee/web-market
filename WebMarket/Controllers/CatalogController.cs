@@ -192,6 +192,7 @@ namespace WebMarket.Controllers
 
         public IActionResult AddToCart(string productName, int productIndex)
         {
+            Userbase.LoadUser();
             for (int i = 0; i < CatalogViewModel.ListOfProducts.Count; i++)
             {
                 CatalogViewModel.ListOfProducts[i].AddedToCart = false;
