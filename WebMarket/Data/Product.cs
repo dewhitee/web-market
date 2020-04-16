@@ -22,7 +22,7 @@ namespace WebMarket.Data
         public string FirstImageLink { get => CardImageLink; }
         public string SecondImageLink { get; set; }
         public string ThirdImageLink { get; set; }
-        public bool IsBought { get; set; }
+        public bool IsBought { get => CatalogViewModel.CurrentUser.boughtProductIDs.Contains(ID.ToString());/* set;*/ }
         public bool OnlyRegisteredCanComment { get; set; }
         public bool OnlyOneCommentPerUser { get; set; }
         public bool AddedToCart { get; set; }
@@ -38,6 +38,7 @@ namespace WebMarket.Data
         public string LinkTableString { get => string.IsNullOrWhiteSpace(Link) ? "no link" : "yes"; }
         public string IsBoughtString { get => IsBought ? "Bought" : "+"; }
         public string IsAddedToCartString { get => AddedToCart ? "Added" : "+"; }
+
         public float GetRateAvg()
         {
             return GetRateSum() / Comments.Count;

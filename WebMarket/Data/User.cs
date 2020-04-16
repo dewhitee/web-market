@@ -30,7 +30,7 @@ namespace WebMarket.Data
             {
                 // todo: add and save product to profile
                 Money -= product.FinalPrice;
-                product.IsBought = true;
+                //product.IsBought = true;
                 boughtProductIDs.Add(product.ID.ToString());
                 Console.WriteLine($"{product.Name} is bought!");
             }
@@ -44,7 +44,8 @@ namespace WebMarket.Data
             if (product.IsBought)
             {
                 Money += product.FinalPrice;
-                product.IsBought = false;
+                //product.IsBought = false;
+                boughtProductIDs.Remove(product.ID.ToString());
                 Console.WriteLine($"{product.Name} is sold!");
             }
         }
