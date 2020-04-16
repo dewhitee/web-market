@@ -72,16 +72,6 @@ namespace WebMarket.Controllers
                 FindAndBuyProduct(productName);
                 return RedirectToAction("Catalog");
             }
-            //Product toBuy = new Product();
-            //foreach (var product in CatalogViewModel.ListOfProducts)
-            //{
-            //    if (product.Name == productName)
-            //    {
-            //        toBuy = product;
-            //        CatalogViewModel.CurrentUser.BuyProduct(toBuy);
-            //        break;
-            //    }
-            //}
             Buy(productName, productID);
             SaveUser();
             SaveProducts();
