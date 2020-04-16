@@ -61,6 +61,7 @@ namespace WebMarket.Data
                 ID = id,
                 Money = GetMoney()
             };
+            //LoadUser();
             AddUserNameIDBinding(User.Identity.Name, id);
             IsInitialized = true;
             //CatalogViewModel.CurrentUser.AddInitMoney();
@@ -113,13 +114,13 @@ namespace WebMarket.Data
             if (!File.Exists(saveUserFilePath))
                 File.Create(saveUserFilePath);
 
-            if (CatalogViewModel.CurrentUser == null)
-            {
+            //if (CatalogViewModel.CurrentUser == null)
+            //{
                 BinaryFormatter bf = new BinaryFormatter();
                 Stream stream = new FileStream(saveUserFilePath, FileMode.Open, FileAccess.Read);
                 CatalogViewModel.CurrentUser = (User)bf.Deserialize(stream);
                 stream.Close();
-            }
+            //}
             if (CatalogViewModel.CurrentUser.BoughtProductIDs == null)
                 CatalogViewModel.CurrentUser.BoughtProductIDs = new List<string>();
         }

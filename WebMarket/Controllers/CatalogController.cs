@@ -172,14 +172,6 @@ namespace WebMarket.Controllers
         public IActionResult SaveUser()
         {
             Userbase.SaveUser();
-            //BinaryFormatter bf = new BinaryFormatter();
-            //Stream stream = new FileStream(saveUserFilePath, FileMode.Open, FileAccess.Write);
-
-            //bf.Serialize(stream, CatalogViewModel.CurrentUser);
-            //stream.Close();
-
-            //Userbase.SaveMoney();
-
             return Ok();
         }
 
@@ -194,13 +186,6 @@ namespace WebMarket.Controllers
         public IActionResult LoadUser()
         {
             while (!Userbase.IsInitialized) { }
-            //if (CatalogViewModel.CurrentUser == null)
-            //{
-            //    BinaryFormatter bf = new BinaryFormatter();
-            //    Stream stream = new FileStream(saveUserFilePath, FileMode.Open, FileAccess.Read);
-            //    CatalogViewModel.CurrentUser = (User)bf.Deserialize(stream);
-            //    stream.Close();
-            //}
             Userbase.LoadUser();
             return Ok();
         }
