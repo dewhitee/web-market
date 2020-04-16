@@ -16,7 +16,7 @@ namespace WebMarket.Controllers
 
     public class CatalogController : Controller
     {
-        private string saveUserFilePath { get => @"D:\ASP.NET PROJECTS\WebMarket\data\user_" + CatalogViewModel.CurrentUser.Username + "_.dew"; }
+        //private string saveUserFilePath { get => @"D:\ASP.NET PROJECTS\WebMarket\data\user_" + CatalogViewModel.CurrentUser.Username + "_.dew"; }
 
         public IActionResult Catalog()
         {
@@ -171,19 +171,21 @@ namespace WebMarket.Controllers
         }
         public IActionResult SaveUser()
         {
-            BinaryFormatter bf = new BinaryFormatter();
-            Stream stream = new FileStream(saveUserFilePath, FileMode.Open, FileAccess.Write);
+            Userbase.SaveUser();
+            //BinaryFormatter bf = new BinaryFormatter();
+            //Stream stream = new FileStream(saveUserFilePath, FileMode.Open, FileAccess.Write);
 
-            bf.Serialize(stream, CatalogViewModel.CurrentUser);
-            stream.Close();
+            //bf.Serialize(stream, CatalogViewModel.CurrentUser);
+            //stream.Close();
 
-            Userbase.SaveMoney();
+            //Userbase.SaveMoney();
 
             return Ok();
         }
 
         public IActionResult LoadProducts()
         {
+            while (!Userbase.IsInitialized) { }
             CatalogViewModel.LoadProducts();
             LoadUser();
 
@@ -191,13 +193,15 @@ namespace WebMarket.Controllers
         }
         public IActionResult LoadUser()
         {
-            if (CatalogViewModel.CurrentUser == null)
-            {
-                BinaryFormatter bf = new BinaryFormatter();
-                Stream stream = new FileStream(saveUserFilePath, FileMode.Open, FileAccess.Read);
-                CatalogViewModel.CurrentUser = (User)bf.Deserialize(stream);
-                stream.Close();
-            }
+            while (!Userbase.IsInitialized) { }
+            //if (CatalogViewModel.CurrentUser == null)
+            //{
+            //    BinaryFormatter bf = new BinaryFormatter();
+            //    Stream stream = new FileStream(saveUserFilePath, FileMode.Open, FileAccess.Read);
+            //    CatalogViewModel.CurrentUser = (User)bf.Deserialize(stream);
+            //    stream.Close();
+            //}
+            Userbase.LoadUser();
             return Ok();
         }
 

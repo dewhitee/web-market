@@ -27,7 +27,7 @@ namespace WebMarket.Models
         public Product ToAdd { get; set; }
 
         private static string addedToCartProductsFilePath { get => @"D:\ASP.NET PROJECTS\WebMarket\data\addedtocartproducts_" + CurrentUser.Username + "_.dew"; }
-        private static string saveProductsFilePath { get => @"D:\ASP.NET PROJECTS\WebMarket\data\products_" + CurrentUser.Username + "_.dew"; }
+        private static string saveProductsFilePath { get => @"D:\ASP.NET PROJECTS\WebMarket\data\products.dew"; }
 
 
         public static CatalogViewVariant ViewVariant { get; set; }
@@ -181,11 +181,17 @@ namespace WebMarket.Models
 
         public static void LoadProducts()
         {
+            if (!File.Exists(saveProductsFilePath))
+                File.Create(saveProductsFilePath);
+
             BinaryFormatter bf = new BinaryFormatter();
             Stream stream = new FileStream(saveProductsFilePath, FileMode.Open, FileAccess.Read);
             if (stream.Length != 0)
                 ListOfProducts = (List<Product>)bf.Deserialize(stream);
             stream.Close();
+
+            if (!File.Exists(addedToCartProductsFilePath))
+                File.Create(addedToCartProductsFilePath);
 
             BinaryFormatter addedToCartFormatter = new BinaryFormatter();
             Stream addedToCartStream = new FileStream(addedToCartProductsFilePath, FileMode.Open, FileAccess.Read);
@@ -196,11 +202,17 @@ namespace WebMarket.Models
         }
         public static void SaveProducts()
         {
+            //if (!File.Exists(saveProductsFilePath))
+            //    File.Create(saveProductsFilePath);
+
             BinaryFormatter bf = new BinaryFormatter();
             Stream stream = new FileStream(saveProductsFilePath, FileMode.Open, FileAccess.Write);
 
             bf.Serialize(stream, ListOfProducts);
             stream.Close();
+
+            //if (!File.Exists(addedToCartProductsFilePath))
+            //    File.Create(addedToCartProductsFilePath);
 
             BinaryFormatter addedToCartFormatter = new BinaryFormatter();
             Stream addedToCartStream = new FileStream(addedToCartProductsFilePath, FileMode.Open, FileAccess.Write);
