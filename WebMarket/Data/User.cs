@@ -14,7 +14,7 @@ namespace WebMarket.Data
         public decimal Money { get; set; }
         public string MoneyString { get => Money.ToString("0.##") + "€"; }
 
-        public List<string> BoughtProductIDs { get; set; }
+        public List<string> BoughtProductIDs = new List<string>();
 
         public string Email { get; set; }
         public string FirstName { get; set; }
@@ -26,12 +26,13 @@ namespace WebMarket.Data
 
         public void BuyProduct(Product product)
         {
+            Userbase.LoadUser();
             if (Money >= product.FinalPrice && !product.IsBought)
             {
                 // todo: add and save product to profile
                 Money -= product.FinalPrice;
                 //product.IsBought = true;
-                BoughtProductIDs.Add(product.ID.ToString());
+                CatalogViewModel.CurrentUser.BoughtProductIDs.Add(product.ID.ToString());
                 Console.WriteLine($"{product.Name} is bought!");
             }
             else

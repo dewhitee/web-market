@@ -165,7 +165,7 @@ namespace WebMarket.Controllers
         public IActionResult SaveProducts()
         {
             CatalogViewModel.SaveProducts();
-            SaveUser();
+            //SaveUser();
 
             return Ok();
         }
