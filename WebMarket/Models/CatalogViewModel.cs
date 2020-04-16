@@ -26,8 +26,8 @@ namespace WebMarket.Models
         public List<Product> Products { get; set; }
         public Product ToAdd { get; set; }
 
-        private static readonly string addedToCartProductsFilePath = @"D:\ASP.NET PROJECTS\WebMarket\data\addedtocartproducts.dew";
-        private static readonly string saveProductsFilePath = @"D:\ASP.NET PROJECTS\WebMarket\data\products.dew";
+        private static string addedToCartProductsFilePath { get => @"D:\ASP.NET PROJECTS\WebMarket\data\addedtocartproducts_" + CurrentUser.Username + "_.dew"; }
+        private static string saveProductsFilePath { get => @"D:\ASP.NET PROJECTS\WebMarket\data\products_" + CurrentUser.Username + "_.dew"; }
 
 
         public static CatalogViewVariant ViewVariant { get; set; }

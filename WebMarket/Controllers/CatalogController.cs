@@ -16,7 +16,7 @@ namespace WebMarket.Controllers
 
     public class CatalogController : Controller
     {
-        private readonly string saveUserFilePath = @"D:\ASP.NET PROJECTS\WebMarket\data\user.dew";
+        private string saveUserFilePath { get => @"D:\ASP.NET PROJECTS\WebMarket\data\user_" + CatalogViewModel.CurrentUser.Username + "_.dew"; }
 
         public IActionResult Catalog()
         {
@@ -165,6 +165,7 @@ namespace WebMarket.Controllers
         public IActionResult SaveProducts()
         {
             CatalogViewModel.SaveProducts();
+            SaveUser();
 
             return Ok();
         }
@@ -184,6 +185,7 @@ namespace WebMarket.Controllers
         public IActionResult LoadProducts()
         {
             CatalogViewModel.LoadProducts();
+            LoadUser();
 
             return Ok();
         }
@@ -201,16 +203,6 @@ namespace WebMarket.Controllers
 
         public IActionResult AddToCart(string productName, int productIndex)
         {
-            ///productAdded.AddedToCart = true;
-            //foreach (var product in CatalogViewModel.ListOfProducts)
-            //{
-            //    product.AddedToCart = false;
-            //    if (product.Name == productName)
-            //    {
-            //        product.AddedToCart = true;
-            //        break;
-            //    }
-            //}
             for (int i = 0; i < CatalogViewModel.ListOfProducts.Count; i++)
             {
                 CatalogViewModel.ListOfProducts[i].AddedToCart = false;
