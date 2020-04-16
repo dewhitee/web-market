@@ -60,7 +60,7 @@ namespace WebMarket.Data
             AddUserNameIDBinding(User.Identity.Name, id);
             //CatalogViewModel.CurrentUser.AddInitMoney();
             //SaveMoney();
-            await Task.Delay(10);
+            await Task.Delay(1);
         }
         public static void LoadUserNameIDs()
         {

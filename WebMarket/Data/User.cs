@@ -14,6 +14,8 @@ namespace WebMarket.Data
         public decimal Money { get; set; }
         public string MoneyString { get => Money.ToString("0.##") + "€"; }
 
+        public List<string> boughtProductIDs = new List<string>();
+
         public string Email { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -29,6 +31,7 @@ namespace WebMarket.Data
                 // todo: add and save product to profile
                 Money -= product.FinalPrice;
                 product.IsBought = true;
+                boughtProductIDs.Add(product.ID.ToString());
                 Console.WriteLine($"{product.Name} is bought!");
             }
             else
