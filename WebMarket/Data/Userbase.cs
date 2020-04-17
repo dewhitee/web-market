@@ -118,6 +118,7 @@ namespace WebMarket.Data
             //{
                 BinaryFormatter bf = new BinaryFormatter();
                 Stream stream = new FileStream(saveUserFilePath, FileMode.Open, FileAccess.Read);
+            if (stream.Length != 0)
                 CatalogViewModel.CurrentUser = (User)bf.Deserialize(stream);
                 stream.Close();
             //}
