@@ -11,5 +11,7 @@ namespace WebMarket.Data
         public string Text { get; set; }
         public string UserID { get; set; }
         public float Rate { get; set; }
+
+        public uint Stars { get => (uint)Math.Truncate((decimal)Rate); }
     }
 }

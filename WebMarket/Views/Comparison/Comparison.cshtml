@@ -3,9 +3,6 @@
     ViewData["Title"] = "Comparison";
 }
 
-<style>
-</style>
-
 <script>
     //$(document).ready(function () {
     //    $("#lproductName")
@@ -46,9 +43,31 @@
     //    });
     //}) 
 
+
+    //function setStarsWidth(index) {
+    //    let stars_id = ".bar-" + index;
+    //    $(stard_id).css("width", "10px")
+    //}
+
+    $(document).ready(function () {
+        $("lbar").each(function (index, element) {
+            switch (index) {
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+            }
+            $(element.id).css("width");
+        });
+    }
+
 </script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="~/js/ratingtable.js" type="text/javascript" />
+<link href="~/css/ratingtable.css" rel="stylesheet" type="text/css" />
 <style>
     .checked {
         color: orange;
@@ -247,6 +266,66 @@
                                     <i class="fa fa-star not-checked"></i>
                                 }
                             }
+                            <div id="left-rating-table">
+                                <div class="row">
+                                    <div class="side">
+                                        <div>5 star</div>
+                                    </div>
+                                    <div class="middle">
+                                        <div class="bar-container">
+                                            <div class="bar-5 lbar" id="lbar-5"></div>
+                                        </div>
+                                    </div>
+                                    <div class="side right">
+                                        <div>@leftProduct.GetStarsCount(5)</div>
+                                    </div>
+                                    <div class="side">
+                                        <div>4 star</div>
+                                    </div>
+                                    <div class="middle">
+                                        <div class="bar-container">
+                                            <div class="bar-4 lbar" id="lbar-4"></div>
+                                        </div>
+                                    </div>
+                                    <div class="side right">
+                                        <div>@leftProduct.GetStarsCount(4)</div>
+                                    </div>
+                                    <div class="side">
+                                        <div>3 star</div>
+                                    </div>
+                                    <div class="middle">
+                                        <div class="bar-container">
+                                            <div class="bar-3 lbar" id="lbar-3"></div>
+                                        </div>
+                                    </div>
+                                    <div class="side right">
+                                        <div>@leftProduct.GetStarsCount(3)</div>
+                                    </div>
+                                    <div class="side">
+                                        <div>2 star</div>
+                                    </div>
+                                    <div class="middle">
+                                        <div class="bar-container">
+                                            <div class="bar-2 lbar" id="lbar-2"></div>
+                                        </div>
+                                    </div>
+                                    <div class="side right">
+                                        <div>@leftProduct.GetStarsCount(2)</div>
+                                    </div>
+                                    <div class="side">
+                                        <div>1 star</div>
+                                    </div>
+                                    <div class="middle">
+                                        <div class="bar-container">
+                                            <div class="bar-1 lbar" id="lbar-1"></div>
+                                        </div>
+                                    </div>
+                                    <div class="side right">
+                                        <div>@leftProduct.GetStarsCount(1)</div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                         <div class="card-body" style="transform:rotate(0);">
                             @{

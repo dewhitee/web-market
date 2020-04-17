@@ -58,6 +58,32 @@ namespace WebMarket.Data
             }
             return sum;
         }
+        public int GetStarsCount(int stars)
+        {
+            if (stars > 5) return -1;
+            int count = 0;
+            foreach (var i in Comments)
+            {
+                if (Math.Truncate((decimal)i.Rate) == stars)
+                    count++;
+            }
+            return count;
+        }
+        public float GetStarsPercent(int stars)
+        {
+            if (stars > 5) return -1f;
+            return GetStarsCount(stars) / GetTotalStarsCount();
+        }
+        public uint GetTotalStarsCount()
+        {
+            uint count = 0;
+            foreach (var i in Comments)
+            {
+                count += i.Stars;
+            }
+            return count;
+        }
+        
         public static int MakeNewID()
         {
             Random random = new Random();
