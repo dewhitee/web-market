@@ -12,8 +12,13 @@
     width: 70%;
 }
 
+.left {
+    padding-left: 2rem;
+}
+
 /* Place text to the right */
 .right {
+    padding-right: 2.5rem;
     text-align: right;
 }
 
