@@ -138,7 +138,7 @@ namespace WebMarket.Controllers
                 product.Comments.Add(new UserComment
                 {
                     Text = commentSection,
-                    UserID = CatalogViewModel.CurrentUser.ID,
+                    UserID = /*CatalogViewModel.CurrentUser.Username != "" ? */CatalogViewModel.CurrentUser.ID/* : "Unknown"*/,
                     Rate = rating
                 });
             }

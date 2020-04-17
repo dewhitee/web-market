@@ -12,6 +12,7 @@ namespace WebMarket.Data
 {
     public class Userbase
     {
+        [Serializable]
         public struct UserNameIDBinding
         {
             public string id;
@@ -82,6 +83,17 @@ namespace WebMarket.Data
             stream.Close();
             UserNameIDs = usernameids;
             //await Task.Delay(10);
+        }
+        public static void SaveUserNameIDs()
+        {
+            if (!File.Exists(usernameidsFilePath))
+                File.Create(usernameidsFilePath);
+
+            BinaryFormatter bf = new BinaryFormatter();
+            Stream stream = new FileStream(usernameidsFilePath, FileMode.Open, FileAccess.Write);
+
+            bf.Serialize(stream, UserNameIDs);
+            stream.Close();
         }
         public static string GetUsername(string id)
         {
@@ -161,6 +173,7 @@ namespace WebMarket.Data
             {
                 UserNameIDs.Add(newBinding);
             }
+            SaveUserNameIDs();
         }
 
     }
