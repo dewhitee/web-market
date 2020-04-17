@@ -72,7 +72,8 @@ namespace WebMarket.Data
         public float GetStarsPercent(int stars)
         {
             if (stars > 5) return -1f;
-            return GetStarsCount(stars) / GetTotalStarsCount();
+            var starsCount = GetStarsCount(stars);
+            return starsCount <= 0 ? starsCount : starsCount / GetTotalStarsCount();
         }
         public uint GetTotalStarsCount()
         {

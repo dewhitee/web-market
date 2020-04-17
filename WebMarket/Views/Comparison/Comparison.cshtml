@@ -3,7 +3,13 @@
     ViewData["Title"] = "Comparison";
 }
 
-    <script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="~/js/ratingtable.js" type="text/javascript" />
+<link href="~/css/ratingtable.css" rel="stylesheet" type="text/css" />
+
+<script>
     //$(document).ready(function () {
     //    $("#lproductName")
     //})
@@ -50,51 +56,45 @@
     //}
 
     function getLeftFinalWidth(index) {
+        if (@ComparisonViewModel.LeftProduct == null) return 0;
         switch (index) {
-            case 1: return @ComparisonViewModel.LeftProduct.GetStarsPercent(1);
-            case 2: return @ComparisonViewModel.LeftProduct.GetStarsPercent(2);
-            case 3: return @ComparisonViewModel.LeftProduct.GetStarsPercent(3);
-            case 4: return @ComparisonViewModel.LeftProduct.GetStarsPercent(4);
-            case 5: return @ComparisonViewModel.LeftProduct.GetStarsPercent(5);
+            case 1: return @ComparisonViewModel.LeftProduct?.GetStarsPercent(1);
+            case 2: return @ComparisonViewModel.LeftProduct?.GetStarsPercent(2);
+            case 3: return @ComparisonViewModel.LeftProduct?.GetStarsPercent(3);
+            case 4: return @ComparisonViewModel.LeftProduct?.GetStarsPercent(4);
+            case 5: return @ComparisonViewModel.LeftProduct?.GetStarsPercent(5);
         }
     }
     function getRightFinalWidth(index) {
+        if (@ComparisonViewModel.RightProduct == null) return 0;
         switch (index) {
-            case 1: return @ComparisonViewModel.RightProduct.GetStarsPercent(1);
-            case 2: return @ComparisonViewModel.RightProduct.GetStarsPercent(2);
-            case 3: return @ComparisonViewModel.RightProduct.GetStarsPercent(3);
-            case 4: return @ComparisonViewModel.RightProduct.GetStarsPercent(4);
-            case 5: return @ComparisonViewModel.RightProduct.GetStarsPercent(5);
+            case 1: return @ComparisonViewModel.RightProduct?.GetStarsPercent(1);
+            case 2: return @ComparisonViewModel.RightProduct?.GetStarsPercent(2);
+            case 3: return @ComparisonViewModel.RightProduct?.GetStarsPercent(3);
+            case 4: return @ComparisonViewModel.RightProduct?.GetStarsPercent(4);
+            case 5: return @ComparisonViewModel.RightProduct?.GetStarsPercent(5);
         }
     }
 
-    $(document).ready(function () {
+    $(document).ready(function() {
+        //if ($("lproductName").val().length == 0 || $("rproductName").val().length == 0) return;
+        alert("Doc is ready!");
         $("lbar").each(function (index, element) {
-            switch (index) {
-                case 1:
-                    break;
-                case 2:
-                    break;
-                case 3:
-                    break;
-                case 4:
-                    break;
-                case 5:
-                    break;
-            }
-            $(element.id).css("width");
+            alert(getLeftFinalWidth(index));
+            $(element.id).css("width", getLeftFinalWidth(index));
+        });
+        $("rbar").each(function (index, element) {
+            alert(getRightFinalWidth(index));
+            $(element.id).css("width", getRightFinalWidth(index));
         });
     }
 
-    </script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link href="~/js/ratingtable.js" type="text/javascript" />
-<link href="~/css/ratingtable.css" rel="stylesheet" type="text/css" />
+</script>
 <style>
     .checked {
         color: orange;
     }
+
     .not-checked {
         color: #ddd;
     }
@@ -409,7 +409,7 @@
                                         <p>@comment.Text</p>
                                         for (int i = 0; i < 5; i++)
                                         {
-                                            if (comment.Rate >= i+1)
+                                            if (comment.Rate >= i + 1)
                                             {
                                                 <i class="fa fa-star checked"></i>
                                             }
