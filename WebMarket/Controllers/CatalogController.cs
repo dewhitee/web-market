@@ -36,7 +36,8 @@ namespace WebMarket.Controllers
         }
 
         public IActionResult AddProduct(string productName, string productType, decimal productCost, float productDiscount, string productDescription,
-            string productImageLink, string secondImageLink, string thirdImageLink, string productLink)
+            string productImageLink, string productImageDescription, string secondImageLink, string secondImageDescription, string thirdImageLink,
+            string thirdImageDescription, string productLink)
         {
             int integralCost = (int)Math.Truncate(productCost);
             int fractionalCost = (int)(productCost - integralCost);
@@ -53,9 +54,22 @@ namespace WebMarket.Controllers
                     CostFractional = fractionalCost,
                     Discount = productDiscount,
                     Description = (productDescription != null && productDescription.Length > 0) ? productDescription : "test description",
-                    CardImageLink = (productImageLink != null && productImageLink.Length > 0) ? productImageLink : "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg",
-                    SecondImageLink = secondImageLink,
-                    ThirdImageLink = thirdImageLink,
+                    //CardImageLink = (productImageLink != null && productImageLink.Length > 0) ? productImageLink : "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg",
+                    //SecondImageLink = secondImageLink,
+                    //ThirdImageLink = thirdImageLink,
+                    FirstImage = new Product.Image {
+                        Link = (productImageLink != null && productImageLink.Length > 0) ? productImageLink
+                        : "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg",
+                        Description = productImageDescription
+                    },
+                    SecondImage = new Product.Image {
+                        Link = secondImageLink,
+                        Description = secondImageDescription
+                    },
+                    ThirdImage = new Product.Image {
+                        Link = thirdImageLink,
+                        Description = thirdImageDescription
+                    },
                     Link = productLink,
                     AddedDate = DateTime.Today
                 });

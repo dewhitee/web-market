@@ -9,6 +9,12 @@ namespace WebMarket.Data
     [Serializable]
     public class Product
     {
+        [Serializable]
+        public struct Image
+        {
+            public string Link;
+            public string Description;
+        }
         public int ID { get; set; }
         public string Name { get; set; }
         public string Type { get; set; }
@@ -19,6 +25,9 @@ namespace WebMarket.Data
         public string Description { get; set; }
         public string Link { get; set; }
         public string CardImageLink { get; set; }
+        public Image FirstImage { get; set; }
+        public Image SecondImage { get; set; }
+        public Image ThirdImage { get; set; }
         public string FirstImageLink { get => CardImageLink; }
         public string SecondImageLink { get; set; }
         public string ThirdImageLink { get; set; }
@@ -127,29 +136,33 @@ namespace WebMarket.Data
             {
                 return CardImageLink.Length > 0 ? CardImageLink : "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg";
             }
+            else if (FirstImage.Link.Length > 0)
+            {
+                return FirstImage.Link;
+            }
             else return "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg";
         }
         public string GetFirstImageSrc()
         {
-            if (FirstImageLink != null)
+            if (FirstImage.Link != null)
             {
-                return FirstImageLink.Length > 0 ? FirstImageLink : "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg";
+                return FirstImage.Link.Length > 0 ? FirstImage.Link : "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg";
             }
             else return "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg";
         }
         public string GetSecondImageSrc()
         {
-            if (SecondImageLink != null)
+            if (SecondImage.Link != null)
             {
-                return SecondImageLink.Length > 0 ? SecondImageLink : "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg";
+                return SecondImage.Link.Length > 0 ? SecondImage.Link : "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg";
             }
             else return "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg";
         }
         public string GetThirdImageSrc()
         {
-            if (ThirdImageLink != null)
+            if (ThirdImage.Link != null)
             {
-                return ThirdImageLink.Length > 0 ? ThirdImageLink : "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg";
+                return ThirdImage.Link.Length > 0 ? ThirdImage.Link : "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg";
             }
             else return "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg";
         }
