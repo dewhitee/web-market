@@ -1,10 +1,16 @@
 ﻿
 /* Carousel image classes */
 .catalog-img {
-    width: 18%;
-    max-height: 400px;
+    width: 100%;
+    object-fit: cover;
+    height: 320px;
+    /*max-height: 320px !important;
     margin-right: auto;
     margin-left: auto;
     min-width: 200px;
-    max-width: 350px;
+    z-index: 2;*/
+}
+
+.catalog-background-img {
+    z-index: 1;
 }
