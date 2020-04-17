@@ -17,14 +17,12 @@
     //});
     $(document).ready(function() {
         //if ($("lproductName").val().length == 0 || $("rproductName").val().length == 0) return;
-        alert("Doc is ready!");
-        $(".lbar").each(function (index, element) {
-            //alert(getLeftFinalWidth(index));
-            $(element.id).css("width", getLeftFinalWidth(index));
+        //alert("Doc is ready!");
+        $($(".lbar").get().reverse()).each(function (index, element) {
+            $(element).width(getLeftFinalWidth(index+1)*100 + '%');
         });
-        $(".rbar").each(function (index, element) {
-            //alert(getRightFinalWidth(index));
-            $(element.id).css("width", getRightFinalWidth(index));
+        $($(".rbar").get().reverse()).each(function (index, element) {
+            $(element).width(getRightFinalWidth(index+1)*100 + '%');
         });
     });
     

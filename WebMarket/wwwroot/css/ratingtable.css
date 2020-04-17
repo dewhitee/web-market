@@ -46,6 +46,14 @@
     width: 10%;
 }*/
 
+.lbar {
+    width: 100%;
+}
+
+.rbar {
+    width: 100%;
+}
+
 .bar-4 {
     width: 30%;
     height: 18px;

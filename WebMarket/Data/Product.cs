@@ -69,13 +69,25 @@ namespace WebMarket.Data
             }
             return count;
         }
+        public uint GetTotalCountOfNotNulledComments()
+        {
+            uint count = 0;
+            foreach (var i in Comments)
+            {
+                if (i.Rate != 0f)
+                    count++;
+            }
+            return count;
+        }
         public float GetStarsPercent(int stars)
         {
             Console.WriteLine($"Getting stars percent for {stars} stars...");
-            if (stars > 5) return -1f;
-            var starsCount = GetStarsCount(stars);
-            Console.WriteLine($"Final stars count is {starsCount}. This is {(starsCount <= 0 ? starsCount : starsCount / GetTotalStarsCount())} percent from the total amount of stars.");
-            return starsCount <= 0 ? 0f : starsCount / GetTotalStarsCount();
+            if (stars > 5) return 0f;
+            float starsCount = GetStarsCount(stars);
+            //float totalStarsCount = GetTotalStarsCount();
+            float totalComments = GetTotalCountOfNotNulledComments();
+            Console.WriteLine($"Final stars count is {starsCount}. This is {(starsCount <= 0 ? starsCount : starsCount / totalComments)} percent from the total amount of stars.");
+            return starsCount <= 0 ? 0f : starsCount / totalComments;
         }
         public uint GetTotalStarsCount()
         {
