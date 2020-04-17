@@ -9,8 +9,13 @@
     margin-left: auto;
     min-width: 200px;
     z-index: 2;*/
+    transition: box-shadow .3s ease-out;
 }
 
 .catalog-background-img {
     z-index: 1;
+}
+
+.catalog-img:hover {
+    box-shadow: inset 0 0 0 100vw rgba(0,0,0,0.2);
 }
