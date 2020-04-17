@@ -6,57 +6,29 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link href="~/js/ratingtable.js" type="text/javascript" />
 <link href="~/css/ratingtable.css" rel="stylesheet" type="text/css" />
 
+
+<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+@*<link href="~/js/ratingtable.js" type="text/javascript" />*@
 <script>
     //$(document).ready(function () {
-    //    $("#lproductName")
-    //})
-    function rfindSimilar() {
-        var str = $("#rproductName").val();
-        var products = @CatalogViewModel.ListOfProducts;
-        @*@{
-            @CatalogViewModel.AutocompleteProduct($("#rproductName").val());
-
-        }*@
-    }
-    function lfindSimilar() {
-        var str = $("#lproductName").val();
-        //alert(str);
-    }
-
-    //! here will be js code for handling autocompletion on search
-    //$(document).ready(function () {
-    //    $("#CityName").autocomplete({
-    //        source: function (request, response) {
-    //            $.ajax({
-    //                url: "/Home/Index",
-    //                type: "POST",
-    //                dataType: "json",
-    //                data: { Prefix: request.term },
-    //                success: function (data) {
-    //                    response($.map(data, function (item) {
-    //                        return { label: item.CityName, value: item.CityName };
-    //                    }))
-
-    //                }
-    //            })
-    //        },
-    //        messages: {
-    //            noResults: "", results: ""
-    //        }
-    //    });
-    //})
-
-
-    //function setStarsWidth(index) {
-    //    let stars_id = ".bar-" + index;
-    //    $(stard_id).css("width", "10px")
-    //}
-
+    //    alert("HELLO");
+    //});
+    $(document).ready(function() {
+        //if ($("lproductName").val().length == 0 || $("rproductName").val().length == 0) return;
+        alert("Doc is ready!");
+        $(".lbar").each(function (index, element) {
+            //alert(getLeftFinalWidth(index));
+            $(element.id).css("width", getLeftFinalWidth(index));
+        });
+        $(".rbar").each(function (index, element) {
+            //alert(getRightFinalWidth(index));
+            $(element.id).css("width", getRightFinalWidth(index));
+        });
+    });
+    
     function getLeftFinalWidth(index) {
-        if (@ComparisonViewModel.LeftProduct == null) return 0;
         switch (index) {
             case 1: return @ComparisonViewModel.LeftProduct?.GetStarsPercent(1);
             case 2: return @ComparisonViewModel.LeftProduct?.GetStarsPercent(2);
@@ -64,9 +36,9 @@
             case 4: return @ComparisonViewModel.LeftProduct?.GetStarsPercent(4);
             case 5: return @ComparisonViewModel.LeftProduct?.GetStarsPercent(5);
         }
-    }
+    };
     function getRightFinalWidth(index) {
-        if (@ComparisonViewModel.RightProduct == null) return 0;
+        
         switch (index) {
             case 1: return @ComparisonViewModel.RightProduct?.GetStarsPercent(1);
             case 2: return @ComparisonViewModel.RightProduct?.GetStarsPercent(2);
@@ -74,20 +46,7 @@
             case 4: return @ComparisonViewModel.RightProduct?.GetStarsPercent(4);
             case 5: return @ComparisonViewModel.RightProduct?.GetStarsPercent(5);
         }
-    }
-
-    $(document).ready(function() {
-        //if ($("lproductName").val().length == 0 || $("rproductName").val().length == 0) return;
-        alert("Doc is ready!");
-        $("lbar").each(function (index, element) {
-            alert(getLeftFinalWidth(index));
-            $(element.id).css("width", getLeftFinalWidth(index));
-        });
-        $("rbar").each(function (index, element) {
-            alert(getRightFinalWidth(index));
-            $(element.id).css("width", getRightFinalWidth(index));
-        });
-    }
+    };
 
 </script>
 <style>
@@ -398,6 +357,65 @@
                                     <i class="fa fa-star not-checked"></i>
                                 }
                             }
+                            <div id="right-rating-table">
+                                <div class="row">
+                                    <div class="side">
+                                        <div>5 star</div>
+                                    </div>
+                                    <div class="middle">
+                                        <div class="bar-container">
+                                            <div class="bar-5 rbar" id="rbar-5"></div>
+                                        </div>
+                                    </div>
+                                    <div class="side right">
+                                        <div>@rightProduct.GetStarsCount(5)</div>
+                                    </div>
+                                    <div class="side">
+                                        <div>4 star</div>
+                                    </div>
+                                    <div class="middle">
+                                        <div class="bar-container">
+                                            <div class="bar-4 rbar" id="rbar-4"></div>
+                                        </div>
+                                    </div>
+                                    <div class="side right">
+                                        <div>@rightProduct.GetStarsCount(4)</div>
+                                    </div>
+                                    <div class="side">
+                                        <div>3 star</div>
+                                    </div>
+                                    <div class="middle">
+                                        <div class="bar-container">
+                                            <div class="bar-3 rbar" id="rbar-3"></div>
+                                        </div>
+                                    </div>
+                                    <div class="side right">
+                                        <div>@rightProduct.GetStarsCount(3)</div>
+                                    </div>
+                                    <div class="side">
+                                        <div>2 star</div>
+                                    </div>
+                                    <div class="middle">
+                                        <div class="bar-container">
+                                            <div class="bar-2 rbar" id="rbar-2"></div>
+                                        </div>
+                                    </div>
+                                    <div class="side right">
+                                        <div>@rightProduct.GetStarsCount(2)</div>
+                                    </div>
+                                    <div class="side">
+                                        <div>1 star</div>
+                                    </div>
+                                    <div class="middle">
+                                        <div class="bar-container">
+                                            <div class="bar-1 rbar" id="rbar-1"></div>
+                                        </div>
+                                    </div>
+                                    <div class="side right">
+                                        <div>@rightProduct.GetStarsCount(1)</div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="card-body" style="transform:rotate(0);">
                             @{

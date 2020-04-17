@@ -12,50 +12,20 @@
 
 <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
 <script type="text/javascript">
-    //$(document).ready(function (clicked_id) {
-    //    $("#card_" + clicked_id).click(function () {
-    //        $("#card_").addClass("bg-dark text-white");
-    //    });
+
+    //$(document).ready(function () {
+    //    alert("HELLO");
     //})
+    
     function onClickedCard(clicked_id) {
-        //$("#card_" + clicked_id).click(function () {
-        //    if ($("#card_header_" + clicked_id).hasClass("bg-dark text-white")) {
-        //        $("#card_header_" + clicked_id).removeClass("bg-dark text-white");
-        //    }
-        //    else $("#card_header_" + clicked_id).addClass("bg-dark text-white");
-
-        //    if ($("#card_footer_" + clicked_id).hasClass("bg-dark text-white")) {
-        //        $("#card_footer_" + clicked_id).removeClass("bg-dark text-white");
-        //    }
-        //    else $("#card_footer_" + clicked_id).addClass("bg-dark text-white");
-        //})
-
-        //! then set this card as selected in C# code:
-        //var tempVar = CatalogViewModel.ListOfProducts[ tempVar ];
     }
 
     function addOnHoverDiv(hovered_id) {
         let card_id = "#card_expand_" + hovered_id;
-
-        //$(card_id).after("<div class='expanded-div w-100 p-3'>");
-        //$(card_id).after("<a href='@@product.Link' class='expanded-a'>Add to favourites</p>");
-        //$(card_id).after("<p class='expanded-p w-100 p-3 text-muted'>Add to favourites</p>");
-        //$(card_id).after("<button class='expanded-btn w-50 p-3 btn btn-outline-primary'><img src='data/icons/shopping-cart' alt='noimg'></button>");
-        //$(card_id).after("<button class='expanded-btn w-50 p-3 btn btn-outline-primary'><img src='data/icons/shopping-cart' alt='noimg'></button>");
-        //$(card_id).after("</div>");
     }
     function onHoveredCard(hovered_id) {
-        //setTimeout(addOnHoverDiv, 1, hovered_id);
     }
     function onHoveredCardOut(hovered_id) {
-        //setTimeout(function () {
-        //    let card_id = "#card_expand_" + hovered_id;
-        //    $(".expanded-p").remove();
-        //    $(".expanded-a").remove();
-        //    $(".expanded-btn").remove();
-        //    $(".expanded-div").remove();
-        //}, 1);
-        //alert("HELLO!");
     }
 
     function onHoveredButton(hovered_id) {

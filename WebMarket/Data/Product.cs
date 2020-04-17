@@ -71,9 +71,11 @@ namespace WebMarket.Data
         }
         public float GetStarsPercent(int stars)
         {
+            Console.WriteLine($"Getting stars percent for {stars} stars...");
             if (stars > 5) return -1f;
             var starsCount = GetStarsCount(stars);
-            return starsCount <= 0 ? starsCount : starsCount / GetTotalStarsCount();
+            Console.WriteLine($"Final stars count is {starsCount}. This is {(starsCount <= 0 ? starsCount : starsCount / GetTotalStarsCount())} percent from the total amount of stars.");
+            return starsCount <= 0 ? 0f : starsCount / GetTotalStarsCount();
         }
         public uint GetTotalStarsCount()
         {
