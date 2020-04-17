@@ -13,12 +13,12 @@
 }
 
 .left {
-    padding-left: 2rem;
+    padding-left: 1rem;
 }
 
 /* Place text to the right */
 .right {
-    padding-right: 2.5rem;
+    padding-right: 3rem;
     text-align: right;
 }
 
