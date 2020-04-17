@@ -3,7 +3,7 @@
     ViewData["Title"] = "Comparison";
 }
 
-<script>
+    <script>
     //$(document).ready(function () {
     //    $("#lproductName")
     //})
@@ -41,13 +41,32 @@
     //            noResults: "", results: ""
     //        }
     //    });
-    //}) 
+    //})
 
 
     //function setStarsWidth(index) {
     //    let stars_id = ".bar-" + index;
     //    $(stard_id).css("width", "10px")
     //}
+
+    function getLeftFinalWidth(index) {
+        switch (index) {
+            case 1: return @ComparisonViewModel.LeftProduct.GetStarsPercent(1);
+            case 2: return @ComparisonViewModel.LeftProduct.GetStarsPercent(2);
+            case 3: return @ComparisonViewModel.LeftProduct.GetStarsPercent(3);
+            case 4: return @ComparisonViewModel.LeftProduct.GetStarsPercent(4);
+            case 5: return @ComparisonViewModel.LeftProduct.GetStarsPercent(5);
+        }
+    }
+    function getRightFinalWidth(index) {
+        switch (index) {
+            case 1: return @ComparisonViewModel.RightProduct.GetStarsPercent(1);
+            case 2: return @ComparisonViewModel.RightProduct.GetStarsPercent(2);
+            case 3: return @ComparisonViewModel.RightProduct.GetStarsPercent(3);
+            case 4: return @ComparisonViewModel.RightProduct.GetStarsPercent(4);
+            case 5: return @ComparisonViewModel.RightProduct.GetStarsPercent(5);
+        }
+    }
 
     $(document).ready(function () {
         $("lbar").each(function (index, element) {
@@ -58,12 +77,16 @@
                     break;
                 case 3:
                     break;
+                case 4:
+                    break;
+                case 5:
+                    break;
             }
             $(element.id).css("width");
         });
     }
 
-</script>
+    </script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link href="~/js/ratingtable.js" type="text/javascript" />
