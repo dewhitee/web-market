@@ -1,0 +1,10 @@
+﻿
+/* Carousel image classes */
+.catalog-img {
+    width: 18%;
+    max-height: 400px;
+    margin-right: auto;
+    margin-left: auto;
+    min-width: 200px;
+    max-width: 350px;
+}
