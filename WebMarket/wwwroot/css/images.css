@@ -23,7 +23,7 @@
     background-position:center;*/
     border-top-left-radius: calc(.25rem - 1px);
     border-top-right-radius: calc(.25rem - 1px);
-    transition: 0.2s;
+    transition: 1s;
 }
     .hoverable-img img {
         transition: 0.2s;
@@ -33,41 +33,23 @@
         color: rgba(0,0,0,0.6);
         transform: scale(1.025);
         opacity: 0.8;
-        filter: brightness(80%);
+        filter: brightness(50%);
     }
-    .hoverable-img:before {
-        /*background-color: rgba(0,0,0,0.3);
-        content: attr(data-title);
-        transition: 0.5s 0.1s;
-        color: #fff;*/
+    .hoverable-img p {
+        transition: 0.3s;
     }
-    .hoverable-img:after {
-        /*content: attr(data-title);
-        transition: 0.5s;
+    .hoverable-img:hover p {
         color: #fff;
-        opacity: 0;*/
-        /*text-align: center;
-        content: attr(data-text);*/
+        text-shadow: 2px 2px rgba(0,0,0,0.2);
     }
-    .hoverable-img:hover:before {
-        /*transform: translateY(0);
-        padding: 8px;
-        background-color: rgba(0,0,0,0.6);
-        transition: 0.5s;*/
-    }
-    .hoverable-img:hover:after {
-        /*transform: translateY(0);
-        transition: 0.5s 0.1s;
-        opacity: 1;*/
-    }
-
     .hoverable-img .catalog-img {
         z-index: 0;
     }
-    
-    .hoverable-img-p {
-        text-shadow: 2px 2px rgba(0,0,0,0.2);
-    }
+
+.hoverable-img-p {
+    color: transparent;
+    /*text-shadow: 2px 2px rgba(0,0,0,0.2);*/
+}
     
     .hoverable-img .card-text {
         text-align: center;
