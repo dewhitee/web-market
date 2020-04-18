@@ -90,14 +90,23 @@
                     <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
                 </ol>
                 <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img class="d-block w-100 catalog-img catalog-buy" src="@product.GetFirstImageSrc()" alt="First slide">
+                    <div class="carousel-item active hoverable-img">
+                        <div class="carousel-caption d-none d-md-block">
+                            <p class="hoverable-img-p">@product.FirstImage.Description</p>
+                        </div>
+                        <img class="d-block w-100 img-fluid catalog-img catalog-buy" src="@product.GetFirstImageSrc()" alt="First slide">
                     </div>
-                    <div class="carousel-item">
-                        <img class="d-block w-100 catalog-img catalog-buy" src="@product.GetSecondImageSrc()" alt="Second slide">
+                    <div class="carousel-item hoverable-img">
+                        <div class="carousel-caption d-none d-md-block">
+                            <p class="hoverable-img-p">@product.SecondImage.Description</p>
+                        </div>
+                        <img class="d-block w-100 img-fluid catalog-img catalog-buy" src="@product.GetSecondImageSrc()" alt="Second slide">
                     </div>
-                    <div class="carousel-item">
-                        <img class="d-block w-100 catalog-img catalog-buy" src="@product.GetThirdImageSrc()" alt="Third slide">
+                    <div class="carousel-item hoverable-img">
+                        <div class="carousel-caption d-none d-md-block">
+                            <p class="hoverable-img-p">@product.ThirdImage.Description</p>
+                        </div>
+                        <img class="d-block w-100 img-fluid catalog-img catalog-buy" src="@product.GetThirdImageSrc()" alt="Third slide">
                     </div>
                 </div>
                 <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
