@@ -53,6 +53,7 @@
             case 5: return @ComparisonViewModel.RightProduct?.GetStarsPercent(5);
         }
     };
+
 </script>
 <style>
     .checked {
@@ -63,6 +64,7 @@
         color: #ddd;
     }
 </style>
+
 <form asp-controller="Comparison" asp-area="" asp-action="FindProducts" method="post">
     <div class="form-group">
         <label for="lproductName">Left product name</label>
@@ -101,13 +103,13 @@
                                 </ol>
                                 <div class="carousel-inner">
                                     <div class="carousel-item active">
-                                        <img class="d-block w-100 img-fluid catalog-img"  id="img-left-0" onmouseover="onHoveredLeftImg(0)" onmouseout="onHoveredLeftImgOut(0)" src="@leftProduct.GetFirstImageSrc()" alt="First slide">
+                                        <img class="d-block w-100 img-fluid catalog-img catalog-comp"  id="img-left-0" onmouseover="onHoveredLeftImg(0)" onmouseout="onHoveredLeftImgOut(0)" src="@leftProduct.GetFirstImageSrc()" alt="First slide">
                                     </div>
                                     <div class="carousel-item">
-                                        <img class="d-block w-100 img-fluid catalog-img"  id="img-left-0" onmouseover="onHoveredLeftImg(1)" onmouseout="onHoveredLeftImgOut(1)" src="@leftProduct.GetSecondImageSrc()" alt="Second slide">
+                                        <img class="d-block w-100 img-fluid catalog-img catalog-comp"  id="img-left-0" onmouseover="onHoveredLeftImg(1)" onmouseout="onHoveredLeftImgOut(1)" src="@leftProduct.GetSecondImageSrc()" alt="Second slide">
                                     </div>
                                     <div class="carousel-item">
-                                        <img class="d-block w-100 img-fluid catalog-img"  id="img-left-0" onmouseover="onHoveredLeftImg(2)" onmouseout="onHoveredLeftImgOut(2)" src="@leftProduct.GetThirdImageSrc()" alt="Third slide">
+                                        <img class="d-block w-100 img-fluid catalog-img catalog-comp"  id="img-left-0" onmouseover="onHoveredLeftImg(2)" onmouseout="onHoveredLeftImgOut(2)" src="@leftProduct.GetThirdImageSrc()" alt="Third slide">
                                     </div>
                                 </div>
                                 <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -185,13 +187,13 @@
                                 </ol>
                                 <div class="carousel-inner">
                                     <div class="carousel-item active">
-                                        <img class="d-block w-100 img-fluid catalog-img" id="img-right-0" onmouseover="onHoveredRightImg(0)" onmouseout="onHoveredRightImgOut(0)" src="@rightProduct.GetFirstImageSrc()" alt="First slide">
+                                        <img class="d-block w-100 img-fluid catalog-img catalog-comp" id="img-right-0" onmouseover="onHoveredRightImg(0)" onmouseout="onHoveredRightImgOut(0)" src="@rightProduct.GetFirstImageSrc()" alt="First slide">
                                     </div>
                                     <div class="carousel-item">
-                                        <img class="d-block w-100 img-fluid catalog-img" id="img-right-1" onmouseover="onHoveredRightImg(1)" onmouseout="onHoveredRightImgOut(1)" src="@rightProduct.GetSecondImageSrc()" alt="Second slide">
+                                        <img class="d-block w-100 img-fluid catalog-img catalog-comp" id="img-right-1" onmouseover="onHoveredRightImg(1)" onmouseout="onHoveredRightImgOut(1)" src="@rightProduct.GetSecondImageSrc()" alt="Second slide">
                                     </div>
                                     <div class="carousel-item">
-                                        <img class="d-block w-100 img-fluid catalog-img" id="img-right-2" onmouseover="onHoveredRightImg(2)" onmouseout="onHoveredRightImgOut(2)" src="@rightProduct.GetThirdImageSrc()" alt="Third slide">
+                                        <img class="d-block w-100 img-fluid catalog-img catalog-comp" id="img-right-2" onmouseover="onHoveredRightImg(2)" onmouseout="onHoveredRightImgOut(2)" src="@rightProduct.GetThirdImageSrc()" alt="Third slide">
                                     </div>
                                 </div>
                                 <a class="carousel-control-prev" href="#carouselExampleIndicators2" role="button" data-slide="prev">

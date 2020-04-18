@@ -90,6 +90,7 @@ namespace WebMarket.Data
                 File.Create(usernameidsFilePath);
 
             BinaryFormatter bf = new BinaryFormatter();
+            //! the process cannot access file exception rises here!
             Stream stream = new FileStream(usernameidsFilePath, FileMode.Open, FileAccess.Write);
 
             bf.Serialize(stream, UserNameIDs);

@@ -3,6 +3,30 @@
 .catalog-img {
     width: 100%;
     object-fit: cover;
+    /*height: 320px;*/
+    /*max-height: 320px !important;
+    margin-right: auto;
+    margin-left: auto;
+    min-width: 200px;
+    z-index: 2;*/
+    transition: box-shadow .3s ease-out;
+}
+
+    .catalog-img:hover {
+        box-shadow: inset 0 0 0 100vw rgba(0,0,0,0.2);
+    }
+
+.catalog-comp {
+    height: 320px;
+}
+
+.catalog-main {
+    height: 200px;
+}
+
+.comp-img {
+    width: 100%;
+    object-fit: cover;
     height: 320px;
     /*max-height: 320px !important;
     margin-right: auto;
@@ -12,10 +36,10 @@
     transition: box-shadow .3s ease-out;
 }
 
+    .comp-img:hover {
+        box-shadow: inset 0 0 0 100vw rgba(0,0,0,0.2);
+    }
+
 .catalog-background-img {
     z-index: 1;
-}
-
-.catalog-img:hover {
-    box-shadow: inset 0 0 0 100vw rgba(0,0,0,0.2);
 }
