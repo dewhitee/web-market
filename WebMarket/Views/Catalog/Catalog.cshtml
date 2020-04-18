@@ -49,12 +49,20 @@
     }
 
     function addTag() {
-        var node = document.createElement("SPAN");
+        let node = document.createElement("SPAN");
         node.className += "badge badge-pill badge-primary";
         node.style.paddingRight = '12px';
-        var text_node = document.createTextNode($("#productType").val());
+        node.id = $("#productType").val();
+        let text_node = document.createTextNode($("#productType").val());
         node.appendChild(text_node);
-        document.getElementById("tags").appendChild(node);
+        //$(".badge").each(function (index, element) {
+        //    if (element.id == node.id)
+        //        return;
+        //});
+        //if (document.getElementById($("#productType").val()).val() != text_node.val())
+        if (document.getElementById(node.id) == null) {
+            document.getElementById("tags").appendChild(node);
+        }
     }
 </script>
 
