@@ -18,7 +18,7 @@
 .hoverable-img {
     border-top-left-radius: calc(.25rem - 1px);
     border-top-right-radius: calc(.25rem - 1px);
-    transition: 1s;
+    transition: 0.5s;
 }
     .hoverable-img img {
         transition: 0.2s;

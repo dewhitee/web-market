@@ -3,6 +3,8 @@
     ViewData["Title"] = "Buying";
 }
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <link href="~/css/comments.css" rel="stylesheet" type="text/css" />
 <link href="~/css/images.css" rel="stylesheet" type="text/css" />
 <link href="~/css/ratingtable.css" rel="stylesheet" type="text/css" /> 
@@ -27,6 +29,15 @@
     };
 
 </script>
+<style>
+    .checked {
+        color: orange;
+    }
+
+    .not-checked {
+        color: #ddd;
+    }
+</style>
 
 <div class="float-right">
     <h2>@CatalogViewModel.CurrentUser.MoneyString</h2>
