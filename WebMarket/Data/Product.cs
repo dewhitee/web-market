@@ -35,6 +35,7 @@ namespace WebMarket.Data
         public bool OnlyRegisteredCanComment { get; set; }
         public bool OnlyOneCommentPerUser { get; set; }
         public bool AddedToCart { get; set; }
+        public List<string> Tags = new List<string>();
         public List<UserComment> Comments = new List<UserComment>();
 
         public DateTime AddedDate { get; set; }
