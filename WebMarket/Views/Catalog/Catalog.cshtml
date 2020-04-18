@@ -470,9 +470,10 @@
                         <h5 class="card-title">Light card title</h5>
                         <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                     </div>
+                    <p class="card-text text-center">Tags</p>
                     <div class="input-group col-md-12">
-                        @*<label for="productType">Type</label>*@
-                        <select name="findTag" id="findTag" class="custom-select">
+                        @*<label for="findTag">Tags</label>*@
+                        <select name="findTag" id="findTag" class="custom-select form-control form-control-sm">
                             <option selected>Choose type</option>
                             <option>Software</option>
                             <option>Game</option>
@@ -487,13 +488,12 @@
                             <option>Video Capture</option>
                         </select>
                         <div class="input-group-append">
-                            <button class="btn btn-outline-primary btn-sm" type="button" onclick="addFindTag()">Add tags to show</button>
+                            <button class="btn btn-outline-primary btn-sm" type="button" onclick="addFindTag()">+</button>
                         </div>
-                        <div id="findTags" class="pb-4">
-                            <!-- There will be all tags -->
-                        </div>
-                        <i class="fas fa-times"></i>
-                        <i class="fa fa-star checked"></i>
+                        <hr />
+                    </div>
+                    <div id="findTags" class="pt-2 pb-4">
+                        <!-- There will be all tags -->
                     </div>
                 </div>
                 <div class="card text-white bg-dark mb-3" style="max-width: 12rem;">

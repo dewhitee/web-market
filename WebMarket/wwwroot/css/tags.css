@@ -11,7 +11,7 @@
     transition: 0.5s;
 }
     .tag-cross:hover {
-        color: darkslategray;
-        transform: rotate(-90deg);
+        color: #363636;
+        transform: scale(1.5);
     }
 
