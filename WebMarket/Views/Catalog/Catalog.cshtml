@@ -424,13 +424,16 @@
                         var thClass = product.GetTableHeaderClassString();
                         <div class="col col-xs-12 col-sm-12 col-md-6 col-lg-4" style="padding-bottom: 2rem;">
                             <div class="card h-100 hoverable-card" id="card_@i" onmouseover="onHoveredCard(@i)" onmouseout="onHoveredCardOut(@i)">
-                                <div class="card-header @product.GetTableHeaderClassString()" id="card_header_@i" onclick="onClickedCard(@i)">
+                                @*<div class="card-header @product.GetTableHeaderClassString()" id="card_header_@i" onclick="onClickedCard(@i)">
                                     <h5 style="font-weight:300">@product.Type</h5>
-                                </div>
+                                    </div>*@
                                 <div style="transform:rotate(0);">
                                     <a href="@product.Link" class="stretched-link">
                                         <img class="d-block w-100 img-fluid catalog-img catalog-main card-img-top" src="@product.GetCardImageSrc()" alt="Cat Lawyer Is Real And He Is Everything Right Now | Above the Law">
                                     </a>
+                                    <div class="card-img-overlay">
+                                        <h5 class="card-title align-text-bottom">@product.Type</h5>
+                                    </div>
                                 </div>
                                 <div class="card-body" style="transform:rotate(0);">
                                     <h4 class="card-title">

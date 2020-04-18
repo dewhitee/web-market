@@ -4,6 +4,29 @@
 }
 
 <link href="~/css/comments.css" rel="stylesheet" type="text/css" />
+<link href="~/css/images.css" rel="stylesheet" type="text/css" />
+<link href="~/css/ratingtable.css" rel="stylesheet" type="text/css" /> 
+
+<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+<script>
+
+    $(document).ready(function() {
+        $($(".lbar").get().reverse()).each(function (index, element) {
+            $(element).width(getFinalWidth(index+1)*100 + '%');
+        });
+    });
+
+    function getFinalWidth(index) {
+        switch (index) {
+            case 1: return @CatalogViewModel.GetSelectedBuyProduct()?.GetStarsPercent(1);
+            case 2: return @CatalogViewModel.GetSelectedBuyProduct()?.GetStarsPercent(2);
+            case 3: return @CatalogViewModel.GetSelectedBuyProduct()?.GetStarsPercent(3);
+            case 4: return @CatalogViewModel.GetSelectedBuyProduct()?.GetStarsPercent(4);
+            case 5: return @CatalogViewModel.GetSelectedBuyProduct()?.GetStarsPercent(5);
+        }
+    };
+
+</script>
 
 <div class="float-right">
     <h2>@CatalogViewModel.CurrentUser.MoneyString</h2>
@@ -57,13 +80,13 @@
                 </ol>
                 <div class="carousel-inner">
                     <div class="carousel-item active">
-                        <img class="d-block w-100" src="@product.GetFirstImageSrc()" alt="First slide">
+                        <img class="d-block w-100 catalog-img catalog-buy" src="@product.GetFirstImageSrc()" alt="First slide">
                     </div>
                     <div class="carousel-item">
-                        <img class="d-block w-100" src="@product.GetSecondImageSrc()" alt="Second slide">
+                        <img class="d-block w-100 catalog-img catalog-buy" src="@product.GetSecondImageSrc()" alt="Second slide">
                     </div>
                     <div class="carousel-item">
-                        <img class="d-block w-100" src="@product.GetThirdImageSrc()" alt="Third slide">
+                        <img class="d-block w-100 catalog-img catalog-buy" src="@product.GetThirdImageSrc()" alt="Third slide">
                     </div>
                 </div>
                 <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -147,4 +170,115 @@
 
         //<h1>Pure CSS Star Rating Widget</h1>
     }
+    <div class="col col-sm-12 col-md-12 col-lg-6" style="padding-top: 2rem;">
+        <div class="card h-100 hoverable-card" id="card_on_transaction">
+            <div class="card-header @product.GetTableHeaderClassString()" id="card_on_transaction_header">
+                <h5 style="font-weight:300">What people think about <strong>@product.Name</strong></h5>
+                <p>RATE: @product.GetRate()</p>
+                @for (int i = 0; i < 5; i++)
+                {
+                    if (ComparisonViewModel.GetStarsValue(product) >= i + 1)
+                    {
+                        <i class="fa fa-star checked"></i>
+                    }
+                    else
+                    {
+                        <i class="fa fa-star not-checked"></i>
+                    }
+                }
+                <div id="left-rating-table">
+                    <div class="row">
+                        <div class="side left">
+                            <div>5 star</div>
+                        </div>
+                        <div class="middle">
+                            <div class="bar-container">
+                                <div class="bar-5 lbar" id="lbar-5"></div>
+                            </div>
+                        </div>
+                        <div class="side right">
+                            <div>@product.GetStarsCount(5)</div>
+                        </div>
+                        <div class="side left">
+                            <div>4 star</div>
+                        </div>
+                        <div class="middle">
+                            <div class="bar-container">
+                                <div class="bar-4 lbar" id="lbar-4"></div>
+                            </div>
+                        </div>
+                        <div class="side right">
+                            <div>@product.GetStarsCount(4)</div>
+                        </div>
+                        <div class="side left">
+                            <div>3 star</div>
+                        </div>
+                        <div class="middle">
+                            <div class="bar-container">
+                                <div class="bar-3 lbar" id="lbar-3"></div>
+                            </div>
+                        </div>
+                        <div class="side right">
+                            <div>@product.GetStarsCount(3)</div>
+                        </div>
+                        <div class="side left">
+                            <div>2 star</div>
+                        </div>
+                        <div class="middle">
+                            <div class="bar-container">
+                                <div class="bar-2 lbar" id="lbar-2"></div>
+                            </div>
+                        </div>
+                        <div class="side right">
+                            <div>@product.GetStarsCount(2)</div>
+                        </div>
+                        <div class="side left">
+                            <div>1 star</div>
+                        </div>
+                        <div class="middle">
+                            <div class="bar-container">
+                                <div class="bar-1 lbar" id="lbar-1"></div>
+                            </div>
+                        </div>
+                        <div class="side right">
+                            <div>@product.GetStarsCount(1)</div>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-center text-muted"><small><i>from total amount of <b>@product.GetTotalCountOfNotNulledComments()</b> rated comments</i></small></p>
+            </div>
+            <div class="card-body" style="transform:rotate(0);">
+                @{
+                    if (product.Comments != null)
+                    {
+                        foreach (var comment in product.Comments)
+                        {
+                            <p><strong>@WebMarket.Data.Userbase.GetUsername(comment.UserID)</strong></p>
+                            <p>@comment.Text</p>
+                            if (comment.Rate > 0f)
+                            {
+                                for (int i = 0; i < 5; i++)
+                                {
+                                    if (comment.Rate > i)
+                                    {
+                                        <i class="fa fa-star checked"></i>
+                                    }
+                                    else
+                                    {
+                                        <i class="fa fa-star not-checked"></i>
+                                    }
+                                }
+                            }
+                            <hr />
+                        }
+                    }
+                    else
+                    {
+                        <p><strong>We can't render comments as this product don't have any...</strong></p>
+                    }
+                }
+            </div>
+
+        </div>
+    </div>
 }

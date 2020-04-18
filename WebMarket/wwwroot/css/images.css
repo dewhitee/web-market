@@ -4,12 +4,7 @@
     width: 100%;
     object-fit: cover;
     /*height: 320px;*/
-    /*max-height: 320px !important;
-    margin-right: auto;
-    margin-left: auto;
-    min-width: 200px;
-    z-index: 2;*/
-    transition: box-shadow .3s ease-out;
+    /*transition: box-shadow .3s ease-out;*/
 }
 
     .catalog-img:hover {
@@ -18,6 +13,18 @@
 
 .catalog-comp {
     height: 320px;
+}
+
+.hoverable-img {
+    transition: 1s;
+}
+
+    .hoverable-img:hover {
+        transform: scale(1.05);
+    }
+
+.catalog-buy {
+    height: 480px;
 }
 
 .catalog-main {
