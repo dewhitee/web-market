@@ -9,6 +9,7 @@
             if (card.click())
         }
     </script>*@
+<link href="~/css/images.css" rel="stylesheet" type="text/css" />
 
 <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
 <script type="text/javascript">
@@ -378,14 +379,14 @@
     case CatalogViewModel.CatalogViewVariant.Main:
         {
             <div class="float-right">
-                <div class="card bg-light mb-3" style="max-width: 18rem;">
+                <div class="card bg-light mb-3" style="max-width: 12rem;">
                     <div class="card-header">About</div>
                     <div class="card-body">
                         <h5 class="card-title">Light card title</h5>
                         <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                     </div>
                 </div>
-                <div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
+                <div class="card text-white bg-dark mb-3" style="max-width: 12rem;">
                     <div class="card-header">Characteristics</div>
                     <div class="card-body">
                         <h5 class="card-title">Dark card title</h5>
@@ -413,14 +414,14 @@
                         string buttonClassString = product.GetAddToCartButtonClassString();
                         var linkClass = product.GetProductTableLinkClassString();
                         var thClass = product.GetTableHeaderClassString();
-                        <div class="col col-lg-4" style="padding-bottom: 2rem;">
+                        <div class="col col-xs-12 col-sm-12 col-md-6 col-lg-4" style="padding-bottom: 2rem;">
                             <div class="card h-100 hoverable-card" id="card_@i" onmouseover="onHoveredCard(@i)" onmouseout="onHoveredCardOut(@i)">
                                 <div class="card-header @product.GetTableHeaderClassString()" id="card_header_@i" onclick="onClickedCard(@i)">
                                     <h5 style="font-weight:300">@product.Type</h5>
                                 </div>
                                 <div style="transform:rotate(0);">
                                     <a href="@product.Link" class="stretched-link">
-                                        <img src="@product.GetCardImageSrc()" alt="Cat Lawyer Is Real And He Is Everything Right Now | Above the Law" class="card-img-top">
+                                        <img class="img-fluid catalog-img" src="@product.GetCardImageSrc()" alt="Cat Lawyer Is Real And He Is Everything Right Now | Above the Law" class="card-img-top">
                                     </a>
                                 </div>
                                 <div class="card-body" style="transform:rotate(0);">
