@@ -8,10 +8,10 @@
     }
 
 .tag-cross {
-    transition: 1s;
+    transition: 0.5s;
 }
     .tag-cross:hover {
-        color: orange;
-        transform: rotate(270deg);
+        color: darkslategray;
+        transform: rotate(-90deg);
     }
 

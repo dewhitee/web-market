@@ -87,7 +87,9 @@
         }
 
         //! binding removing of a tag on click
-        $("#" + node.id).on("click", function () { $(node.id).remove() });
+        $(cross_node).on('click', function () {
+            $(this).parent().remove();
+        });
     }
 </script>
 
