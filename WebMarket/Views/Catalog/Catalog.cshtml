@@ -72,27 +72,31 @@
     <script type="text/javascript">
         $("#submitProductButton").on("click", function (e) {
             //e.preventDefault();
-            alert("HI");
+            //alert("HI");
+            var tags_array = [];
+            //alert("heeeee");
 
-            let badges_array = document.getElementsByClassName(".badge");
-            let tags_array;
-            $(".badge").each(function (index, element) {
-                tags_array.push(element.text());
+            //! there is something wrong
+            $('#tags > span').each(function() {
+                tags_array.push($(this).text());
+                //alert($(this).text());
             });
+            
+            //alert("ITERATED");
 
             $.ajax({
                 type: "post",
                 dataType: "json",
-                url: "/Home/MyAction",
+                url: "/Catalog/AddProduct",
                 traditional: true,
                 data: {
-                    tags:tags_array
+                    tags: tags_array,
                 },
-                success: function () {
-                    alert("successsssss");
-                }
-            })
-        })
+                success: function (data) {
+                    console.log(data.message);
+                },
+            });
+        });
     </script>
 }
 
