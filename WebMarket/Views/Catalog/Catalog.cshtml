@@ -9,7 +9,10 @@
             if (card.click())
         }
     </script>*@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link href="~/css/images.css" rel="stylesheet" type="text/css" />
+
+<script src="https://kit.fontawesome.com/37c897dddf.js" crossorigin="anonymous"></script>
 
 <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
 <script type="text/javascript">
@@ -64,25 +67,40 @@
             document.getElementById("tags").appendChild(node);
         }
     }
+    function addFindTag() {
+        let node = document.createElement("SPAN");
+        node.className += "badge badge-pill badge-primary";
+        node.style.marginLeft = "12px";
+        node.id = $("#findTag").val();
+        let text_node = document.createTextNode($("#findTag").val());
+        node.appendChild(text_node);
 
+        //! adding cross for deleting tag
+        let cross_node = document.createElement("I");
+        cross_node.className += "fas fa-times";
+        cross_node.style.paddingLeft = "4px";
+        node.appendChild(cross_node);
+
+        //$(".badge").each(function (index, element) {
+        //    if (element.id == node.id)
+        //        return;
+        //});
+        //if (document.getElementById($("#productType").val()).val() != text_node.val())
+        if (document.getElementById(node.id) == null) {
+            document.getElementById("findTags").appendChild(node);
+        }
+    }
 </script>
 
 @section scripts
 {
     <script type="text/javascript">
         $("#submitProductButton").on("click", function (e) {
-            //e.preventDefault();
-            //alert("HI");
             var tags_array = [];
-            //alert("heeeee");
 
-            //! there is something wrong
-            $('#tags > span').each(function() {
+            $('#tags > span').each(function () {
                 tags_array.push($(this).text());
-                //alert($(this).text());
             });
-            
-            //alert("ITERATED");
 
             $.ajax({
                 type: "post",
@@ -221,83 +239,82 @@
                     </div>
 
                     <div class="input-group col-md-6">
-                            @*<label for="productType">Type</label>*@
-                            <select name="productType" id="productType" class="custom-select">
-                                <option selected>Choose type</option>
-                                <option>Software</option>
-                                <option>Game</option>
-                                <option>Game Engine</option>
-                                <option>3D Modeling</option>
-                                <option>3D Texturing</option>
-                                <option>3D Scanning</option>
-                                <option>3D Sculpting</option>
-                                <option>Photogrammetry</option>
-                                <option>DAW</option>
-                                <option>Audio Recording</option>
-                                <option>Video Capture</option>
-                            </select>
-                            <div class="input-group-append">
-                                <button class="btn btn-outline-success btn-sm" type="button" onclick="addTag()">Add new tag</button>
-                            </div>
+                        @*<label for="productType">Type</label>*@
+                        <select name="productType" id="productType" class="custom-select">
+                            <option selected>Choose type</option>
+                            <option>Software</option>
+                            <option>Game</option>
+                            <option>Game Engine</option>
+                            <option>3D Modeling</option>
+                            <option>3D Texturing</option>
+                            <option>3D Scanning</option>
+                            <option>3D Sculpting</option>
+                            <option>Photogrammetry</option>
+                            <option>DAW</option>
+                            <option>Audio Recording</option>
+                            <option>Video Capture</option>
+                        </select>
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-primary btn-sm" type="button" onclick="addTag()">Add new tag</button>
+                        </div>
                     </div>
-                        <div id="tags" class="pb-4">
-                            <!-- There will be all tags -->
-                        </div>
-                        <!-- There will be badges passed as array of strings -->
+                    <div id="tags" class="pb-4">
+                        <!-- There will be all tags -->
+                    </div>
 
-                        <div class="form-row">
-                            <div class="col-auto">
-                                <label for="productCost">Cost</label>
-                                <div class="input-group mb-2">
-                                    <input type="text" class="form-control" name="productCost" id="productCost" placeholder="10.99" required>
-                                    <div class="input-group-append">
-                                        <div class="input-group-text">€</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-auto">
-                                <label for="productDiscount">Discount</label>
-                                <div class="input-group mb-2">
-                                    <input type="text" class="form-control" name="productDiscount" id="productDiscount" placeholder="20" required>
-                                    <div class="input-group-append">
-                                        <div class="input-group-text">%</div>
-                                    </div>
+                    <div class="form-row">
+                        <div class="col-auto">
+                            <label for="productCost">Cost</label>
+                            <div class="input-group mb-2">
+                                <input type="text" class="form-control" name="productCost" id="productCost" placeholder="10.99" required>
+                                <div class="input-group-append">
+                                    <div class="input-group-text">€</div>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="form-group">
-                            <label for="productDescription">Product Description</label>
-                            <textarea class="form-control" maxlength="255" name="productDescription" id="productDescription" rows="3" placeholder="Enter product description"></textarea>
+                        <div class="col-auto">
+                            <label for="productDiscount">Discount</label>
+                            <div class="input-group mb-2">
+                                <input type="text" class="form-control" name="productDiscount" id="productDiscount" placeholder="20" required>
+                                <div class="input-group-append">
+                                    <div class="input-group-text">%</div>
+                                </div>
+                            </div>
                         </div>
+                    </div>
 
-                        <div class="form-group">
-                            <label for="productImageLink">Product Image link</label>
-                            <input type="text" class="form-control" name="productImageLink" id="productImageLink" placeholder="Enter product image link" />
-                            <label for="productImageDescription">Product Image description</label>
-                            <input type="text" class="form-control" name="productImageDescription" id="productImageDescription" placeholder="Enter product image description" />
-                        </div>
-                        <div class="form-group">
-                            <label for="secondImageLink">Second product Image link</label>
-                            <input type="text" class="form-control" name="secondImageLink" id="secondImageLink" placeholder="Enter product second image link" />
-                            <label for="secondImageDescription">Second Image description</label>
-                            <input type="text" class="form-control" name="secondImageDescription" id="secondImageDescription" placeholder="Enter second product image description" />
-                        </div>
-                        <div class="form-group">
-                            <label for="thirdImageLink">Third product Image link</label>
-                            <input type="text" class="form-control" name="thirdImageLink" id="thirdImageLink" placeholder="Enter product third image link" />
-                            <label for="thirdImageDescription">Third Image description</label>
-                            <input type="text" class="form-control" name="thirdImageDescription" id="thirdImageDescription" placeholder="Enter third product image description" />
-                        </div>
+                    <div class="form-group">
+                        <label for="productDescription">Product Description</label>
+                        <textarea class="form-control" maxlength="255" name="productDescription" id="productDescription" rows="3" placeholder="Enter product description"></textarea>
+                    </div>
 
-                        <div class="form-group">
-                            <label for="productLink">Product link</label>
-                            <input type="text" class="form-control" name="productLink" id="productLink" placeholder="Enter product link" />
-                        </div>
+                    <div class="form-group">
+                        <label for="productImageLink">Product Image link</label>
+                        <input type="text" class="form-control" name="productImageLink" id="productImageLink" placeholder="Enter product image link" />
+                        <label for="productImageDescription">Product Image description</label>
+                        <input type="text" class="form-control" name="productImageDescription" id="productImageDescription" placeholder="Enter product image description" />
+                    </div>
+                    <div class="form-group">
+                        <label for="secondImageLink">Second product Image link</label>
+                        <input type="text" class="form-control" name="secondImageLink" id="secondImageLink" placeholder="Enter product second image link" />
+                        <label for="secondImageDescription">Second Image description</label>
+                        <input type="text" class="form-control" name="secondImageDescription" id="secondImageDescription" placeholder="Enter second product image description" />
+                    </div>
+                    <div class="form-group">
+                        <label for="thirdImageLink">Third product Image link</label>
+                        <input type="text" class="form-control" name="thirdImageLink" id="thirdImageLink" placeholder="Enter product third image link" />
+                        <label for="thirdImageDescription">Third Image description</label>
+                        <input type="text" class="form-control" name="thirdImageDescription" id="thirdImageDescription" placeholder="Enter third product image description" />
+                    </div>
 
-                        <button id="submitProductButton" class="btn btn-success" type="submit">Submit product</button>
+                    <div class="form-group">
+                        <label for="productLink">Product link</label>
+                        <input type="text" class="form-control" name="productLink" id="productLink" placeholder="Enter product link" />
+                    </div>
 
-</form>
+                    <button id="submitProductButton" class="btn btn-success" type="submit">Submit product</button>
+
+                </form>
 
             </div>
         </div>
@@ -452,6 +469,31 @@
                         <h5 class="card-title">Light card title</h5>
                         <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                     </div>
+                    <div class="input-group col-md-12">
+                        @*<label for="productType">Type</label>*@
+                        <select name="findTag" id="findTag" class="custom-select">
+                            <option selected>Choose type</option>
+                            <option>Software</option>
+                            <option>Game</option>
+                            <option>Game Engine</option>
+                            <option>3D Modeling</option>
+                            <option>3D Texturing</option>
+                            <option>3D Scanning</option>
+                            <option>3D Sculpting</option>
+                            <option>Photogrammetry</option>
+                            <option>DAW</option>
+                            <option>Audio Recording</option>
+                            <option>Video Capture</option>
+                        </select>
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-primary btn-sm" type="button" onclick="addFindTag()">Add tags to show</button>
+                        </div>
+                        <div id="findTags" class="pb-4">
+                            <!-- There will be all tags -->
+                        </div>
+                        <i class="fas fa-times"></i>
+                        <i class="fa fa-star checked"></i>
+                    </div>
                 </div>
                 <div class="card text-white bg-dark mb-3" style="max-width: 12rem;">
                     <div class="card-header">Characteristics</div>
@@ -589,8 +631,8 @@
     <form asp-controller="Catalog" asp-action="ChangeView" method="post">
         <input type="hidden" class="form-control" name="viewVariant" id="viewVariant" value=@CatalogViewModel.ViewVariant />
         @*<a class="text-dark" name="productName" asp-area="" asp-controller="Catalog" asp-action="AddToCart">
-           @CatalogViewModel.ListOfProducts[i].IsBoughtString
-       </a>*@
+                @CatalogViewModel.ListOfProducts[i].IsBoughtString
+            </a>*@
         <button type="submit" class="btn btn-outline-primary">Change View</button>
     </form>
 </div>
