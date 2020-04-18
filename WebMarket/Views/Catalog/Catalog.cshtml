@@ -51,7 +51,7 @@
     function addTag() {
         let node = document.createElement("SPAN");
         node.className += "badge badge-pill badge-primary";
-        node.style.paddingRight = '12px';
+        node.style.marginLeft = "12px";
         node.id = $("#productType").val();
         let text_node = document.createTextNode($("#productType").val());
         node.appendChild(text_node);
@@ -220,27 +220,29 @@
                         <input type="text" class="form-control" name="productName" id="productName" placeholder="Enter product name" required />
                     </div>
 
-                    <div class="form-group col-md-4">
-                        <label for="productType">Type</label>
-                        <select name="productType" id="productType" class="form-control">
-                            <option selected>Choose type</option>
-                            <option>Software</option>
-                            <option>Game</option>
-                            <option>Game Engine</option>
-                            <option>3D Modeling</option>
-                            <option>3D Texturing</option>
-                            <option>3D Scanning</option>
-                            <option>3D Sculpting</option>
-                            <option>Photogrammetry</option>
-                            <option>DAW</option>
-                            <option>Audio Recording</option>
-                            <option>Video Capture</option>
-                        </select>
+                    <div class="input-group col-md-6">
+                            @*<label for="productType">Type</label>*@
+                            <select name="productType" id="productType" class="custom-select">
+                                <option selected>Choose type</option>
+                                <option>Software</option>
+                                <option>Game</option>
+                                <option>Game Engine</option>
+                                <option>3D Modeling</option>
+                                <option>3D Texturing</option>
+                                <option>3D Scanning</option>
+                                <option>3D Sculpting</option>
+                                <option>Photogrammetry</option>
+                                <option>DAW</option>
+                                <option>Audio Recording</option>
+                                <option>Video Capture</option>
+                            </select>
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-success btn-sm" type="button" onclick="addTag()">Add new tag</button>
+                            </div>
                     </div>
-                    <div id="tags">
-                        <!-- There will be all tags -->
-                    </div>
-                    <button class="btn btn-outline-success btn-sm" type="button" onclick="addTag()">Add new tag</button>
+                        <div id="tags" class="pb-4">
+                            <!-- There will be all tags -->
+                        </div>
                         <!-- There will be badges passed as array of strings -->
 
                         <div class="form-row">
