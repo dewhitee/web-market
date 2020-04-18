@@ -102,14 +102,26 @@
                                     <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
                                 </ol>
                                 <div class="carousel-inner">
-                                    <div class="carousel-item active hoverable-img">
-                                        <img class="d-block w-100 img-fluid catalog-img catalog-comp"  id="img-left-0" onmouseover="onHoveredLeftImg(0)" onmouseout="onHoveredLeftImgOut(0)" src="@leftProduct.GetFirstImageSrc()" alt="First slide">
+                                    <div class="carousel-item active hoverable-img" data-title="Test data title 1" data-text="Test description 1">
+                                        <div class="carousel-caption d-none d-md-block">
+                                            <p class="hoverable-img-p">@leftProduct.FirstImage.Description</p>
+                                        </div>
+                                        <img class="d-block w-100 img-fluid catalog-img catalog-comp" id="img-left-0"
+                                             onmouseover="onHoveredLeftImg(0)" onmouseout="onHoveredLeftImgOut(0)" src="@leftProduct.GetFirstImageSrc()" alt="First slide">
                                     </div>
-                                    <div class="carousel-item hoverable-img">
-                                        <img class="d-block w-100 img-fluid catalog-img catalog-comp"  id="img-left-0" onmouseover="onHoveredLeftImg(1)" onmouseout="onHoveredLeftImgOut(1)" src="@leftProduct.GetSecondImageSrc()" alt="Second slide">
+                                    <div class="carousel-item hoverable-img" data-title="Test data title 2" data-text="Test description 2">
+                                        <div class="carousel-caption d-none d-md-block">
+                                            <p class="hoverable-img-p">@leftProduct.SecondImage.Description</p>
+                                        </div>
+                                        <img class="d-block w-100 img-fluid catalog-img catalog-comp" id="img-left-1"
+                                             onmouseover="onHoveredLeftImg(1)" onmouseout="onHoveredLeftImgOut(1)" src="@leftProduct.GetSecondImageSrc()" alt="Second slide">
                                     </div>
-                                    <div class="carousel-item hoverable-img">
-                                        <img class="d-block w-100 img-fluid catalog-img catalog-comp"  id="img-left-0" onmouseover="onHoveredLeftImg(2)" onmouseout="onHoveredLeftImgOut(2)" src="@leftProduct.GetThirdImageSrc()" alt="Third slide">
+                                    <div class="carousel-item hoverable-img" data-title="Test data title 3" data-text="Test description 3">
+                                        <div class="carousel-caption d-none d-md-block">
+                                            <p class="hoverable-img-p">@leftProduct.ThirdImage.Description</p>
+                                        </div>
+                                        <img class="d-block w-100 img-fluid catalog-img catalog-comp" id="img-left-2"
+                                             onmouseover="onHoveredLeftImg(2)" onmouseout="onHoveredLeftImgOut(2)" src="@leftProduct.GetThirdImageSrc()" alt="Third slide">
                                     </div>
                                 </div>
                                 <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
