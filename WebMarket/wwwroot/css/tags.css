@@ -1,0 +1,17 @@
+﻿
+/* tag classes */
+.tag {
+    transition: 0.5s;
+}
+    .tag:hover {
+        transform: scale(1.2);
+    }
+
+.tag-cross {
+    transition: 1s;
+}
+    .tag-cross:hover {
+        color: orange;
+        transform: rotate(270deg);
+    }
+

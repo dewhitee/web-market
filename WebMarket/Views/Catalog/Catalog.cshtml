@@ -11,6 +11,7 @@
     </script>*@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link href="~/css/images.css" rel="stylesheet" type="text/css" />
+<link href="~/css/tags.css" rel="stylesheet" type="text/css" />
 
 <script src="https://kit.fontawesome.com/37c897dddf.js" crossorigin="anonymous"></script>
 
@@ -53,7 +54,7 @@
 
     function addTag() {
         let node = document.createElement("SPAN");
-        node.className += "badge badge-pill badge-primary";
+        node.className += "badge badge-pill badge-primary tag";
         node.style.marginLeft = "12px";
         node.id = $("#productType").val();
         let text_node = document.createTextNode($("#productType").val());
@@ -69,7 +70,7 @@
     }
     function addFindTag() {
         let node = document.createElement("SPAN");
-        node.className += "badge badge-pill badge-primary";
+        node.className += "badge badge-pill badge-primary tag";
         node.style.marginLeft = "12px";
         node.id = $("#findTag").val();
         let text_node = document.createTextNode($("#findTag").val());
@@ -77,18 +78,16 @@
 
         //! adding cross for deleting tag
         let cross_node = document.createElement("I");
-        cross_node.className += "fas fa-times";
+        cross_node.className += "fas fa-times tag-cross";
         cross_node.style.paddingLeft = "4px";
         node.appendChild(cross_node);
 
-        //$(".badge").each(function (index, element) {
-        //    if (element.id == node.id)
-        //        return;
-        //});
-        //if (document.getElementById($("#productType").val()).val() != text_node.val())
         if (document.getElementById(node.id) == null) {
             document.getElementById("findTags").appendChild(node);
         }
+
+        //! binding removing of a tag on click
+        $("#" + node.id).on("click", function () { $(node.id).remove() });
     }
 </script>
 
