@@ -35,7 +35,7 @@ namespace WebMarket.Controllers
             return RedirectToAction("Catalog");
         }
 
-        public IActionResult AddProduct(string productName, string productType, decimal productCost, float productDiscount, string productDescription,
+        public IActionResult AddProduct(string productName, string productType, string[] tags, decimal productCost, float productDiscount, string productDescription,
             string productImageLink, string productImageDescription, string secondImageLink, string secondImageDescription, string thirdImageLink,
             string thirdImageDescription, string productLink)
         {
@@ -49,6 +49,7 @@ namespace WebMarket.Controllers
                     ID = Product.MakeNewID(),
                     Name = productName,
                     Type = Product.CheckTypeString(productType),
+                    Tags = new List<string>(tags),
                     Price = productCost,
                     CostIntegral = integralCost,
                     CostFractional = fractionalCost,

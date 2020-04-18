@@ -64,7 +64,37 @@
             document.getElementById("tags").appendChild(node);
         }
     }
+
 </script>
+
+@section scripts
+{
+    <script type="text/javascript">
+        $("#submitProductButton").on("click", function (e) {
+            //e.preventDefault();
+            alert("HI");
+
+            let badges_array = document.getElementsByClassName(".badge");
+            let tags_array;
+            $(".badge").each(function (index, element) {
+                tags_array.push(element.text());
+            });
+
+            $.ajax({
+                type: "post",
+                dataType: "json",
+                url: "/Home/MyAction",
+                traditional: true,
+                data: {
+                    tags:tags_array
+                },
+                success: function () {
+                    alert("successsssss");
+                }
+            })
+        })
+    </script>
+}
 
 <style>
     img {
@@ -259,7 +289,7 @@
                             <input type="text" class="form-control" name="productLink" id="productLink" placeholder="Enter product link" />
                         </div>
 
-                        <button class="btn btn-success" type="submit">Submit product</button>
+                        <button id="submitProductButton" class="btn btn-success" type="submit">Submit product</button>
 
 </form>
 
