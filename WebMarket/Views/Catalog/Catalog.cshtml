@@ -490,11 +490,26 @@
                         <div class="input-group-append">
                             <button class="btn btn-outline-primary btn-sm" type="button" onclick="addFindTag()">+</button>
                         </div>
-                        <hr />
                     </div>
-                    <div id="findTags" class="pt-2 pb-4">
+                    <div id="findTags" class="pt-2 pb-2">
                         <!-- There will be all tags -->
                     </div>
+                    <hr />
+                    <div class="ml-3">
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" id="catalogLength3" name="catalogLength" class="custom-control-input">
+                            <label class="custom-control-label" for="catalogLength3">Show 3 items</label>
+                        </div>
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" id="catalogLength6" name="catalogLength" class="custom-control-input">
+                            <label class="custom-control-label" for="catalogLength6">Show 6 items</label>
+                        </div>
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" id="catalogLengthAll" name="catalogLength" class="custom-control-input" value="@CatalogViewModel.ListOfProducts.Count">
+                            <label class="custom-control-label" for="catalogLengthAll">Show all items</label>
+                        </div>
+                    </div>
+                    <hr />
                 </div>
                 <div class="card text-white bg-dark mb-3" style="max-width: 12rem;">
                     <div class="card-header">Characteristics</div>
