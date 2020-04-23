@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebMarket.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace WebMarket.Data
 {
     [Serializable]
-    public class User
+    public class User/* : IdentityUser*/
     {
         public string Username { get; set; }
         public string ID { get; set; }
@@ -16,13 +17,13 @@ namespace WebMarket.Data
 
         public List<string> BoughtProductIDs = new List<string>();
 
-        public string Email { get; set; }
+        // public string Email { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Mobile { get; set; }
         public string Address { get; set; }
         public string City { get; set; }
-        public bool EmailConfirmed { get; set; }
+        // public bool EmailConfirmed { get; set; }
 
         public void BuyProduct(Product product)
         {
