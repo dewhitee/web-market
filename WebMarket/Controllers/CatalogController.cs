@@ -6,6 +6,8 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 using WebMarket.Models;
 using WebMarket.Data;
 
@@ -17,6 +19,14 @@ namespace WebMarket.Controllers
     public class CatalogController : Controller
     {
         //private string saveUserFilePath { get => @"D:\ASP.NET PROJECTS\WebMarket\data\user_" + CatalogViewModel.CurrentUser.Username + "_.dew"; }
+        //System.Security.Claims.ClaimsPrincipal currentUser = User;
+
+        public CatalogController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager,
+            IHttpContextAccessor contextAccessor)
+        {
+            Userbase.LoadData();
+            Userbase.Set(signInManager, userManager, contextAccessor.HttpContext.User);
+        }
 
         public IActionResult Catalog()
         {
@@ -24,6 +34,7 @@ namespace WebMarket.Controllers
             LoadUser();
             //UpdateAllExistedProducts();
             //SaveProducts();
+            Userbase.User = this.User;
             return View();
         }
 

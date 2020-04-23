@@ -3,11 +3,6 @@
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 
-@{
-    Userbase.LoadData();
-    Userbase.Set(SignInManager, UserManager, User);
-}
-
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
 {

@@ -5,7 +5,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Http;
 using WebMarket.Models;
+using WebMarket.Data;
 
 namespace WebMarket.Controllers
 {
@@ -15,9 +18,12 @@ namespace WebMarket.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager,
+            IHttpContextAccessor contextAccessor)
         {
             _logger = logger;
+            Userbase.LoadData();
+            Userbase.Set(signInManager, userManager, contextAccessor.HttpContext.User);
         }
 
         public IActionResult Index()

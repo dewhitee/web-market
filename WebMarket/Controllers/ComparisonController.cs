@@ -3,13 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Http;
 using WebMarket.Models;
+using WebMarket.Data;
 using System.Web;
 
 namespace WebMarket.Controllers
 {
     public class ComparisonController : Controller
     {
+        public ComparisonController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager,
+            IHttpContextAccessor contextAccessor)
+        {
+            Userbase.LoadData();
+            Userbase.Set(signInManager, userManager, contextAccessor.HttpContext.User);
+        }
+
         [HttpGet]
         public IActionResult Comparison()
         {

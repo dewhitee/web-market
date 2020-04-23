@@ -28,7 +28,7 @@ namespace WebMarket.Data
 
         public static bool IsInitialized = false;
 
-        public static string MoneyFilePath { get => userMoneyPartialPath + (User.Identity.Name != null ? User.Identity.Name : "") + "_money.dew"; }
+        public static string MoneyFilePath { get => userMoneyPartialPath + (User/*.Identity.Name*/ != null ? User.Identity.Name : "") + "_money.dew"; }
 
         private static readonly string usernamesFilePath = @"D:\ASP.NET PROJECTS\WebMarket\data\allusernames.dew";
         private static readonly string usernameidsFilePath = @"D:\ASP.NET PROJECTS\WebMarket\data\usernameids.dew";
@@ -55,16 +55,19 @@ namespace WebMarket.Data
         }
         public static async void InitCurrentUser()
         {
-            var id = UserManager.GetUserId(User);
-            CatalogViewModel.CurrentUser = new User
+            if (User != null)
             {
-                Username = User.Identity.Name,
-                ID = id,
-                Money = GetMoney()
-            };
-            //LoadUser();
-            AddUserNameIDBinding(User.Identity.Name, id);
-            IsInitialized = true;
+                var id = UserManager.GetUserId(User);
+                CatalogViewModel.CurrentUser = new User
+                {
+                    Username = User.Identity.Name,
+                    ID = id,
+                    Money = GetMoney()
+                };
+                //LoadUser();
+                AddUserNameIDBinding(User.Identity.Name, id);
+                IsInitialized = true;
+            }
             //CatalogViewModel.CurrentUser.AddInitMoney();
             //SaveMoney();
             await Task.Delay(1);
