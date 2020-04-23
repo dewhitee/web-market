@@ -7,85 +7,85 @@ using Microsoft.AspNetCore.Identity;
 
 namespace WebMarket.Data
 {
-    public class CustomUserStore : IUserStore<User>
+    public class CustomUserStore : IUserStore<AppUser>
     {
-        static readonly List<User> Users = new List<User>();
+        static readonly List<AppUser> Users = new List<AppUser>();
         public void Dispose()
         {
             throw new NotImplementedException();
         }
 
-        public Task CreateAsync(User user)
+        public Task CreateAsync(AppUser user)
         {
             return Task.Factory.StartNew(() => Users.Add(user));
         }
 
-        public Task UpdateAsync(User user)
+        public Task UpdateAsync(AppUser user)
         {
             throw new NotImplementedException();
         }
 
-        public Task DeleteAsync(User user)
+        public Task DeleteAsync(AppUser user)
         {
             throw new NotImplementedException();
         }
 
-        public Task<User> FindByIdAsync(string userId)
+        public Task<AppUser> FindByIdAsync(string userId)
         {
             throw new NotImplementedException();
         }
 
-        public Task<User> FindByNameAsync(string username)
+        public Task<AppUser> FindByNameAsync(string userName)
         {
-            return Task<User>.Factory.StartNew(() => Users.FirstOrDefault(u => u.Username == username));
+            return Task<AppUser>.Factory.StartNew(() => Users.FirstOrDefault(u => u.UserName == userName));
         }
 
-        public Task<IdentityResult> CreateAsync(User user, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IdentityResult> DeleteAsync(User user, CancellationToken cancellationToken)
+        public Task<IdentityResult> CreateAsync(AppUser user, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }
 
-        public Task<User> FindByIdAsync(string userId, CancellationToken cancellationToken)
+        public Task<IdentityResult> DeleteAsync(AppUser user, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }
 
-        public Task<User> FindByNameAsync(string normalizedUserName, CancellationToken cancellationToken)
+        public Task<AppUser> FindByIdAsync(string userId, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }
 
-        public Task<string> GetNormalizedUserNameAsync(User user, CancellationToken cancellationToken)
+        public Task<AppUser> FindByNameAsync(string normalizedUserName, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }
 
-        public Task<string> GetUserIdAsync(User user, CancellationToken cancellationToken)
+        public Task<string> GetNormalizedUserNameAsync(AppUser user, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }
 
-        public Task<string> GetUserNameAsync(User user, CancellationToken cancellationToken)
+        public Task<string> GetUserIdAsync(AppUser user, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }
 
-        public Task SetNormalizedUserNameAsync(User user, string normalizedName, CancellationToken cancellationToken)
+        public Task<string> GetUserNameAsync(AppUser user, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }
 
-        public Task SetUserNameAsync(User user, string userName, CancellationToken cancellationToken)
+        public Task SetNormalizedUserNameAsync(AppUser user, string normalizedName, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IdentityResult> UpdateAsync(User user, CancellationToken cancellationToken)
+        public Task SetUserNameAsync(AppUser user, string userName, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IdentityResult> UpdateAsync(AppUser user, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }
