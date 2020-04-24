@@ -59,15 +59,23 @@
         node.id = $("#productType_add").val();
         let text_node = document.createTextNode($("#productType_add").val());
         node.appendChild(text_node);
-        //$(".badge").each(function (index, element) {
-        //    if (element.id == node.id)
-        //        return;
-        //});
-        //if (document.getElementById($("#productType").val()).val() != text_node.val())
+
+        //! adding cross for deleting tag
+        let cross_node = document.createElement("I");
+        cross_node.className += "fas fa-times tag-cross";
+        cross_node.style.paddingLeft = "4px";
+        node.appendChild(cross_node);
+
         if (document.getElementById(node.id) == null) {
             document.getElementById("tags").appendChild(node);
         }
+
+        //! binding removing of a tag on click
+        $(cross_node).on('click', function () {
+            $(this).parent().remove();
+        });
     }
+
     function addFindTag() {
         let node = document.createElement("SPAN");
         node.className += "badge badge-pill badge-primary tag";
@@ -575,12 +583,20 @@
                                         <h6 style="font-weight:300">@product.Type</h6>
                                     </div>
                                 </div>
-                                <div class="card-body" style="transform:rotate(0);">
+                                <div class="card-body pt-1" style="transform:rotate(0);">
                                     <h5 class="card-title">
                                         @product.Name
                                     </h5>
                                     <div class="overflower" aria-hidden="true">
                                         <p class="card-text card-description">@product.Description</p>
+                                    </div>
+                                    <div>
+                                        @{
+                                            foreach (var tag in product.Tags)
+                                            {
+                                                <span class="badge badge-pill badge-primary">@tag</span>
+                                            }
+                                        }
                                     </div>
                                     <a href="@product.Link" class="stretched-link"></a>
                                 </div>
