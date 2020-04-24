@@ -47,7 +47,7 @@ namespace WebMarket.Controllers
             int integralCost = (int)Math.Truncate(productCost);
             int fractionalCost = (int)(productCost - integralCost);
 
-            if (!CatalogViewModel.ContainsName(productName))
+            if (!CatalogViewModel.ContainsName(productName) && productName != null)
             {
                 CatalogViewModel.ListOfProducts.Add(new Product
                 {

@@ -194,7 +194,7 @@ namespace WebMarket.Models
             }
             catch (IOException e)
             {
-                Console.WriteLine(e.Message);
+                Console.WriteLine($"{e.Message}, Line: {Utilities.LineNumber()}");
             }
 
             if (!File.Exists(addedToCartProductsFilePath))
@@ -211,7 +211,7 @@ namespace WebMarket.Models
             }
             catch (IOException e)
             {
-                Console.WriteLine(e.Message);
+                Console.WriteLine($"{e.Message}, Line: {Utilities.LineNumber()}");
             }
         }
         public static void SaveProducts()
@@ -220,29 +220,39 @@ namespace WebMarket.Models
             //    File.Create(saveProductsFilePath);
 
             BinaryFormatter bf = new BinaryFormatter();
+            Stream stream = null;
             try
             {
-                Stream stream = new FileStream(saveProductsFilePath, FileMode.Open, FileAccess.Write);
+                stream = new FileStream(saveProductsFilePath, FileMode.Open, FileAccess.Write);
                 bf.Serialize(stream, ListOfProducts);
-                stream.Close();
+                //stream.Close();
             }
             catch (IOException e)
             {
-                Console.WriteLine(e.Message);
+                Console.WriteLine($"{e.Message}, Line: {Utilities.LineNumber()}");
+            }
+            finally
+            {
+                stream?.Close();
             }
 
             //if (!File.Exists(addedToCartProductsFilePath))
             //    File.Create(addedToCartProductsFilePath);
             BinaryFormatter addedToCartFormatter = new BinaryFormatter();
+            Stream addedToCartStream = null;
             try
             {
-                Stream addedToCartStream = new FileStream(addedToCartProductsFilePath, FileMode.Open, FileAccess.Write);
+                addedToCartStream = new FileStream(addedToCartProductsFilePath, FileMode.Open, FileAccess.Write);
                 addedToCartFormatter.Serialize(addedToCartStream, AddedToCartProducts);
-                addedToCartStream.Close();
+                //addedToCartStream.Close();
             }
             catch (IOException e)
             {
-                Console.WriteLine(e.Message);
+                Console.WriteLine($"{e.Message}, Line: {Utilities.LineNumber()}");
+            }
+            finally
+            {
+                addedToCartStream?.Close();
             }
         }
     }
