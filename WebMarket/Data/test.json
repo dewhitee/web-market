@@ -1,0 +1,8 @@
+{
+  "property1": "text",
+  "property2": {
+    "property21": 123
+  },
+  "property3": [ "213", "text" ],
+  "some_new_property": 1
+}
