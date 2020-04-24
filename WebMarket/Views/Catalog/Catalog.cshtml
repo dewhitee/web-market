@@ -555,8 +555,10 @@
                         </div>
                     </div>
                     <hr />
+                    <button class="btn btn-primary ml-4 mr-4" type="submit">Apply</button>
+                    <hr />
                 </div>
-                <div class="card text-white bg-dark mb-3" style="max-width: 12rem;">
+                <div class="card text-dark bg-white mb-3" style="max-width: 12rem;">
                     <div class="card-header">Characteristics</div>
                     <div class="card-body">
                         <h5 class="card-title">Dark card title</h5>
@@ -649,7 +651,7 @@
 }
 
 <!-- TEST -->
-<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+@*<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
     <ol class="carousel-indicators">
         @for (int i = 0; i < CatalogViewModel.ListOfProducts.Count; i++)
         {
@@ -671,13 +673,13 @@
                     @if (i > 0)
                     {
                         <div class="carousel-item">
-                            body
+                            body_@i
                         </div>
                     }
                     else
                     {
                         <div class="carousel-item active">
-                            body
+                            body_@i
                         </div>
                     }
                 }
@@ -692,7 +694,7 @@
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="sr-only">Next</span>
     </a>
-</div>
+</div>*@
 <!-- END TEST -->
 
 <div style="padding-bottom:1em"></div>
