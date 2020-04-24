@@ -125,6 +125,12 @@
             </h4>
             <div class="overflower" aria-hidden="true">
                 <p class="card-text card-description">@product.Description</p>
+                @{ 
+                    foreach (var i in product.Tags)
+                    {
+                        <span class="badge badge-pill badge-primary">@i</span>
+                    }
+                }
             </div>
 
             @*<a href="@product.Link" class="stretched-link"></a>*@

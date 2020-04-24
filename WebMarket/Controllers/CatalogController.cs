@@ -67,7 +67,7 @@ namespace WebMarket.Controllers
                     ID = Product.MakeNewID(),
                     Name = productName,
                     Type = Product.CheckTypeString(productType),
-                    Tags = tags != null ? new List<string>(tags) : _tags,
+                    Tags = _tags,
                     Price = productCost,
                     CostIntegral = integralCost,
                     CostFractional = fractionalCost,
@@ -108,7 +108,7 @@ namespace WebMarket.Controllers
                 }
                 else
                 {
-                    CatalogViewModel.GetProduct(productName).Tags = new List<string>(tags);
+                    CatalogViewModel.GetProduct(productName).Tags = new List<string>(_tags);
                     _tags = null;
                 }
             }
