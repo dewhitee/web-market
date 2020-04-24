@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WebMarket.Models;
 
-namespace WebMarket.Data
+namespace WebMarket.Models
 {
     [Serializable]
     public class Product

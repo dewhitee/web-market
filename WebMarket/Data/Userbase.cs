@@ -94,10 +94,17 @@ namespace WebMarket.Data
 
             BinaryFormatter bf = new BinaryFormatter();
             //! the process cannot access file exception rises here!
-            Stream stream = new FileStream(usernameidsFilePath, FileMode.Open, FileAccess.Write);
+            try
+            {
+                Stream stream = new FileStream(usernameidsFilePath, FileMode.Open, FileAccess.Write);
 
-            bf.Serialize(stream, UserNameIDs);
-            stream.Close();
+                bf.Serialize(stream, UserNameIDs);
+                stream.Close();
+            }
+            catch (IOException e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
         public static string GetUsername(string id)
         {
@@ -118,11 +125,17 @@ namespace WebMarket.Data
         public static void SaveUser()
         {
             BinaryFormatter bf = new BinaryFormatter();
-            Stream stream = new FileStream(saveUserFilePath, FileMode.Open, FileAccess.Write);
+            try
+            {
+                Stream stream = new FileStream(saveUserFilePath, FileMode.Open, FileAccess.Write);
 
-            bf.Serialize(stream, CatalogViewModel.CurrentUser);
-            stream.Close();
-
+                bf.Serialize(stream, CatalogViewModel.CurrentUser);
+                stream.Close();
+            }
+            catch (IOException e)
+            {
+                Console.WriteLine(e.Message);
+            }
             SaveMoney();
         }
         public static void LoadUser()
@@ -130,14 +143,19 @@ namespace WebMarket.Data
             if (!File.Exists(saveUserFilePath))
                 File.Create(saveUserFilePath);
 
-            //if (CatalogViewModel.CurrentUser == null)
-            //{
-                BinaryFormatter bf = new BinaryFormatter();
+            BinaryFormatter bf = new BinaryFormatter();
+            try
+            {
                 Stream stream = new FileStream(saveUserFilePath, FileMode.Open, FileAccess.Read);
-            if (stream.Length != 0)
-                CatalogViewModel.CurrentUser = (User)bf.Deserialize(stream);
+                if (stream.Length != 0)
+                    CatalogViewModel.CurrentUser = (User)bf.Deserialize(stream);
                 stream.Close();
-            //}
+            }
+            catch (IOException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
             if (CatalogViewModel.CurrentUser.BoughtProductIDs == null)
                 CatalogViewModel.CurrentUser.BoughtProductIDs = new List<string>();
         }

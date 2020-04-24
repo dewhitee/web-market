@@ -185,20 +185,34 @@ namespace WebMarket.Models
                 File.Create(saveProductsFilePath);
 
             BinaryFormatter bf = new BinaryFormatter();
-            Stream stream = new FileStream(saveProductsFilePath, FileMode.Open, FileAccess.Read);
-            if (stream.Length != 0)
-                ListOfProducts = (List<Product>)bf.Deserialize(stream);
-            stream.Close();
+            try
+            {
+                Stream stream = new FileStream(saveProductsFilePath, FileMode.Open, FileAccess.Read);
+                if (stream.Length != 0)
+                    ListOfProducts = (List<Product>)bf.Deserialize(stream);
+                stream.Close();
+            }
+            catch (IOException e)
+            {
+                Console.WriteLine(e.Message);
+            }
 
             if (!File.Exists(addedToCartProductsFilePath))
                 File.Create(addedToCartProductsFilePath);
 
             BinaryFormatter addedToCartFormatter = new BinaryFormatter();
-            Stream addedToCartStream = new FileStream(addedToCartProductsFilePath, FileMode.Open, FileAccess.Read);
-            if (addedToCartStream.Length != 0)
-                AddedToCartProducts = (List<Product>)addedToCartFormatter?.Deserialize(addedToCartStream);
+            try
+            {
+                Stream addedToCartStream = new FileStream(addedToCartProductsFilePath, FileMode.Open, FileAccess.Read);
+                if (addedToCartStream.Length != 0)
+                    AddedToCartProducts = (List<Product>)addedToCartFormatter?.Deserialize(addedToCartStream);
 
-            addedToCartStream.Close();
+                addedToCartStream.Close();
+            }
+            catch (IOException e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
         public static void SaveProducts()
         {
@@ -206,18 +220,30 @@ namespace WebMarket.Models
             //    File.Create(saveProductsFilePath);
 
             BinaryFormatter bf = new BinaryFormatter();
-            Stream stream = new FileStream(saveProductsFilePath, FileMode.Open, FileAccess.Write);
-
-            bf.Serialize(stream, ListOfProducts);
-            stream.Close();
+            try
+            {
+                Stream stream = new FileStream(saveProductsFilePath, FileMode.Open, FileAccess.Write);
+                bf.Serialize(stream, ListOfProducts);
+                stream.Close();
+            }
+            catch (IOException e)
+            {
+                Console.WriteLine(e.Message);
+            }
 
             //if (!File.Exists(addedToCartProductsFilePath))
             //    File.Create(addedToCartProductsFilePath);
-
             BinaryFormatter addedToCartFormatter = new BinaryFormatter();
-            Stream addedToCartStream = new FileStream(addedToCartProductsFilePath, FileMode.Open, FileAccess.Write);
-            addedToCartFormatter.Serialize(addedToCartStream, AddedToCartProducts);
-            addedToCartStream.Close();
+            try
+            {
+                Stream addedToCartStream = new FileStream(addedToCartProductsFilePath, FileMode.Open, FileAccess.Write);
+                addedToCartFormatter.Serialize(addedToCartStream, AddedToCartProducts);
+                addedToCartStream.Close();
+            }
+            catch (IOException e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
     }
 }
