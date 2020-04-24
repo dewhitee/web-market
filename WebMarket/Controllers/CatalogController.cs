@@ -13,9 +13,6 @@ using WebMarket.Data;
 
 namespace WebMarket.Controllers
 {
-    //using Product = CatalogViewModel.Product;
-    //using User = CatalogViewModel.User;
-
     public class CatalogController : Controller
     {
         //private string saveUserFilePath { get => @"D:\ASP.NET PROJECTS\WebMarket\data\user_" + CatalogViewModel.CurrentUser.Username + "_.dew"; }
@@ -32,9 +29,6 @@ namespace WebMarket.Controllers
         {
             LoadProducts();
             LoadUser();
-            //UpdateAllExistedProducts();
-            //SaveProducts();
-            Userbase.User = this.User;
             return View();
         }
 
@@ -183,8 +177,6 @@ namespace WebMarket.Controllers
         public IActionResult SaveProducts()
         {
             CatalogViewModel.SaveProducts();
-            //SaveUser();
-
             return Ok();
         }
         public IActionResult SaveUser()
@@ -231,15 +223,7 @@ namespace WebMarket.Controllers
                 SaveProducts();
                 return RedirectToAction("Selling");
             }
-
-            SaveProducts();
-            return RedirectToAction("Catalog");
         }
-
-        //public IActionResult LoadLink()
-        //{
-
-        //}
 
         public IActionResult SortByName()
         {
