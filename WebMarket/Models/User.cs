@@ -54,6 +54,18 @@ namespace WebMarket.Models
             }
             Userbase.SaveUser();
         }
+        public bool HasProductBought(int productID)
+        {
+            return BoughtProductIDs.Contains(productID.ToString());
+        }
+        public bool HasProductBought(string productName)
+        {
+            return BoughtProductIDs.Contains(CatalogViewModel.GetProduct(productName)?.ID.ToString());
+        }
+        public bool HasProductAdded(string productID)
+        {
+            return false;
+        }
         public void AddInitMoney()
         {
             Money = 100M;

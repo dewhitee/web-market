@@ -56,8 +56,8 @@
         let node = document.createElement("SPAN");
         node.className += "badge badge-pill badge-primary tag";
         node.style.marginLeft = "12px";
-        node.id = $("#productType").val();
-        let text_node = document.createTextNode($("#productType").val());
+        node.id = $("#productType_add").val();
+        let text_node = document.createTextNode($("#productType_add").val());
         node.appendChild(text_node);
         //$(".badge").each(function (index, element) {
         //    if (element.id == node.id)
@@ -102,6 +102,18 @@
             $('#tags > span').each(function () {
                 tags_array.push($(this).text());
             });
+            var prod_name = $('#productName_add').val();
+            //var prod_type = $('#productType_add').val();
+            //var prod_cost = $('#productCost_add').val();
+            //var prod_discount = $('#productDiscount_add').val();
+            //var prod_desc = $('#productDescription_add').val();
+            //var prod_img_link = $('#productImageLink_add').val();
+            //var prod_img_desc = $('#productImageDescription_add').val();
+            //var prod_second_img_link = $('#secondImageLink_add').val();
+            //var prod_second_img_desc = $('#secondImageDescription_add').val();
+            //var prod_third_img_link = $('#thirdImageLink_add').val();
+            //var prod_third_img_desc = $('#thirdImageDescription_add').val();
+            //var prod_link = $('#productLink_add').val();
 
             $.ajax({
                 type: "post",
@@ -109,7 +121,19 @@
                 url: "/Catalog/AddProduct",
                 traditional: true,
                 data: {
+                    productName: prod_name,
+                    //productType: prod_type,
                     tags: tags_array,
+                    //productCost: prod_cost,
+                    //productDiscount: prod_discount,
+                    //productDescription: prod_desc,
+                    //productImageLink: prod_img_link,
+                    //productImageDescription: prod_img_desc,
+                    //secondImageLink: prod_second_img_link,
+                    //secondImageDescription: prod_second_img_desc,
+                    //thirdImageLink: prod_third_img_link,
+                    //thirdImageDescription: prod_third_img_desc,
+                    //productLink: prod_link
                 },
                 success: function (data) {
                     console.log(data.message);
@@ -231,17 +255,16 @@
         <div class="collapse multi-collapse" id="addButtonCollapse">
             <h2 class="display-4 text-center">Adding</h2>
             <div class="card card-body">
-
                 <form asp-controller="Catalog" asp-area="" asp-action="AddProduct" method="post">
 
                     <div class="form-group">
                         <label for="productName">Product name</label>
-                        <input type="text" class="form-control" name="productName" id="productName" placeholder="Enter product name" required />
+                        <input type="text" class="form-control" name="productName" id="productName_add" placeholder="Enter product name" required />
                     </div>
 
                     <div class="input-group col-md-6">
                         @*<label for="productType">Type</label>*@
-                        <select name="productType" id="productType" class="custom-select">
+                        <select name="productType" id="productType_add" class="custom-select">
                             <option selected>Choose type</option>
                             <option>Software</option>
                             <option>Game</option>
@@ -267,7 +290,7 @@
                         <div class="col-auto">
                             <label for="productCost">Cost</label>
                             <div class="input-group mb-2">
-                                <input type="text" class="form-control" name="productCost" id="productCost" placeholder="10.99" required>
+                                <input type="text" class="form-control" name="productCost" id="productCost_add" placeholder="10.99" required>
                                 <div class="input-group-append">
                                     <div class="input-group-text">€</div>
                                 </div>
@@ -276,7 +299,7 @@
                         <div class="col-auto">
                             <label for="productDiscount">Discount</label>
                             <div class="input-group mb-2">
-                                <input type="text" class="form-control" name="productDiscount" id="productDiscount" placeholder="20" required>
+                                <input type="text" class="form-control" name="productDiscount" id="productDiscount_add" placeholder="20" required>
                                 <div class="input-group-append">
                                     <div class="input-group-text">%</div>
                                 </div>
@@ -286,33 +309,33 @@
 
                     <div class="form-group">
                         <label for="productDescription">Product Description</label>
-                        <textarea class="form-control" maxlength="255" name="productDescription" id="productDescription" rows="3" placeholder="Enter product description"></textarea>
+                        <textarea class="form-control" maxlength="255" name="productDescription" id="productDescription_add" rows="3" placeholder="Enter product description"></textarea>
                     </div>
 
                     <div class="form-group">
                         <label for="productImageLink">Product Image link</label>
-                        <input type="text" class="form-control" name="productImageLink" id="productImageLink" placeholder="Enter product image link" />
+                        <input type="text" class="form-control" name="productImageLink" id="productImageLink_add" placeholder="Enter product image link" />
                         <label for="productImageDescription">Product Image description</label>
-                        <input type="text" class="form-control" name="productImageDescription" id="productImageDescription" placeholder="Enter product image description" />
+                        <input type="text" class="form-control" name="productImageDescription" id="productImageDescription_add" placeholder="Enter product image description" />
                     </div>
                     <div class="form-group">
                         <label for="secondImageLink">Second product Image link</label>
-                        <input type="text" class="form-control" name="secondImageLink" id="secondImageLink" placeholder="Enter product second image link" />
+                        <input type="text" class="form-control" name="secondImageLink" id="secondImageLink_add" placeholder="Enter product second image link" />
                         <label for="secondImageDescription">Second Image description</label>
-                        <input type="text" class="form-control" name="secondImageDescription" id="secondImageDescription" placeholder="Enter second product image description" />
+                        <input type="text" class="form-control" name="secondImageDescription" id="secondImageDescription_add" placeholder="Enter second product image description" />
                     </div>
                     <div class="form-group">
                         <label for="thirdImageLink">Third product Image link</label>
-                        <input type="text" class="form-control" name="thirdImageLink" id="thirdImageLink" placeholder="Enter product third image link" />
+                        <input type="text" class="form-control" name="thirdImageLink" id="thirdImageLink_add" placeholder="Enter product third image link" />
                         <label for="thirdImageDescription">Third Image description</label>
-                        <input type="text" class="form-control" name="thirdImageDescription" id="thirdImageDescription" placeholder="Enter third product image description" />
+                        <input type="text" class="form-control" name="thirdImageDescription" id="thirdImageDescription_add" placeholder="Enter third product image description" />
                     </div>
 
                     <div class="form-group">
                         <label for="productLink">Product link</label>
-                        <input type="text" class="form-control" name="productLink" id="productLink" placeholder="Enter product link" />
+                        <input type="text" class="form-control" name="productLink" id="productLink_add" placeholder="Enter product link" />
                     </div>
-
+                    <input type="hidden" class="form-control" name="condition" id="condition_add" value=1 />
                     <button id="submitProductButton" class="btn btn-success" type="submit">Submit product</button>
 
                 </form>

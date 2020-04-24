@@ -17,6 +17,7 @@ namespace WebMarket.Controllers
     {
         //private string saveUserFilePath { get => @"D:\ASP.NET PROJECTS\WebMarket\data\user_" + CatalogViewModel.CurrentUser.Username + "_.dew"; }
         //System.Security.Claims.ClaimsPrincipal currentUser = User;
+        private static List<string> _tags = null;
 
         public CatalogController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager,
             IHttpContextAccessor contextAccessor)
@@ -40,21 +41,33 @@ namespace WebMarket.Controllers
             return RedirectToAction("Catalog");
         }
 
-        public IActionResult AddProduct(string productName, string productType, string[] tags, decimal productCost, float productDiscount, string productDescription,
-            string productImageLink, string productImageDescription, string secondImageLink, string secondImageDescription, string thirdImageLink,
-            string thirdImageDescription, string productLink)
+        public IActionResult AddProduct(
+            string productName,
+            string productType,
+            string[] tags,
+            decimal productCost,
+            float productDiscount,
+            string productDescription,
+            string productImageLink,
+            string productImageDescription,
+            string secondImageLink,
+            string secondImageDescription,
+            string thirdImageLink,
+            string thirdImageDescription,
+            string productLink,
+            int condition)
         {
             int integralCost = (int)Math.Truncate(productCost);
             int fractionalCost = (int)(productCost - integralCost);
 
-            if (!CatalogViewModel.ContainsName(productName) && productName != null)
+            if (!CatalogViewModel.ContainsName(productName) && productName != null && condition != 0)
             {
                 CatalogViewModel.ListOfProducts.Add(new Product
                 {
                     ID = Product.MakeNewID(),
                     Name = productName,
                     Type = Product.CheckTypeString(productType),
-                    Tags = new List<string>(tags),
+                    Tags = tags != null ? new List<string>(tags) : _tags,
                     Price = productCost,
                     CostIntegral = integralCost,
                     CostFractional = fractionalCost,
@@ -79,6 +92,25 @@ namespace WebMarket.Controllers
                     Link = productLink,
                     AddedDate = DateTime.Today
                 });
+                _tags = null;
+            }
+            else if (/*CatalogViewModel.ContainsName(productName) && Userbase.UserModel.HasProductBought(productName)*/condition == 0)
+            {
+                //var prod = CatalogViewModel.GetProduct(productName);
+                //prod.ID = prod.HasValidID() ? prod.ID : Product.MakeNewID();
+                //prod.Name = productName ?? prod.Name;
+                //prod.Type = productType ?? prod.Type;
+                //prod.Tags = prod.Tags.Count < 0 ? new List<string>(tags) : prod.Tags;
+                //prod.Discount = productDiscount;
+                if (!CatalogViewModel.ContainsName(productName))
+                {
+                    _tags = new List<string>(tags);
+                }
+                else
+                {
+                    CatalogViewModel.GetProduct(productName).Tags = new List<string>(tags);
+                    _tags = null;
+                }
             }
             SaveProducts();
             return RedirectToAction("Catalog");

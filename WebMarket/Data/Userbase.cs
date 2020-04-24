@@ -22,6 +22,7 @@ namespace WebMarket.Data
         public static SignInManager<IdentityUser> SignInManager { get; set; }
         public static UserManager<IdentityUser> UserManager { get; set; }
         public static ClaimsPrincipal User { get; set; }
+        public static Models.User UserModel { get => CatalogViewModel.CurrentUser; }
 
         public static List<string> Usernames { get; private set; }
         public static List<UserNameIDBinding> UserNameIDs { get; private set; }

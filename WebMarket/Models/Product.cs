@@ -48,6 +48,12 @@ namespace WebMarket.Models
         public string IsBoughtString { get => IsBought ? "Bought" : "+"; }
         public string IsAddedToCartString { get => AddedToCart ? "Added" : "+"; }
 
+        public bool HasValidID()
+        {
+            return ID < 0;
+        }
+
+
         public float GetRateAvg()
         {
             return GetRateSum() / Comments.Count;
@@ -115,7 +121,7 @@ namespace WebMarket.Models
             bool success;
             do
             {
-                newID = random.Next(0, int.MaxValue);
+                newID = random.Next(1, int.MaxValue);
                 success = CatalogViewModel.ListOfProducts.Find(x => x.ID == newID) == null;
             } while (!success);
             return newID;
