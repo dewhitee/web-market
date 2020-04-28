@@ -257,6 +257,25 @@ namespace WebMarket.Controllers
             }
         }
 
+        public IActionResult SortProducts(int sortOptionIndex)
+        {
+            switch (sortOptionIndex)
+            {
+                case (int)CatalogViewModel.ProductSort.Name:
+                    return SortByName();
+                case (int)CatalogViewModel.ProductSort.Type:
+                    return SortByType();
+                case (int)CatalogViewModel.ProductSort.Price:
+                    return SortByPrice();
+                case (int)CatalogViewModel.ProductSort.Discount:
+                    return SortByDiscount();
+                case (int)CatalogViewModel.ProductSort.FinalPrice:
+                    return SortByFinalPrice();
+                default:
+                    return Ok();
+            }
+        }
+
         public IActionResult SortByName()
         {
             CatalogViewModel.ListOfProducts.Sort(Product.CompareByName);

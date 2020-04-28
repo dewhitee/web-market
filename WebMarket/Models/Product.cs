@@ -8,6 +8,22 @@ namespace WebMarket.Models
     [Serializable]
     public class Product
     {
+        public enum Tag
+        {
+            None,
+            Software,
+            Game,
+            GameEngine,
+            Modeling3D,
+            Texturing3D,
+            Scanning3D,
+            Sculpting3D,
+            Photogrammetry,
+            DAW,
+            AudioRecording,
+            VideoCapture,
+        }
+
         [Serializable]
         public struct Image
         {

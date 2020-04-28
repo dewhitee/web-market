@@ -17,6 +17,14 @@ namespace WebMarket.Models
             Main,
             Table,
         }
+        public enum ProductSort
+        { 
+            Name,
+            Type,
+            Price,
+            Discount,
+            FinalPrice,
+        }
 
         public static List<Product> ListOfProducts = new List<Product>();
         public static List<User> ListOfUsers = new List<User>();
