@@ -261,6 +261,8 @@ namespace WebMarket.Controllers
         {
             switch (sortOptionIndex)
             {
+                case (int)CatalogViewModel.ProductSort.None:
+                    return Ok();
                 case (int)CatalogViewModel.ProductSort.Name:
                     return SortByName();
                 case (int)CatalogViewModel.ProductSort.Type:

@@ -19,6 +19,7 @@ namespace WebMarket.Models
         }
         public enum ProductSort
         { 
+            None,
             Name,
             Type,
             Price,
