@@ -55,6 +55,7 @@ namespace WebMarket.Controllers
             string thirdImageLink,
             string thirdImageDescription,
             string productLink,
+            string productFileName,
             int condition)
         {
             int integralCost = (int)Math.Truncate(productCost);
@@ -90,6 +91,7 @@ namespace WebMarket.Controllers
                         Description = thirdImageDescription
                     },
                     Link = productLink,
+                    FileName = productFileName,
                     AddedDate = DateTime.Today
                 });
                 _tags = null;
@@ -231,6 +233,15 @@ namespace WebMarket.Controllers
             Userbase.LoadUser();
             return Ok();
         }
+
+        //public IActionResult GetBlobDownload([FromQuery] string link)
+        //{
+        //    var net = new System.Net.WebClient();
+        //    var data = net.DownloadData(link);
+        //    var content = new System.IO.MemoryStream(data);
+        //    var contentType = "APPLICATION/octet-stream";
+        //    var fileName = "test_Downloaded"
+        //}
 
         public IActionResult AddToCart(string productName, int productIndex)
         {

@@ -25,4 +25,9 @@
     <None Include="wwwroot\css\comments.css" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Folder Include="wwwroot\file\" />
+  </ItemGroup>
+
 </Project>
