@@ -30,7 +30,7 @@ namespace WebMarket.Controllers
         {
             LoadProducts();
             LoadUser();
-            CatalogViewModel.LoadFindTags();
+            //CatalogViewModel.LoadFindTags();
             return View();
         }
 
@@ -93,7 +93,8 @@ namespace WebMarket.Controllers
                     },
                     Link = productLink,
                     FileName = productFileName,
-                    AddedDate = DateTime.Today
+                    AddedDate = DateTime.Today,
+                    OwnerID = CatalogViewModel.CurrentUser.ID
                 });
                 _tags = null;
             }
@@ -333,7 +334,8 @@ namespace WebMarket.Controllers
         {
             if (findTags != null)
                 CatalogViewModel.FindTags = new List<string>(findTags);
-            CatalogViewModel.SaveFindTags();
+            else return View("Error");
+            //CatalogViewModel.SaveFindTags();
             return RedirectToAction("Catalog");
         }
 

@@ -35,7 +35,11 @@ namespace WebMarket.Data
         private static readonly string usernameidsFilePath = @"D:\ASP.NET PROJECTS\WebMarket\data\usernameids.dew";
         private static readonly string userMoneyPartialPath = @"D:\ASP.NET PROJECTS\WebMarket\data\user_";
         private static string saveUserFilePath { get => @"D:\ASP.NET PROJECTS\WebMarket\data\user_" + CatalogViewModel.CurrentUser.Username + "_.dew"; }
-
+        
+        private static string MakeUserFilePath(string userName)
+        {
+            return @"D:\ASP.NET PROJECTS\WebMarket\data\user_" + userName + "_.dew";
+        }
 
         public static void Set(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager, ClaimsPrincipal user)
         {
@@ -73,6 +77,36 @@ namespace WebMarket.Data
             //SaveMoney();
             await Task.Delay(1);
         }
+
+        public static User GetUser(string userName)
+        {
+            User user = new User();
+
+            string filePath = MakeUserFilePath(userName);
+
+            if (!File.Exists(filePath))
+                File.Create(filePath);
+
+            BinaryFormatter bf = new BinaryFormatter();
+            try
+            {
+                Stream stream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+                if (stream.Length != 0)
+                    user = (User)bf.Deserialize(stream);
+                stream.Close();
+            }
+            catch (IOException e)
+            {
+                Console.WriteLine($"{e.Message}, Line: {Utilities.LineNumber()}");
+            }
+
+            if (user.BoughtProductIDs == null)
+                user.BoughtProductIDs = new List<string>();
+
+            return user;
+        }
+
+        #region Name IDs
         public static void LoadUserNameIDs()
         {
             if (!File.Exists(usernameidsFilePath))
@@ -118,6 +152,7 @@ namespace WebMarket.Data
                 Console.WriteLine($"{e.Message}, Line: {Utilities.LineNumber()}");
             }
         }
+        #endregion
         public static string GetUsername(string id)
         {
             return UserNameIDs.Find(x => x.id == id).name;

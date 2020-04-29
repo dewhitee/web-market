@@ -167,6 +167,8 @@
         });
 
         $("#applyShowProductsButton").on("click", function (e) {
+            //e.preventDefault();
+            
             var find_tags_array = [];
 
             $('#findTags > span').each(function () {
@@ -384,8 +386,8 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="productFileName">Product name</label>
-                        <input type="text" class="form-control" name="productFileName" id="productFileName_add" placeholder="Enter product name" required />
+                        <label for="productFileName">Product file name</label>
+                        <input type="text" class="form-control" name="productFileName" id="productFileName_add" placeholder="Enter product name" />
                     </div>
 
                     <input type="hidden" class="form-control" name="condition" id="condition_add" value=1 />
@@ -557,7 +559,7 @@ else
                     <div class="card-header">About</div>
                     <div class="card-body">
                         <h5 class="card-title">Light card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <p class="card-text">No text.</p>
                         <hr />
                         <h6 class="card-title">Sort by</h6>
                         <form asp-controller="Catalog" asp-area="" asp-action="SortProducts" method="post">

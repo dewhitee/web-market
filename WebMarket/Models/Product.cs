@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using WebMarket.Data;
 
 namespace WebMarket.Models
 {
@@ -57,6 +58,7 @@ namespace WebMarket.Models
         public List<UserComment> Comments = new List<UserComment>();
 
         public DateTime AddedDate { get; set; }
+        public string OwnerID { get; set; }
 
         public decimal FinalPrice { get => Price - (Price * (decimal)Discount * 0.01M); }
         public string FinalPriceString { get => FinalPrice > 0 ? FinalPrice.ToString("0.##") + "€" : "free"; }
@@ -80,6 +82,22 @@ namespace WebMarket.Models
                     return false;
             }
             return true;
+        }
+
+        public string GetOwnerName()
+        {
+            if (OwnerID != null)
+                return Userbase.GetUsername(OwnerID);
+
+            foreach (var userName in Userbase.Usernames)
+            {
+                var user = Userbase.GetUser(userName);
+                if (user.BoughtProductIDs.Contains(Name))
+                {
+                    return user.Username;
+                }
+            }
+            return "NO_OWNER";
         }
 
         public float GetRateAvg()
