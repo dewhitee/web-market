@@ -38,6 +38,12 @@ namespace WebMarket.Models
         private static string addedToCartProductsFilePath { get => @"D:\ASP.NET PROJECTS\WebMarket\data\addedtocartproducts_" + CurrentUser.Username + "_.dew"; }
         private static string saveProductsFilePath { get => @"D:\ASP.NET PROJECTS\WebMarket\data\products.dew"; }
 
+        public static List<string> FindTags { get; private set; }
+
+        public static void SetFindTags(string[] findTags)
+        {
+            FindTags = new List<string>(findTags);
+        }
 
         public static CatalogViewVariant ViewVariant { get; set; }
 

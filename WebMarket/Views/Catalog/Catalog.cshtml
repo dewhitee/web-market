@@ -106,7 +106,7 @@
         var charRemain = (maxLength - strLength);
 
         if (charRemain < 0) {
-            document.getElementById('descriptionCharCounter_add').innerHTML = '<span style="color:red;">You have exceeded the limit of '+maxLengthZ+' characters</span>';
+            document.getElementById('descriptionCharCounter_add').innerHTML = '<span style="color:red;">You have exceeded the limit of ' + maxLengthZ + ' characters</span>';
         }
         else {
             document.getElementById('descriptionCharCounter_add').innerHTML = charRemain + ' characters remaining';
@@ -162,6 +162,27 @@
                 },
                 success: function (data) {
                     console.log(data.message);
+                },
+            });
+        });
+
+        $("#applyShowProductsButton").on("click", function (e) {
+            var find_tags_array = [];
+
+            $('#findTags > span').each(function () {
+                find_tags_array.push($(this).text());
+            })
+
+            $.ajax({
+                type: "post",
+                dataType: "json",
+                url: "/Catalog/SubmitTags",
+                traditional: true,
+                data: {
+                    findTags: find_tags_array,
+                },
+                success: function (data) {
+                    condole.log(data.message);
                 },
             });
         });
@@ -422,7 +443,14 @@
 </div>
 
 <div style="padding-bottom:1em"></div>
-
+@if (CatalogViewModel.FindTags?.Count > 0)
+{
+    <p class="text-body">Showing following tags:</p>
+    foreach (var findTag in CatalogViewModel.FindTags)
+    {
+        <span class="badge badge-pill badge-light">findTag</span>
+    }
+}
 
 
 @switch (CatalogViewModel.ViewVariant)
@@ -540,6 +568,7 @@
 
                         </form>
                     </div>
+                    @*asp-controller="Catalog" asp-area="" asp-action="SubmitTags" method="post"*@
                     <form>
                         <p class="card-text text-center">Tags</p>
                         <div class="input-group col-md-12">
@@ -581,28 +610,28 @@
                             </div>
                         </div>
                         <hr />
-                        <button class="btn btn-primary ml-4 mr-4" type="submit">Apply</button>
+                        <button id="applyShowProductsButton" class="btn btn-primary ml-4 mr-4" type="submit">Apply</button>
                         <hr />
                     </form>
                 </div>
                 @*<div class="card text-dark bg-white mb-3" style="max-width: 12rem;">
-                    <div class="card-header">Characteristics</div>
-                    <div class="card-body">
-                        <h5 class="card-title">Dark card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <ul>
-                            <li>
-                                first characteristic
-                            </li>
-                            <li>
-                                second characteristic
-                            </li>
-                            <li>
-                                third characteristic
-                            </li>
-                        </ul>
-                    </div>
-                </div>*@
+                        <div class="card-header">Characteristics</div>
+                        <div class="card-body">
+                            <h5 class="card-title">Dark card title</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <ul>
+                                <li>
+                                    first characteristic
+                                </li>
+                                <li>
+                                    second characteristic
+                                </li>
+                                <li>
+                                    third characteristic
+                                </li>
+                            </ul>
+                        </div>
+                    </div>*@
             </div>
             <div class="container-fluid">
                 <div class="row row-cols-1 row-cols-md-3">
@@ -679,49 +708,49 @@
 
 <!-- TEST -->
 @*<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-    <ol class="carousel-indicators">
-        @for (int i = 0; i < CatalogViewModel.ListOfProducts.Count; i++)
-        {
-            @if (i > 0)
+        <ol class="carousel-indicators">
+            @for (int i = 0; i < CatalogViewModel.ListOfProducts.Count; i++)
             {
-                <li data-target="#carouselExampleIndicators" data-slide-to="@i"></li>
-            }
-            else
-            {
-                <li data-target="#carouselExampleIndicators" data-slide-to="@i" class="active"></li>
-            }
-        }
-    </ol>
-    <div class="carousel-inner">
-        <div class="container-fluid">
-            <div class="row row-cols-1 row-cols-md-3">
-                @for (int i = 0; i < CatalogViewModel.ListOfProducts.Count; i++)
+                @if (i > 0)
                 {
-                    @if (i > 0)
-                    {
-                        <div class="carousel-item">
-                            body_@i
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="carousel-item active">
-                            body_@i
-                        </div>
-                    }
+                    <li data-target="#carouselExampleIndicators" data-slide-to="@i"></li>
                 }
+                else
+                {
+                    <li data-target="#carouselExampleIndicators" data-slide-to="@i" class="active"></li>
+                }
+            }
+        </ol>
+        <div class="carousel-inner">
+            <div class="container-fluid">
+                <div class="row row-cols-1 row-cols-md-3">
+                    @for (int i = 0; i < CatalogViewModel.ListOfProducts.Count; i++)
+                    {
+                        @if (i > 0)
+                        {
+                            <div class="carousel-item">
+                                body_@i
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="carousel-item active">
+                                body_@i
+                            </div>
+                        }
+                    }
+                </div>
             </div>
         </div>
-    </div>
-    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-    </a>
-    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-    </a>
-</div>*@
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>*@
 <!-- END TEST -->
 
 <div style="padding-bottom:1em"></div>

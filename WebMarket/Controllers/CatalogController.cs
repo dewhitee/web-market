@@ -327,6 +327,14 @@ namespace WebMarket.Controllers
                 prod.ID = Product.MakeNewID();
             }
         }
+
+        public IActionResult SubmitTags(string[] findTags)
+        {
+            if (findTags != null)
+                CatalogViewModel.SetFindTags(findTags);
+            return RedirectToAction("Catalog");
+        }
+
         public IActionResult Index()
         {
             return View();

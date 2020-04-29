@@ -53,6 +53,10 @@
             <div class="card-body">
                 <h5 class="card-title">Light card title</h5>
                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                @if (product.FileName?.Length > 0)
+                {
+                    <a class="card-link" href="~/file/@product.FileName" download>Download link</a>
+                }
             </div>
         </div>
         <div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
@@ -132,10 +136,6 @@
                     }
                 }
             </div>
-            @if (product.FileName?.Length > 0)
-            {
-                <a class="card-link" href="~/file/@product.FileName" download>Download link</a>
-            }
             @*<a href="@product.Link" class="stretched-link"></a>*@
         </div>
 
