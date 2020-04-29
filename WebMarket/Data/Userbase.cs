@@ -48,11 +48,11 @@ namespace WebMarket.Data
                 File.Create(MoneyFilePath);
             InitCurrentUser();
         }
-        public static async void LoadData()
+        public static /*async */void LoadData()
         {
             LoadUsernames();
             LoadUserNameIDs();
-            await Task.Delay(1);
+            //await Task.Delay(1);
         }
         public static async void InitCurrentUser()
         {
@@ -79,13 +79,24 @@ namespace WebMarket.Data
                 File.Create(usernameidsFilePath);
 
             BinaryFormatter bf = new BinaryFormatter();
-            Stream stream = new FileStream(usernameidsFilePath, FileMode.Open, FileAccess.Read);
-            List<UserNameIDBinding> usernameids = new List<UserNameIDBinding>();
-            if (stream.Length != 0)
-                usernameids = (List<UserNameIDBinding>)bf.Deserialize(stream);
+            Stream stream = null;
+            try
+            {
+                stream = new FileStream(usernameidsFilePath, FileMode.Open, FileAccess.Read);
+                List<UserNameIDBinding> usernameids = new List<UserNameIDBinding>();
+                if (stream.Length != 0)
+                    usernameids = (List<UserNameIDBinding>)bf.Deserialize(stream);
 
-            stream.Close();
-            UserNameIDs = usernameids;
+                UserNameIDs = usernameids;
+            }
+            catch (IOException e)
+            {
+                Console.WriteLine($"{e.Message}, Line: {Utilities.LineNumber()}");
+            }
+            finally
+            {
+                stream?.Close();
+            }
             //await Task.Delay(10);
         }
         public static void SaveUserNameIDs()
@@ -104,7 +115,7 @@ namespace WebMarket.Data
             }
             catch (IOException e)
             {
-                Console.WriteLine(e.Message);
+                Console.WriteLine($"{e.Message}, Line: {Utilities.LineNumber()}");
             }
         }
         public static string GetUsername(string id)
@@ -135,7 +146,7 @@ namespace WebMarket.Data
             }
             catch (IOException e)
             {
-                Console.WriteLine(e.Message);
+                Console.WriteLine($"{e.Message}, Line: {Utilities.LineNumber()}");
             }
             SaveMoney();
         }
@@ -154,7 +165,7 @@ namespace WebMarket.Data
             }
             catch (IOException e)
             {
-                Console.WriteLine(e.Message);
+                Console.WriteLine($"{e.Message}, Line: {Utilities.LineNumber()}");
             }
 
             if (CatalogViewModel.CurrentUser.BoughtProductIDs == null)

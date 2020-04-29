@@ -37,15 +37,48 @@ namespace WebMarket.Models
 
         private static string addedToCartProductsFilePath { get => @"D:\ASP.NET PROJECTS\WebMarket\data\addedtocartproducts_" + CurrentUser.Username + "_.dew"; }
         private static string saveProductsFilePath { get => @"D:\ASP.NET PROJECTS\WebMarket\data\products.dew"; }
+        private static string findTagsFilePath { get => @"D:\ASP.NET PROJECTS\WebMarket\data\findtags.dew"; }
 
-        public static List<string> FindTags { get; private set; }
-
-        public static void SetFindTags(string[] findTags)
-        {
-            FindTags = new List<string>(findTags);
-        }
+        public static List<string> FindTags { get; set; }
 
         public static CatalogViewVariant ViewVariant { get; set; }
+
+        public static void SaveFindTags()
+        {
+            BinaryFormatter bf = new BinaryFormatter();
+            Stream stream = null;
+            try
+            {
+                stream = new FileStream(findTagsFilePath, FileMode.Open, FileAccess.Write);
+                bf.Serialize(stream, FindTags);
+            }
+            catch (IOException e)
+            {
+                Console.WriteLine($"{e.Message}, Line: {Utilities.LineNumber()}");
+            }
+            finally
+            {
+                stream?.Close();
+            }
+        }
+        public static void LoadFindTags()
+        {
+            if (!File.Exists(findTagsFilePath))
+                File.Create(findTagsFilePath);
+
+            BinaryFormatter bf = new BinaryFormatter();
+            try
+            {
+                Stream stream = new FileStream(findTagsFilePath, FileMode.Open, FileAccess.Read);
+                if (stream.Length != 0)
+                    FindTags = (List<string>)bf.Deserialize(stream);
+                stream.Close();
+            }
+            catch (IOException e)
+            {
+                Console.WriteLine($"{e.Message}, Line: {Utilities.LineNumber()}");
+            }
+        }
 
         public static bool ContainsID(int ID)
         {

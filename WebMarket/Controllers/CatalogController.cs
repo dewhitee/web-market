@@ -30,6 +30,7 @@ namespace WebMarket.Controllers
         {
             LoadProducts();
             LoadUser();
+            CatalogViewModel.LoadFindTags();
             return View();
         }
 
@@ -331,7 +332,8 @@ namespace WebMarket.Controllers
         public IActionResult SubmitTags(string[] findTags)
         {
             if (findTags != null)
-                CatalogViewModel.SetFindTags(findTags);
+                CatalogViewModel.FindTags = new List<string>(findTags);
+            CatalogViewModel.SaveFindTags();
             return RedirectToAction("Catalog");
         }
 

@@ -448,8 +448,13 @@
     <p class="text-body">Showing following tags:</p>
     foreach (var findTag in CatalogViewModel.FindTags)
     {
-        <span class="badge badge-pill badge-light">findTag</span>
+        <span class="badge badge-pill badge-primary">@findTag</span>
     }
+    <div style="padding-bottom:1em"></div>
+}
+else
+{
+    <p class="text-body">Showing all products.</p>
 }
 
 
@@ -642,6 +647,14 @@
                         string buttonClassString = product.GetAddToCartButtonClassString();
                         var linkClass = product.GetProductTableLinkClassString();
                         var thClass = product.GetTableHeaderClassString();
+
+
+                        if (CatalogViewModel.FindTags?.Count > 0)
+                        {
+                            if (!product.ContainsTags(CatalogViewModel.FindTags))
+                                continue;
+                        }
+
                         <div class="col col-xs-12 col-sm-12 col-md-6 col-lg-4" style="padding-bottom: 2rem;">
                             <div class="card h-100 hoverable-card" id="card_@i" onmouseover="onHoveredCard(@i)" onmouseout="onHoveredCardOut(@i)">
                                 @*<div class="card-header @product.GetTableHeaderClassString()" id="card_header_@i" onclick="onClickedCard(@i)">

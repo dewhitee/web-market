@@ -72,6 +72,15 @@ namespace WebMarket.Models
             return ID < 0;
         }
 
+        public bool ContainsTags(List<string> findTags)
+        {
+            foreach (var tag in findTags)
+            {
+                if (!Tags.Contains(tag))
+                    return false;
+            }
+            return true;
+        }
 
         public float GetRateAvg()
         {
