@@ -187,7 +187,7 @@ namespace WebMarket.Models
                 return "You have not selected any product to buy!";
         }
 
-        public static string GetBuyProductButtonClassString()
+        public static string GetBuyProductButtonClassString(bool outline = true)
         {
             var product = GetSelectedBuyProduct();
             var finalCost = CurrentUser.Money - product.FinalPrice;
@@ -196,7 +196,7 @@ namespace WebMarket.Models
                 if (finalCost < 0)
                     return "btn btn-danger";
             }
-            return "btn btn-outline-primary";
+            return outline ? "btn btn-outline-primary" : "btn btn-primary";
         }
         public static string GetSubmitBuyingButtonClassString()
         {

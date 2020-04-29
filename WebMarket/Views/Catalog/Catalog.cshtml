@@ -278,9 +278,9 @@
     }
 </style>
 
-<div class="text-center">
+@*<div class="text-center">
     <h1 class="display-3">@ViewData["Title"]</h1>
-</div>
+</div>*@
 
 <div class="float-right">
     <h2>@CatalogViewModel.CurrentUser.MoneyString</h2>
@@ -447,7 +447,7 @@
 <div style="padding-bottom:1em"></div>
 @if (CatalogViewModel.FindTags?.Count > 0)
 {
-    <p class="text-body">Showing following tags:</p>
+    <p class="text-body text-muted">Showing following tags:</p>
     foreach (var findTag in CatalogViewModel.FindTags)
     {
         <span class="badge badge-pill badge-primary">@findTag</span>
@@ -456,7 +456,7 @@
 }
 else
 {
-    <p class="text-body">Showing all products.</p>
+    <p class="text-body text-muted">Showing all products.</p>
 }
 
 
@@ -555,14 +555,15 @@ else
         {
             <div class="float-right">
                 <div class="card bg-light mb-3" style="max-width: 12rem;">
-
-                    <div class="card-header">About</div>
-                    <div class="card-body">
-                        <h5 class="card-title">Light card title</h5>
-                        <p class="card-text">No text.</p>
-                        <hr />
-                        <h6 class="card-title">Sort by</h6>
-                        <form asp-controller="Catalog" asp-area="" asp-action="SortProducts" method="post">
+                    <form class="" asp-controller="Catalog" asp-area="" asp-action="SortProducts" method="post">
+                        <div class="card-header">About</div>
+                        <div class="card-body">
+                            <h5 class="card-title">Light card title</h5>
+                            <p class="card-text">No text.</p>
+                            <hr />
+                            <h6 class="card-title">Sort by</h6>
+                        </div>
+                        <div class="input-group col-12">
                             <select name="sortOptionIndex" id="sortOptionIndex" class="custom-select form-control form-control-sm">
                                 <option value="0" selected>Default</option>
                                 <option value="1">by Name</option>
@@ -571,13 +572,18 @@ else
                                 <option value="4">by Discount</option>
                                 <option value="5">by Final Price</option>
                             </select>
-                            <button class="btn btn-primary btn-sm" type="submit">Sort</button>
-
-                        </form>
-                    </div>
-                    @*asp-controller="Catalog" asp-area="" asp-action="SubmitTags" method="post"*@
+                        </div>
+                        <div class="pt-2">
+                            <button class="btn btn-primary ml-4 mr-4" type="submit">Sort</button>
+                        </div>
+                        @*asp-controller="Catalog" asp-area="" asp-action="SubmitTags" method="post"*@
+                    </form>
+                    <hr />
                     <form>
-                        <p class="card-text text-center">Tags</p>
+                        <div class="card-body pt-0 mt-0">
+                            <h6 class="card-title">Find by</h6>
+                        </div>
+                        @*<p class="card-text text-center">Tags</p>*@
                         <div class="input-group col-md-12">
                             @*<label for="findTag">Tags</label>*@
                             <select name="findTag" id="findTag" class="custom-select form-control form-control-sm">
@@ -616,8 +622,10 @@ else
                                 <label class="custom-control-label" for="catalogLengthAll">Show all items</label>
                             </div>
                         </div>
-                        <hr />
-                        <button id="applyShowProductsButton" class="btn btn-primary ml-4 mr-4" type="submit">Apply</button>
+                        @*<hr />*@
+                        <div class="pt-2">
+                            <button id="applyShowProductsButton" class="btn btn-primary ml-4 mr-4" type="submit">Apply</button>
+                        </div>
                         <hr />
                     </form>
                 </div>

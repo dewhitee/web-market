@@ -57,7 +57,7 @@
                 {
                     <a class="card-link" href="~/file/@product.FileName" download>Download link</a>
                 }
-                <p>Owner: @product.GetOwnerName()</p>
+                <p>Owner: <b>@product.GetOwnerName()</b></p>
             </div>
         </div>
         <div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
@@ -157,7 +157,7 @@
                 <form asp-controller="Catalog" asp-action="BuyProduct" method="post">
                     <input type="hidden" class="form-control" name="productName" id="productName" value=@product.Name />
                     <input type="hidden" class="form-control" name="productID" id="productID" value=@product.ID />
-                    <button class="@CatalogViewModel.GetBuyProductButtonClassString() btn-lg" type="submit" id="card_on_transaction_buy_button">Buy</button>
+                    <button class="@CatalogViewModel.GetBuyProductButtonClassString(false) btn-lg" type="submit" id="card_on_transaction_buy_button">Buy</button>
                 </form>
             </div>
             <br>
