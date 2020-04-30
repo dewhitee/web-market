@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -34,6 +35,7 @@ namespace WebMarket.Models
             public string Description;
         }
         public int ID { get; set; }
+        [Required]
         public string Name { get; set; }
         public string Type { get; set; }
         public decimal Price { get; set; }
@@ -54,7 +56,7 @@ namespace WebMarket.Models
         public bool OnlyOneCommentPerUser { get; set; }
         public bool AddedToCart { get; set; }
         public string FileName { get; set; }
-        public IFormFile ZipFile { get; set; }
+        public string ZipFilePath { get; set; }
 
         public List<string> Tags = new List<string>();
         public List<UserComment> Comments = new List<UserComment>();

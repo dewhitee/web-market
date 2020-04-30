@@ -6,12 +6,27 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebMarket.Models;
 using WebMarket.Data;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
 
 namespace WebMarket.Controllers
 {
     public class AddProductController : Controller
     {
         private static List<string> _tags = null;
+        private readonly IProductRepository productRepository;
+        [Obsolete]
+        private readonly IHostingEnvironment hostingEnvironment;
+
+        [Obsolete]
+        public AddProductController(
+            IProductRepository productRepository,
+            IHostingEnvironment hostingEnvironment)
+        {
+            this.productRepository = productRepository;
+            this.hostingEnvironment = hostingEnvironment;
+        }
+
 
         // GET: AddProduct
         public ActionResult AddProductView()
@@ -28,27 +43,66 @@ namespace WebMarket.Controllers
         }
 
         // GET: AddProduct/Create
-        public ActionResult Create()
+        //public ActionResult Create()
+        //{
+        //    return View();
+        //}
+
+        [HttpPost]
+        public IActionResult Create(AddProductViewModel model)
         {
+            if (ModelState.IsValid)
+            {
+                string uniqueFileName = null;
+                if (model.ZipFile != null)
+                {
+                    string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "file");
+                    uniqueFileName = Guid.NewGuid().ToString() + "_" + model.ZipFile.FileName;
+                    string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                    model.ZipFile.CopyTo(new FileStream(filePath, FileMode.Create));
+                }
+                Product newProduct = new Product
+                {
+                    ID = model.ID,
+                    Name = model.Name,
+                    Type = model.Type,
+                    Tags = _tags,
+                    Price = model.Price,
+                    CostIntegral = model.CostIntegral,
+                    CostFractional = model.CostFractional,
+                    Discount = model.Discount,
+                    Description = model.Description,
+                    FirstImage = model.FirstImage,
+                    SecondImage = model.SecondImage,
+                    ThirdImage = model.ThirdImage,
+                    Link = model.Link,
+                    FileName = model.FileName,
+                    ZipFilePath = uniqueFileName,
+                    AddedDate = DateTime.Today,
+                    OwnerID = CatalogViewModel.CurrentUser.ID
+                };
+                CatalogViewModel.ListOfProducts.Add(newProduct);
+                return RedirectToAction("AddProductView");
+            }
             return View();
         }
 
         // POST: AddProduct/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add insert logic here
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Create(IFormCollection collection)
+        //{
+        //    try
+        //    {
+        //        // TODO: Add insert logic here
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
 
         // GET: AddProduct/Edit/5
         public ActionResult Edit(int id)
