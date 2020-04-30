@@ -1,0 +1,248 @@
+﻿@model AddProductViewModel
+@{
+    ViewData["Title"] = "AddProductView";
+}
+
+<h1>AddProductView</h1>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="~/css/tags.css" rel="stylesheet" type="text/css" />
+
+<script src="https://kit.fontawesome.com/37c897dddf.js" crossorigin="anonymous"></script>
+
+<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+<script type="text/javascript">
+</script>
+
+<style>
+    img {
+        width: 100%;
+        max-width: 600px;
+        max-height: 400px;
+    }
+
+    .expanded-div {
+        position: absolute;
+    }
+
+    .expanded-a {
+        position: absolute;
+        text-align: right;
+    }
+
+    .expanded-p {
+        padding-top: 2em;
+        position: absolute;
+        text-align: right;
+    }
+
+    .expanded-btn {
+        position: absolute;
+        text-align: center;
+    }
+
+    .card-description {
+        /*white-space: nowrap;*/
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-height: 100px;
+    }
+
+    .side-btn {
+        min-width: 78px !important;
+    }
+
+</style>
+
+
+@*Add a product div container*@
+@*<div class="row">
+    <div class="col">*@
+            <h2 class="display-4 text-center">Adding</h2>
+            <div class="card card-body">
+                <form enctype="multipart/form-data" asp-controller="Catalog" asp-area="" asp-action="AddProduct" method="post">
+
+                    <div class="form-group">
+                        <label for="productName">Product name</label>
+                        <input type="text" class="form-control" name="productName" id="productName_add" placeholder="Enter product name" required />
+                    </div>
+
+                    <div class="input-group col-md-6">
+                        @*<label for="productType">Type</label>*@
+                        <select name="productType" id="productType_add" class="custom-select">
+                            <option selected>Choose type</option>
+                            <option>Software</option>
+                            <option>Game</option>
+                            <option>Game Engine</option>
+                            <option>3D Modeling</option>
+                            <option>3D Texturing</option>
+                            <option>3D Scanning</option>
+                            <option>3D Sculpting</option>
+                            <option>Photogrammetry</option>
+                            <option>DAW</option>
+                            <option>Audio Recording</option>
+                            <option>Video Capture</option>
+                        </select>
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-primary btn-sm" type="button" onclick="addTag()">Add new tag</button>
+                        </div>
+                    </div>
+                    <div id="tags" class="pb-4">
+                        <!-- There will be all tags -->
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-auto">
+                            <label for="productCost">Cost</label>
+                            <div class="input-group mb-2">
+                                <input type="text" class="form-control" name="productCost" id="productCost_add" placeholder="10.99" required>
+                                <div class="input-group-append">
+                                    <div class="input-group-text">€</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <label for="productDiscount">Discount</label>
+                            <div class="input-group mb-2">
+                                <input type="text" class="form-control" name="productDiscount" id="productDiscount_add" placeholder="20" required>
+                                <div class="input-group-append">
+                                    <div class="input-group-text">%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="productDescription">Product Description</label>
+                        <textarea class="form-control" maxlength="256" name="productDescription" id="productDescription_add" rows="3" placeholder="Enter product description" onkeyup="countChars(this);"></textarea>
+                        <p id="descriptionCharCounter_add">256 characters remaining</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="productImageLink">Product Image link</label>
+                        <input type="text" class="form-control" name="productImageLink" id="productImageLink_add" placeholder="Enter product image link" />
+                        <label for="productImageDescription">Product Image description</label>
+                        <input type="text" class="form-control" name="productImageDescription" id="productImageDescription_add" placeholder="Enter product image description" />
+                    </div>
+                    <div class="form-group">
+                        <label for="secondImageLink">Second product Image link</label>
+                        <input type="text" class="form-control" name="secondImageLink" id="secondImageLink_add" placeholder="Enter product second image link" />
+                        <label for="secondImageDescription">Second Image description</label>
+                        <input type="text" class="form-control" name="secondImageDescription" id="secondImageDescription_add" placeholder="Enter second product image description" />
+                    </div>
+                    <div class="form-group">
+                        <label for="thirdImageLink">Third product Image link</label>
+                        <input type="text" class="form-control" name="thirdImageLink" id="thirdImageLink_add" placeholder="Enter product third image link" />
+                        <label for="thirdImageDescription">Third Image description</label>
+                        <input type="text" class="form-control" name="thirdImageDescription" id="thirdImageDescription_add" placeholder="Enter third product image description" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="productLink">Product link</label>
+                        <input type="text" class="form-control" name="productLink" id="productLink_add" placeholder="Enter product link" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="productFileName">Product file name</label>
+                        <input type="text" class="form-control" name="productFileName" id="productFileName_add" placeholder="Enter product name" />
+                    </div>
+
+                    <div class="form-group row">
+                        <label asp-for="ZipFile" class="col-sm-2 col-form-label">Product zip archive:</label>
+                        <div class="col-sm-10">
+                            <div class="custom-file">
+                                <input asp-for="ZipFile" class="form-control custom-file-input">
+                                <label class="custom-file-label">Choose file...</label>
+                            </div>
+                        </div>
+                        
+                    </div>
+
+                    <input type="hidden" class="form-control" name="condition" id="condition_add" value=1 />
+                    <button id="submitProductButton" class="btn btn-success" type="submit">Submit product</button>
+
+                    @section Scripts
+                    {
+                        <script>
+                            $(document).ready(function () {
+                                $('.custom-file-input').on("change", function () {
+                                    var fileName = $(this).val().split("\\").pop();
+                                    $(this).next('.custom-file-label').html(fileName);
+                                });
+                            });
+
+                            function addTag() {
+                                let node = document.createElement("SPAN");
+                                node.className += "badge badge-pill badge-primary tag";
+                                node.style.marginLeft = "12px";
+                                node.id = $("#productType_add").val();
+                                let text_node = document.createTextNode($("#productType_add").val());
+                                node.appendChild(text_node);
+
+                                //! adding cross for deleting tag
+                                let cross_node = document.createElement("I");
+                                cross_node.className += "fas fa-times tag-cross";
+                                cross_node.style.paddingLeft = "4px";
+                                node.appendChild(cross_node);
+
+                                if (document.getElementById(node.id) == null) {
+                                    document.getElementById("tags").appendChild(node);
+                                }
+
+                                //! binding removing of a tag on click
+                                $(cross_node).on('click', function () {
+                                    $(this).parent().remove();
+                                });
+                            }
+
+                            function countChars(obj) {
+                                var maxLength = obj.maxLength;
+                                var strLength = obj.value.length;
+                                var charRemain = (maxLength - strLength);
+
+                                if (charRemain < 0) {
+                                    document.getElementById('descriptionCharCounter_add').innerHTML = '<span style="color:red;">You have exceeded the limit of ' + maxLengthZ + ' characters</span>';
+                                }
+                                else {
+                                    document.getElementById('descriptionCharCounter_add').innerHTML = charRemain + ' characters remaining';
+                                }
+                            }
+
+                            function sortProducts() {
+
+                            }
+
+                            $("#submitProductButton").on("click", function (e) {
+                                var tags_array = [];
+
+                                $('#tags > span').each(function () {
+                                    tags_array.push($(this).text());
+                                });
+                                var prod_name = $('#productName_add').val();
+                                //var prod_zip = $('#productZipFile').val();
+
+                                $.ajax({
+                                    type: "post",
+                                    dataType: "json",
+                                    url: "/Catalog/AddProduct",
+                                    traditional: true,
+                                    data: {
+                                        productName: prod_name,
+                                        //productType: prod_type,
+                                        tags: tags_array,
+                                        //productZipFile: prod_zip
+                                    },
+                                    success: function (data) {
+                                        console.log(data.message);
+                                    },
+                                });
+                            });
+
+                        </script>
+                    }
+
+                </form>
+
+            </div>
+    @*</div>
+</div>*@

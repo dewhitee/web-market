@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using WebMarket.Data;
+using Microsoft.AspNetCore.Http;
 
 namespace WebMarket.Models
 {
