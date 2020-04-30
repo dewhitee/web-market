@@ -71,7 +71,7 @@
 
          <div class="input-group col-md-6">
              @*<label for="productType">Type</label>*@
-             <select asp-for="Type" name="productType" id="productType_add" class="custom-select">
+             <select asp-for="Type" id="productType_add" class="custom-select">
                             <option selected>Choose type</option>
                             <option>Software</option>
                             <option>Game</option>
@@ -95,18 +95,18 @@
 
          <div class="form-row">
              <div class="col-auto">
-                 <label asp-for="Price" for="productCost">Cost</label>
+                 <label asp-for="Price">Cost</label>
                  <div class="input-group mb-2">
-                     <input asp-for="Price" class="form-control" name="productCost" id="productCost_add" placeholder="10.99" required>
+                     <input asp-for="Price" class="form-control" placeholder="10.99" required>
                      <div class="input-group-append">
                          <div class="input-group-text">€</div>
                      </div>
                  </div>
              </div>
              <div class="col-auto">
-                 <label asp-for="Discount" for="productDiscount">Discount</label>
+                 <label asp-for="Discount">Discount</label>
                  <div class="input-group mb-2">
-                     <input asp-for="Discount" class="form-control" name="productDiscount" id="productDiscount_add" placeholder="20" required>
+                     <input asp-for="Discount" class="form-control" id="productDiscount_add" placeholder="20" required>
                      <div class="input-group-append">
                          <div class="input-group-text">%</div>
                      </div>
@@ -115,38 +115,38 @@
          </div>
 
          <div class="form-group row">
-             <label asp-for="Description" for="productDescription">Product Description</label>
-             <textarea asp-for="Description" class="form-control" maxlength="256" name="productDescription" id="productDescription_add" rows="3" placeholder="Enter product description" onkeyup="countChars(this);"></textarea>
+             <label asp-for="Description">Product Description</label>
+             <textarea asp-for="Description" class="form-control" maxlength="256" id="productDescription_add" rows="3" placeholder="Enter product description" onkeyup="countChars(this);"></textarea>
              <p id="descriptionCharCounter_add">256 characters remaining</p>
          </div>
 
          <div class="form-group row">
-             <label asp-for="FirstImage.Link" for="productImageLink">Product Image link</label>
-             <input asp-for="FirstImage.Link" class="form-control" name="productImageLink" id="productImageLink_add" placeholder="Enter product image link" />
-             <label asp-for="FirstImage.Description" for="productImageDescription">Product Image description</label>
-             <input asp-for="FirstImage.Description" class="form-control" name="productImageDescription" id="productImageDescription_add" placeholder="Enter product image description" />
+             <label asp-for="FirstImageLink">Product Image link</label>
+             <input asp-for="FirstImageLink" class="form-control" id="productImageLink_add" placeholder="Enter product image link" />
+             <label asp-for="FirstImageDescription">Product Image description</label>
+             <input asp-for="FirstImageDescription" class="form-control" id="productImageDescription_add" placeholder="Enter product image description" />
          </div>
          <div class="form-group">
-             <label asp-for="SecondImage.Link" for="secondImageLink">Second product Image link</label>
-             <input asp-for="SecondImage.Link" class="form-control" name="secondImageLink" id="secondImageLink_add" placeholder="Enter product second image link" />
-             <label asp-for="SecondImage.Description" for="secondImageDescription">Second Image description</label>
-             <input asp-for="SecondImage.Description" class="form-control" name="secondImageDescription" id="secondImageDescription_add" placeholder="Enter second product image description" />
+             <label asp-for="SecondImageLink">Second product Image link</label>
+             <input asp-for="SecondImageLink" class="form-control" id="secondImageLink_add" placeholder="Enter product second image link" />
+             <label asp-for="SecondImageDescription">Second Image description</label>
+             <input asp-for="SecondImageDescription" class="form-control" id="secondImageDescription_add" placeholder="Enter second product image description" />
          </div>
          <div class="form-group row">
-             <label asp-for="ThirdImage.Link" for="thirdImageLink">Third product Image link</label>
-             <input asp-for="ThirdImage.Link" class="form-control" name="thirdImageLink" id="thirdImageLink_add" placeholder="Enter product third image link" />
-             <label asp-for="ThirdImage.Description" for="thirdImageDescription">Third Image description</label>
-             <input asp-for="ThirdImage.Description" class="form-control" name="thirdImageDescription" id="thirdImageDescription_add" placeholder="Enter third product image description" />
+             <label asp-for="ThirdImageLink">Third product Image link</label>
+             <input asp-for="ThirdImageLink" class="form-control" id="thirdImageLink_add" placeholder="Enter product third image link" />
+             <label asp-for="ThirdImageDescription">Third Image description</label>
+             <input asp-for="ThirdImageDescription" class="form-control" id="thirdImageDescription_add" placeholder="Enter third product image description" />
          </div>
 
          <div class="form-group row">
              <label for="productLink">Product link</label>
-             <input asp-for="Link" type="text" class="form-control" name="productLink" id="productLink_add" placeholder="Enter product link" />
+             <input asp-for="Link" class="form-control" id="productLink_add" placeholder="Enter product link" />
          </div>
 
          <div class="form-group row">
-             <label asp-for="FileName" for="productFileName">Product file name</label>
-             <input type="text" class="form-control" name="productFileName" id="productFileName_add" placeholder="Enter product name" />
+             <label asp-for="FileName">Product file name</label>
+             <input asp-for="FileName" class="form-control" id="productFileName_add" placeholder="Enter product name" />
          </div>
 
          <div class="form-group row">
@@ -236,7 +236,7 @@
                      $.ajax({
                          type: "post",
                          dataType: "json",
-                         url: "/Catalog/AddProduct",
+                         url: "/AddProduct/AddTags",
                          traditional: true,
                          data: {
                              productName: prod_name,

@@ -61,30 +61,68 @@ namespace WebMarket.Controllers
                     string filePath = Path.Combine(uploadsFolder, uniqueFileName);
                     model.ZipFile.CopyTo(new FileStream(filePath, FileMode.Create));
                 }
-                Product newProduct = new Product
+
+                int integralCost = (int)Math.Truncate((decimal)model.CostIntegral);
+                int fractionalCost = (int)(model.Price - integralCost);
+
+                if (!CatalogViewModel.ContainsName(model.Name))
                 {
-                    ID = model.ID,
-                    Name = model.Name,
-                    Type = model.Type,
-                    Tags = _tags,
-                    Price = model.Price,
-                    CostIntegral = model.CostIntegral,
-                    CostFractional = model.CostFractional,
-                    Discount = model.Discount,
-                    Description = model.Description,
-                    FirstImage = model.FirstImage,
-                    SecondImage = model.SecondImage,
-                    ThirdImage = model.ThirdImage,
-                    Link = model.Link,
-                    FileName = model.FileName,
-                    ZipFilePath = uniqueFileName,
-                    AddedDate = DateTime.Today,
-                    OwnerID = CatalogViewModel.CurrentUser.ID
-                };
-                CatalogViewModel.ListOfProducts.Add(newProduct);
+                    Product newProduct = new Product
+                    {
+                        ID = Product.MakeNewID(),
+                        Name = model.Name,
+                        Type = Product.CheckTypeString(model.Type),
+                        Tags = _tags != null ? _tags : new List<string>(),
+                        Price = model.Price,
+                        CostIntegral = integralCost,
+                        CostFractional = fractionalCost,
+                        Discount = model.Discount,
+                        Description = model.Description,
+                        FirstImage = new Product.Image
+                        { 
+                            Link = (model.FirstImageLink != null && model.FirstImageLink.Length > 0) ? model.FirstImageLink
+                            : "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg",
+                            Description = model.FirstImageDescription
+                        },
+                        SecondImage = new Product.Image
+                        {
+                            Link = model.SecondImageLink,
+                            Description = model.SecondImageDescription
+                        },
+                        ThirdImage = new Product.Image
+                        {
+                            Link = model.ThirdImageLink,
+                            Description = model.ThirdImageDescription
+                        },
+                        Link = model.Link,
+                        FileName = model.FileName,
+                        ZipFilePath = uniqueFileName,
+                        AddedDate = DateTime.Today,
+                        OwnerID = CatalogViewModel.CurrentUser.ID
+                    };
+                    CatalogViewModel.ListOfProducts.Add(newProduct);
+                    _tags = null;
+                    SaveProducts();
+                }
                 return RedirectToAction("AddProductView");
             }
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult AddTags(string productName, string[] tags)
+        {
+            if (!CatalogViewModel.ContainsName(productName))
+            {
+                _tags = new List<string>(tags);
+            }
+            else
+            {
+                CatalogViewModel.GetProduct(productName).Tags = new List<string>(_tags);
+                _tags = null;
+            }
+            SaveProducts();
+            return RedirectToAction("AddProductView");
         }
 
         // POST: AddProduct/Create

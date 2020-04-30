@@ -37,7 +37,9 @@ namespace WebMarket.Models
         public int ID { get; set; }
         [Required]
         public string Name { get; set; }
+        [Required]
         public string Type { get; set; }
+        [Required]
         public decimal Price { get; set; }
         public int CostIntegral { get; set; }
         public int CostFractional { get; set; }
@@ -48,9 +50,9 @@ namespace WebMarket.Models
         public Image FirstImage { get; set; }
         public Image SecondImage { get; set; }
         public Image ThirdImage { get; set; }
-        public string FirstImageLink { get => CardImageLink; }
-        public string SecondImageLink { get; set; }
-        public string ThirdImageLink { get; set; }
+        //public string FirstImageLink { get => CardImageLink; }
+        //public string SecondImageLink { get; set; }
+        //public string ThirdImageLink { get; set; }
         public bool IsBought { get => CatalogViewModel.CurrentUser.BoughtProductIDs.Contains(ID.ToString());/* set;*/}
         public bool OnlyRegisteredCanComment { get; set; }
         public bool OnlyOneCommentPerUser { get; set; }
