@@ -35,7 +35,7 @@
     }
     .hoverable-img:hover p {
         color: #fff;
-        text-shadow: 4px 4px rgba(0,0,0,0.2);
+        text-shadow: 1px 1px rgba(0,0,0,0.2);
     }
     .hoverable-img .catalog-img {
         z-index: 0;

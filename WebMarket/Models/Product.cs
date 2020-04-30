@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -53,6 +54,7 @@ namespace WebMarket.Models
         public bool OnlyOneCommentPerUser { get; set; }
         public bool AddedToCart { get; set; }
         public string FileName { get; set; }
+        public IFormFile ZipFile { get; set; }
 
         public List<string> Tags = new List<string>();
         public List<UserComment> Comments = new List<UserComment>();

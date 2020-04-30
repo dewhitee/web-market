@@ -57,6 +57,7 @@ namespace WebMarket.Controllers
             string thirdImageDescription,
             string productLink,
             string productFileName,
+            byte[] productZipFile,
             int condition)
         {
             int integralCost = (int)Math.Truncate(productCost);
@@ -243,6 +244,12 @@ namespace WebMarket.Controllers
         //    var content = new System.IO.MemoryStream(data);
         //    var contentType = "APPLICATION/octet-stream";
         //    var fileName = "test_Downloaded"
+        //}
+
+        //[HttpPost]
+        //public string[] UploadFiles()
+        //{
+            //HttpFileCollection
         //}
 
         public IActionResult AddToCart(string productName, int productIndex)
