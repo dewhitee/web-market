@@ -18,6 +18,17 @@ namespace WebMarket.Models
             };
         }
 
+        public Product Add(Product product)
+        {
+            _productList.Add(product);
+            return product;
+        }
+
+        public IEnumerable<Product> GetAllProducts()
+        {
+            return _productList;
+        }
+
         public Product GetProduct(int id)
         {
             return _productList.FirstOrDefault(e => e.ID == id);

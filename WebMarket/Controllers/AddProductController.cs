@@ -43,13 +43,13 @@ namespace WebMarket.Controllers
         }
 
         // GET: AddProduct/Create
-        //public ActionResult Create()
+        //public ActionResult AddProductView()
         //{
         //    return View();
         //}
 
         [HttpPost]
-        public IActionResult Create(AddProductViewModel model)
+        public IActionResult AddProductView([FromForm]AddProductViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -95,6 +95,7 @@ namespace WebMarket.Controllers
         //    try
         //    {
         //        // TODO: Add insert logic here
+        //        collection.Keys
 
         //        return RedirectToAction(nameof(Index));
         //    }

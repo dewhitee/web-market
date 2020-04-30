@@ -7,6 +7,8 @@ namespace WebMarket.Models
 {
     public interface IProductRepository
     {
-        public Product GetProduct(int id);
+        Product GetProduct(int id);
+        IEnumerable<Product> GetAllProducts();
+        Product Add(Product product);
     }
 }
