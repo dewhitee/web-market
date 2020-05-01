@@ -105,6 +105,13 @@ namespace WebMarket.Models
             return context.Products.ToList()[index];
         }
 
+        public IEnumerable<Product> GetProductsByName(string name)
+        {
+            return from p in context.Products
+                   where p.Name == name
+                   select p;
+        }
+
         public Tag GetTag(int id)
         {
             return context.Tags.Find(id);

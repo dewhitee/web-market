@@ -728,9 +728,9 @@ else
                                     </div>
                                     <div>
                                         @{
-                                            foreach (var tag in product.Tags)
+                                            foreach (var tag in /*product.Tags*/_repository.GetTagsByProductID(product.ID))
                                             {
-                                                <span class="badge badge-pill badge-primary">@tag</span>
+                                                <span class="badge badge-pill badge-primary">@tag.Text</span>
                                             }
                                         }
                                     </div>

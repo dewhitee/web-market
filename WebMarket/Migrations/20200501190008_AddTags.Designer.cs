@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebMarket.Data;
 
 namespace WebMarket.Migrations
 {
     [DbContext(typeof(MainDbContext))]
-    partial class MainDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200501190008_AddTags")]
+    partial class AddTags
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -114,13 +116,11 @@ namespace WebMarket.Migrations
 
                     b.Property<string>("ProductID")
                         .IsRequired()
-                        .HasColumnType("nvarchar(32)")
-                        .HasMaxLength(32);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Text")
                         .IsRequired()
-                        .HasColumnType("nvarchar(32)")
-                        .HasMaxLength(32);
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
 

@@ -9,6 +9,7 @@ namespace WebMarket.Models
     {
         Product GetProduct(int id);
         Product GetProductByIndex(int index);
+        IEnumerable<Product> GetProductsByName(string name);
         IEnumerable<Product> GetAllProducts();
         Product AddProduct(Product product);
         Product UpdateProduct(Product productChanges);

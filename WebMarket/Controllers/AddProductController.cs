@@ -14,16 +14,17 @@ namespace WebMarket.Controllers
     public class AddProductController : Controller
     {
         private static List<string> _tags = null;
-        private readonly IMainRepository productRepository;
+        private static Product _addedProduct = null;
+        private readonly IMainRepository mainRepository;
         [Obsolete]
         private readonly IHostingEnvironment hostingEnvironment;
 
         [Obsolete]
         public AddProductController(
-            IMainRepository productRepository,
+            IMainRepository mainRepository,
             IHostingEnvironment hostingEnvironment)
         {
-            this.productRepository = productRepository;
+            this.mainRepository = mainRepository;
             this.hostingEnvironment = hostingEnvironment;
         }
 
@@ -67,41 +68,48 @@ namespace WebMarket.Controllers
 
                 //if (!CatalogViewModel.ContainsName(model.Name))
                 //{
-                    Product newProduct = new Product
+
+                int newID = Product.MakeNewID(mainRepository);
+
+                bool attached = AttachTags(newID);
+
+                Product newProduct = new Product
+                {
+                    ID = newID,
+                    Name = model.Name,
+                    Type = Product.CheckTypeString(model.Type),
+                    Tags = _tags != null ? _tags : new List<string>(),
+                    Price = model.Price,
+                    Discount = model.Discount,
+                    Description = model.Description,
+                    FirstImage = new Product.Image
+                    { 
+                        Link = (model.FirstImageLink != null && model.FirstImageLink.Length > 0) ? model.FirstImageLink
+                        : "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg",
+                        Description = model.FirstImageDescription
+                    },
+                    SecondImage = new Product.Image
                     {
-                        ID = Product.MakeNewID(productRepository),
-                        Name = model.Name,
-                        Type = Product.CheckTypeString(model.Type),
-                        Tags = _tags != null ? _tags : new List<string>(),
-                        Price = model.Price,
-                        Discount = model.Discount,
-                        Description = model.Description,
-                        FirstImage = new Product.Image
-                        { 
-                            Link = (model.FirstImageLink != null && model.FirstImageLink.Length > 0) ? model.FirstImageLink
-                            : "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg",
-                            Description = model.FirstImageDescription
-                        },
-                        SecondImage = new Product.Image
-                        {
-                            Link = model.SecondImageLink,
-                            Description = model.SecondImageDescription
-                        },
-                        ThirdImage = new Product.Image
-                        {
-                            Link = model.ThirdImageLink,
-                            Description = model.ThirdImageDescription
-                        },
-                        Link = model.Link,
-                        FileName = model.FileName,
-                        ZipFilePath = uniqueFileName,
-                        AddedDate = DateTime.Today,
-                        OwnerID = CatalogViewModel.CurrentUser.ID
-                    };
-                    //CatalogViewModel.ListOfProducts.Add(newProduct);
-                    productRepository.AddProduct(newProduct);
-                    _tags = null;
-                    SaveProducts();
+                        Link = model.SecondImageLink,
+                        Description = model.SecondImageDescription
+                    },
+                    ThirdImage = new Product.Image
+                    {
+                        Link = model.ThirdImageLink,
+                        Description = model.ThirdImageDescription
+                    },
+                    Link = model.Link,
+                    FileName = model.FileName,
+                    ZipFilePath = uniqueFileName,
+                    AddedDate = DateTime.Today,
+                    OwnerID = CatalogViewModel.CurrentUser.ID
+                };
+                //CatalogViewModel.ListOfProducts.Add(newProduct);
+                mainRepository.AddProduct(newProduct);
+
+                _tags = null;
+                _addedProduct = !attached ? newProduct : null;
+                SaveProducts();
                 //}
                 return RedirectToAction("AddProductView");
             }
@@ -111,17 +119,32 @@ namespace WebMarket.Controllers
         [HttpPost]
         public IActionResult AddTags(string productName, string[] tags)
         {
-            if (!CatalogViewModel.ContainsName(productName))
+            _tags = new List<string>(tags);
+            if (_addedProduct != null)
             {
-                _tags = new List<string>(tags);
-            }
-            else
-            {
-                CatalogViewModel.GetProduct(productName).Tags = new List<string>(_tags);
+                AttachTags(_addedProduct.ID);
                 _tags = null;
+                _addedProduct = null;
             }
-            SaveProducts();
+
             return RedirectToAction("AddProductView");
+        }
+
+        bool AttachTags(int productID)
+        {
+            if (_tags != null)
+            {
+                foreach (var tag in _tags)
+                {
+                    mainRepository.AddTag(new Tag
+                    {
+                        ProductID = productID.ToString(),
+                        Text = tag
+                    });
+                }
+                return true;
+            }
+            return false;
         }
 
         // POST: AddProduct/Create
