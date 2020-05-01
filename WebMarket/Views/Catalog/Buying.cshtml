@@ -1,4 +1,6 @@
 ﻿@model CatalogViewModel
+@inject IProductRepository _prodRepository
+ 
 @{
     ViewData["Title"] = "Buying";
 }
@@ -20,11 +22,11 @@
 
     function getFinalWidth(index) {
         switch (index) {
-            case 1: return @CatalogViewModel.GetSelectedBuyProduct()?.GetStarsPercent(1);
-            case 2: return @CatalogViewModel.GetSelectedBuyProduct()?.GetStarsPercent(2);
-            case 3: return @CatalogViewModel.GetSelectedBuyProduct()?.GetStarsPercent(3);
-            case 4: return @CatalogViewModel.GetSelectedBuyProduct()?.GetStarsPercent(4);
-            case 5: return @CatalogViewModel.GetSelectedBuyProduct()?.GetStarsPercent(5);
+            case 1: return @CatalogViewModel.GetSelectedBuyProduct(_prodRepository)?.GetStarsPercent(1);
+            case 2: return @CatalogViewModel.GetSelectedBuyProduct(_prodRepository)?.GetStarsPercent(2);
+            case 3: return @CatalogViewModel.GetSelectedBuyProduct(_prodRepository)?.GetStarsPercent(3);
+            case 4: return @CatalogViewModel.GetSelectedBuyProduct(_prodRepository)?.GetStarsPercent(4);
+            case 5: return @CatalogViewModel.GetSelectedBuyProduct(_prodRepository)?.GetStarsPercent(5);
         }
     };
 
@@ -45,7 +47,7 @@
 <h1>Buying</h1>
 <br>
 @{
-    var product = CatalogViewModel.GetSelectedBuyProduct();
+    var product = CatalogViewModel.GetSelectedBuyProduct(_prodRepository);
 
     <div class="float-left" style="padding-right:2em">
         <div class="card bg-light mb-3" style="max-width: 18rem;">

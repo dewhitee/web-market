@@ -54,6 +54,11 @@ namespace WebMarket.Models
             return context.Products.Find(id);
         }
 
+        public Product GetProductByIndex(int index)
+        {
+            return context.Products.ToList()[index];
+        }
+
         public Product Update(Product productChanges)
         {
             var product = context.Products.Attach(productChanges);

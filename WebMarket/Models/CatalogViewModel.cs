@@ -31,6 +31,7 @@ namespace WebMarket.Models
         public static List<Product> ListOfProducts = new List<Product>();
         public static List<User> ListOfUsers = new List<User>();
         public static List<Product> AddedToCartProducts = new List<Product>();
+        public static Product ChoosenProduct = new Product();
         public static User CurrentUser = new User();
 
         public List<Product> Products { get; set; }
@@ -158,6 +159,16 @@ namespace WebMarket.Models
                     return product;
             }
             return new Product();
+        }
+        public static Product GetSelectedBuyProduct(IProductRepository repository)
+        {
+            //foreach (var product in /*repository.GetAllProducts()*/AddedToCartProducts)
+            //{
+            //    if (product.AddedToCart && !product.IsBought)
+            //        return product;
+            //}
+            //return new Product();
+            return ChoosenProduct ?? new Product();
         }
 
         public static Product GetSelectedSellProduct()

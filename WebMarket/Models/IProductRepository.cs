@@ -8,6 +8,7 @@ namespace WebMarket.Models
     public interface IProductRepository
     {
         Product GetProduct(int id);
+        Product GetProductByIndex(int index);
         IEnumerable<Product> GetAllProducts();
         Product Add(Product product);
         Product Update(Product productChanges);

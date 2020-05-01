@@ -44,6 +44,11 @@ namespace WebMarket.Models
             return _productList.FirstOrDefault(p => p.ID == id);
         }
 
+        public Product GetProductByIndex(int index)
+        {
+            throw new NotImplementedException();
+        }
+
         public Product Update(Product productChanges)
         {
             Product product = _productList.FirstOrDefault(p => p.ID == productChanges.ID);

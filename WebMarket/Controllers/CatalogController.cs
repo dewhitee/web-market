@@ -260,17 +260,29 @@ namespace WebMarket.Controllers
         public IActionResult AddToCart(string productName, int productIndex)
         {
             Userbase.LoadUser();
-            for (int i = 0; i < CatalogViewModel.ListOfProducts.Count; i++)
+            var products = productRepository.GetAllProducts().ToList();
+            for (int i = 0; i < /*CatalogViewModel.ListOfProducts.Count*/products.Count; i++)
             {
-                CatalogViewModel.ListOfProducts[i].AddedToCart = false;
+                var product = products[i];
+                if (product != null)
+                {
+                    product.AddedToCart = false;
+                }
+                /*CatalogViewModel.ListOfProducts[i].AddedToCart = false */;
             }
-            CatalogViewModel.ListOfProducts[productIndex].AddedToCart = true;
+            if (products[productIndex] != null)
+            {
+                /*CatalogViewModel.ListOfProducts[productIndex]*/
+                products[productIndex].AddedToCart = true;
+            }
 
-            if (!CatalogViewModel.AddedToCartProducts.Contains(CatalogViewModel.ListOfProducts[productIndex]))
-                CatalogViewModel.AddedToCartProducts.Add(CatalogViewModel.ListOfProducts[productIndex]);
+            if (!CatalogViewModel.AddedToCartProducts.Contains(/*CatalogViewModel.ListOfProducts[productIndex]*/products[productIndex]))
+                CatalogViewModel.AddedToCartProducts.Add(/*CatalogViewModel.ListOfProducts[productIndex]*/products[productIndex]);
+
+            CatalogViewModel.ChoosenProduct = products[productIndex];
 
             // temporally will be redirecting to the Buying page
-            if (!CatalogViewModel.ListOfProducts[productIndex].IsBought)
+            if (!/*CatalogViewModel.ListOfProducts[productIndex]*/products[productIndex].IsBought)
             {
                 SaveProducts();
                 return RedirectToAction("Buying");
