@@ -19,8 +19,17 @@ namespace WebMarket.Models
         public Product Add(Product product)
         {
             context.Products.Add(product);
-            //context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT Product")
-            context.SaveChanges();
+            context.Database.OpenConnection();
+            try
+            {
+                context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Products ON");
+                context.SaveChanges();
+                context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Products OFF");
+            }
+            finally
+            {
+                context.Database.CloseConnection();
+            }
             return product;
         }
 
