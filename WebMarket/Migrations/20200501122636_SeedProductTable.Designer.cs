@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebMarket.Data;
 
 namespace WebMarket.Migrations
 {
     [DbContext(typeof(ProductDbContext))]
-    partial class ProductDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200501122636_SeedProductTable")]
+    partial class SeedProductTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -90,18 +92,6 @@ namespace WebMarket.Migrations
                             OnlyRegisteredCanComment = false,
                             Price = 10.0m,
                             Type = "Software"
-                        },
-                        new
-                        {
-                            ID = 2,
-                            AddedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            AddedToCart = false,
-                            Discount = 10f,
-                            Name = "AnotherTestProduct",
-                            OnlyOneCommentPerUser = false,
-                            OnlyRegisteredCanComment = false,
-                            Price = 14.990m,
-                            Type = "Game"
                         });
                 });
 #pragma warning restore 612, 618

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,6 +19,7 @@ namespace WebMarket.Models
         public Product Add(Product product)
         {
             context.Products.Add(product);
+            //context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT Product")
             context.SaveChanges();
             return product;
         }

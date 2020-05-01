@@ -207,7 +207,7 @@ namespace WebMarket.Models
             {
                 return CardImageLink.Length > 0 ? CardImageLink : "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg";
             }
-            else if (FirstImage.Link.Length > 0)
+            else if (FirstImage.Link?.Length > 0)
             {
                 return FirstImage.Link;
             }
