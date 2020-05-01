@@ -142,7 +142,7 @@ namespace WebMarket.Controllers
         }
         private void Buy(string productName, int productID)
         {
-            foreach (var product in CatalogViewModel.ListOfProducts)
+            foreach (var product in /*CatalogViewModel.ListOfProducts*/productRepository.GetAllProducts())
             {
                 if (product.ID == productID || product.Name == productName)
                 {
@@ -172,7 +172,7 @@ namespace WebMarket.Controllers
         {
             Console.WriteLine("Selling Product...");
             Product toSell = new Product();
-            foreach (var product in CatalogViewModel.ListOfProducts)
+            foreach (var product in /*CatalogViewModel.ListOfProducts*/productRepository.GetAllProducts())
             {
                 if (product.ID == productID || product.Name == productName)
                 {

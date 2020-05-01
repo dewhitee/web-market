@@ -162,12 +162,6 @@ namespace WebMarket.Models
         }
         public static Product GetSelectedBuyProduct(IProductRepository repository)
         {
-            //foreach (var product in /*repository.GetAllProducts()*/AddedToCartProducts)
-            //{
-            //    if (product.AddedToCart && !product.IsBought)
-            //        return product;
-            //}
-            //return new Product();
             return ChoosenProduct ?? new Product();
         }
 
@@ -179,6 +173,11 @@ namespace WebMarket.Models
                     return product;
             }
             return new Product();
+        }
+
+        public static Product GetSelectedSellProduct(IProductRepository repository)
+        {
+            return ChoosenProduct != null && ChoosenProduct.IsBought ? ChoosenProduct : new Product();
         }
 
         public static string GetSelectedSellProductPriceSentence()

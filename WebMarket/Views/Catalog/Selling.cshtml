@@ -1,4 +1,5 @@
 ﻿@model CatalogViewModel
+@inject IProductRepository _prodRepository 
 @{
     ViewData["Title"] = "Selling";
 }
@@ -11,7 +12,7 @@
 <h1>Selling</h1>
 <br>
 @{
-    var product = CatalogViewModel.GetSelectedSellProduct();
+    var product = CatalogViewModel.GetSelectedSellProduct(_prodRepository);
 
     <div class="float-left" style="padding-right:2em">
         <div class="card bg-light mb-3" style="max-width: 18rem;">
