@@ -101,6 +101,7 @@ namespace WebMarket.Controllers
                         OwnerID = CatalogViewModel.CurrentUser.ID
                     };
                     CatalogViewModel.ListOfProducts.Add(newProduct);
+                    productRepository.Add(newProduct);
                     _tags = null;
                     SaveProducts();
                 }

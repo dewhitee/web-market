@@ -10,5 +10,7 @@ namespace WebMarket.Models
         Product GetProduct(int id);
         IEnumerable<Product> GetAllProducts();
         Product Add(Product product);
+        Product Update(Product productChanges);
+        Product Delete(int id);
     }
 }

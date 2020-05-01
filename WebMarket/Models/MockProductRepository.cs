@@ -24,6 +24,16 @@ namespace WebMarket.Models
             return product;
         }
 
+        public Product Delete(int id)
+        {
+            Product product =_productList.FirstOrDefault(p => p.ID == id);
+            if (product != null)
+            {
+                _productList.Remove(product);
+            }
+            return product;
+        }
+
         public IEnumerable<Product> GetAllProducts()
         {
             return _productList;
@@ -31,7 +41,19 @@ namespace WebMarket.Models
 
         public Product GetProduct(int id)
         {
-            return _productList.FirstOrDefault(e => e.ID == id);
+            return _productList.FirstOrDefault(p => p.ID == id);
+        }
+
+        public Product Update(Product productChanges)
+        {
+            Product product = _productList.FirstOrDefault(p => p.ID == productChanges.ID);
+            if (product != null)
+            {
+                product.Name = productChanges.Name;
+                product.Price = productChanges.Price;
+                product.Discount = productChanges.Discount;
+            }
+            return product;
         }
     }
 }

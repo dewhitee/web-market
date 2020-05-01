@@ -18,12 +18,17 @@ namespace WebMarket.Controllers
         //private string saveUserFilePath { get => @"D:\ASP.NET PROJECTS\WebMarket\data\user_" + CatalogViewModel.CurrentUser.Username + "_.dew"; }
         //System.Security.Claims.ClaimsPrincipal currentUser = User;
         private static List<string> _tags = null;
+        private readonly IProductRepository productRepository;
 
-        public CatalogController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager,
-            IHttpContextAccessor contextAccessor)
+        public CatalogController(
+            UserManager<IdentityUser> userManager,
+            SignInManager<IdentityUser> signInManager,
+            IHttpContextAccessor contextAccessor,
+            IProductRepository productRepository)
         {
             Userbase.LoadData();
             Userbase.Set(signInManager, userManager, contextAccessor.HttpContext.User);
+            this.productRepository = productRepository;
         }
 
         public IActionResult Catalog()

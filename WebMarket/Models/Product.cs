@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -47,8 +48,12 @@ namespace WebMarket.Models
         public string Description { get; set; }
         public string Link { get; set; }
         public string CardImageLink { get; set; }
+
+        [NotMapped]
         public Image FirstImage { get; set; }
+        [NotMapped]
         public Image SecondImage { get; set; }
+        [NotMapped]
         public Image ThirdImage { get; set; }
         //public string FirstImageLink { get => CardImageLink; }
         //public string SecondImageLink { get; set; }
