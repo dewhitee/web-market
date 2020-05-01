@@ -192,7 +192,7 @@ namespace WebMarket.Models
             return newID;
         }
 
-        public static int MakeNewID(IProductRepository repository)
+        public static int MakeNewID(IMainRepository repository)
         {
             Random random = new Random();
             int newID;

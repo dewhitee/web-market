@@ -37,11 +37,10 @@ namespace WebMarket
             services.AddRazorPages();
             services.AddHttpContextAccessor();
 
-            services.AddDbContextPool<ProductDbContext>(options =>
+            services.AddDbContextPool<MainDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("ProductDBConnection")));
-
-            services.AddScoped<IProductRepository, SQLProductRepository>();
+                    Configuration.GetConnectionString("MainDBConnection")));
+            services.AddScoped<IMainRepository, SQLMainRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -7,11 +7,12 @@ using WebMarket.Models;
 
 namespace WebMarket.Data
 {
-    public class ProductDbContext : DbContext
+    public class MainDbContext : DbContext
     {
         public DbSet<Product> Products { get; set; }
+        public DbSet<UserComment> Comments { get; set; }
 
-        public ProductDbContext(DbContextOptions<ProductDbContext> options)
+        public MainDbContext(DbContextOptions<MainDbContext> options)
             : base(options)
         {
 

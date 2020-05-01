@@ -14,13 +14,13 @@ namespace WebMarket.Controllers
     public class AddProductController : Controller
     {
         private static List<string> _tags = null;
-        private readonly IProductRepository productRepository;
+        private readonly IMainRepository productRepository;
         [Obsolete]
         private readonly IHostingEnvironment hostingEnvironment;
 
         [Obsolete]
         public AddProductController(
-            IProductRepository productRepository,
+            IMainRepository productRepository,
             IHostingEnvironment hostingEnvironment)
         {
             this.productRepository = productRepository;
@@ -99,7 +99,7 @@ namespace WebMarket.Controllers
                         OwnerID = CatalogViewModel.CurrentUser.ID
                     };
                     //CatalogViewModel.ListOfProducts.Add(newProduct);
-                    productRepository.Add(newProduct);
+                    productRepository.AddProduct(newProduct);
                     _tags = null;
                     SaveProducts();
                 //}

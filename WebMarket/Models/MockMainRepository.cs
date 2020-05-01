@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 
 namespace WebMarket.Models
 {
-    public class MockProductRepository : IProductRepository
+    public class MockMainRepository : IMainRepository
     {
         private List<Product> _productList;
 
-        public MockProductRepository()
+        public MockMainRepository()
         {
             _productList = new List<Product>()
             {
@@ -18,13 +18,18 @@ namespace WebMarket.Models
             };
         }
 
-        public Product Add(Product product)
+        public Product AddProduct(Product product)
         {
             _productList.Add(product);
             return product;
         }
 
-        public Product Delete(int id)
+        public UserComment AddUserComment(UserComment comment)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Product DeleteProduct(int id)
         {
             Product product =_productList.FirstOrDefault(p => p.ID == id);
             if (product != null)
@@ -34,9 +39,19 @@ namespace WebMarket.Models
             return product;
         }
 
+        public UserComment DeleteUserComment(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<Product> GetAllProducts()
         {
             return _productList;
+        }
+
+        public IEnumerable<UserComment> GetAllUserComments()
+        {
+            throw new NotImplementedException();
         }
 
         public Product GetProduct(int id)
@@ -49,7 +64,22 @@ namespace WebMarket.Models
             throw new NotImplementedException();
         }
 
-        public Product Update(Product productChanges)
+        public UserComment GetUserComment(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public UserComment GetUserCommentByIndex(int index)
+        {
+            throw new NotImplementedException();
+        }
+
+        public UserComment UpdateComment(UserComment commentChanges)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Product UpdateProduct(Product productChanges)
         {
             Product product = _productList.FirstOrDefault(p => p.ID == productChanges.ID);
             if (product != null)

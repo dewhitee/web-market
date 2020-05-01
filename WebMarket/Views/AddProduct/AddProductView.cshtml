@@ -1,5 +1,5 @@
 ﻿@model AddProductViewModel
-@inject IProductRepository _prodRepository
+@inject IMainRepository _repository
 
 @{
     ViewData["Title"] = "AddProductView";
@@ -169,7 +169,7 @@
 
          <div class="form-group row">
              <div class="col-sm-10">
-                 Total products count = @_prodRepository.GetAllProducts().Count();
+                 Total products count = @_repository.GetAllProducts().Count();
              </div>
          </div>
 

@@ -9,7 +9,7 @@ using WebMarket.Data;
 
 namespace WebMarket.Migrations
 {
-    [DbContext(typeof(ProductDbContext))]
+    [DbContext(typeof(MainDbContext))]
     [Migration("20200501105001_ProductMigration")]
     partial class ProductMigration
     {

@@ -1,5 +1,5 @@
 ﻿@model CatalogViewModel
-@inject IProductRepository _prodRepository
+@inject IMainRepository _repository
 
 @{
     ViewData["Title"] = "Catalog";
@@ -691,9 +691,9 @@ else
             </div>
             <div class="container-fluid">
                 <div class="row row-cols-1 row-cols-md-3">
-                    @for (int i = 0; i < _prodRepository.GetAllProducts().Count(); i++)
+                    @for (int i = 0; i < _repository.GetAllProducts().Count(); i++)
                     {
-                        var product = /*CatalogViewModel.ListOfProducts*/_prodRepository.GetAllProducts().ElementAt(i);
+                        var product = /*CatalogViewModel.ListOfProducts*/_repository.GetAllProducts().ElementAt(i);
                         string tdClassString = product.GetPriceTableClassString();
                         string buttonClassString = product.GetAddToCartButtonClassString();
                         var linkClass = product.GetProductTableLinkClassString();

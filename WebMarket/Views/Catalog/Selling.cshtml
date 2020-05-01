@@ -1,5 +1,5 @@
 ﻿@model CatalogViewModel
-@inject IProductRepository _prodRepository 
+@inject IMainRepository _repository 
 @{
     ViewData["Title"] = "Selling";
 }
@@ -12,7 +12,7 @@
 <h1>Selling</h1>
 <br>
 @{
-    var product = CatalogViewModel.GetSelectedSellProduct(_prodRepository);
+    var product = CatalogViewModel.GetSelectedSellProduct(_repository);
 
     <div class="float-left" style="padding-right:2em">
         <div class="card bg-light mb-3" style="max-width: 18rem;">
@@ -85,7 +85,7 @@
             <br>
             <p class="text-md-left">
                 You will have:
-                <mark>@CatalogViewModel.GetSelectedSellProductPriceSentence(_prodRepository)</mark>
+                <mark>@CatalogViewModel.GetSelectedSellProductPriceSentence(_repository)</mark>
             </p>
             <small class="text-warning @product.GetProductTableLinkClassString()">
                 Added @product.AddedDate.ToShortDateString()

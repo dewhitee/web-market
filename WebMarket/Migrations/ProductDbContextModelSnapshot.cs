@@ -8,7 +8,7 @@ using WebMarket.Data;
 
 namespace WebMarket.Migrations
 {
-    [DbContext(typeof(ProductDbContext))]
+    [DbContext(typeof(MainDbContext))]
     partial class ProductDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

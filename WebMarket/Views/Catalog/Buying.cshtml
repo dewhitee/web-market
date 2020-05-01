@@ -1,5 +1,5 @@
 ﻿@model CatalogViewModel
-@inject IProductRepository _prodRepository
+@inject IMainRepository _repository
  
 @{
     ViewData["Title"] = "Buying";
@@ -22,11 +22,11 @@
 
     function getFinalWidth(index) {
         switch (index) {
-            case 1: return @CatalogViewModel.GetSelectedBuyProduct(_prodRepository)?.GetStarsPercent(1);
-            case 2: return @CatalogViewModel.GetSelectedBuyProduct(_prodRepository)?.GetStarsPercent(2);
-            case 3: return @CatalogViewModel.GetSelectedBuyProduct(_prodRepository)?.GetStarsPercent(3);
-            case 4: return @CatalogViewModel.GetSelectedBuyProduct(_prodRepository)?.GetStarsPercent(4);
-            case 5: return @CatalogViewModel.GetSelectedBuyProduct(_prodRepository)?.GetStarsPercent(5);
+            case 1: return @CatalogViewModel.GetSelectedBuyProduct(_repository)?.GetStarsPercent(1);
+            case 2: return @CatalogViewModel.GetSelectedBuyProduct(_repository)?.GetStarsPercent(2);
+            case 3: return @CatalogViewModel.GetSelectedBuyProduct(_repository)?.GetStarsPercent(3);
+            case 4: return @CatalogViewModel.GetSelectedBuyProduct(_repository)?.GetStarsPercent(4);
+            case 5: return @CatalogViewModel.GetSelectedBuyProduct(_repository)?.GetStarsPercent(5);
         }
     };
 
@@ -47,7 +47,7 @@
 <h1>Buying</h1>
 <br>
 @{
-    var product = CatalogViewModel.GetSelectedBuyProduct(_prodRepository);
+    var product = CatalogViewModel.GetSelectedBuyProduct(_repository);
 
     <div class="float-left" style="padding-right:2em">
         <div class="card bg-light mb-3" style="max-width: 18rem;">
@@ -159,13 +159,13 @@
                 <form asp-controller="Catalog" asp-action="BuyProduct" method="post">
                     <input type="hidden" class="form-control" name="productName" id="productName" value=@product.Name />
                     <input type="hidden" class="form-control" name="productID" id="productID" value=@product.ID />
-                    <button class="@CatalogViewModel.GetBuyProductButtonClassString(_prodRepository, false) btn-lg" type="submit" id="card_on_transaction_buy_button">Buy</button>
+                    <button class="@CatalogViewModel.GetBuyProductButtonClassString(_repository, false) btn-lg" type="submit" id="card_on_transaction_buy_button">Buy</button>
                 </form>
             </div>
             <br>
             <p class="text-md-left">
                 You will have:
-                <mark>@CatalogViewModel.GetSelectedBuyProductPriceSentence(_prodRepository)</mark>
+                <mark>@CatalogViewModel.GetSelectedBuyProductPriceSentence(_repository)</mark>
             </p>
             <small class="text-warning @product.GetProductTableLinkClassString()">
                 Added @product.AddedDate.ToShortDateString()
