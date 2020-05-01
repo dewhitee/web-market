@@ -24,6 +24,11 @@ namespace WebMarket.Models
             return product;
         }
 
+        public Tag AddTag(Tag tag)
+        {
+            throw new NotImplementedException();
+        }
+
         public UserComment AddUserComment(UserComment comment)
         {
             throw new NotImplementedException();
@@ -39,6 +44,11 @@ namespace WebMarket.Models
             return product;
         }
 
+        public Tag DeleteTag(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public UserComment DeleteUserComment(int id)
         {
             throw new NotImplementedException();
@@ -47,6 +57,11 @@ namespace WebMarket.Models
         public IEnumerable<Product> GetAllProducts()
         {
             return _productList;
+        }
+
+        public IEnumerable<Tag> GetAllTags()
+        {
+            throw new NotImplementedException();
         }
 
         public IEnumerable<UserComment> GetAllUserComments()
@@ -64,12 +79,32 @@ namespace WebMarket.Models
             throw new NotImplementedException();
         }
 
+        public Tag GetTag(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Tag> GetTagsByProductID(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public UserComment GetUserComment(int id)
         {
             throw new NotImplementedException();
         }
 
         public UserComment GetUserCommentByIndex(int index)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<UserComment> GetUserCommentsByProdID(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<UserComment> GetUserCommentsByUserID(int id)
         {
             throw new NotImplementedException();
         }
@@ -89,6 +124,11 @@ namespace WebMarket.Models
                 product.Discount = productChanges.Discount;
             }
             return product;
+        }
+
+        public Tag UpdateTag(Tag tagChanges)
+        {
+            throw new NotImplementedException();
         }
     }
 }

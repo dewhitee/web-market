@@ -16,9 +16,18 @@ namespace WebMarket.Models
 
         UserComment GetUserComment(int id);
         UserComment GetUserCommentByIndex(int index);
+        IEnumerable<UserComment> GetUserCommentsByProdID(int id);
+        IEnumerable<UserComment> GetUserCommentsByUserID(int id);
         IEnumerable<UserComment> GetAllUserComments();
         UserComment AddUserComment(UserComment comment);
         UserComment UpdateComment(UserComment commentChanges);
         UserComment DeleteUserComment(int id);
+
+        Tag GetTag(int id);
+        IEnumerable<Tag> GetTagsByProductID(int id);
+        IEnumerable<Tag> GetAllTags();
+        Tag AddTag(Tag tag);
+        Tag UpdateTag(Tag tagChanges);
+        Tag DeleteTag(int id);
     }
 }

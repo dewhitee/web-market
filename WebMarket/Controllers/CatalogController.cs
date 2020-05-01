@@ -18,7 +18,7 @@ namespace WebMarket.Controllers
         //private string saveUserFilePath { get => @"D:\ASP.NET PROJECTS\WebMarket\data\user_" + CatalogViewModel.CurrentUser.Username + "_.dew"; }
         //System.Security.Claims.ClaimsPrincipal currentUser = User;
         private static List<string> _tags = null;
-        private readonly IMainRepository productRepository;
+        private readonly IMainRepository mainRepository;
 
         public CatalogController(
             UserManager<IdentityUser> userManager,
@@ -28,7 +28,7 @@ namespace WebMarket.Controllers
         {
             Userbase.LoadData();
             Userbase.Set(signInManager, userManager, contextAccessor.HttpContext.User);
-            this.productRepository = productRepository;
+            this.mainRepository = productRepository;
         }
 
         public IActionResult Catalog()
@@ -142,7 +142,7 @@ namespace WebMarket.Controllers
         }
         private void Buy(string productName, int productID)
         {
-            foreach (var product in /*CatalogViewModel.ListOfProducts*/productRepository.GetAllProducts())
+            foreach (var product in /*CatalogViewModel.ListOfProducts*/mainRepository.GetAllProducts())
             {
                 if (product.ID == productID || product.Name == productName)
                 {
@@ -172,7 +172,7 @@ namespace WebMarket.Controllers
         {
             Console.WriteLine("Selling Product...");
             Product toSell = new Product();
-            foreach (var product in /*CatalogViewModel.ListOfProducts*/productRepository.GetAllProducts())
+            foreach (var product in /*CatalogViewModel.ListOfProducts*/mainRepository.GetAllProducts())
             {
                 if (product.ID == productID || product.Name == productName)
                 {
@@ -190,19 +190,22 @@ namespace WebMarket.Controllers
         public IActionResult AddComment(string commentSection, int productID, float rating)
         {
             Console.WriteLine("Adding comment");
-            var product = CatalogViewModel.GetProduct(productID);
+            var product = /*CatalogViewModel.GetProduct(productID)*/mainRepository.GetProduct(productID);
             if (product.Comments == null) // is needed for old products that do not have comments list instantiated
                 product.Comments = new List<UserComment>();
 
             bool canAdd = product.OnlyOneCommentPerUser ? product.Comments.Find(x => x.UserID == CatalogViewModel.CurrentUser.ID) == null : true;
             if (canAdd)
             {
-                product.Comments.Add(new UserComment
+                UserComment newComment = new UserComment
                 {
                     Text = commentSection,
+                    ProductID = product.ID.ToString(),
                     UserID = /*CatalogViewModel.CurrentUser.Username != "" ? */CatalogViewModel.CurrentUser.ID/* : "Unknown"*/,
                     Rate = rating
-                });
+                };
+                product.Comments.Add(newComment);
+                mainRepository.AddUserComment(newComment);
             }
 
             SaveProducts();
@@ -260,7 +263,7 @@ namespace WebMarket.Controllers
         public IActionResult AddToCart(string productName, int productIndex)
         {
             Userbase.LoadUser();
-            var products = productRepository.GetAllProducts().ToList();
+            var products = mainRepository.GetAllProducts().ToList();
             for (int i = 0; i < /*CatalogViewModel.ListOfProducts.Count*/products.Count; i++)
             {
                 var product = products[i];

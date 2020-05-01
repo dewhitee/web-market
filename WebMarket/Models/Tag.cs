@@ -7,16 +7,15 @@ using System.Threading.Tasks;
 namespace WebMarket.Models
 {
     [Serializable]
-    public class UserComment
+    public class Tag
     {
         [Key]
         public int ID { get; set; }
+
+        [Required]
         public string Text { get; set; }
+
         [Required]
         public string ProductID { get; set; }
-        public string UserID { get; set; }
-        public float Rate { get; set; }
-
-        public uint Stars { get => (uint)Math.Truncate((decimal)Rate); }
     }
 }

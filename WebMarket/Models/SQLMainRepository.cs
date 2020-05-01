@@ -33,9 +33,17 @@ namespace WebMarket.Models
             return product;
         }
 
+        public Tag AddTag(Tag tag)
+        {
+            context.Tags.Add(tag);
+            context.SaveChanges();
+            return tag;
+        }
+
         public UserComment AddUserComment(UserComment comment)
         {
             context.Comments.Add(comment);
+            context.SaveChanges();
             return comment;
         }
 
@@ -48,6 +56,17 @@ namespace WebMarket.Models
                 context.SaveChanges();
             }
             return product;
+        }
+
+        public Tag DeleteTag(int id)
+        {
+            Tag tag = context.Tags.Find(id);
+            if (tag != null)
+            {
+                context.Tags.Remove(tag);
+                context.SaveChanges();
+            }
+            return tag;
         }
 
         public UserComment DeleteUserComment(int id)
@@ -66,6 +85,11 @@ namespace WebMarket.Models
             return context.Products;
         }
 
+        public IEnumerable<Tag> GetAllTags()
+        {
+            return context.Tags;
+        }
+
         public IEnumerable<UserComment> GetAllUserComments()
         {
             return context.Comments;
@@ -81,6 +105,18 @@ namespace WebMarket.Models
             return context.Products.ToList()[index];
         }
 
+        public Tag GetTag(int id)
+        {
+            return context.Tags.Find(id);
+        }
+
+        public IEnumerable<Tag> GetTagsByProductID(int id)
+        {
+            return from t in context.Tags
+                   where t.ProductID == id.ToString()
+                   select t;
+        }
+
         public UserComment GetUserComment(int id)
         {
             return context.Comments.Find(id);
@@ -89,6 +125,20 @@ namespace WebMarket.Models
         public UserComment GetUserCommentByIndex(int index)
         {
             return context.Comments.ToList()[index];
+        }
+
+        public IEnumerable<UserComment> GetUserCommentsByProdID(int id)
+        {
+            return from c in context.Comments
+                           where c.ProductID == id.ToString()
+                           select c;
+        }
+
+        public IEnumerable<UserComment> GetUserCommentsByUserID(int id)
+        {
+            return from c in context.Comments
+                           where c.UserID == id.ToString()
+                           select c;
         }
 
         public UserComment UpdateComment(UserComment commentChanges)
@@ -105,6 +155,14 @@ namespace WebMarket.Models
             product.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
             context.SaveChanges();
             return productChanges;
+        }
+
+        public Tag UpdateTag(Tag tagChanges)
+        {
+            var tag = context.Tags.Attach(tagChanges);
+            tag.State = EntityState.Modified;
+            context.SaveChanges();
+            return tagChanges;
         }
     }
 }

@@ -281,9 +281,9 @@
             </div>
             <div class="card-body" style="transform:rotate(0);">
                 @{
-                    if (product.Comments != null)
+                    if (/*product.Comments != null*/_repository.GetUserCommentsByProdID(product.ID) != null)
                     {
-                        foreach (var comment in product.Comments)
+                        foreach (var comment in /*product.Comments*/_repository.GetUserCommentsByProdID(product.ID))
                         {
                             <p><strong>@WebMarket.Data.Userbase.GetUsername(comment.UserID)</strong></p>
                             <p>@comment.Text</p>
