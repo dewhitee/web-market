@@ -159,13 +159,13 @@
                 <form asp-controller="Catalog" asp-action="BuyProduct" method="post">
                     <input type="hidden" class="form-control" name="productName" id="productName" value=@product.Name />
                     <input type="hidden" class="form-control" name="productID" id="productID" value=@product.ID />
-                    <button class="@CatalogViewModel.GetBuyProductButtonClassString(false) btn-lg" type="submit" id="card_on_transaction_buy_button">Buy</button>
+                    <button class="@CatalogViewModel.GetBuyProductButtonClassString(_prodRepository, false) btn-lg" type="submit" id="card_on_transaction_buy_button">Buy</button>
                 </form>
             </div>
             <br>
             <p class="text-md-left">
                 You will have:
-                <mark>@CatalogViewModel.GetSelectedBuyProductPriceSentence()</mark>
+                <mark>@CatalogViewModel.GetSelectedBuyProductPriceSentence(_prodRepository)</mark>
             </p>
             <small class="text-warning @product.GetProductTableLinkClassString()">
                 Added @product.AddedDate.ToShortDateString()

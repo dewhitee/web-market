@@ -188,9 +188,26 @@ namespace WebMarket.Models
             else
                 return "You have not selected any product to sell!";
         }
+        public static string GetSelectedSellProductPriceSentence(IProductRepository repository)
+        {
+            var product = GetSelectedSellProduct(repository);
+            if (!string.IsNullOrWhiteSpace(product.Name))
+                return CurrentUser.MoneyString + " + " + product.FinalPriceString + string.Format(" = {0}€", (CurrentUser.Money + product.FinalPrice).ToString("0.##"));
+            else
+                return "You have not selected any product to sell!";
+        }
         public static string GetSelectedBuyProductPriceSentence()
         {
             var product = GetSelectedBuyProduct();
+            var finalCost = CurrentUser.Money - product.FinalPrice;
+            if (!string.IsNullOrWhiteSpace(product.Name))
+                return CurrentUser.MoneyString + " - " + product.FinalPriceString + string.Format(" = {0}€", finalCost.ToString("0.##")) + (finalCost < 0 ? " (You don't have enough money!)" : "");
+            else
+                return "You have not selected any product to buy!";
+        }
+        public static string GetSelectedBuyProductPriceSentence(IProductRepository repository)
+        {
+            var product = GetSelectedBuyProduct(repository);
             var finalCost = CurrentUser.Money - product.FinalPrice;
             if (!string.IsNullOrWhiteSpace(product.Name))
                 return CurrentUser.MoneyString + " - " + product.FinalPriceString + string.Format(" = {0}€", finalCost.ToString("0.##")) + (finalCost < 0 ? " (You don't have enough money!)" : "");
@@ -201,6 +218,17 @@ namespace WebMarket.Models
         public static string GetBuyProductButtonClassString(bool outline = true)
         {
             var product = GetSelectedBuyProduct();
+            var finalCost = CurrentUser.Money - product.FinalPrice;
+            if (!string.IsNullOrWhiteSpace(product.Name))
+            {
+                if (finalCost < 0)
+                    return "btn btn-danger";
+            }
+            return outline ? "btn btn-outline-primary" : "btn btn-primary";
+        }
+        public static string GetBuyProductButtonClassString(IProductRepository repository, bool outline = true)
+        {
+            var product = GetSelectedBuyProduct(repository);
             var finalCost = CurrentUser.Money - product.FinalPrice;
             if (!string.IsNullOrWhiteSpace(product.Name))
             {
@@ -220,6 +248,17 @@ namespace WebMarket.Models
             }
             return "btn btn-success";
         }
+        public static string GetSubmitBuyingButtonClassString(IProductRepository repository)
+        {
+            var product = GetSelectedBuyProduct(repository);
+            var finalCost = CurrentUser.Money - product.FinalPrice;
+            if (!string.IsNullOrWhiteSpace(product.Name))
+            {
+                if (finalCost < 0)
+                    return "btn btn-danger disabled";
+            }
+            return "btn btn-success";
+        }
 
         public static string GetSubmitBuyingButtonText()
         {
@@ -229,9 +268,25 @@ namespace WebMarket.Models
 
             return "Find";
         }
+        public static string GetSubmitBuyingButtonText(IProductRepository repository)
+        {
+            var product = GetSelectedBuyProduct(repository);
+            if (!string.IsNullOrWhiteSpace(product.Name))
+                return "Submit buying product";
+
+            return "Find";
+        }
         public static string GetSubmitSellingButtonText()
         {
             var product = GetSelectedSellProduct();
+            if (!string.IsNullOrWhiteSpace(product.Name))
+                return "Submit selling product";
+
+            return "Find";
+        }
+        public static string GetSubmitSellingButtonText(IProductRepository repository)
+        {
+            var product = GetSelectedSellProduct(repository);
             if (!string.IsNullOrWhiteSpace(product.Name))
                 return "Submit selling product";
 
