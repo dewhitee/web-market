@@ -65,8 +65,8 @@ namespace WebMarket.Controllers
             byte[] productZipFile,
             int condition)
         {
-            int integralCost = (int)Math.Truncate(productCost);
-            int fractionalCost = (int)(productCost - integralCost);
+            //int integralCost = (int)Math.Truncate(productCost);
+            //int fractionalCost = (int)(productCost - integralCost);
 
             if (!CatalogViewModel.ContainsName(productName) && productName != null && condition != 0)
             {
@@ -77,8 +77,8 @@ namespace WebMarket.Controllers
                     Type = Product.CheckTypeString(productType),
                     Tags = _tags,
                     Price = productCost,
-                    CostIntegral = integralCost,
-                    CostFractional = fractionalCost,
+                    //CostIntegral = integralCost,
+                    //CostFractional = fractionalCost,
                     Discount = productDiscount,
                     Description = (productDescription != null && productDescription.Length > 0) ? productDescription : "test description",
                     //CardImageLink = (productImageLink != null && productImageLink.Length > 0) ? productImageLink : "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg",

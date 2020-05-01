@@ -37,15 +37,20 @@ namespace WebMarket.Models
         }
         public int ID { get; set; }
         [Required]
+        [StringLength(32)]
         public string Name { get; set; }
-        [Required]
+        [Required, StringLength(32)]
         public string Type { get; set; }
-        [Required]
+        [Required, Column(TypeName = "decimal(18,2)")]
         public decimal Price { get; set; }
-        public int CostIntegral { get; set; }
-        public int CostFractional { get; set; }
+        [NotMapped]
+        public int CostIntegral { get => (int)Math.Truncate(Price); }
+        [NotMapped]
+        public int CostFractional { get => (int)(Price - CostIntegral); }
         public float Discount { get; set; }
+        [StringLength(512)]
         public string Description { get; set; }
+        [StringLength(128)]
         public string Link { get; set; }
         public string CardImageLink { get; set; }
 
@@ -58,6 +63,7 @@ namespace WebMarket.Models
         //public string FirstImageLink { get => CardImageLink; }
         //public string SecondImageLink { get; set; }
         //public string ThirdImageLink { get; set; }
+        [NotMapped]
         public bool IsBought { get => CatalogViewModel.CurrentUser.BoughtProductIDs.Contains(ID.ToString());/* set;*/}
         public bool OnlyRegisteredCanComment { get; set; }
         public bool OnlyOneCommentPerUser { get; set; }
@@ -68,6 +74,8 @@ namespace WebMarket.Models
         public List<string> Tags = new List<string>();
         public List<UserComment> Comments = new List<UserComment>();
 
+        [Display(Name = "Added Date")]
+        [DataType(DataType.Date)]
         public DateTime AddedDate { get; set; }
         public string OwnerID { get; set; }
 

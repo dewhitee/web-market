@@ -62,8 +62,8 @@ namespace WebMarket.Controllers
                     model.ZipFile.CopyTo(new FileStream(filePath, FileMode.Create));
                 }
 
-                int integralCost = (int)Math.Truncate((decimal)model.CostIntegral);
-                int fractionalCost = (int)(model.Price - integralCost);
+                //int integralCost = (int)Math.Truncate(model.Price);
+                //int fractionalCost = (int)(model.Price - integralCost);
 
                 if (!CatalogViewModel.ContainsName(model.Name))
                 {
@@ -74,8 +74,6 @@ namespace WebMarket.Controllers
                         Type = Product.CheckTypeString(model.Type),
                         Tags = _tags != null ? _tags : new List<string>(),
                         Price = model.Price,
-                        CostIntegral = integralCost,
-                        CostFractional = fractionalCost,
                         Discount = model.Discount,
                         Description = model.Description,
                         FirstImage = new Product.Image
@@ -208,8 +206,8 @@ namespace WebMarket.Controllers
             byte[] productZipFile,
             int condition)
         {
-            int integralCost = (int)Math.Truncate(productCost);
-            int fractionalCost = (int)(productCost - integralCost);
+            //int integralCost = (int)Math.Truncate(productCost);
+            //int fractionalCost = (int)(productCost - integralCost);
 
             if (!CatalogViewModel.ContainsName(productName) && productName != null && condition != 0)
             {
@@ -220,8 +218,8 @@ namespace WebMarket.Controllers
                     Type = Product.CheckTypeString(productType),
                     Tags = _tags,
                     Price = productCost,
-                    CostIntegral = integralCost,
-                    CostFractional = fractionalCost,
+                    //CostIntegral = integralCost,
+                    //CostFractional = fractionalCost,
                     Discount = productDiscount,
                     Description = (productDescription != null && productDescription.Length > 0) ? productDescription : "test description",
                     //CardImageLink = (productImageLink != null && productImageLink.Length > 0) ? productImageLink : "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg",
