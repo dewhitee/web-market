@@ -192,6 +192,19 @@ namespace WebMarket.Models
             return newID;
         }
 
+        public static int MakeNewID(IProductRepository repository)
+        {
+            Random random = new Random();
+            int newID;
+            bool success;
+            do
+            {
+                newID = random.Next(1, int.MaxValue);
+                success = repository.GetAllProducts().FirstOrDefault(x => x.ID == newID) == null;
+            } while (!success);
+            return newID;
+        }
+
         public string GetAddToCartButtonString()
         {
             if (IsBought)

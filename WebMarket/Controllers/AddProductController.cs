@@ -69,7 +69,7 @@ namespace WebMarket.Controllers
                 //{
                     Product newProduct = new Product
                     {
-                        ID = Product.MakeNewID(),
+                        ID = Product.MakeNewID(productRepository),
                         Name = model.Name,
                         Type = Product.CheckTypeString(model.Type),
                         Tags = _tags != null ? _tags : new List<string>(),
