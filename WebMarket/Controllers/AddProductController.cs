@@ -99,8 +99,8 @@ namespace WebMarket.Controllers
                         Description = model.ThirdImageDescription
                     },
                     Link = model.Link,
-                    FileName = model.FileName,
-                    ZipFilePath = uniqueFileName,
+                    //OldFileName = model.OldFileName,
+                    FileName = uniqueFileName,
                     AddedDate = DateTime.Today,
                     OwnerID = CatalogViewModel.CurrentUser.ID
                 };

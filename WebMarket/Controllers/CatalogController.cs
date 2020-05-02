@@ -98,7 +98,7 @@ namespace WebMarket.Controllers
                         Description = thirdImageDescription
                     },
                     Link = productLink,
-                    FileName = productFileName,
+                    //OldFileName = productFileName,
                     AddedDate = DateTime.Today,
                     OwnerID = CatalogViewModel.CurrentUser.ID
                 });

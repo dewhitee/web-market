@@ -68,8 +68,8 @@ namespace WebMarket.Models
         public bool OnlyRegisteredCanComment { get; set; }
         public bool OnlyOneCommentPerUser { get; set; }
         public bool AddedToCart { get; set; }
+        //public string OldFileName { get; set; }
         public string FileName { get; set; }
-        public string ZipFilePath { get; set; }
 
         public List<string> Tags = new List<string>();
         public List<UserComment> Comments = new List<UserComment>();
