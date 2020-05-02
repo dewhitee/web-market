@@ -12,25 +12,6 @@
 <link href="~/css/ratingtable.css" rel="stylesheet" type="text/css" /> 
 
 <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
-<script>
-
-    $(document).ready(function() {
-        $($(".lbar").get().reverse()).each(function (index, element) {
-            $(element).width(getFinalWidth(index+1)*100 + '%');
-        });
-    });
-
-    function getFinalWidth(index) {
-        switch (index) {
-            case 1: return @CatalogViewModel.GetSelectedBuyProduct(_repository)?.GetStarsPercent(1);
-            case 2: return @CatalogViewModel.GetSelectedBuyProduct(_repository)?.GetStarsPercent(2);
-            case 3: return @CatalogViewModel.GetSelectedBuyProduct(_repository)?.GetStarsPercent(3);
-            case 4: return @CatalogViewModel.GetSelectedBuyProduct(_repository)?.GetStarsPercent(4);
-            case 5: return @CatalogViewModel.GetSelectedBuyProduct(_repository)?.GetStarsPercent(5);
-        }
-    };
-
-</script>
 <style>
     .checked {
         color: orange;
@@ -99,21 +80,21 @@
                 <div class="carousel-inner">
                     <div class="carousel-item active hoverable-img">
                         <div class="carousel-caption d-none d-md-block">
-                            <p class="hoverable-img-p">@product.FirstImage.Description</p>
+                            <p class="hoverable-img-p">@_repository.GetImageByOrderIndex(product.ID, 0)?.Description</p>
                         </div>
-                        <img class="d-block w-100 img-fluid catalog-img catalog-buy" src="@product.GetFirstImageSrc()" alt="First slide">
+                        <img class="d-block w-100 img-fluid catalog-img catalog-buy" src="@product.GetFirstImageSrc(_repository)" alt="First slide">
                     </div>
                     <div class="carousel-item hoverable-img">
                         <div class="carousel-caption d-none d-md-block">
-                            <p class="hoverable-img-p">@product.SecondImage.Description</p>
+                            <p class="hoverable-img-p">@_repository.GetImageByOrderIndex(product.ID, 1)?.Description</p>
                         </div>
-                        <img class="d-block w-100 img-fluid catalog-img catalog-buy" src="@product.GetSecondImageSrc()" alt="Second slide">
+                        <img class="d-block w-100 img-fluid catalog-img catalog-buy" src="@product.GetSecondImageSrc(_repository)" alt="Second slide">
                     </div>
                     <div class="carousel-item hoverable-img">
                         <div class="carousel-caption d-none d-md-block">
-                            <p class="hoverable-img-p">@product.ThirdImage.Description</p>
+                            <p class="hoverable-img-p">@_repository.GetImageByOrderIndex(product.ID, 2)?.Description</p>
                         </div>
-                        <img class="d-block w-100 img-fluid catalog-img catalog-buy" src="@product.GetThirdImageSrc()" alt="Third slide">
+                        <img class="d-block w-100 img-fluid catalog-img catalog-buy" src="@product.GetThirdImageSrc(_repository)" alt="Third slide">
                     </div>
                 </div>
                 <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -206,10 +187,10 @@
         <div class="card h-100 hoverable-card" id="card_on_transaction">
             <div class="card-header @product.GetTableHeaderClassString()" id="card_on_transaction_header">
                 <h5 style="font-weight:300">What people think about <strong>@product.Name</strong></h5>
-                <p>RATE: @product.GetRate()</p>
+                <p>RATE: @product.GetRate(_repository)</p>
                 @for (int i = 0; i < 5; i++)
                 {
-                    if (ComparisonViewModel.GetStarsValue(product) >= i + 1)
+                    if (ComparisonViewModel.GetStarsValue(product, _repository) >= i + 1)
                     {
                         <i class="fa fa-star checked"></i>
                     }
@@ -229,7 +210,7 @@
                             </div>
                         </div>
                         <div class="side right">
-                            <div>@product.GetStarsCount(5)</div>
+                            <div>@product.GetStarsCount(5, _repository)</div>
                         </div>
                         <div class="side left">
                             <div>4 star</div>
@@ -240,7 +221,7 @@
                             </div>
                         </div>
                         <div class="side right">
-                            <div>@product.GetStarsCount(4)</div>
+                            <div>@product.GetStarsCount(4, _repository)</div>
                         </div>
                         <div class="side left">
                             <div>3 star</div>
@@ -251,7 +232,7 @@
                             </div>
                         </div>
                         <div class="side right">
-                            <div>@product.GetStarsCount(3)</div>
+                            <div>@product.GetStarsCount(3, _repository)</div>
                         </div>
                         <div class="side left">
                             <div>2 star</div>
@@ -262,7 +243,7 @@
                             </div>
                         </div>
                         <div class="side right">
-                            <div>@product.GetStarsCount(2)</div>
+                            <div>@product.GetStarsCount(2, _repository)</div>
                         </div>
                         <div class="side left">
                             <div>1 star</div>
@@ -273,11 +254,11 @@
                             </div>
                         </div>
                         <div class="side right">
-                            <div>@product.GetStarsCount(1)</div>
+                            <div>@product.GetStarsCount(1, _repository)</div>
                         </div>
                     </div>
                 </div>
-                <p class="text-center text-muted"><small><i>from total amount of <b>@product.GetTotalCountOfNotNulledComments()</b> rated comments</i></small></p>
+                <p class="text-center text-muted"><small><i>from total amount of <b>@product.GetTotalCountOfNotNulledComments(_repository)</b> rated comments</i></small></p>
             </div>
             <div class="card-body" style="transform:rotate(0);">
                 @{
@@ -313,4 +294,27 @@
 
         </div>
     </div>
+}
+
+@section Scripts
+{
+    <script>
+
+        $(document).ready(function() {
+            $($(".lbar").get().reverse()).each(function (index, element) {
+                $(element).width(getFinalWidth(index+1)*100 + '%');
+            });
+        });
+
+        function getFinalWidth(index) {
+            switch (index) {
+                case 1: return @CatalogViewModel.GetSelectedBuyProduct(_repository)?.GetStarsPercent(1, _repository);
+                case 2: return @CatalogViewModel.GetSelectedBuyProduct(_repository)?.GetStarsPercent(2, _repository);
+                case 3: return @CatalogViewModel.GetSelectedBuyProduct(_repository)?.GetStarsPercent(3, _repository);
+                case 4: return @CatalogViewModel.GetSelectedBuyProduct(_repository)?.GetStarsPercent(4, _repository);
+                case 5: return @CatalogViewModel.GetSelectedBuyProduct(_repository)?.GetStarsPercent(5, _repository);
+            }
+        };
+
+    </script>
 }

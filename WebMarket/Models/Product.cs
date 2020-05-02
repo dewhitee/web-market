@@ -71,7 +71,9 @@ namespace WebMarket.Models
         //public string OldFileName { get; set; }
         public string FileName { get; set; }
 
+        [Obsolete]
         public List<string> Tags = new List<string>();
+        [Obsolete]
         public List<UserComment> Comments = new List<UserComment>();
 
         [Display(Name = "Added Date")]
@@ -119,53 +121,53 @@ namespace WebMarket.Models
             return "NO_OWNER";
         }
 
-        public float GetRateAvg()
+        public float GetRateAvg(IMainRepository repository)
         {
-            return GetRateSum() / Comments.Count;
+            return GetRateSum(repository) / repository.GetUserCommentsByProdID(ID).Count();
         }
-        public float GetRate()
+        public float GetRate(IMainRepository repository)
         {
-            float sum = GetRateSum();
-            float max = Comments.Count * 5f;
+            float sum = GetRateSum(repository);
+            float max = repository.GetUserCommentsByProdID(ID).Count() * 5f;
             return sum / max;
         }
-        public float GetRateSum()
+        public float GetRateSum(IMainRepository repository)
         {
             float sum = 0;
-            foreach (var i in Comments)
+            foreach (var i in repository.GetUserCommentsByProdID(ID))
             {
                 sum += i.Rate;
             }
             return sum;
         }
-        public int GetStarsCount(int stars)
+        public int GetStarsCount(int stars, IMainRepository repository)
         {
             if (stars > 5) return -1;
             int count = 0;
-            foreach (var i in Comments)
+            foreach (var i in repository.GetUserCommentsByProdID(ID))
             {
                 if (Math.Truncate((decimal)i.Rate) == stars)
                     count++;
             }
             return count;
         }
-        public uint GetTotalCountOfNotNulledComments()
+        public uint GetTotalCountOfNotNulledComments(IMainRepository repository)
         {
             uint count = 0;
-            foreach (var i in Comments)
+            foreach (var i in repository.GetUserCommentsByProdID(ID))
             {
                 if (i.Rate != 0f)
                     count++;
             }
             return count;
         }
-        public float GetStarsPercent(int stars)
+        public float GetStarsPercent(int stars, IMainRepository repository)
         {
             Console.WriteLine($"Getting stars percent for {stars} stars...");
             if (stars > 5) return 0f;
-            float starsCount = GetStarsCount(stars);
+            float starsCount = GetStarsCount(stars, repository);
             //float totalStarsCount = GetTotalStarsCount();
-            float totalComments = GetTotalCountOfNotNulledComments();
+            float totalComments = GetTotalCountOfNotNulledComments(repository);
             Console.WriteLine($"Final stars count is {starsCount}. This is {(starsCount <= 0 ? starsCount : starsCount / totalComments)} percent from the total amount of stars.");
             return starsCount <= 0 ? 0f : starsCount / totalComments;
         }
@@ -227,11 +229,29 @@ namespace WebMarket.Models
             }
             else return "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg";
         }
+        public string GetCardImageSrc(IMainRepository repository)
+        {
+            Models.Image image = repository.GetImagesByProductID(ID).FirstOrDefault();
+            if (image != null)
+            {
+                return image.Link.Length > 0 ? image.Link : "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg";
+            }
+            else return "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg";
+        }
         public string GetFirstImageSrc()
         {
             if (FirstImage.Link != null)
             {
                 return FirstImage.Link.Length > 0 ? FirstImage.Link : "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg";
+            }
+            else return "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg";
+        }
+        public string GetFirstImageSrc(IMainRepository repository)
+        {
+            Models.Image image = repository.GetImagesByProductID(ID).FirstOrDefault();
+            if (image != null)
+            {
+                return image.Link.Length > 0 ? image.Link : "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg";
             }
             else return "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg";
         }
@@ -243,11 +263,29 @@ namespace WebMarket.Models
             }
             else return "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg";
         }
+        public string GetSecondImageSrc(IMainRepository repository)
+        {
+            Models.Image image = repository.GetImageByOrderIndex(ID, 1);
+            if (image != null)
+            {
+                return image.Link.Length > 0 ? image.Link : "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg";
+            }
+            else return "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg";
+        }
         public string GetThirdImageSrc()
         {
             if (ThirdImage.Link != null)
             {
                 return ThirdImage.Link.Length > 0 ? ThirdImage.Link : "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg";
+            }
+            else return "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg";
+        }
+        public string GetThirdImageSrc(IMainRepository repository)
+        {
+            Models.Image image = repository.GetImageByOrderIndex(ID, 2);
+            if (image != null)
+            {
+                return image.Link.Length > 0 ? image.Link : "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg";
             }
             else return "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg";
         }

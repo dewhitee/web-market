@@ -11,10 +11,12 @@ namespace WebMarket.Models
     {
         [Key]
         public int ID { get; set; }
-        [MaxLength(256)]
+        [Required, MaxLength(256)]
         public string Link { get; set; }
         [MaxLength(512)]
         public string Description { get; set; }
+        [Required]
         public string ProductID { get; set; }
+        public int OrderIndex { get; set; }
     }
 }

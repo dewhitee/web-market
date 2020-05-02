@@ -159,19 +159,22 @@ namespace WebMarket.Controllers
             {
                 ProductID = id,
                 Link = (firstLink != null && firstLink.Length > 0) ? firstLink : "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg",
-                Description = firstDesc
+                Description = firstDesc,
+                OrderIndex = 0
             });
             mainRepository.AddImage(new Image
             {
                 ProductID = id,
                 Link = secondLink,
-                Description = secondDesc
+                Description = secondDesc,
+                OrderIndex = 1
             });
             mainRepository.AddImage(new Image
             {
                 ProductID = id,
                 Link = thirdLink,
-                Description = thirdDesc
+                Description = thirdDesc,
+                OrderIndex = 2
             });
         }
 

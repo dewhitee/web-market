@@ -33,6 +33,7 @@ namespace WebMarket.Models
 
         Image GetImage(int id);
         IEnumerable<Image> GetImagesByProductID(int id);
+        Image GetImageByOrderIndex(int productID, int orderIndex);
         IEnumerable<Image> GetAllImages();
         Image AddImage(Image image);
         Image UpdateImage(Image imageChanges);

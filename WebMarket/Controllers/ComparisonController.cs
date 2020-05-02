@@ -13,11 +13,15 @@ namespace WebMarket.Controllers
 {
     public class ComparisonController : Controller
     {
+        private readonly IMainRepository mainRepository;
+
         public ComparisonController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager,
-            IHttpContextAccessor contextAccessor)
+            IHttpContextAccessor contextAccessor,
+            IMainRepository mainRepository)
         {
             Userbase.LoadData();
             Userbase.Set(signInManager, userManager, contextAccessor.HttpContext.User);
+            this.mainRepository = mainRepository;
         }
 
         [HttpGet]
@@ -29,8 +33,8 @@ namespace WebMarket.Controllers
 
         public IActionResult FindProducts(string lproductName, string rproductName)
         {
-            ComparisonViewModel.LeftProduct = CatalogViewModel.GetProduct(lproductName);
-            ComparisonViewModel.RightProduct = CatalogViewModel.GetProduct(rproductName);
+            ComparisonViewModel.LeftProduct = /*CatalogViewModel.GetProduct(lproductName)*/mainRepository.GetProductsByName(lproductName).FirstOrDefault();
+            ComparisonViewModel.RightProduct = /*CatalogViewModel.GetProduct(rproductName)*/mainRepository.GetProductsByName(rproductName).FirstOrDefault();
             return RedirectToAction("Comparison");
         }
 

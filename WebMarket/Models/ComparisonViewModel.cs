@@ -45,9 +45,9 @@ namespace WebMarket.Models
             return ProductNames.ToArray();
         }
 
-        public static float GetStarsValue(Product product)
+        public static float GetStarsValue(Product product, IMainRepository repository)
         {
-            return product.GetRate() * 5f;
+            return product.GetRate(repository) * 5f;
         }
     }
 }

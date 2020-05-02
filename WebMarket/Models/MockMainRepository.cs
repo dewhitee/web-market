@@ -89,6 +89,11 @@ namespace WebMarket.Models
             throw new NotImplementedException();
         }
 
+        public Image GetImageByOrderIndex(int productID, int orderIndex)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<Image> GetImagesByProductID(int id)
         {
             throw new NotImplementedException();

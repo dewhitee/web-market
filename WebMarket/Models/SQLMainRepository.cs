@@ -123,6 +123,13 @@ namespace WebMarket.Models
             return context.Images.Find(id);
         }
 
+        public Image GetImageByOrderIndex(int productID, int orderIndex)
+        {
+            return (from i in context.Images
+                    where i.ProductID == productID.ToString() && i.OrderIndex == orderIndex
+                    select i).FirstOrDefault();
+        }
+
         public IEnumerable<Image> GetImagesByProductID(int id)
         {
             return from i in context.Images
