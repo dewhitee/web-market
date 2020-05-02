@@ -713,7 +713,7 @@ else
                                     </div>*@
                                 <div style="transform:rotate(0);">
                                     <a href="@product.Link" class="stretched-link">
-                                        <img class="d-block w-100 img-fluid catalog-img catalog-main card-img-top" src="@product.GetCardImageSrc()" alt="Cat Lawyer Is Real And He Is Everything Right Now | Above the Law">
+                                        <img class="d-block w-100 img-fluid catalog-img catalog-main card-img-top" src="@_repository.GetImagesByProductID(product.ID).First().Link" alt="Cat Lawyer Is Real And He Is Everything Right Now | Above the Law">
                                     </a>
                                     <div class="card-img-overlay">
                                         <h6 style="font-weight:300">@product.Type</h6>

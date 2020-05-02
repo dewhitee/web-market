@@ -30,5 +30,12 @@ namespace WebMarket.Models
         Tag AddTag(Tag tag);
         Tag UpdateTag(Tag tagChanges);
         Tag DeleteTag(int id);
+
+        Image GetImage(int id);
+        IEnumerable<Image> GetImagesByProductID(int id);
+        IEnumerable<Image> GetAllImages();
+        Image AddImage(Image image);
+        Image UpdateImage(Image imageChanges);
+        Image DeleteImage(int id);
     }
 }

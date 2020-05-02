@@ -46,7 +46,7 @@ namespace WebMarket.Models
         [NotMapped]
         public int CostIntegral { get => (int)Math.Truncate(Price); }
         [NotMapped]
-        public int CostFractional { get => (int)(Price - CostIntegral); }
+        public decimal CostFractional { get => Price - CostIntegral; }
         public float Discount { get; set; }
         [StringLength(512)]
         public string Description { get; set; }
@@ -194,14 +194,15 @@ namespace WebMarket.Models
 
         public static int MakeNewID(IMainRepository repository)
         {
-            Random random = new Random();
-            int newID;
-            bool success;
-            do
-            {
-                newID = random.Next(1, int.MaxValue);
-                success = repository.GetAllProducts().FirstOrDefault(x => x.ID == newID) == null;
-            } while (!success);
+            //Random random = new Random();
+            //int newID;
+            //bool success;
+            //do
+            //{
+            //    newID = random.Next(1, int.MaxValue);
+            //    success = repository.GetAllProducts().FirstOrDefault(x => x.ID == newID) == null;
+            //} while (!success);
+            int newID = repository.GetAllProducts().Count() + 1;
             return newID;
         }
 

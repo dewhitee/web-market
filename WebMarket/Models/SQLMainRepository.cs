@@ -16,6 +16,13 @@ namespace WebMarket.Models
             this.context = context;
         }
 
+        public Image AddImage(Image image)
+        {
+            context.Images.Add(image);
+            context.SaveChanges();
+            return image;
+        }
+
         public Product AddProduct(Product product)
         {
             context.Products.Add(product);
@@ -45,6 +52,17 @@ namespace WebMarket.Models
             context.Comments.Add(comment);
             context.SaveChanges();
             return comment;
+        }
+
+        public Image DeleteImage(int id)
+        {
+            Image image = context.Images.Find(id);
+            if (image != null)
+            {
+                context.Images.Remove(image);
+                context.SaveChanges();
+            }
+            return image;
         }
 
         public Product DeleteProduct(int id)
@@ -80,6 +98,11 @@ namespace WebMarket.Models
             return comment;
         }
 
+        public IEnumerable<Image> GetAllImages()
+        {
+            return context.Images;
+        }
+
         public IEnumerable<Product> GetAllProducts()
         {
             return context.Products;
@@ -93,6 +116,18 @@ namespace WebMarket.Models
         public IEnumerable<UserComment> GetAllUserComments()
         {
             return context.Comments;
+        }
+
+        public Image GetImage(int id)
+        {
+            return context.Images.Find(id);
+        }
+
+        public IEnumerable<Image> GetImagesByProductID(int id)
+        {
+            return from i in context.Images
+                   where i.ProductID == id.ToString()
+                   select i;
         }
 
         public Product GetProduct(int id)
@@ -154,6 +189,14 @@ namespace WebMarket.Models
             comment.State = EntityState.Modified;
             context.SaveChanges();
             return commentChanges;
+        }
+
+        public Image UpdateImage(Image imageChanges)
+        {
+            var image = context.Images.Attach(imageChanges);
+            image.State = EntityState.Modified;
+            context.SaveChanges();
+            return imageChanges;
         }
 
         public Product UpdateProduct(Product productChanges)

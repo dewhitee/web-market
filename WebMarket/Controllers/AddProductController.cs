@@ -32,8 +32,8 @@ namespace WebMarket.Controllers
         // GET: AddProduct
         public ActionResult AddProductView()
         {
-            LoadProducts();
-            LoadUser();
+            //LoadProducts();
+            //LoadUser();
             return View();
         }
 
@@ -62,12 +62,6 @@ namespace WebMarket.Controllers
                     string filePath = Path.Combine(uploadsFolder, uniqueFileName);
                     model.ZipFile.CopyTo(new FileStream(filePath, FileMode.Create));
                 }
-
-                //int integralCost = (int)Math.Truncate(model.Price);
-                //int fractionalCost = (int)(model.Price - integralCost);
-
-                //if (!CatalogViewModel.ContainsName(model.Name))
-                //{
 
                 int newID = Product.MakeNewID(mainRepository);
 
@@ -99,18 +93,22 @@ namespace WebMarket.Controllers
                         Description = model.ThirdImageDescription
                     },
                     Link = model.Link,
-                    //OldFileName = model.OldFileName,
                     FileName = uniqueFileName,
                     AddedDate = DateTime.Today,
                     OwnerID = CatalogViewModel.CurrentUser.ID
                 };
-                //CatalogViewModel.ListOfProducts.Add(newProduct);
+
                 mainRepository.AddProduct(newProduct);
+
+                AttachImages(newID,
+                    model.FirstImageLink, model.FirstImageDescription,
+                    model.SecondImageLink, model.SecondImageDescription,
+                    model.ThirdImageLink, model.ThirdImageDescription);
 
                 _tags = null;
                 _addedProduct = !attached ? newProduct : null;
-                SaveProducts();
-                //}
+                //SaveProducts();
+
                 return RedirectToAction("AddProductView");
             }
             return View();
@@ -130,7 +128,7 @@ namespace WebMarket.Controllers
             return RedirectToAction("AddProductView");
         }
 
-        bool AttachTags(int productID)
+        private bool AttachTags(int productID)
         {
             if (_tags != null)
             {
@@ -145,6 +143,36 @@ namespace WebMarket.Controllers
                 return true;
             }
             return false;
+        }
+
+        private void AttachImages(
+            int productID,
+            string firstLink,
+            string firstDesc,
+            string secondLink,
+            string secondDesc,
+            string thirdLink,
+            string thirdDesc)
+        {
+            string id = productID.ToString();
+            mainRepository.AddImage(new Image
+            {
+                ProductID = id,
+                Link = (firstLink != null && firstLink.Length > 0) ? firstLink : "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg",
+                Description = firstDesc
+            });
+            mainRepository.AddImage(new Image
+            {
+                ProductID = id,
+                Link = secondLink,
+                Description = secondDesc
+            });
+            mainRepository.AddImage(new Image
+            {
+                ProductID = id,
+                Link = thirdLink,
+                Description = thirdDesc
+            });
         }
 
         // POST: AddProduct/Create
