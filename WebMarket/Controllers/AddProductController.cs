@@ -165,14 +165,14 @@ namespace WebMarket.Controllers
             mainRepository.AddImage(new Image
             {
                 ProductID = id,
-                Link = secondLink,
+                Link = secondLink ?? "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg",
                 Description = secondDesc,
                 OrderIndex = 1
             });
             mainRepository.AddImage(new Image
             {
                 ProductID = id,
-                Link = thirdLink,
+                Link = thirdLink ?? "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg",
                 Description = thirdDesc,
                 OrderIndex = 2
             });
