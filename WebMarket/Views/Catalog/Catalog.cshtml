@@ -451,12 +451,12 @@
                         <label for="productName">Product name</label>
                         <input type="text" class="form-control" name="productName" id="productName" placeholder="Enter product name" value="@CatalogViewModel.GetSelectedBuyProductName()" required />
                     </div>
-                    <button class="@CatalogViewModel.GetSubmitBuyingButtonClassString()" type="submit">
-                        @CatalogViewModel.GetSubmitBuyingButtonText()
+                    <button class="@CatalogViewModel.GetSubmitBuyingButtonClassString(_repository)" type="submit">
+                        @CatalogViewModel.GetSubmitBuyingButtonText(_repository)
                     </button>
                 </form>
                 <p class="text-md-right">
-                    <mark>@CatalogViewModel.GetSelectedBuyProductPriceSentence()</mark>
+                    <mark>@CatalogViewModel.GetSelectedBuyProductPriceSentence(_repository)</mark>
                 </p>
             </div>
         </div>
@@ -474,11 +474,11 @@
                         <input type="text" class="form-control" name="productName" id="productName" placeholder="Enter product name" value="@CatalogViewModel.GetSelectedSellProductName()" required />
                     </div>
                     <button class="btn btn-success" type="submit">
-                        @CatalogViewModel.GetSubmitSellingButtonText()
+                        @CatalogViewModel.GetSubmitSellingButtonText(_repository)
                     </button>
                 </form>
                 <p class="text-md-right">
-                    <mark>@CatalogViewModel.GetSelectedSellProductPriceSentence()</mark>
+                    <mark>@CatalogViewModel.GetSelectedSellProductPriceSentence(_repository)</mark>
                 </p>
             </div>
         </div>
@@ -702,7 +702,7 @@ else
 
                         if (CatalogViewModel.FindTags?.Count > 0)
                         {
-                            if (!product.ContainsTags(CatalogViewModel.FindTags))
+                            if (!product.ContainsTags(CatalogViewModel.FindTags, _repository))
                                 continue;
                         }
 

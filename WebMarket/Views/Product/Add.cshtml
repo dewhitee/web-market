@@ -59,7 +59,7 @@
 
 @*Add a product div container*@
  <h2 class="display-4 text-center">Adding</h2>
-     <form enctype="multipart/form-data" asp-controller="AddProduct" asp-action="AddProductView" method="post">
+     <form enctype="multipart/form-data" asp-controller="Product" asp-action="Add" method="post">
 
          <div class="form-group">
              <label asp-for="Name" class="col-sm-2 col-form-label">Product name</label>
@@ -236,7 +236,7 @@
                      $.ajax({
                          type: "post",
                          dataType: "json",
-                         url: "/AddProduct/AddTags",
+                         url: "/Product/AddTags",
                          traditional: true,
                          data: {
                              productName: prod_name,

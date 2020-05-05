@@ -58,9 +58,9 @@ namespace WebMarket.Models
         {
             return BoughtProductIDs.Contains(productID.ToString());
         }
-        public bool HasProductBought(string productName)
+        public bool HasProductBought(string productName, IMainRepository repository)
         {
-            return BoughtProductIDs.Contains(CatalogViewModel.GetProduct(productName)?.ID.ToString());
+            return BoughtProductIDs.Contains(repository.GetProductsByName(productName).FirstOrDefault()?.ID.ToString());
         }
         public bool HasProductAdded(string productID)
         {

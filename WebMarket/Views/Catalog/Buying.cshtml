@@ -1,6 +1,6 @@
 ﻿@model CatalogViewModel
 @inject IMainRepository _repository
- 
+
 @{
     ViewData["Title"] = "Buying";
 }
@@ -9,7 +9,7 @@
 
 <link href="~/css/comments.css" rel="stylesheet" type="text/css" />
 <link href="~/css/images.css" rel="stylesheet" type="text/css" />
-<link href="~/css/ratingtable.css" rel="stylesheet" type="text/css" /> 
+<link href="~/css/ratingtable.css" rel="stylesheet" type="text/css" />
 
 <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
 <style>
@@ -30,37 +30,54 @@
 @{
     var product = CatalogViewModel.GetSelectedBuyProduct(_repository);
 
+    @if (product.OwnerID == CatalogViewModel.CurrentUser.ID)
+    {
+        <div style="padding-bottom:1em"></div>
+        <form asp-controller="Product" asp-action="OpenEditProduct" method="post">
+            <div class="d-inline" @*style="padding-bottom:1em"*@>
+                <input type="hidden" class="form-control" name="prodId" value="@product.ID" />
+                <button asp-controller="Product" asp-action="OpenEditProduct" type="submit" class="btn btn-primary">Edit Product</button>
+            </div>
+        </form>
+        <div class="d-inline">
+            <button type="button" class="btn btn-primary">Edit Page</button>
+        </div>
+    }
+    <div style="padding-bottom:1em"></div>
+
+
     <div class="float-left" style="padding-right:2em">
         <div class="card bg-light mb-3" style="max-width: 18rem;">
-            <div class="card-header">About</div>
+            @*<div class="card-header">About</div>*@
             <div class="card-body">
-                <h5 class="card-title">Light card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <h5 class="card-title">About</h5>
                 @if (product.FileName?.Length > 0)
                 {
                     <a class="card-link" href="~/file/@product.FileName" download>Download link</a>
                 }
                 <p>Owner: <b>@product.GetOwnerName()</b></p>
+                <p>Added at: <b>@product.AddedDate.ToShortDateString()</b></p>
+                <p></p>
             </div>
         </div>
-        <div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
-            <div class="card-header">Characteristics</div>
-            <div class="card-body">
-                <h5 class="card-title">Dark card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <ul>
-                    <li>
-                        first characteristic
-                    </li>
-                    <li>
-                        second characteristic
-                    </li>
-                    <li>
-                        third characteristic
-                    </li>
-                </ul>
-            </div>
-        </div>
+        @*<div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
+                <div class="card-header">Characteristics</div>
+                <div class="card-body">
+                    <h5 class="card-title">Dark card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <ul>
+                        <li>
+                            first characteristic
+                        </li>
+                        <li>
+                            second characteristic
+                        </li>
+                        <li>
+                            third characteristic
+                        </li>
+                    </ul>
+                </div>
+            </div>*@
     </div>
 
     <div class="card h-100 hoverable-card" id="card_on_transaction">
@@ -266,7 +283,14 @@
                     {
                         foreach (var comment in /*product.Comments*/_repository.GetUserCommentsByProdID(product.ID))
                         {
-                            <p><strong>@WebMarket.Data.Userbase.GetUsername(comment.UserID)</strong></p>
+                            if (WebMarket.Data.Userbase.GetUsername(comment.UserID)?.Length > 0)
+                            {
+                                <p><strong>@WebMarket.Data.Userbase.GetUsername(comment.UserID)</strong></p>
+                            }
+                            else
+                            {
+                                <p><strong>Anonymous</strong></p>
+                            }
                             <p>@comment.Text</p>
                             if (comment.Rate > 0f)
                             {

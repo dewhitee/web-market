@@ -111,25 +111,25 @@ namespace WebMarket.Models
             return "";
         }
 
-        public static Product GetProduct(string name)
-        {
-            foreach (var i in ListOfProducts)
-            {
-                if (i.Name == name)
-                    return i;
-            }
-            return null;
-        }
+        //public static Product GetProduct(string name)
+        //{
+        //    foreach (var i in ListOfProducts)
+        //    {
+        //        if (i.Name == name)
+        //            return i;
+        //    }
+        //    return null;
+        //}
         
-        public static Product GetProduct(int id)
-        {
-            foreach (var i in ListOfProducts)
-            {
-                if (i.ID == id)
-                    return i;
-            }
-            return null;
-        }
+        //public static Product GetProduct(int id)
+        //{
+        //    foreach (var i in ListOfProducts)
+        //    {
+        //        if (i.ID == id)
+        //            return i;
+        //    }
+        //    return null;
+        //}
 
         public static string GetSelectedBuyProductName()
         {

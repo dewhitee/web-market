@@ -95,11 +95,12 @@ namespace WebMarket.Models
             return ID < 0;
         }
 
-        public bool ContainsTags(List<string> findTags)
+        public bool ContainsTags(List<string> findTags, IMainRepository repository)
         {
+            var repoTags = (from t in repository.GetTagsByProductID(ID) select t.Text);
             foreach (var tag in findTags)
             {
-                if (!Tags.Contains(tag))
+                if (!repoTags.Contains(tag))
                     return false;
             }
             return true;
@@ -171,10 +172,10 @@ namespace WebMarket.Models
             Console.WriteLine($"Final stars count is {starsCount}. This is {(starsCount <= 0 ? starsCount : starsCount / totalComments)} percent from the total amount of stars.");
             return starsCount <= 0 ? 0f : starsCount / totalComments;
         }
-        public uint GetTotalStarsCount()
+        public uint GetTotalStarsCount(IMainRepository repository)
         {
             uint count = 0;
-            foreach (var i in Comments)
+            foreach (var i in repository.GetAllUserComments())
             {
                 count += i.Stars;
             }

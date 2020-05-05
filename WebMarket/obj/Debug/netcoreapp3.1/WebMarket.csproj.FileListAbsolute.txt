@@ -148,4 +148,5 @@ D:\ASP.NET PROJECTS\WebMarket\WebMarket\bin\Debug\netcoreapp3.1\xunit.execution.
 D:\ASP.NET PROJECTS\WebMarket\WebMarket\obj\Debug\netcoreapp3.1\WebMarket.csproj.CoreCompileInputs.cache
 D:\ASP.NET PROJECTS\WebMarket\WebMarket\obj\Debug\netcoreapp3.1\WebMarket.MvcApplicationPartsAssemblyInfo.cs
 D:\ASP.NET PROJECTS\WebMarket\WebMarket\obj\Debug\netcoreapp3.1\WebMarket.MvcApplicationPartsAssemblyInfo.cache
-D:\ASP.NET PROJECTS\WebMarket\WebMarket\obj\Debug\netcoreapp3.1\Razor\Views\AddProduct\AddProductView.cshtml.g.cs
+D:\ASP.NET PROJECTS\WebMarket\WebMarket\obj\Debug\netcoreapp3.1\Razor\Views\Product\Add.cshtml.g.cs
+D:\ASP.NET PROJECTS\WebMarket\WebMarket\obj\Debug\netcoreapp3.1\Razor\Views\Product\Edit.cshtml.g.cs

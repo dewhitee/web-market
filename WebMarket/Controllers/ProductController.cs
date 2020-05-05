@@ -11,16 +11,18 @@ using System.IO;
 
 namespace WebMarket.Controllers
 {
-    public class AddProductController : Controller
+    public class ProductController : Controller
     {
         private static List<string> _tags = null;
         private static Product _addedProduct = null;
+        //private static Product _editProduct = null;
+
         private readonly IMainRepository mainRepository;
         [Obsolete]
         private readonly IHostingEnvironment hostingEnvironment;
 
         [Obsolete]
-        public AddProductController(
+        public ProductController(
             IMainRepository mainRepository,
             IHostingEnvironment hostingEnvironment)
         {
@@ -30,7 +32,7 @@ namespace WebMarket.Controllers
 
 
         // GET: AddProduct
-        public ActionResult AddProductView()
+        public ActionResult Add()
         {
             //LoadProducts();
             //LoadUser();
@@ -50,7 +52,7 @@ namespace WebMarket.Controllers
         //}
 
         [HttpPost]
-        public IActionResult AddProductView([FromForm]AddProductViewModel model)
+        public IActionResult Add([FromForm]AddProductViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -109,7 +111,7 @@ namespace WebMarket.Controllers
                 _addedProduct = !attached ? newProduct : null;
                 //SaveProducts();
 
-                return RedirectToAction("AddProductView");
+                return RedirectToAction("Catalog", "Catalog");
             }
             return View();
         }
@@ -178,6 +180,12 @@ namespace WebMarket.Controllers
             });
         }
 
+        public IActionResult OpenEditProduct(int prodId)
+        {
+            var product = mainRepository.GetProduct(prodId);
+            return View("Edit", product);
+        }
+
         // POST: AddProduct/Create
         //[HttpPost]
         //[ValidateAntiForgeryToken]
@@ -223,6 +231,12 @@ namespace WebMarket.Controllers
         public ActionResult Delete(int id)
         {
             return View();
+        }
+
+        public IActionResult Update([FromForm]Product product)
+        {
+            mainRepository.UpdateProduct(product);
+            return RedirectToAction("Catalog", "Catalog");
         }
 
         // POST: AddProduct/Delete/5

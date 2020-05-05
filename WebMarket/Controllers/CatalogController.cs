@@ -112,15 +112,15 @@ namespace WebMarket.Controllers
                 //prod.Type = productType ?? prod.Type;
                 //prod.Tags = prod.Tags.Count < 0 ? new List<string>(tags) : prod.Tags;
                 //prod.Discount = productDiscount;
-                if (!CatalogViewModel.ContainsName(productName))
-                {
-                    _tags = new List<string>(tags);
-                }
-                else
-                {
-                    CatalogViewModel.GetProduct(productName).Tags = new List<string>(_tags);
-                    _tags = null;
-                }
+                ///if (!CatalogViewModel.ContainsName(productName))
+                ///{
+                    ///_tags = new List<string>(tags);
+                ///}
+                ///else
+                ///{
+                    ///CatalogViewModel.GetProduct(productName).Tags = new List<string>(_tags);
+                    ///_tags = null;
+                ///}
             }
             SaveProducts();
             return RedirectToAction("Catalog");
@@ -191,20 +191,20 @@ namespace WebMarket.Controllers
         {
             Console.WriteLine("Adding comment");
             var product = /*CatalogViewModel.GetProduct(productID)*/mainRepository.GetProduct(productID);
-            if (product.Comments == null) // is needed for old products that do not have comments list instantiated
-                product.Comments = new List<UserComment>();
+            ///if (product.Comments == null) // is needed for old products that do not have comments list instantiated
+            ///    product.Comments = new List<UserComment>();
 
-            bool canAdd = product.OnlyOneCommentPerUser ? product.Comments.Find(x => x.UserID == CatalogViewModel.CurrentUser.ID) == null : true;
+            bool canAdd = product.OnlyOneCommentPerUser ? mainRepository.GetUserCommentsByProdID(product.ID).FirstOrDefault() == null : true;
             if (canAdd)
             {
                 UserComment newComment = new UserComment
                 {
                     Text = commentSection,
                     ProductID = product.ID.ToString(),
-                    UserID = /*CatalogViewModel.CurrentUser.Username != "" ? */CatalogViewModel.CurrentUser.ID/* : "Unknown"*/,
+                    UserID = CatalogViewModel.CurrentUser.ID,
                     Rate = rating
                 };
-                product.Comments.Add(newComment);
+                //product.Comments.Add(newComment);
                 mainRepository.AddUserComment(newComment);
             }
 
