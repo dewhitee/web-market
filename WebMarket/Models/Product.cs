@@ -206,6 +206,11 @@ namespace WebMarket.Models
             //    success = repository.GetAllProducts().FirstOrDefault(x => x.ID == newID) == null;
             //} while (!success);
             int newID = repository.GetAllProducts().Count() + 1;
+            Random random = new Random();
+            while (repository.GetAllProducts().Any(p => p.ID == newID))
+            {
+                newID++;
+            }
             return newID;
         }
 

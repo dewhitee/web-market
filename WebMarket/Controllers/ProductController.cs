@@ -213,13 +213,12 @@ namespace WebMarket.Controllers
         // POST: AddProduct/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit([FromForm]Product product)
         {
             try
             {
-                // TODO: Add update logic here
-
-                return RedirectToAction(nameof(Index));
+                mainRepository.UpdateProduct(product);
+                return RedirectToAction("Catalog", "Catalog");
             }
             catch
             {
@@ -233,22 +232,15 @@ namespace WebMarket.Controllers
             return View();
         }
 
-        public IActionResult Update([FromForm]Product product)
-        {
-            mainRepository.UpdateProduct(product);
-            return RedirectToAction("Catalog", "Catalog");
-        }
-
         // POST: AddProduct/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(string deleteId)
         {
             try
             {
-                // TODO: Add delete logic here
-
-                return RedirectToAction(nameof(Index));
+                mainRepository.DeleteProduct(int.Parse(deleteId));
+                return RedirectToAction("Catalog", "Catalog");
             }
             catch
             {

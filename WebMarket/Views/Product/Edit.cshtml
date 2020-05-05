@@ -74,15 +74,41 @@
                 <span asp-validation-for="AddedDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="OwnerID" class="control-label"></label>
-                <input asp-for="OwnerID" class="form-control" />
+                @*<label asp-for="OwnerID" class="control-label"></label>*@
+                <input type="hidden" asp-for="OwnerID" class="form-control" />
                 <span asp-validation-for="OwnerID" class="text-danger"></span>
             </div>
+            <div class="form-group float-right">
+                <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#deleteModal">
+                    Delete
+                </button>
+            </div>
             <div class="form-group">
-                <input type="hidden" name="prodId" value="@Model.ID"/>
-                <input type="submit" asp-action="Update" value="Save" class="btn btn-primary" />
+                <input type="submit" asp-action="Edit" value="Save" class="btn btn-primary" />
             </div>
         </form>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Are you sure you want to delete @Model.Name?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                You will not have an ability to restore it from database. So think carefully.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+                <form asp-controller="Product" asp-action="Delete" asp-route-deleteid="@Model.ID">
+                    <input type="submit" value="Delete" class="btn btn-danger" />
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 
