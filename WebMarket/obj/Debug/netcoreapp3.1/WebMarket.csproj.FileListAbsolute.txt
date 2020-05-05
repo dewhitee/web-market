@@ -150,3 +150,5 @@ D:\ASP.NET PROJECTS\WebMarket\WebMarket\obj\Debug\netcoreapp3.1\WebMarket.MvcApp
 D:\ASP.NET PROJECTS\WebMarket\WebMarket\obj\Debug\netcoreapp3.1\WebMarket.MvcApplicationPartsAssemblyInfo.cache
 D:\ASP.NET PROJECTS\WebMarket\WebMarket\obj\Debug\netcoreapp3.1\Razor\Views\Product\Add.cshtml.g.cs
 D:\ASP.NET PROJECTS\WebMarket\WebMarket\obj\Debug\netcoreapp3.1\Razor\Views\Product\Edit.cshtml.g.cs
+D:\ASP.NET PROJECTS\WebMarket\WebMarket\obj\Debug\netcoreapp3.1\Razor\Views\Product\Page.cshtml.g.cs
+D:\ASP.NET PROJECTS\WebMarket\WebMarket\obj\Debug\netcoreapp3.1\Razor\Views\Product\PageEdit.cshtml.g.cs

@@ -248,6 +248,11 @@ namespace WebMarket.Controllers
             }
         }
 
+        public IActionResult Page()
+        {
+            return View();
+        }
+
         public IActionResult SaveProducts()
         {
             CatalogViewModel.SaveProducts();
