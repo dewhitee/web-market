@@ -52,6 +52,7 @@ namespace WebMarket.Controllers
         //}
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Add([FromForm]AddProductViewModel model)
         {
             if (ModelState.IsValid)

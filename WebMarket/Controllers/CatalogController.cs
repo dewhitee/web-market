@@ -19,6 +19,7 @@ namespace WebMarket.Controllers
         //System.Security.Claims.ClaimsPrincipal currentUser = User;
         private static List<string> _tags = null;
         private readonly IMainRepository mainRepository;
+        private static bool _productsListInitialized = false;
 
         public CatalogController(
             UserManager<IdentityUser> userManager,
@@ -35,6 +36,11 @@ namespace WebMarket.Controllers
         {
             LoadProducts();
             LoadUser();
+            if (!_productsListInitialized)
+            {
+                CatalogViewModel.ListOfProducts = mainRepository.GetAllProducts().ToList();
+                _productsListInitialized = true;
+            }
             //CatalogViewModel.LoadFindTags();
             return View();
         }
@@ -47,6 +53,7 @@ namespace WebMarket.Controllers
             return RedirectToAction("Catalog");
         }
 
+        [Obsolete]
         public IActionResult AddProduct(
             string productName,
             string productType,
@@ -153,6 +160,7 @@ namespace WebMarket.Controllers
             }
         }
 
+        [Obsolete]
         private void FindAndBuyProduct(string productName)
         {
             foreach (var product in CatalogViewModel.ListOfProducts)
