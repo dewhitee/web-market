@@ -142,6 +142,7 @@ namespace WebMarket.Controllers
                         Text = tag
                     });
                 }
+                _tags = null;
                 return true;
             }
             return false;
@@ -239,12 +240,23 @@ namespace WebMarket.Controllers
         {
             try
             {
+                int id = int.Parse(deleteId);
+                CleanTags(id);
+
                 mainRepository.DeleteProduct(int.Parse(deleteId));
                 return RedirectToAction("Catalog", "Catalog");
             }
             catch
             {
-                return View();
+                return RedirectToAction("Catalog", "Catalog");
+            }
+        }
+
+        private void CleanTags(int id)
+        {
+            foreach (var i in mainRepository.GetTagsByProductID(id).ToList())
+            {
+                mainRepository.DeleteTag(i.ID);
             }
         }
 
