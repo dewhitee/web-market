@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,7 +12,7 @@ using WebMarket.Data;
 namespace WebMarket.Models
 {
     [Serializable]
-    public class Product
+    public class Product : IComparable<Product>
     {
         public enum Tag
         {
@@ -374,6 +375,16 @@ namespace WebMarket.Models
         public static int CompareByFinalPrice(Product x, Product y)
         {
             return x.FinalPrice.CompareTo(y.FinalPrice);
+        }
+
+        public int CompareTo([AllowNull] Product other)
+        {
+            if (this.ID < other.ID)
+                return 1;
+            else if (this.ID > other.ID)
+                return -1;
+            else
+                return 0;
         }
     }
 }

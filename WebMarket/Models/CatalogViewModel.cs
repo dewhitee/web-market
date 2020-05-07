@@ -19,7 +19,7 @@ namespace WebMarket.Models
             Table,
         }
         public enum ProductSort
-        { 
+        {
             None,
             Name,
             Type,

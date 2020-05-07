@@ -691,9 +691,9 @@ else
             </div>
             <div class="container-fluid">
                 <div class="row row-cols-1 row-cols-md-3">
-                    @for (int i = 0; i < _repository.GetAllProducts().Count(); i++)
+                    @for (int i = 0; i < @*_repository.GetAllProducts()*@CatalogViewModel.ListOfProducts.Count(); i++)
                     {
-                        var product = /*CatalogViewModel.ListOfProducts*/_repository.GetAllProducts().ElementAt(i);
+                        var product = CatalogViewModel.ListOfProducts.ElementAt(i);   //_repository.GetAllProducts().ElementAt(i);
                         string tdClassString = product.GetPriceTableClassString();
                         string buttonClassString = product.GetAddToCartButtonClassString();
                         var linkClass = product.GetProductTableLinkClassString();
@@ -749,8 +749,9 @@ else
                                     </h3>
                                     <div class="float-right">
                                         <form asp-controller="Catalog" asp-action="AddToCart" method="post">
-                                            <input type="hidden" class="form-control" name="productName" id="productName" value=@product.Name />
-                                            <input type="hidden" class="form-control" name="productIndex" id="productIndex" value=@i />
+                                            @*<input type="hidden" class="form-control" name="productName" id="productName" value=@product.Name />
+                                                  <input type="hidden" class="form-control" name="productIndex" id="productIndex" value=@i />*@
+                                            <input type="hidden" class="form-control" name="productId" id="productId" value=@product.ID />
                                             <button class="@product.GetAddToCartButtonClassString() hoverable-btn" type="submit" id="card_addtocart_button_@i" onmouseover="onHoveredButton(@i)" onmouseout="onHoveredButtonOut(@i)">@product.GetAddToCartButtonString()</button>
                                         </form>
                                     </div>

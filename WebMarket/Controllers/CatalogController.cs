@@ -19,7 +19,8 @@ namespace WebMarket.Controllers
         //System.Security.Claims.ClaimsPrincipal currentUser = User;
         private static List<string> _tags = null;
         private readonly IMainRepository mainRepository;
-        private static bool _productsListInitialized = false;
+        private static bool _productsListInitialized = false; //Enumerable.SequenceEqual(mainRepository.GetAllProducts().OrderBy(p => p),
+        //CatalogViewModel.ListOfProducts.OrderBy(t => t));
 
         public CatalogController(
             UserManager<IdentityUser> userManager,
@@ -268,32 +269,33 @@ namespace WebMarket.Controllers
             //HttpFileCollection
         //}
 
-        public IActionResult AddToCart(string productName, int productIndex)
+        public IActionResult AddToCart(/*string productName, int productIndex, */int productId)
         {
             Userbase.LoadUser();
-            var products = mainRepository.GetAllProducts().ToList();
-            for (int i = 0; i < /*CatalogViewModel.ListOfProducts.Count*/products.Count; i++)
-            {
-                var product = products[i];
-                if (product != null)
-                {
-                    product.AddedToCart = false;
-                }
+            var products = CatalogViewModel.ListOfProducts;//mainRepository.GetAllProducts().ToList();
+            //for (int i = 0; i < /*CatalogViewModel.ListOfProducts.Count*/products.Count; i++)
+            //{
+            //    var product = products[i];
+            //    if (product != null)
+            //    {
+            //        product.AddedToCart = false;
+            var product = mainRepository.GetProduct(productId);
+            //    }
                 /*CatalogViewModel.ListOfProducts[i].AddedToCart = false */;
-            }
-            if (products[productIndex] != null)
+           // }
+            if (product/*s[productIndex]*/ != null)
             {
                 /*CatalogViewModel.ListOfProducts[productIndex]*/
-                products[productIndex].AddedToCart = true;
+                product/*s[productIndex]*/.AddedToCart = true;
             }
 
-            if (!CatalogViewModel.AddedToCartProducts.Contains(/*CatalogViewModel.ListOfProducts[productIndex]*/products[productIndex]))
-                CatalogViewModel.AddedToCartProducts.Add(/*CatalogViewModel.ListOfProducts[productIndex]*/products[productIndex]);
+            if (!CatalogViewModel.AddedToCartProducts.Contains(/*products[productIndex])*/product))
+                CatalogViewModel.AddedToCartProducts.Add(/*products[productIndex]*/product);
 
-            CatalogViewModel.ChoosenProduct = products[productIndex];
+            CatalogViewModel.ChoosenProduct = product/*s[productIndex]*/;
 
             // temporally will be redirecting to the Buying page
-            if (!/*CatalogViewModel.ListOfProducts[productIndex]*/products[productIndex].IsBought)
+            if (!/*CatalogViewModel.ListOfProducts[productIndex]*/product/*s[productIndex]*/.IsBought)
             {
                 SaveProducts();
                 return RedirectToAction("Buying");
