@@ -19,8 +19,9 @@ namespace WebMarket.Controllers
         //System.Security.Claims.ClaimsPrincipal currentUser = User;
         private static List<string> _tags = null;
         private readonly IMainRepository mainRepository;
-        private static bool _productsListInitialized = false; //Enumerable.SequenceEqual(mainRepository.GetAllProducts().OrderBy(p => p),
+        private bool _productsListInitialized => //Enumerable.SequenceEqual(mainRepository.GetAllProducts().OrderBy(p => p),
         //CatalogViewModel.ListOfProducts.OrderBy(t => t));
+        mainRepository.GetAllProducts().All(CatalogViewModel.ListOfProducts.Contains);
 
         public CatalogController(
             UserManager<IdentityUser> userManager,
@@ -35,15 +36,20 @@ namespace WebMarket.Controllers
 
         public IActionResult Catalog()
         {
-            LoadProducts();
+            //LoadProducts();
             LoadUser();
             if (!_productsListInitialized)
             {
                 CatalogViewModel.ListOfProducts = mainRepository.GetAllProducts().ToList();
-                _productsListInitialized = true;
+                ///_productsListInitialized = true;
             }
             //CatalogViewModel.LoadFindTags();
             return View();
+        }
+
+        public IActionResult Sorted()
+        {
+            return View("Catalog");
         }
 
         public IActionResult ChangeView(CatalogViewModel.CatalogViewVariant viewVariant)
@@ -332,31 +338,31 @@ namespace WebMarket.Controllers
         {
             CatalogViewModel.ListOfProducts.Sort(Product.CompareByName);
             SaveProducts();
-            return RedirectToAction("Catalog");
+            return RedirectToAction("Sorted");
         }
         public IActionResult SortByType()
         {
             CatalogViewModel.ListOfProducts.Sort(Product.CompareByType);
             SaveProducts();
-            return RedirectToAction("Catalog");
+            return RedirectToAction("Sorted");
         }
         public IActionResult SortByPrice()
         {
             CatalogViewModel.ListOfProducts.Sort(Product.CompareByPrice);
             SaveProducts();
-            return RedirectToAction("Catalog");
+            return RedirectToAction("Sorted");
         }
         public IActionResult SortByDiscount()
         {
             CatalogViewModel.ListOfProducts.Sort(Product.CompareByDiscount);
             SaveProducts();
-            return RedirectToAction("Catalog");
+            return RedirectToAction("Sorted");
         }
         public IActionResult SortByFinalPrice()
         {
             CatalogViewModel.ListOfProducts.Sort(Product.CompareByFinalPrice);
             SaveProducts();
-            return RedirectToAction("Catalog");
+            return RedirectToAction("Sorted");
         }
 
         private void UpdateAllExistedProducts()
