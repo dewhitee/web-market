@@ -89,7 +89,7 @@ namespace WebMarket.Models
         public string DiscountSupString { get => Discount > 0 ? Discount.ToString() + "%" : ""; }
         public string LinkTableString { get => string.IsNullOrWhiteSpace(Link) ? "no link" : "yes"; }
         public string IsBoughtString { get => IsBought ? "Bought" : "+"; }
-        public string IsAddedToCartString { get => AddedToCart ? "Added" : "+"; }
+        public string IsAddedToCartString { get => AddedToCart || CatalogViewModel.ChoosenProductID == this.ID ? "Added" : "+"; }
 
         public bool HasValidID()
         {
@@ -219,7 +219,7 @@ namespace WebMarket.Models
         {
             if (IsBought)
                 return "Bought";
-            else if (AddedToCart)
+            else if (AddedToCart || CatalogViewModel.ChoosenProductID == this.ID)
                 return "Selected";
             else return "+";
         }
@@ -306,7 +306,7 @@ namespace WebMarket.Models
 
         public string GetPriceTableClassString()
         {
-            if (AddedToCart)
+            if (AddedToCart || CatalogViewModel.ChoosenProductID == this.ID)
                 return "bg-dark text-white";
             if (IsBought)
                 return "bg-primary text-dark";
@@ -321,7 +321,7 @@ namespace WebMarket.Models
 
         public string GetProductTableLinkClassString()
         {
-            if (AddedToCart || IsBought)
+            if (AddedToCart || IsBought || CatalogViewModel.ChoosenProductID == this.ID)
                 return "text-white";
             else
                 return "text-dark";
@@ -329,7 +329,7 @@ namespace WebMarket.Models
 
         public string GetAddToCartButtonClassString()
         {
-            if (AddedToCart)
+            if (AddedToCart || CatalogViewModel.ChoosenProductID == this.ID)
             {
                 //if (ViewVariant != CatalogViewVariant.Main)
                 return "btn btn-outline-light";
@@ -344,7 +344,7 @@ namespace WebMarket.Models
 
         public string GetTableHeaderClassString()
         {
-            if (AddedToCart)
+            if (AddedToCart || CatalogViewModel.ChoosenProductID == this.ID)
             {
                 //if ()
                 return "bg-dark text-white";

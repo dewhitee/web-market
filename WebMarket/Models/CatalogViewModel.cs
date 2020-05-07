@@ -32,6 +32,7 @@ namespace WebMarket.Models
         public static List<User> ListOfUsers = new List<User>();
         public static List<Product> AddedToCartProducts = new List<Product>();
         public static Product ChoosenProduct = new Product();
+        public static int ChoosenProductID { get; set; }
         public static User CurrentUser = new User();
 
         public List<Product> Products { get; set; }

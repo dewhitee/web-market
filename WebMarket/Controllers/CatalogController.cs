@@ -183,6 +183,7 @@ namespace WebMarket.Controllers
             SaveProducts();
         }
 
+        [Obsolete]
         public IActionResult SellProduct(string productName, int productID)
         {
             Console.WriteLine("Selling Product...");
@@ -278,30 +279,19 @@ namespace WebMarket.Controllers
         public IActionResult AddToCart(/*string productName, int productIndex, */int productId)
         {
             Userbase.LoadUser();
-            var products = CatalogViewModel.ListOfProducts;//mainRepository.GetAllProducts().ToList();
-            //for (int i = 0; i < /*CatalogViewModel.ListOfProducts.Count*/products.Count; i++)
-            //{
-            //    var product = products[i];
-            //    if (product != null)
-            //    {
-            //        product.AddedToCart = false;
             var product = mainRepository.GetProduct(productId);
-            //    }
-                /*CatalogViewModel.ListOfProducts[i].AddedToCart = false */;
-           // }
-            if (product/*s[productIndex]*/ != null)
+            if (product != null)
             {
-                /*CatalogViewModel.ListOfProducts[productIndex]*/
-                product/*s[productIndex]*/.AddedToCart = true;
+                product.AddedToCart = true;
             }
 
-            if (!CatalogViewModel.AddedToCartProducts.Contains(/*products[productIndex])*/product))
-                CatalogViewModel.AddedToCartProducts.Add(/*products[productIndex]*/product);
+            if (!CatalogViewModel.AddedToCartProducts.Contains(product))
+                CatalogViewModel.AddedToCartProducts.Add(product);
 
-            CatalogViewModel.ChoosenProduct = product/*s[productIndex]*/;
+            CatalogViewModel.ChoosenProduct = product;
+            CatalogViewModel.ChoosenProductID = product.ID;
 
-            // temporally will be redirecting to the Buying page
-            if (!/*CatalogViewModel.ListOfProducts[productIndex]*/product/*s[productIndex]*/.IsBought)
+            if (!product.IsBought)
             {
                 SaveProducts();
                 return RedirectToAction("Buying");
@@ -365,13 +355,13 @@ namespace WebMarket.Controllers
             return RedirectToAction("Sorted");
         }
 
-        private void UpdateAllExistedProducts()
-        {
-            foreach (var prod in CatalogViewModel.ListOfProducts)
-            {
-                prod.ID = Product.MakeNewID();
-            }
-        }
+        //private void UpdateAllExistedProducts()
+        //{
+        //    foreach (var prod in CatalogViewModel.ListOfProducts)
+        //    {
+        //        prod.ID = Product.MakeNewID();
+        //    }
+        //}
 
         public IActionResult SubmitTags(string[] findTags)
         {
