@@ -19,9 +19,9 @@ namespace WebMarket.Controllers
         //System.Security.Claims.ClaimsPrincipal currentUser = User;
         private static List<string> _tags = null;
         private readonly IMainRepository mainRepository;
-        private bool _productsListInitialized => //Enumerable.SequenceEqual(mainRepository.GetAllProducts().OrderBy(p => p),
+        //private bool _productsListInitialized => //Enumerable.SequenceEqual(mainRepository.GetAllProducts().OrderBy(p => p),
         //CatalogViewModel.ListOfProducts.OrderBy(t => t));
-        mainRepository.GetAllProducts().All(CatalogViewModel.ListOfProducts.Contains);
+        //mainRepository.GetAllProducts().All(CatalogViewModel.ListOfProducts.Contains);
 
         public CatalogController(
             UserManager<IdentityUser> userManager,
@@ -38,14 +38,20 @@ namespace WebMarket.Controllers
         {
             //LoadProducts();
             LoadUser();
-            if (!_productsListInitialized)
-            {
+            //if (!/*_productsListInitialized*/ProductsInitialized())
+            //{
                 CatalogViewModel.ListOfProducts = mainRepository.GetAllProducts().ToList();
                 ///_productsListInitialized = true;
-            }
+            //}
             //CatalogViewModel.LoadFindTags();
             return View();
         }
+
+        //private bool ProductsInitialized()
+        //{
+        //    var sortedProducts = new List<Product>(CatalogViewModel.ListOfProducts);
+        //    return mainRepository.GetAllProducts().All(sortedProducts.Contains);
+        //}
 
         public IActionResult Sorted()
         {
