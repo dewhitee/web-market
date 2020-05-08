@@ -54,6 +54,7 @@ namespace WebMarket.Models
             }
             Userbase.SaveUser();
         }
+        [Obsolete]
         public bool HasProductBought(int productID)
         {
             return BoughtProductIDs.Contains(productID.ToString());

@@ -178,15 +178,17 @@ namespace WebMarket.Controllers
         {
             foreach (var product in CatalogViewModel.ListOfProducts)
             {
-                product.AddedToCart = false;
+                //product.AddedToCart = false;
                 if (product.Name == productName && !product.IsBought)
                 {
-                    product.AddedToCart = true;
+                    //product.AddedToCart = true;
+                    CatalogViewModel.ChoosenProductID = product.ID;
+                    Buy(product.Name, product.ID);
                     break;
                 }
             }
-            SaveUser();
-            SaveProducts();
+            //SaveUser();
+            //SaveProducts();
         }
 
         [Obsolete]
