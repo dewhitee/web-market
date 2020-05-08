@@ -56,7 +56,7 @@
             @*<div class="card-header">About</div>*@
             <div class="card-body">
                 <h5 class="card-title">About</h5>
-                @if (product.FileName?.Length > 0)
+                @if (product.IsBought && product.FileName?.Length > 0)
                 {
                     <a class="card-link" href="~/file/@product.FileName" download>Download link</a>
                 }
@@ -143,7 +143,7 @@
                     Added @product.AddedDate.ToShortDateString()
                 </small>
             }
-            else if (!CatalogViewModel.CurrentUser.HasProductBought(product.ID, _repository))
+            else if (!/*CatalogViewModel.CurrentUser.HasProductBought(product.ID, _repository)*/product.IsBought)
             {
                 <div class="float-right">
                     <form asp-controller="Catalog" asp-action="BuyProduct" method="post">

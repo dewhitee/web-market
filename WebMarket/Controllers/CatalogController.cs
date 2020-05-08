@@ -233,14 +233,14 @@ namespace WebMarket.Controllers
             }
 
             SaveProducts();
-            if (!product.IsBought)
-            {
-                return RedirectToAction("Buying");
-            }
-            else
-            {
-                return RedirectToAction("Selling");
-            }
+            ///if (!product.IsBought)
+            ///{
+                return RedirectToAction("Page", "Product");
+            ///}
+            ///else
+            ///{
+            ///    return RedirectToAction("Selling");
+            ///}
         }
 
         public IActionResult SaveProducts()
@@ -299,16 +299,16 @@ namespace WebMarket.Controllers
             CatalogViewModel.ChoosenProduct = product;
             CatalogViewModel.ChoosenProductID = product.ID;
 
-            if (!product.IsBought)
-            {
-                SaveProducts();
-                return RedirectToAction("Buying");
-            }
-            else
-            {
-                SaveProducts();
-                return RedirectToAction("Selling");
-            }
+            ///if (!product.IsBought)
+            ///{
+            ///    SaveProducts();
+                return RedirectToAction("Page", "Product");
+            ///}
+            ///else
+            ///{
+            ///    SaveProducts();
+            ///    return RedirectToAction("Selling");
+            ///}
         }
 
         public IActionResult SortProducts(int sortOptionIndex)
