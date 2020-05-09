@@ -56,7 +56,7 @@
             @*<div class="card-header">About</div>*@
             <div class="card-body">
                 <h5 class="card-title">About</h5>
-                @if (product.IsBought && product.FileName?.Length > 0)
+                @if ((product.IsBought || product.OwnerID == CatalogViewModel.CurrentUser.ID) && product.FileName?.Length > 0)
                 {
                     <a class="card-link" href="~/file/@product.FileName" download>Download link</a>
                 }
