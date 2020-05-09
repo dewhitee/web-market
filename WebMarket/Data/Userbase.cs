@@ -212,12 +212,22 @@ namespace WebMarket.Data
                 File.Create(MoneyFilePath);
 
             BinaryFormatter bf = new BinaryFormatter();
-            Stream stream = new FileStream(MoneyFilePath, FileMode.Open, FileAccess.Read);
+            Stream stream = null;
             decimal moneyValue = 0.0M;
-            if (stream.Length != 0)
-                moneyValue = (decimal)bf.Deserialize(stream);
-
-            stream.Close();
+            try
+            {
+                stream = new FileStream(MoneyFilePath, FileMode.Open, FileAccess.Read);
+                if (stream.Length != 0)
+                    moneyValue = (decimal)bf.Deserialize(stream);
+            }
+            catch (IOException e)
+            {
+                Console.WriteLine($"{e.Message}, Line: {Utilities.LineNumber()}");
+            }
+            finally
+            {
+                stream?.Close();
+            }
             return moneyValue;
         }
         private static void LoadUsernames()
