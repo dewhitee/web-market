@@ -194,6 +194,14 @@ namespace WebMarket.Models
             return context.Tags.Find(id);
         }
 
+        public IEnumerable<string> GetTagNamesByProductId(int id)
+        {
+            return from prodType in context.ProductTypes
+                   join tag in context.Tags on prodType.ID equals tag.TypeId 
+                   where tag.ProductID == id.ToString()
+                   select prodType.Name;
+        }
+
         public IEnumerable<Tag> GetTagsByProductID(int id)
         {
             return from t in context.Tags

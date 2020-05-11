@@ -27,6 +27,7 @@ namespace WebMarket.Models
 
         Tag GetTag(int id);
         IEnumerable<Tag> GetTagsByProductID(int id);
+        IEnumerable<string> GetTagNamesByProductId(int id);
         IEnumerable<Tag> GetAllTags();
         Tag AddTag(Tag tag);
         Tag UpdateTag(Tag tagChanges);

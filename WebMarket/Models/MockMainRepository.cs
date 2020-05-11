@@ -144,6 +144,11 @@ namespace WebMarket.Models
             throw new NotImplementedException();
         }
 
+        public IEnumerable<string> GetTagNamesByProductId(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<Tag> GetTagsByProductID(int id)
         {
             throw new NotImplementedException();
