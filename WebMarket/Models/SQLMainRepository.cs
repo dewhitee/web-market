@@ -190,6 +190,15 @@ namespace WebMarket.Models
                            select c;
         }
 
+        public IEnumerable<Product> Search(string searchTerm)
+        {
+            if (string.IsNullOrEmpty(searchTerm))
+            {
+                return context.Products;
+            }
+            return context.Products.Where(p => p.Name.Contains(searchTerm));
+        }
+
         public UserComment UpdateComment(UserComment commentChanges)
         {
             var comment = context.Comments.Attach(commentChanges);

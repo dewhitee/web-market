@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,9 +9,14 @@ namespace WebMarket.Models
 {
     public class ComparisonViewModel
     {
-        public static List<Product> Products = new List<Product>();
+        public List<Product> Products { get; set; }
         public static Product LeftProduct;
         public static Product RightProduct;
+        [BindProperty(SupportsGet = true)]
+        public string RightSearchTerm { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public string LeftSearchTerm { get; set; }
 
         private static List<string> ProductNames;
 

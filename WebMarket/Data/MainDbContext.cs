@@ -13,6 +13,7 @@ namespace WebMarket.Data
         public DbSet<UserComment> Comments { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<Image> Images { get; set; }
+        public DbSet<ProductType> ProductTypes { get; set; }
 
         public MainDbContext(DbContextOptions<MainDbContext> options)
             : base(options)

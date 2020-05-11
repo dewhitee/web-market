@@ -11,6 +11,8 @@ using System.Web;
 
 namespace WebMarket.Controllers
 {
+    //[Route("api/[controller]")]
+    //[ApiController]
     public class ComparisonController : Controller
     {
         private readonly IMainRepository mainRepository;
@@ -38,13 +40,29 @@ namespace WebMarket.Controllers
             return RedirectToAction("Comparison");
         }
 
-       [HttpPost]
-       public JsonResult Comparison(string prefix)
-       {
-           var ProductList = (from N in ComparisonViewModel.GetProductNames()
-                              where N.StartsWith(prefix)
-                              select new { N });
-           return Json(ProductList);
-       }
+        [HttpPost]
+        public JsonResult Comparison(string prefix)
+        {
+            var ProductList = (from N in ComparisonViewModel.GetProductNames()
+                               where N.StartsWith(prefix)
+                               select new { N });
+            return Json(ProductList);
+        }
+
+        //[Produces("application/json")]
+        //[HttpGet("search")]
+        //public async Task<IActionResult> Search()
+        //{
+        //    try
+        //    {
+        //        string term = HttpContext.Request.Query["term"].ToString();
+        //        var prodName = mainRepository.Search(term);
+        //        return Ok(prodName);
+        //    }
+        //    catch
+        //    {
+        //        return BadRequest();
+        //    }
+        //}
     }
 }

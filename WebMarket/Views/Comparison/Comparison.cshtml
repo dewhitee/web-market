@@ -490,4 +490,13 @@
     </div>
 </div>
 
-
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            $("#lproductName").autocomplete({
+                source: 'api/postapi/search'
+            });
+        });
+    </script>
+}

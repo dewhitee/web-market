@@ -144,6 +144,11 @@ namespace WebMarket.Models
             throw new NotImplementedException();
         }
 
+        public IEnumerable<Product> Search(string searchTerm)
+        {
+            throw new NotImplementedException();
+        }
+
         public UserComment UpdateComment(UserComment commentChanges)
         {
             throw new NotImplementedException();
