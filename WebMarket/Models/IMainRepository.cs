@@ -39,5 +39,11 @@ namespace WebMarket.Models
         Image AddImage(Image image);
         Image UpdateImage(Image imageChanges);
         Image DeleteImage(int id);
+
+        ProductType GetProductType(int id);
+        IEnumerable<ProductType> GetAllProductTypes();
+        ProductType AddProductType(ProductType productType);
+        ProductType UpdateProductType(ProductType productTypeChanges);
+        ProductType DeleteProductType(int id);
     }
 }

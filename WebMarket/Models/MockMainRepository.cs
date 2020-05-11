@@ -29,6 +29,11 @@ namespace WebMarket.Models
             return product;
         }
 
+        public ProductType AddProductType(ProductType productType)
+        {
+            throw new NotImplementedException();
+        }
+
         public Tag AddTag(Tag tag)
         {
             throw new NotImplementedException();
@@ -54,6 +59,11 @@ namespace WebMarket.Models
             return product;
         }
 
+        public ProductType DeleteProductType(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public Tag DeleteTag(int id)
         {
             throw new NotImplementedException();
@@ -72,6 +82,11 @@ namespace WebMarket.Models
         public IEnumerable<Product> GetAllProducts()
         {
             return _productList;
+        }
+
+        public IEnumerable<ProductType> GetAllProductTypes()
+        {
+            throw new NotImplementedException();
         }
 
         public IEnumerable<Tag> GetAllTags()
@@ -110,6 +125,11 @@ namespace WebMarket.Models
         }
 
         public IEnumerable<Product> GetProductsByName(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ProductType GetProductType(int id)
         {
             throw new NotImplementedException();
         }
@@ -169,6 +189,11 @@ namespace WebMarket.Models
                 product.Discount = productChanges.Discount;
             }
             return product;
+        }
+
+        public ProductType UpdateProductType(ProductType productTypeChanges)
+        {
+            throw new NotImplementedException();
         }
 
         public Tag UpdateTag(Tag tagChanges)

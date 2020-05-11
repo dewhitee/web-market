@@ -40,6 +40,13 @@ namespace WebMarket.Models
             return product;
         }
 
+        public ProductType AddProductType(ProductType productType)
+        {
+            context.ProductTypes.Add(productType);
+            context.SaveChanges();
+            return productType;
+        }
+
         public Tag AddTag(Tag tag)
         {
             context.Tags.Add(tag);
@@ -76,6 +83,17 @@ namespace WebMarket.Models
             return product;
         }
 
+        public ProductType DeleteProductType(int id)
+        {
+            ProductType productType = context.ProductTypes.Find(id);
+            if (productType != null)
+            {
+                context.ProductTypes.Remove(productType);
+                context.SaveChanges();
+            }
+            return productType;
+        }
+
         public Tag DeleteTag(int id)
         {
             Tag tag = context.Tags.Find(id);
@@ -106,6 +124,11 @@ namespace WebMarket.Models
         public IEnumerable<Product> GetAllProducts()
         {
             return context.Products;
+        }
+
+        public IEnumerable<ProductType> GetAllProductTypes()
+        {
+            return context.ProductTypes;
         }
 
         public IEnumerable<Tag> GetAllTags()
@@ -152,6 +175,11 @@ namespace WebMarket.Models
             return from p in context.Products
                    where p.Name == name
                    select p;
+        }
+
+        public ProductType GetProductType(int id)
+        {
+            return context.ProductTypes.Find(id);
         }
 
         public Tag GetTag(int id)
@@ -221,6 +249,14 @@ namespace WebMarket.Models
             product.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
             context.SaveChanges();
             return productChanges;
+        }
+
+        public ProductType UpdateProductType(ProductType productTypeChanges)
+        {
+            var productType = context.ProductTypes.Attach(productTypeChanges);
+            productType.State = EntityState.Modified;
+            context.SaveChanges();
+            return productTypeChanges;
         }
 
         public Tag UpdateTag(Tag tagChanges)
