@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -198,14 +199,6 @@ namespace WebMarket.Models
 
         public static int MakeNewID(IMainRepository repository)
         {
-            //Random random = new Random();
-            //int newID;
-            //bool success;
-            //do
-            //{
-            //    newID = random.Next(1, int.MaxValue);
-            //    success = repository.GetAllProducts().FirstOrDefault(x => x.ID == newID) == null;
-            //} while (!success);
             int newID = repository.GetAllProducts().Count() + 1;
             Random random = new Random();
             while (repository.GetAllProducts().Any(p => p.ID == newID))
@@ -215,9 +208,31 @@ namespace WebMarket.Models
             return newID;
         }
 
+        public long GetFileSize(IHostingEnvironment hostingEnvironment)
+        {
+            if (FileName.Length > 0)
+            {
+                string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "file");
+                string filePath = Path.Combine(uploadsFolder, FileName);
+                FileInfo fileInfo = new FileInfo(filePath);
+                return fileInfo.Length;
+            }
+            return 0;
+        }
+        public string FormatFileSize(IHostingEnvironment hostingEnvironment)
+        {
+            var fileSize = GetFileSize(hostingEnvironment);
+            if (fileSize > 1000000000) return new string((fileSize / 1000000000f).ToString() + " Gb");
+            if (fileSize > 1000000) return new string((fileSize / 1000000f).ToString() + " Mb");
+            if (fileSize > 1000) return new string((fileSize / 1000f).ToString() + " Kb");
+            return new string(fileSize.ToString() + " bytes");
+        }
+
         public string GetAddToCartButtonString()
         {
-            if (IsBought)
+            if (OwnerID == CatalogViewModel.CurrentUser.ID)
+                return "Yours";
+            else if (IsBought)
                 return "Bought";
             else if (AddedToCart || CatalogViewModel.ChoosenProductID == this.ID)
                 return "Selected";
@@ -306,7 +321,7 @@ namespace WebMarket.Models
 
         public string GetPriceTableClassString()
         {
-            if (AddedToCart || CatalogViewModel.ChoosenProductID == this.ID)
+            if (AddedToCart || CatalogViewModel.ChoosenProductID == this.ID || OwnerID == CatalogViewModel.CurrentUser.ID)
                 return "bg-dark text-white";
             if (IsBought)
                 return "bg-primary text-dark";
@@ -321,7 +336,7 @@ namespace WebMarket.Models
 
         public string GetProductTableLinkClassString()
         {
-            if (AddedToCart || IsBought || CatalogViewModel.ChoosenProductID == this.ID)
+            if (AddedToCart || IsBought || CatalogViewModel.ChoosenProductID == this.ID || OwnerID == CatalogViewModel.CurrentUser.ID)
                 return "text-white";
             else
                 return "text-dark";
@@ -329,7 +344,7 @@ namespace WebMarket.Models
 
         public string GetAddToCartButtonClassString()
         {
-            if (AddedToCart || CatalogViewModel.ChoosenProductID == this.ID)
+            if (AddedToCart || CatalogViewModel.ChoosenProductID == this.ID || OwnerID == CatalogViewModel.CurrentUser.ID)
             {
                 //if (ViewVariant != CatalogViewVariant.Main)
                 return "btn btn-outline-light";
@@ -344,7 +359,7 @@ namespace WebMarket.Models
 
         public string GetTableHeaderClassString()
         {
-            if (AddedToCart || CatalogViewModel.ChoosenProductID == this.ID)
+            if (AddedToCart || CatalogViewModel.ChoosenProductID == this.ID || OwnerID == CatalogViewModel.CurrentUser.ID)
             {
                 //if ()
                 return "bg-dark text-white";

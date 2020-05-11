@@ -1,5 +1,6 @@
 ﻿@model ProductPageViewModel
 @inject IMainRepository _repository
+@inject Microsoft.AspNetCore.Hosting.IHostingEnvironment _hostingEnvironment
 
 @{
     ViewData["Title"] = "Product page";
@@ -31,7 +32,7 @@
             <h2>@CatalogViewModel.CurrentUser.MoneyString</h2>
         </div>
     }
-    <h1>@ViewData["Title"]</h1>
+    <h1>@product.Name</h1>
     <br>
 
 
@@ -52,16 +53,27 @@
 
 
     <div class="float-left" style="padding-right:2em">
-        <div class="card bg-light mb-3" style="max-width: 18rem;">
+        <div class="card bg-light mb-3" style="max-width: 28rem;">
             @*<div class="card-header">About</div>*@
             <div class="card-body">
                 <h5 class="card-title">About</h5>
+                @if (product.OwnerID == CatalogViewModel.CurrentUser.ID)
+                {
+                    <p class="card-text">Owner: <b>You</b></p>
+                }
+                else
+                {
+                    <p class="catd-text">Owner: <b>@product.GetOwnerName()</b></p>
+                }
+                <p>Added at: <b>@product.AddedDate.ToShortDateString()</b></p>
+                <hr />
+                <p class="card-text"><b>Current version: 1.0.0</b></p>
+                <p></p>
                 @if ((product.IsBought || product.OwnerID == CatalogViewModel.CurrentUser.ID) && product.FileName?.Length > 0)
                 {
-                    <a class="card-link" href="~/file/@product.FileName" download>Download link</a>
+                    <p class="card-text float-right">Size: @product.FormatFileSize(_hostingEnvironment)</p>
+                    <a class="card-link btn btn-primary" href="~/file/@product.FileName" download>Download</a>
                 }
-                <p>Owner: <b>@product.GetOwnerName()</b></p>
-                <p>Added at: <b>@product.AddedDate.ToShortDateString()</b></p>
                 <p></p>
             </div>
         </div>
