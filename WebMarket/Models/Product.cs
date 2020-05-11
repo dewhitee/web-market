@@ -99,7 +99,11 @@ namespace WebMarket.Models
 
         public bool ContainsTags(List<string> findTags, IMainRepository repository)
         {
-            var repoTags = (from t in repository.GetTagsByProductID(ID) select t.Text);
+            //var repoTags = (from t in repository.GetTagsByProductID(ID) select t.Text);
+            var repoTags = (from t in repository.GetTagsByProductID(ID)
+                            join pt in repository.GetAllProductTypes()
+                            on t.TypeId equals pt.ID
+                            select pt.Name);
             foreach (var tag in findTags)
             {
                 if (!repoTags.Contains(tag))

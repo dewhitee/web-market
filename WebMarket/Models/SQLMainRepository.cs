@@ -182,6 +182,13 @@ namespace WebMarket.Models
             return context.ProductTypes.Find(id);
         }
 
+        public ProductType GetProductTypeByName(string name)
+        {
+            return (from pt in context.ProductTypes
+                   where pt.Name == name
+                   select pt).FirstOrDefault();
+        }
+
         public Tag GetTag(int id)
         {
             return context.Tags.Find(id);

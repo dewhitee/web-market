@@ -134,6 +134,11 @@ namespace WebMarket.Models
             throw new NotImplementedException();
         }
 
+        public ProductType GetProductTypeByName(string name)
+        {
+            throw new NotImplementedException();
+        }
+
         public Tag GetTag(int id)
         {
             throw new NotImplementedException();

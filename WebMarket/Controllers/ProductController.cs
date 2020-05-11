@@ -140,7 +140,8 @@ namespace WebMarket.Controllers
                     mainRepository.AddTag(new Tag
                     {
                         ProductID = productID.ToString(),
-                        Text = tag
+                        Text = tag,
+                        TypeId = mainRepository.GetProductTypeByName(tag).ID
                     });
                 }
                 _tags = null;

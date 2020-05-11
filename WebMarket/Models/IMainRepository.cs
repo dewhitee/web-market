@@ -41,6 +41,7 @@ namespace WebMarket.Models
         Image DeleteImage(int id);
 
         ProductType GetProductType(int id);
+        ProductType GetProductTypeByName(string name);
         IEnumerable<ProductType> GetAllProductTypes();
         ProductType AddProductType(ProductType productType);
         ProductType UpdateProductType(ProductType productTypeChanges);

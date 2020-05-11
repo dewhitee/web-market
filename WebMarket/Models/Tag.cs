@@ -14,6 +14,8 @@ namespace WebMarket.Models
 
         [Required, MaxLength(32)]
         public string Text { get; set; }
+        
+        public int TypeId { get; set; }
 
         [Required, MaxLength(32)]
         public string ProductID { get; set; }
