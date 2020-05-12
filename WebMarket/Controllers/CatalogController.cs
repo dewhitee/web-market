@@ -41,9 +41,14 @@ namespace WebMarket.Controllers
             //if (!/*_productsListInitialized*/ProductsInitialized())
             //{
                 CatalogViewModel.ListOfProducts = mainRepository.GetAllProducts().ToList();
-                ///_productsListInitialized = true;
+            ///_productsListInitialized = true;
             //}
             //CatalogViewModel.LoadFindTags();
+            List<string> listOfProductTypes = new List<string>();
+            listOfProductTypes = (from pt in mainRepository.GetAllProductTypes() select pt.Name).ToList();
+
+            ViewBag.ListOfProductTypes = listOfProductTypes;
+
             return View();
         }
 
@@ -149,11 +154,11 @@ namespace WebMarket.Controllers
         public IActionResult BuyProduct(string productName, int productID)
         {
             Console.WriteLine("Buying Product...");
-            if (CatalogViewModel.GetSubmitBuyingButtonText() == "Find")
-            {
-                FindAndBuyProduct(productName);
-                return RedirectToAction("Catalog");
-            }
+            //if (CatalogViewModel.GetSubmitBuyingButtonText() == "Find")
+            //{
+            //    FindAndBuyProduct(productName);
+            //    return RedirectToAction("Catalog");
+            //}
             Buy(productName, productID);
             SaveUser();
             SaveProducts();
