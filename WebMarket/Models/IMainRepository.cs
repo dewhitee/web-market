@@ -49,10 +49,12 @@ namespace WebMarket.Models
         ProductType DeleteProductType(int id);
 
         BoughtProduct GetBoughtProduct(int id);
+        IEnumerable<BoughtProduct> GetBoughtProductsByUserId(string id);
         IEnumerable<BoughtProduct> GetAllBoughtProducts();
         BoughtProduct AddBoughtProduct(BoughtProduct boughtProduct);
         BoughtProduct UpdateBoughtProduct(BoughtProduct boughtProductChanges);
         BoughtProduct DeleteBoughtProduct(int id);
+        BoughtProduct DeleteBoughtProduct(string userId, int productId);
 
     }
 }

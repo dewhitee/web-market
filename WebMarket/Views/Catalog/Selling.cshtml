@@ -43,7 +43,7 @@
     </div>
 
     <div class="card h-100 hoverable-card" id="card_on_transaction">
-        <div class="card-header @product.GetTableHeaderClassString()" id="card_on_transaction_header">
+        <div class="card-header @product.GetTableHeaderClassString(_repository)" id="card_on_transaction_header">
             <h5 style="font-weight:300">@product.Type</h5>
         </div>
         <div style="transform:rotate(0);">
@@ -60,7 +60,7 @@
             </div>
         </div>
 
-        <div class="card-footer @product.GetTableHeaderClassString()" id="card_on_transaction_footer">
+        <div class="card-footer @product.GetTableHeaderClassString(_repository)" id="card_on_transaction_footer">
 
             @*<div class="float-right">*@
             <h3>
@@ -87,7 +87,7 @@
                 You will have:
                 <mark>@CatalogViewModel.GetSelectedSellProductPriceSentence(_repository)</mark>
             </p>
-            <small class="text-warning @product.GetProductTableLinkClassString()">
+            <small class="text-warning @product.GetProductTableLinkClassString(_repository)">
                 Added @product.AddedDate.ToShortDateString()
             </small>
 

@@ -326,7 +326,7 @@
     <button type="button" class="btn btn-outline-primary" data-toggle="collapse" data-target="#addButtonCollapse" aria-expanded="false" aria-controls="addButtonCollapse">Add Product</button>
 </div>
 <div class="d-inline" @*style="padding-bottom:1em"*@>
-    <button type="button" class="@CatalogViewModel.GetBuyProductButtonClassString()" data-toggle="collapse" data-target="#buyProductCollapse" aria-expanded="false" aria-controls="buyProductCollapse">Buy Product</button>
+    <button type="button" class="@CatalogViewModel.GetBuyProductButtonClassString(_repository)" data-toggle="collapse" data-target="#buyProductCollapse" aria-expanded="false" aria-controls="buyProductCollapse">Buy Product</button>
 </div>
 <div class="d-inline" @*style="padding-bottom:1em"*@>
     <button type="button" class="btn btn-outline-primary" data-toggle="collapse" data-target="#sellProductCollapse" aria-expanded="false" aria-controls="sellProductCollapse">Sell Product</button>
@@ -449,7 +449,7 @@
                 <form asp-controller="Catalog" asp-area="" asp-action="BuyProduct" method="post">
                     <div class="form-group">
                         <label for="productName">Product name</label>
-                        <input type="text" class="form-control" name="productName" id="productName" placeholder="Enter product name" value="@CatalogViewModel.GetSelectedBuyProductName()" required />
+                        <input type="text" class="form-control" name="productName" id="productName" placeholder="Enter product name" value="@CatalogViewModel.GetSelectedBuyProductName(_repository)" required />
                     </div>
                     <button class="@CatalogViewModel.GetSubmitBuyingButtonClassString(_repository)" type="submit">
                         @CatalogViewModel.GetSubmitBuyingButtonText(_repository)
@@ -471,7 +471,7 @@
                 <form asp-controller="Catalog" asp-area="" asp-action="SellProduct" method="post">
                     <div class="form-group">
                         <label for="productName">Product name</label>
-                        <input type="text" class="form-control" name="productName" id="productName" placeholder="Enter product name" value="@CatalogViewModel.GetSelectedSellProductName()" required />
+                        <input type="text" class="form-control" name="productName" id="productName" placeholder="Enter product name" value="@CatalogViewModel.GetSelectedSellProductName(_repository)" required />
                     </div>
                     <button class="btn btn-success" type="submit">
                         @CatalogViewModel.GetSubmitSellingButtonText(_repository)
@@ -550,10 +550,10 @@ else
                 <tbody>
                     @for (int i = 0; i < CatalogViewModel.ListOfProducts.Count; i++)
                     {
-                        string tdClassString = CatalogViewModel.ListOfProducts[i].GetPriceTableClassString();
-                        string buttonClassString = CatalogViewModel.ListOfProducts[i].GetAddToCartButtonClassString();
-                        var linkClass = CatalogViewModel.ListOfProducts[i].GetProductTableLinkClassString();
-                        var thClass = CatalogViewModel.ListOfProducts[i].GetTableHeaderClassString();
+                        string tdClassString = CatalogViewModel.ListOfProducts[i].GetPriceTableClassString(_repository);
+                        string buttonClassString = CatalogViewModel.ListOfProducts[i].GetAddToCartButtonClassString(_repository);
+                        var linkClass = CatalogViewModel.ListOfProducts[i].GetProductTableLinkClassString(_repository);
+                        var thClass = CatalogViewModel.ListOfProducts[i].GetTableHeaderClassString(_repository);
                         <tr>
                             <th scope="row" class="@thClass">@i</th>
                             <th scope="row" class="@thClass">
@@ -563,7 +563,7 @@ else
                                     @*<a class="text-dark" name="productName" asp-area="" asp-controller="Catalog" asp-action="AddToCart">
                                             @CatalogViewModel.ListOfProducts[i].IsBoughtString
                                         </a>*@
-                                    <button class="@CatalogViewModel.ListOfProducts[i].GetAddToCartButtonClassString()" type="submit">@CatalogViewModel.ListOfProducts[i].IsBoughtString</button>
+                                    <button class="@CatalogViewModel.ListOfProducts[i].GetAddToCartButtonClassString(_repository)" type="submit">@CatalogViewModel.ListOfProducts[i].IsBoughtString(_repository)</button>
                                 </form>
                             </th>
                             <td class="@tdClassString">
@@ -694,10 +694,10 @@ else
                     @for (int i = 0; i < @*_repository.GetAllProducts()*@CatalogViewModel.ListOfProducts.Count(); i++)
                     {
                         var product = CatalogViewModel.ListOfProducts.ElementAt(i);   //_repository.GetAllProducts().ElementAt(i);
-                        string tdClassString = product.GetPriceTableClassString();
-                        string buttonClassString = product.GetAddToCartButtonClassString();
-                        var linkClass = product.GetProductTableLinkClassString();
-                        var thClass = product.GetTableHeaderClassString();
+                        string tdClassString = product.GetPriceTableClassString(_repository);
+                        string buttonClassString = product.GetAddToCartButtonClassString(_repository);
+                        var linkClass = product.GetProductTableLinkClassString(_repository);
+                        var thClass = product.GetTableHeaderClassString(_repository);
 
 
                         if (CatalogViewModel.FindTags?.Count > 0)
@@ -737,7 +737,7 @@ else
                                     <a href="@product.Link" class="stretched-link"></a>
                                 </div>
 
-                                <div class="card-footer @product.GetTableHeaderClassString()" id="card_footer_@i" onclick="onClickedCard(@i)">
+                                <div class="card-footer @product.GetTableHeaderClassString(_repository)" id="card_footer_@i" onclick="onClickedCard(@i)">
                                     <h3>
                                         @product.FinalPriceString
                                         <sup>
@@ -752,10 +752,10 @@ else
                                             @*<input type="hidden" class="form-control" name="productName" id="productName" value=@product.Name />
                                                   <input type="hidden" class="form-control" name="productIndex" id="productIndex" value=@i />*@
                                             <input type="hidden" class="form-control" name="productId" id="productId" value=@product.ID />
-                                            <button class="@product.GetAddToCartButtonClassString() hoverable-btn" type="submit" id="card_addtocart_button_@i" onmouseover="onHoveredButton(@i)" onmouseout="onHoveredButtonOut(@i)">@product.GetAddToCartButtonString()</button>
+                                            <button class="@product.GetAddToCartButtonClassString(_repository) hoverable-btn" type="submit" id="card_addtocart_button_@i" onmouseover="onHoveredButton(@i)" onmouseout="onHoveredButtonOut(@i)">@product.GetAddToCartButtonString(_repository)</button>
                                         </form>
                                     </div>
-                                    <small class="text-warning @product.GetProductTableLinkClassString()">
+                                    <small class="text-warning @product.GetProductTableLinkClassString(_repository)">
                                         Added @product.AddedDate.ToShortDateString()
                                     </small>
 

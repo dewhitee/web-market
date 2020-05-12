@@ -183,41 +183,48 @@ namespace WebMarket.Controllers
             }
         }
 
-        [Obsolete]
-        private void FindAndBuyProduct(string productName)
-        {
-            foreach (var product in CatalogViewModel.ListOfProducts)
-            {
-                //product.AddedToCart = false;
-                if (product.Name == productName && !product.IsBought)
-                {
-                    //product.AddedToCart = true;
-                    CatalogViewModel.ChoosenProductID = product.ID;
-                    Buy(product.Name, product.ID);
-                    break;
-                }
-            }
-            //SaveUser();
-            //SaveProducts();
-        }
+        //[Obsolete]
+        //private void FindAndBuyProduct(string productName)
+        //{
+        //    foreach (var product in CatalogViewModel.ListOfProducts)
+        //    {
+        //        //product.AddedToCart = false;
+        //        if (product.Name == productName && !product.IsBought)
+        //        {
+        //            //product.AddedToCart = true;
+        //            CatalogViewModel.ChoosenProductID = product.ID;
+        //            Buy(product.Name, product.ID);
+        //            break;
+        //        }
+        //    }
+        //    //SaveUser();
+        //    //SaveProducts();
+        //}
 
         [Obsolete]
         public IActionResult SellProduct(string productName, int productID)
         {
             Console.WriteLine("Selling Product...");
             Product toSell = new Product();
-            foreach (var product in /*CatalogViewModel.ListOfProducts*/mainRepository.GetAllProducts())
+            //foreach (var product in /*CatalogViewModel.ListOfProducts*/mainRepository.GetAllProducts())
+            //{
+            //    if (product.ID == productID || product.Name == productName)
+            //    {
+            //        toSell = product;
+            //        LoadUser();
+            //        CatalogViewModel.CurrentUser.SellProduct(toSell, mainRepository);
+            //        break;
+            //    }
+            //}
+            ///SaveUser();
+            ///SaveProducts();
+
+            var product = from p in mainRepository.GetAllProducts() where p.ID == productID select p;
+            if (product.Any())
             {
-                if (product.ID == productID || product.Name == productName)
-                {
-                    toSell = product;
-                    LoadUser();
-                    CatalogViewModel.CurrentUser.SellProduct(toSell);
-                    break;
-                }
+                CatalogViewModel.CurrentUser.SellProduct(product.FirstOrDefault(), mainRepository);
             }
-            SaveUser();
-            SaveProducts();
+
             return RedirectToAction("Catalog");
         }
 

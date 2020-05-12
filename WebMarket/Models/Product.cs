@@ -65,8 +65,19 @@ namespace WebMarket.Models
         //public string FirstImageLink { get => CardImageLink; }
         //public string SecondImageLink { get; set; }
         //public string ThirdImageLink { get; set; }
-        [NotMapped]
-        public bool IsBought { get => CatalogViewModel.CurrentUser.BoughtProductIDs.Contains(ID.ToString()); }
+        //[NotMapped]
+        ///public bool IsBought { get => CatalogViewModel.CurrentUser.BoughtProductIDs.Contains(ID.ToString()); }
+
+        public bool IsBought(IMainRepository repository)
+        {
+            var boughtProductIds = repository.GetBoughtProductsByUserId(CatalogViewModel.CurrentUser.ID);
+            if (boughtProductIds.Any())
+            {
+                return (from bp in boughtProductIds where bp.ProductRefId == ID select bp.ProductRefId).Contains(ID);
+            }
+            return false;
+        }
+
         public bool OnlyRegisteredCanComment { get; set; }
         public bool OnlyOneCommentPerUser { get; set; }
         [NotMapped]
@@ -93,7 +104,11 @@ namespace WebMarket.Models
         public string DiscountString { get => Discount > 0 ? Discount.ToString() + "%" : "no"; }
         public string DiscountSupString { get => Discount > 0 ? Discount.ToString() + "%" : ""; }
         public string LinkTableString { get => string.IsNullOrWhiteSpace(Link) ? "no link" : "yes"; }
-        public string IsBoughtString { get => IsBought ? "Bought" : "+"; }
+        //public string IsBoughtString { get => IsBought ? "Bought" : "+"; }
+        public string IsBoughtString(IMainRepository repo)
+        {
+            return IsBought(repo) ? "Bought" : "+";
+        }
         public string IsAddedToCartString { get => AddedToCart || CatalogViewModel.ChoosenProductID == this.ID ? "Added" : "+"; }
 
         public bool HasValidID()
@@ -233,11 +248,11 @@ namespace WebMarket.Models
             return new string(fileSize.ToString() + " bytes");
         }
 
-        public string GetAddToCartButtonString()
+        public string GetAddToCartButtonString(IMainRepository repo)
         {
             if (OwnerID == CatalogViewModel.CurrentUser.ID)
                 return "Yours";
-            else if (IsBought)
+            else if (IsBought(repo))
                 return "Bought";
             else if (AddedToCart || CatalogViewModel.ChoosenProductID == this.ID)
                 return "Selected";
@@ -324,11 +339,11 @@ namespace WebMarket.Models
             else return type;
         }
 
-        public string GetPriceTableClassString()
+        public string GetPriceTableClassString(IMainRepository repo)
         {
             if (AddedToCart || CatalogViewModel.ChoosenProductID == this.ID || OwnerID == CatalogViewModel.CurrentUser.ID)
                 return "bg-dark text-white";
-            if (IsBought)
+            if (IsBought(repo))
                 return "bg-primary text-dark";
             if (Price == 0 || FinalPrice == 0)
                 return "bg-success text-dark";
@@ -339,15 +354,15 @@ namespace WebMarket.Models
             return "";
         }
 
-        public string GetProductTableLinkClassString()
+        public string GetProductTableLinkClassString(IMainRepository repo)
         {
-            if (AddedToCart || IsBought || CatalogViewModel.ChoosenProductID == this.ID || OwnerID == CatalogViewModel.CurrentUser.ID)
+            if (AddedToCart || IsBought(repo) || CatalogViewModel.ChoosenProductID == this.ID || OwnerID == CatalogViewModel.CurrentUser.ID)
                 return "text-white";
             else
                 return "text-dark";
         }
 
-        public string GetAddToCartButtonClassString()
+        public string GetAddToCartButtonClassString(IMainRepository repo)
         {
             if (AddedToCart || CatalogViewModel.ChoosenProductID == this.ID || OwnerID == CatalogViewModel.CurrentUser.ID)
             {
@@ -357,19 +372,19 @@ namespace WebMarket.Models
             }
             else if (CatalogViewModel.CurrentUser.Money < FinalPrice)
                 return "btn btn-outline-danger";
-            else if (!IsBought)
+            else if (!IsBought(repo))
                 return "btn btn-outline-success";
             else return "btn btn-primary";
         }
 
-        public string GetTableHeaderClassString()
+        public string GetTableHeaderClassString(IMainRepository repo)
         {
             if (AddedToCart || CatalogViewModel.ChoosenProductID == this.ID || OwnerID == CatalogViewModel.CurrentUser.ID)
             {
                 //if ()
                 return "bg-dark text-white";
             }
-            else if (IsBought)
+            else if (IsBought(repo))
             {
                 return "bg-primary text-white";
             }

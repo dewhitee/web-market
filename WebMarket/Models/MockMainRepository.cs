@@ -54,6 +54,11 @@ namespace WebMarket.Models
             throw new NotImplementedException();
         }
 
+        public BoughtProduct DeleteBoughtProduct(string userId, int productId)
+        {
+            throw new NotImplementedException();
+        }
+
         public Image DeleteImage(int id)
         {
             throw new NotImplementedException();
@@ -115,6 +120,11 @@ namespace WebMarket.Models
         }
 
         public BoughtProduct GetBoughtProduct(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<BoughtProduct> GetBoughtProductsByUserId(string id)
         {
             throw new NotImplementedException();
         }

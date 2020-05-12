@@ -69,7 +69,7 @@
                 <hr />
                 <p class="card-text"><b>Current version: 1.0.0</b></p>
                 <p></p>
-                @if ((product.IsBought || product.OwnerID == CatalogViewModel.CurrentUser.ID) && product.FileName?.Length > 0)
+                @if ((product.IsBought(_repository) || product.OwnerID == CatalogViewModel.CurrentUser.ID) && product.FileName?.Length > 0)
                 {
                     <p class="card-text float-right">Size: @product.FormatFileSize(_hostingEnvironment)</p>
                     <a class="card-link btn btn-primary" href="~/file/@product.FileName" download>Download</a>
@@ -80,7 +80,7 @@
     </div>
 
     <div class="card h-100 hoverable-card" id="card_on_transaction">
-        <div class="card-header @product.GetTableHeaderClassString()" id="card_on_transaction_header">
+        <div class="card-header @product.GetTableHeaderClassString(_repository)" id="card_on_transaction_header">
             <h5 style="font-weight:300">@product.Type</h5>
         </div>
         <div style="transform:rotate(0);">
@@ -136,7 +136,7 @@
             @*<a href="@product.Link" class="stretched-link"></a>*@
         </div>
 
-        <div class="card-footer @product.GetTableHeaderClassString()" id="card_on_transaction_footer">
+        <div class="card-footer @product.GetTableHeaderClassString(_repository)" id="card_on_transaction_footer">
 
             @*<div class="float-right">*@
             <h3>
@@ -151,11 +151,11 @@
 
             @if (product.OwnerID == CatalogViewModel.CurrentUser.ID)
             {
-                <small class="text-warning @product.GetProductTableLinkClassString()">
+                <small class="text-warning @product.GetProductTableLinkClassString(_repository)">
                     Added @product.AddedDate.ToShortDateString()
                 </small>
             }
-            else if (!/*CatalogViewModel.CurrentUser.HasProductBought(product.ID, _repository)*/product.IsBought)
+            else if (!/*CatalogViewModel.CurrentUser.HasProductBought(product.ID, _repository)*/product.IsBought(_repository))
             {
                 <div class="float-right">
                     <form asp-controller="Catalog" asp-action="BuyProduct" method="post">
@@ -170,7 +170,7 @@
                     You will have:
                     <mark>@CatalogViewModel.GetSelectedBuyProductPriceSentence(_repository)</mark>
                 </p>
-                <small class="text-warning @product.GetProductTableLinkClassString()">
+                <small class="text-warning @product.GetProductTableLinkClassString(_repository)">
                     Added @product.AddedDate.ToShortDateString()
                 </small>
             }
@@ -189,7 +189,7 @@
                     You will have:
                     <mark>@CatalogViewModel.GetSelectedSellProductPriceSentence(_repository)</mark>
                 </p>
-                <small class="text-warning @product.GetProductTableLinkClassString()">
+                <small class="text-warning @product.GetProductTableLinkClassString(_repository)">
                     Added @product.AddedDate.ToShortDateString()
                 </small>
             }
@@ -226,7 +226,7 @@
     }
     <div class="col col-sm-12 col-md-12 col-lg-6" style="padding-top: 2rem;">
         <div class="card h-100 hoverable-card" id="card_on_transaction">
-            <div class="card-header @product.GetTableHeaderClassString()" id="card_on_transaction_header">
+            <div class="card-header @product.GetTableHeaderClassString(_repository)" id="card_on_transaction_header">
                 <h5 style="font-weight:300">What people think about <strong>@product.Name</strong></h5>
                 <p>RATE: @product.GetRate(_repository)</p>
                 @for (int i = 0; i < 5; i++)

@@ -79,6 +79,19 @@ namespace WebMarket.Models
             return boughtProduct;
         }
 
+        public BoughtProduct DeleteBoughtProduct(string userId, int productId)
+        {
+            BoughtProduct boughtProduct = (from bp in context.BoughtProducts
+                                           where bp.AppUserRefId == userId && bp.ProductRefId == productId
+                                           select bp).FirstOrDefault();
+            if (boughtProduct != null)
+            {
+                context.BoughtProducts.Remove(boughtProduct);
+                context.SaveChanges();
+            }
+            return boughtProduct;
+        }
+
         public Image DeleteImage(int id)
         {
             Image image = context.Images.Find(id);
@@ -167,6 +180,11 @@ namespace WebMarket.Models
         public BoughtProduct GetBoughtProduct(int id)
         {
             return context.BoughtProducts.Find(id);
+        }
+
+        public IEnumerable<BoughtProduct> GetBoughtProductsByUserId(string id)
+        {
+            return from p in context.BoughtProducts where p.AppUserRefId == id select p;
         }
 
         public Image GetImage(int id)

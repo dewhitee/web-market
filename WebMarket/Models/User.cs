@@ -28,7 +28,7 @@ namespace WebMarket.Models
         public void BuyProduct(Product product, IMainRepository repository)
         {
             //Userbase.LoadUser();
-            if (Money >= product.FinalPrice && !product.IsBought)
+            if (Money >= product.FinalPrice && !product.IsBought(repository))
             {
                 // todo: add and save product to profile
                 Money -= product.FinalPrice;
@@ -48,14 +48,16 @@ namespace WebMarket.Models
             }
             Userbase.SaveUser();
         }
-        public void SellProduct(Product product)
+        public void SellProduct(Product product, IMainRepository repo)
         {
             //Userbase.LoadUser();
-            if (product.IsBought)
+            if (product.IsBought(repo))
             {
                 Money += product.FinalPrice;
                 
                 BoughtProductIDs.Remove(product.ID.ToString());
+
+                repo.DeleteBoughtProduct(ID, product.ID);
                 Console.WriteLine($"{product.Name} is sold!");
             }
             Userbase.SaveUser();
