@@ -69,12 +69,13 @@ namespace WebMarket.Models
         public bool IsBought { get => CatalogViewModel.CurrentUser.BoughtProductIDs.Contains(ID.ToString());/* set;*/}
         public bool OnlyRegisteredCanComment { get; set; }
         public bool OnlyOneCommentPerUser { get; set; }
+        [NotMapped]
         public bool AddedToCart { get; set; }
         //public string OldFileName { get; set; }
         public string FileName { get; set; }
 
-        [Obsolete]
-        public List<string> Tags = new List<string>();
+        //[Obsolete]
+        //public List<string> Tags = new List<string>();
         [Obsolete]
         public List<UserComment> Comments = new List<UserComment>();
 

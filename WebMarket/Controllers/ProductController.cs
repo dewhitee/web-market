@@ -36,6 +36,11 @@ namespace WebMarket.Controllers
         {
             //LoadProducts();
             //LoadUser();
+            List<string> listOfProductTypes = new List<string>();
+            listOfProductTypes = (from pt in mainRepository.GetAllProductTypes() select pt.Name).ToList();
+
+            ViewBag.ListOfProductTypes = listOfProductTypes;
+
             return View();
         }
 
@@ -75,7 +80,7 @@ namespace WebMarket.Controllers
                     ID = newID,
                     Name = model.Name,
                     Type = Product.CheckTypeString(model.Type),
-                    Tags = _tags != null ? _tags : new List<string>(),
+                    //Tags = _tags != null ? _tags : new List<string>(),
                     Price = model.Price,
                     Discount = model.Discount,
                     Description = model.Description,

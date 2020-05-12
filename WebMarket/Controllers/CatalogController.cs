@@ -100,7 +100,7 @@ namespace WebMarket.Controllers
                     ID = Product.MakeNewID(),
                     Name = productName,
                     Type = Product.CheckTypeString(productType),
-                    Tags = _tags,
+                    //Tags = _tags,
                     Price = productCost,
                     //CostIntegral = integralCost,
                     //CostFractional = fractionalCost,

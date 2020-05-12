@@ -71,8 +71,8 @@
 
          <div class="input-group col-md-6">
              @*<label for="productType">Type</label>*@
-             <select asp-for="Type" id="productType_add" class="custom-select">
-                            <option selected>Choose type</option>
+             <select asp-for="Type" id="productType_add" class="custom-select"  asp-items="@(new SelectList(ViewBag.ListOfProductTypes))">
+                            @*<option selected>Choose type</option>
                             <option>Software</option>
                             <option>Game</option>
                             <option>Game Engine</option>
@@ -83,7 +83,7 @@
                             <option>Photogrammetry</option>
                             <option>DAW</option>
                             <option>Audio Recording</option>
-                            <option>Video Capture</option>
+                            <option>Video Capture</option>*@
                         </select>
              <div class="input-group-append">
                  <button class="btn btn-outline-primary btn-sm" type="button" onclick="addTag()">Add new tag</button>
