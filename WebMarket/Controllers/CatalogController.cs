@@ -179,7 +179,8 @@ namespace WebMarket.Controllers
             var product = from p in mainRepository.GetAllProducts() where p.ID == productID select p;
             if (product.Any())
             {
-                CatalogViewModel.CurrentUser.BuyProduct(product.FirstOrDefault(), mainRepository);
+                ///CatalogViewModel.CurrentUser.BuyProduct(product.FirstOrDefault(), mainRepository);
+                Userbase.CurrentAppUser.BuyProduct(product.FirstOrDefault(), mainRepository);
             }
         }
 
@@ -222,7 +223,8 @@ namespace WebMarket.Controllers
             var product = from p in mainRepository.GetAllProducts() where p.ID == productID select p;
             if (product.Any())
             {
-                CatalogViewModel.CurrentUser.SellProduct(product.FirstOrDefault(), mainRepository);
+                ///CatalogViewModel.CurrentUser.SellProduct(product.FirstOrDefault(), mainRepository);
+                Userbase.CurrentAppUser.SellProduct(product.FirstOrDefault(), mainRepository);
             }
 
             return RedirectToAction("Catalog");
