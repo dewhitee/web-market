@@ -19,8 +19,8 @@ namespace WebMarket.Data
             public string name;
         }
 
-        public static SignInManager<IdentityUser> SignInManager { get; set; }
-        public static UserManager<IdentityUser> UserManager { get; set; }
+        public static SignInManager<AppUser> SignInManager { get; set; }
+        public static UserManager<AppUser> UserManager { get; set; }
         public static ClaimsPrincipal User { get; set; }
         public static Models.User UserModel { get => CatalogViewModel.CurrentUser; }
 
@@ -41,7 +41,7 @@ namespace WebMarket.Data
             return @"D:\ASP.NET PROJECTS\WebMarket\data\user_" + userName + "_.dew";
         }
 
-        public static void Set(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager, ClaimsPrincipal user)
+        public static void Set(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, ClaimsPrincipal user)
         {
             SignInManager = signInManager;
             UserManager = userManager;

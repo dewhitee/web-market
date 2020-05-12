@@ -17,15 +17,15 @@ namespace WebMarket.Controllers
     {
         //private string saveUserFilePath { get => @"D:\ASP.NET PROJECTS\WebMarket\data\user_" + CatalogViewModel.CurrentUser.Username + "_.dew"; }
         //System.Security.Claims.ClaimsPrincipal currentUser = User;
-        private static List<string> _tags = null;
+        ///private static List<string> _tags = null;
         private readonly IMainRepository mainRepository;
         //private bool _productsListInitialized => //Enumerable.SequenceEqual(mainRepository.GetAllProducts().OrderBy(p => p),
         //CatalogViewModel.ListOfProducts.OrderBy(t => t));
         //mainRepository.GetAllProducts().All(CatalogViewModel.ListOfProducts.Contains);
 
         public CatalogController(
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager,
+            UserManager<AppUser> userManager,
+            SignInManager<AppUser> signInManager,
             IHttpContextAccessor contextAccessor,
             IMainRepository productRepository)
         {
@@ -127,7 +127,7 @@ namespace WebMarket.Controllers
                     AddedDate = DateTime.Today,
                     OwnerID = CatalogViewModel.CurrentUser.ID
                 });
-                _tags = null;
+                //_tags = null;
             }
             else if (/*CatalogViewModel.ContainsName(productName) && Userbase.UserModel.HasProductBought(productName)*/condition == 0)
             {

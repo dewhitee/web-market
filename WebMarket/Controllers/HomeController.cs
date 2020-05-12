@@ -18,7 +18,7 @@ namespace WebMarket.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager,
+        public HomeController(ILogger<HomeController> logger, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager,
             IHttpContextAccessor contextAccessor)
         {
             _logger = logger;

@@ -17,7 +17,7 @@ namespace WebMarket.Controllers
     {
         private readonly IMainRepository mainRepository;
 
-        public ComparisonController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager,
+        public ComparisonController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager,
             IHttpContextAccessor contextAccessor,
             IMainRepository mainRepository)
         {
