@@ -66,7 +66,7 @@ namespace WebMarket.Models
         //public string SecondImageLink { get; set; }
         //public string ThirdImageLink { get; set; }
         [NotMapped]
-        public bool IsBought { get => CatalogViewModel.CurrentUser.BoughtProductIDs.Contains(ID.ToString());/* set;*/}
+        public bool IsBought { get => CatalogViewModel.CurrentUser.BoughtProductIDs.Contains(ID.ToString()); }
         public bool OnlyRegisteredCanComment { get; set; }
         public bool OnlyOneCommentPerUser { get; set; }
         [NotMapped]
@@ -78,6 +78,9 @@ namespace WebMarket.Models
         //public List<string> Tags = new List<string>();
         [Obsolete]
         public List<UserComment> Comments = new List<UserComment>();
+
+        //[ForeignKey("ProductRefId")]
+        //public ICollection<BoughtProduct> BoughtProducts { get; set; }
 
         [Display(Name = "Added Date")]
         [DataType(DataType.Date)]

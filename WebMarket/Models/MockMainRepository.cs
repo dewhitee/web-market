@@ -18,6 +18,11 @@ namespace WebMarket.Models
             };
         }
 
+        public BoughtProduct AddBoughtProduct(BoughtProduct boughtProduct)
+        {
+            throw new NotImplementedException();
+        }
+
         public Image AddImage(Image image)
         {
             throw new NotImplementedException();
@@ -40,6 +45,11 @@ namespace WebMarket.Models
         }
 
         public UserComment AddUserComment(UserComment comment)
+        {
+            throw new NotImplementedException();
+        }
+
+        public BoughtProduct DeleteBoughtProduct(int id)
         {
             throw new NotImplementedException();
         }
@@ -74,6 +84,11 @@ namespace WebMarket.Models
             throw new NotImplementedException();
         }
 
+        public IEnumerable<BoughtProduct> GetAllBoughtProducts()
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<Image> GetAllImages()
         {
             throw new NotImplementedException();
@@ -95,6 +110,11 @@ namespace WebMarket.Models
         }
 
         public IEnumerable<UserComment> GetAllUserComments()
+        {
+            throw new NotImplementedException();
+        }
+
+        public BoughtProduct GetBoughtProduct(int id)
         {
             throw new NotImplementedException();
         }
@@ -175,6 +195,11 @@ namespace WebMarket.Models
         }
 
         public IEnumerable<Product> Search(string searchTerm)
+        {
+            throw new NotImplementedException();
+        }
+
+        public BoughtProduct UpdateBoughtProduct(BoughtProduct boughtProductChanges)
         {
             throw new NotImplementedException();
         }

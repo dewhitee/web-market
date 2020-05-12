@@ -16,6 +16,13 @@ namespace WebMarket.Models
             this.context = context;
         }
 
+        public BoughtProduct AddBoughtProduct(BoughtProduct boughtProduct)
+        {
+            context.BoughtProducts.Add(boughtProduct);
+            context.SaveChanges();
+            return boughtProduct;
+        }
+
         public Image AddImage(Image image)
         {
             context.Images.Add(image);
@@ -59,6 +66,17 @@ namespace WebMarket.Models
             context.Comments.Add(comment);
             context.SaveChanges();
             return comment;
+        }
+
+        public BoughtProduct DeleteBoughtProduct(int id)
+        {
+            BoughtProduct boughtProduct = context.BoughtProducts.Find(id);
+            if (boughtProduct != null)
+            {
+                context.BoughtProducts.Remove(boughtProduct);
+                context.SaveChanges();
+            }
+            return boughtProduct;
         }
 
         public Image DeleteImage(int id)
@@ -116,6 +134,11 @@ namespace WebMarket.Models
             return comment;
         }
 
+        public IEnumerable<BoughtProduct> GetAllBoughtProducts()
+        {
+            return context.BoughtProducts;
+        }
+
         public IEnumerable<Image> GetAllImages()
         {
             return context.Images;
@@ -139,6 +162,11 @@ namespace WebMarket.Models
         public IEnumerable<UserComment> GetAllUserComments()
         {
             return context.Comments;
+        }
+
+        public BoughtProduct GetBoughtProduct(int id)
+        {
+            return context.BoughtProducts.Find(id);
         }
 
         public Image GetImage(int id)
@@ -240,6 +268,14 @@ namespace WebMarket.Models
                 return context.Products;
             }
             return context.Products.Where(p => p.Name.Contains(searchTerm));
+        }
+
+        public BoughtProduct UpdateBoughtProduct(BoughtProduct boughtProductChanges)
+        {
+            var boughtProduct = context.BoughtProducts.Attach(boughtProductChanges);
+            boughtProduct.State = EntityState.Modified;
+            context.SaveChanges();
+            return boughtProductChanges;
         }
 
         public UserComment UpdateComment(UserComment commentChanges)

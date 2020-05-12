@@ -167,14 +167,19 @@ namespace WebMarket.Controllers
         }
         private void Buy(string productName, int productID)
         {
-            foreach (var product in /*CatalogViewModel.ListOfProducts*/mainRepository.GetAllProducts())
+            //foreach (var product in /*CatalogViewModel.ListOfProducts*/mainRepository.GetAllProducts())
+            //{
+            //    if (product.ID == productID || product.Name == productName)
+            //    {
+            //        LoadUser();
+            //        CatalogViewModel.CurrentUser.BuyProduct(product, mainRepository);
+            //        break;
+            //    }
+            //}
+            var product = from p in mainRepository.GetAllProducts() where p.ID == productID select p;
+            if (product.Any())
             {
-                if (product.ID == productID || product.Name == productName)
-                {
-                    LoadUser();
-                    CatalogViewModel.CurrentUser.BuyProduct(product);
-                    break;
-                }
+                CatalogViewModel.CurrentUser.BuyProduct(product.FirstOrDefault(), mainRepository);
             }
         }
 

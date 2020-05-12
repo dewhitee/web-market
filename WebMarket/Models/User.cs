@@ -25,7 +25,7 @@ namespace WebMarket.Models
         public string City { get; set; }
         // public bool EmailConfirmed { get; set; }
 
-        public void BuyProduct(Product product)
+        public void BuyProduct(Product product, IMainRepository repository)
         {
             //Userbase.LoadUser();
             if (Money >= product.FinalPrice && !product.IsBought)
@@ -34,6 +34,12 @@ namespace WebMarket.Models
                 Money -= product.FinalPrice;
                 
                 BoughtProductIDs.Add(product.ID.ToString());
+
+                repository.AddBoughtProduct(new BoughtProduct
+                {
+                    AppUserRefId = CatalogViewModel.CurrentUser.ID,
+                    ProductRefId = product.ID
+                });
                 Console.WriteLine($"{product.Name} is bought!");
             }
             else

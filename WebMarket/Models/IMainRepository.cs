@@ -47,5 +47,12 @@ namespace WebMarket.Models
         ProductType AddProductType(ProductType productType);
         ProductType UpdateProductType(ProductType productTypeChanges);
         ProductType DeleteProductType(int id);
+
+        BoughtProduct GetBoughtProduct(int id);
+        IEnumerable<BoughtProduct> GetAllBoughtProducts();
+        BoughtProduct AddBoughtProduct(BoughtProduct boughtProduct);
+        BoughtProduct UpdateBoughtProduct(BoughtProduct boughtProductChanges);
+        BoughtProduct DeleteBoughtProduct(int id);
+
     }
 }
