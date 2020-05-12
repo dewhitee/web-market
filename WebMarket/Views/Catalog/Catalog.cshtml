@@ -7,6 +7,8 @@
 
 @{
     ViewData["Title"] = "Catalog";
+
+    CatalogViewModel.CurrentAppUser = _userManager.GetUserAsync(User).Result;
 }
 
 @*<script>
@@ -330,7 +332,7 @@
     <button type="button" class="btn btn-outline-primary" data-toggle="collapse" data-target="#addButtonCollapse" aria-expanded="false" aria-controls="addButtonCollapse">Add Product</button>
 </div>
 <div class="d-inline" @*style="padding-bottom:1em"*@>
-    <button type="button" class="@CatalogViewModel.GetBuyProductButtonClassString(_repository)" data-toggle="collapse" data-target="#buyProductCollapse" aria-expanded="false" aria-controls="buyProductCollapse">Buy Product</button>
+    <button type="button" class="@CatalogViewModel.GetBuyProductButtonClassString(_repository, CatalogViewModel.CurrentAppUser)" data-toggle="collapse" data-target="#buyProductCollapse" aria-expanded="false" aria-controls="buyProductCollapse">Buy Product</button>
 </div>
 <div class="d-inline" @*style="padding-bottom:1em"*@>
     <button type="button" class="btn btn-outline-primary" data-toggle="collapse" data-target="#sellProductCollapse" aria-expanded="false" aria-controls="sellProductCollapse">Sell Product</button>
@@ -455,12 +457,12 @@
                         <label for="productName">Product name</label>
                         <input type="text" class="form-control" name="productName" id="productName" placeholder="Enter product name" value="@CatalogViewModel.GetSelectedBuyProductName(_repository)" required />
                     </div>
-                    <button class="@CatalogViewModel.GetSubmitBuyingButtonClassString(_repository)" type="submit">
+                    <button class="@CatalogViewModel.GetSubmitBuyingButtonClassString(_repository, CatalogViewModel.CurrentAppUser)" type="submit">
                         @CatalogViewModel.GetSubmitBuyingButtonText(_repository)
                     </button>
                 </form>
                 <p class="text-md-right">
-                    <mark>@CatalogViewModel.GetSelectedBuyProductPriceSentence(_repository)</mark>
+                    <mark>@CatalogViewModel.GetSelectedBuyProductPriceSentence(_repository, CatalogViewModel.CurrentAppUser)</mark>
                 </p>
             </div>
         </div>
@@ -482,7 +484,7 @@
                     </button>
                 </form>
                 <p class="text-md-right">
-                    <mark>@CatalogViewModel.GetSelectedSellProductPriceSentence(_repository)</mark>
+                    <mark>@CatalogViewModel.GetSelectedSellProductPriceSentence(_repository, CatalogViewModel.CurrentAppUser)</mark>
                 </p>
             </div>
         </div>

@@ -85,7 +85,7 @@
             <br>
             <p class="text-md-left">
                 You will have:
-                <mark>@CatalogViewModel.GetSelectedSellProductPriceSentence(_repository)</mark>
+                <mark>@CatalogViewModel.GetSelectedSellProductPriceSentence(_repository, CatalogViewModel.CurrentAppUser)</mark>
             </p>
             <small class="text-warning @product.GetProductTableLinkClassString(_repository)">
                 Added @product.AddedDate.ToShortDateString()

@@ -7,6 +7,7 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using WebMarket.Data;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 
 namespace WebMarket.Models
 {
@@ -37,6 +38,8 @@ namespace WebMarket.Models
 
         public List<Product> Products { get; set; }
         public Product ToAdd { get; set; }
+
+        public static AppUser CurrentAppUser { get; set; }
 
         private static string addedToCartProductsFilePath { get => @"D:\ASP.NET PROJECTS\WebMarket\data\addedtocartproducts_" + CurrentUser.Username + "_.dew"; }
         private static string saveProductsFilePath { get => @"D:\ASP.NET PROJECTS\WebMarket\data\products.dew"; }
@@ -190,11 +193,11 @@ namespace WebMarket.Models
         //    else
         //        return "You have not selected any product to sell!";
         //}
-        public static string GetSelectedSellProductPriceSentence(IMainRepository repository)
+        public static string GetSelectedSellProductPriceSentence(IMainRepository repository, AppUser user)
         {
             var product = GetSelectedSellProduct(repository);
             if (!string.IsNullOrWhiteSpace(product.Name))
-                return CurrentUser.MoneyString + " + " + product.FinalPriceString + string.Format(" = {0}€", (CurrentUser.Money + product.FinalPrice).ToString("0.##"));
+                return user.MoneyString + " + " + product.FinalPriceString + string.Format(" = {0}€", (user.Money + product.FinalPrice).ToString("0.##"));
             else
                 return "You have not selected any product to sell!";
         }
@@ -207,12 +210,12 @@ namespace WebMarket.Models
         //    else
         //        return "You have not selected any product to buy!";
         //}
-        public static string GetSelectedBuyProductPriceSentence(IMainRepository repository)
+        public static string GetSelectedBuyProductPriceSentence(IMainRepository repository, AppUser user)
         {
             var product = GetSelectedBuyProduct(repository);
-            var finalCost = CurrentUser.Money - product.FinalPrice;
+            var finalCost = /*CurrentUser.Money*/user.Money - product.FinalPrice;
             if (!string.IsNullOrWhiteSpace(product.Name))
-                return CurrentUser.MoneyString + " - " + product.FinalPriceString + string.Format(" = {0}€", finalCost.ToString("0.##")) + (finalCost < 0 ? " (You don't have enough money!)" : "");
+                return user.MoneyString + " - " + product.FinalPriceString + string.Format(" = {0}€", finalCost.ToString("0.##")) + (finalCost < 0 ? " (You don't have enough money!)" : "");
             else
                 return "You have not selected any product to buy!";
         }
@@ -228,10 +231,10 @@ namespace WebMarket.Models
         //    }
         //    return outline ? "btn btn-outline-primary" : "btn btn-primary";
         //}
-        public static string GetBuyProductButtonClassString(IMainRepository repository, bool outline = true)
+        public static string GetBuyProductButtonClassString(IMainRepository repository, AppUser user, bool outline = true)
         {
             var product = GetSelectedBuyProduct(repository);
-            var finalCost = CurrentUser.Money - product.FinalPrice;
+            var finalCost = user.Money - product.FinalPrice;
             if (!string.IsNullOrWhiteSpace(product.Name))
             {
                 if (finalCost < 0)
@@ -250,10 +253,10 @@ namespace WebMarket.Models
         //    }
         //    return "btn btn-success";
         //}
-        public static string GetSubmitBuyingButtonClassString(IMainRepository repository)
+        public static string GetSubmitBuyingButtonClassString(IMainRepository repository, AppUser user)
         {
             var product = GetSelectedBuyProduct(repository);
-            var finalCost = CurrentUser.Money - product.FinalPrice;
+            var finalCost = user.Money - product.FinalPrice;
             if (!string.IsNullOrWhiteSpace(product.Name))
             {
                 if (finalCost < 0)

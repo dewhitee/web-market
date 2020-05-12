@@ -370,7 +370,7 @@ namespace WebMarket.Models
                 return "btn btn-outline-light";
                 //else return "btn btn-outline-dark";
             }
-            else if (CatalogViewModel.CurrentUser.Money < FinalPrice)
+            else if (/*CatalogViewModel.CurrentUser.Money*/Userbase.CurrentAppUser?.Money < FinalPrice)
                 return "btn btn-outline-danger";
             else if (!IsBought(repo))
                 return "btn btn-outline-success";
