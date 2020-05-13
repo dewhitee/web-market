@@ -103,7 +103,7 @@ namespace WebMarket.Controllers
                     Link = model.Link,
                     FileName = uniqueFileName,
                     AddedDate = DateTime.Today,
-                    OwnerID = CatalogViewModel.CurrentUser.ID
+                    OwnerID = Userbase.CurrentAppUser.Id
                 };
 
                 mainRepository.AddProduct(newProduct);

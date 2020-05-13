@@ -157,7 +157,7 @@
                 </sup>
             </h3>
 
-            @if (product.OwnerID == CatalogViewModel.CurrentUser?.ID || Userbase.CurrentAppUser == null)
+            @if (product.OwnerID == Userbase.CurrentAppUser?.Id || Userbase.CurrentAppUser == null)
             {
                 <small class="text-warning @product.GetProductTableLinkClassString(_repository)">
                     Added @product.AddedDate.ToShortDateString()
@@ -203,7 +203,7 @@
             }
         </div>
     </div>
-    if (!product.OnlyRegisteredCanComment && product.OwnerID != CatalogViewModel.CurrentUser.ID)
+    if (!product.OnlyRegisteredCanComment && product.OwnerID != Userbase.CurrentAppUser?.Id)
     {
         <form asp-controller="Catalog" asp-action="AddComment" method="post">
             <div class="form-group">

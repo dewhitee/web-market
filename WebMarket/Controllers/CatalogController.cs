@@ -92,61 +92,61 @@ namespace WebMarket.Controllers
             //int integralCost = (int)Math.Truncate(productCost);
             //int fractionalCost = (int)(productCost - integralCost);
 
-            if (!CatalogViewModel.ContainsName(productName) && productName != null && condition != 0)
-            {
-                CatalogViewModel.ListOfProducts.Add(new Product
-                {
-                    ID = Product.MakeNewID(),
-                    Name = productName,
-                    Type = Product.CheckTypeString(productType),
-                    //Tags = _tags,
-                    Price = productCost,
-                    //CostIntegral = integralCost,
-                    //CostFractional = fractionalCost,
-                    Discount = productDiscount,
-                    Description = (productDescription != null && productDescription.Length > 0) ? productDescription : "test description",
-                    //CardImageLink = (productImageLink != null && productImageLink.Length > 0) ? productImageLink : "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg",
-                    //SecondImageLink = secondImageLink,
-                    //ThirdImageLink = thirdImageLink,
-                    FirstImage = new Product.Image {
-                        Link = (productImageLink != null && productImageLink.Length > 0) ? productImageLink
-                        : "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg",
-                        Description = productImageDescription
-                    },
-                    SecondImage = new Product.Image {
-                        Link = secondImageLink,
-                        Description = secondImageDescription
-                    },
-                    ThirdImage = new Product.Image {
-                        Link = thirdImageLink,
-                        Description = thirdImageDescription
-                    },
-                    Link = productLink,
-                    //OldFileName = productFileName,
-                    AddedDate = DateTime.Today,
-                    OwnerID = CatalogViewModel.CurrentUser.ID
-                });
-                //_tags = null;
-            }
-            else if (/*CatalogViewModel.ContainsName(productName) && Userbase.UserModel.HasProductBought(productName)*/condition == 0)
-            {
-                //var prod = CatalogViewModel.GetProduct(productName);
-                //prod.ID = prod.HasValidID() ? prod.ID : Product.MakeNewID();
-                //prod.Name = productName ?? prod.Name;
-                //prod.Type = productType ?? prod.Type;
-                //prod.Tags = prod.Tags.Count < 0 ? new List<string>(tags) : prod.Tags;
-                //prod.Discount = productDiscount;
-                ///if (!CatalogViewModel.ContainsName(productName))
-                ///{
-                    ///_tags = new List<string>(tags);
-                ///}
-                ///else
-                ///{
-                    ///CatalogViewModel.GetProduct(productName).Tags = new List<string>(_tags);
-                    ///_tags = null;
-                ///}
-            }
-            SaveProducts();
+            //if (!CatalogViewModel.ContainsName(productName) && productName != null && condition != 0)
+            //{
+            //    CatalogViewModel.ListOfProducts.Add(new Product
+            //    {
+            //        ID = Product.MakeNewID(),
+            //        Name = productName,
+            //        Type = Product.CheckTypeString(productType),
+            //        //Tags = _tags,
+            //        Price = productCost,
+            //        //CostIntegral = integralCost,
+            //        //CostFractional = fractionalCost,
+            //        Discount = productDiscount,
+            //        Description = (productDescription != null && productDescription.Length > 0) ? productDescription : "test description",
+            //        //CardImageLink = (productImageLink != null && productImageLink.Length > 0) ? productImageLink : "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg",
+            //        //SecondImageLink = secondImageLink,
+            //        //ThirdImageLink = thirdImageLink,
+            //        FirstImage = new Product.Image {
+            //            Link = (productImageLink != null && productImageLink.Length > 0) ? productImageLink
+            //            : "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg",
+            //            Description = productImageDescription
+            //        },
+            //        SecondImage = new Product.Image {
+            //            Link = secondImageLink,
+            //            Description = secondImageDescription
+            //        },
+            //        ThirdImage = new Product.Image {
+            //            Link = thirdImageLink,
+            //            Description = thirdImageDescription
+            //        },
+            //        Link = productLink,
+            //        //OldFileName = productFileName,
+            //        AddedDate = DateTime.Today,
+            //        OwnerID = CatalogViewModel.CurrentUser.ID
+            //    });
+            //    //_tags = null;
+            //}
+            //else if (/*CatalogViewModel.ContainsName(productName) && Userbase.UserModel.HasProductBought(productName)*/condition == 0)
+            //{
+            //    //var prod = CatalogViewModel.GetProduct(productName);
+            //    //prod.ID = prod.HasValidID() ? prod.ID : Product.MakeNewID();
+            //    //prod.Name = productName ?? prod.Name;
+            //    //prod.Type = productType ?? prod.Type;
+            //    //prod.Tags = prod.Tags.Count < 0 ? new List<string>(tags) : prod.Tags;
+            //    //prod.Discount = productDiscount;
+            //    ///if (!CatalogViewModel.ContainsName(productName))
+            //    ///{
+            //        ///_tags = new List<string>(tags);
+            //    ///}
+            //    ///else
+            //    ///{
+            //        ///CatalogViewModel.GetProduct(productName).Tags = new List<string>(_tags);
+            //        ///_tags = null;
+            //    ///}
+            //}
+            //SaveProducts();
             return RedirectToAction("Catalog");
         }
 
@@ -199,7 +199,7 @@ namespace WebMarket.Controllers
                 {
                     Text = commentSection,
                     ProductID = product.ID.ToString(),
-                    UserID = CatalogViewModel.CurrentUser.ID,
+                    UserID = Userbase.CurrentAppUser?.Id,
                     Rate = rating
                 };
                 //product.Comments.Add(newComment);
@@ -232,7 +232,7 @@ namespace WebMarket.Controllers
         public IActionResult LoadUser()
         {
             while (!Userbase.IsInitialized) { }
-            Userbase.LoadUser();
+            ///Userbase.LoadUser();
             return Ok();
         }
 

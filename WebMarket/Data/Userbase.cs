@@ -22,7 +22,7 @@ namespace WebMarket.Data
         public static SignInManager<AppUser> SignInManager { get; set; }
         public static UserManager<AppUser> UserManager { get; set; }
         public static ClaimsPrincipal User { get; set; }
-        public static Models.User UserModel { get => CatalogViewModel.CurrentUser; }
+        ///public static Models.User UserModel { get => CatalogViewModel.CurrentUser; }
         public static AppUser CurrentAppUser { get => UserManager?.GetUserAsync(User).Result; }
 
         public static List<string> Usernames { get; private set; }
@@ -35,7 +35,7 @@ namespace WebMarket.Data
         private static readonly string usernamesFilePath = @"D:\ASP.NET PROJECTS\WebMarket\data\allusernames.dew";
         private static readonly string usernameidsFilePath = @"D:\ASP.NET PROJECTS\WebMarket\data\usernameids.dew";
         private static readonly string userMoneyPartialPath = @"D:\ASP.NET PROJECTS\WebMarket\data\user_";
-        private static string saveUserFilePath { get => @"D:\ASP.NET PROJECTS\WebMarket\data\user_" + CatalogViewModel.CurrentUser.Username + "_.dew"; }
+        ///private static string saveUserFilePath { get => @"D:\ASP.NET PROJECTS\WebMarket\data\user_" + CatalogViewModel.CurrentUser.Username + "_.dew"; }
         
         private static string MakeUserFilePath(string userName)
         {
@@ -163,50 +163,50 @@ namespace WebMarket.Data
         {
             return UserNameIDs.Find(x => x.name == username).id;
         }
-        public static void SaveMoney()
-        {
-            BinaryFormatter bf = new BinaryFormatter();
-            Stream stream = new FileStream(MoneyFilePath, FileMode.Open, FileAccess.Write);
+        //public static void SaveMoney()
+        //{
+        //    BinaryFormatter bf = new BinaryFormatter();
+        //    Stream stream = new FileStream(MoneyFilePath, FileMode.Open, FileAccess.Write);
 
-            bf.Serialize(stream, CatalogViewModel.CurrentUser.Money);
-            stream.Close();
-        }
+        //    bf.Serialize(stream, CatalogViewModel.CurrentUser.Money);
+        //    stream.Close();
+        //}
         public static void SaveUser()
         {
-            BinaryFormatter bf = new BinaryFormatter();
-            try
-            {
-                Stream stream = new FileStream(saveUserFilePath, FileMode.Open, FileAccess.Write);
+            //BinaryFormatter bf = new BinaryFormatter();
+            //try
+            //{
+            //    Stream stream = new FileStream(saveUserFilePath, FileMode.Open, FileAccess.Write);
 
-                bf.Serialize(stream, CatalogViewModel.CurrentUser);
-                stream.Close();
-            }
-            catch (IOException e)
-            {
-                Console.WriteLine($"{e.Message}, Line: {Utilities.LineNumber()}");
-            }
-            SaveMoney();
+            //    bf.Serialize(stream, CatalogViewModel.CurrentUser);
+            //    stream.Close();
+            //}
+            //catch (IOException e)
+            //{
+            //    Console.WriteLine($"{e.Message}, Line: {Utilities.LineNumber()}");
+            //}
+            //SaveMoney();
         }
         public static void LoadUser()
         {
-            if (!File.Exists(saveUserFilePath))
-                File.Create(saveUserFilePath);
+            //if (!File.Exists(saveUserFilePath))
+            //    File.Create(saveUserFilePath);
 
-            BinaryFormatter bf = new BinaryFormatter();
-            try
-            {
-                Stream stream = new FileStream(saveUserFilePath, FileMode.Open, FileAccess.Read);
-                if (stream.Length != 0)
-                    CatalogViewModel.CurrentUser = (User)bf.Deserialize(stream);
-                stream.Close();
-            }
-            catch (IOException e)
-            {
-                Console.WriteLine($"{e.Message}, Line: {Utilities.LineNumber()}");
-            }
+            //BinaryFormatter bf = new BinaryFormatter();
+            //try
+            //{
+            //    Stream stream = new FileStream(saveUserFilePath, FileMode.Open, FileAccess.Read);
+            //    if (stream.Length != 0)
+            //        CatalogViewModel.CurrentUser = (User)bf.Deserialize(stream);
+            //    stream.Close();
+            //}
+            //catch (IOException e)
+            //{
+            //    Console.WriteLine($"{e.Message}, Line: {Utilities.LineNumber()}");
+            //}
 
-            if (CatalogViewModel.CurrentUser.BoughtProductIDs == null)
-                CatalogViewModel.CurrentUser.BoughtProductIDs = new List<string>();
+            //if (CatalogViewModel.CurrentUser.BoughtProductIDs == null)
+            //    CatalogViewModel.CurrentUser.BoughtProductIDs = new List<string>();
         }
         private static decimal GetMoney()
         {

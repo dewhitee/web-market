@@ -1,4 +1,6 @@
-﻿@model CatalogViewModel
+﻿@using WebMarket.Data 
+
+@model CatalogViewModel
 @inject IMainRepository _repository
 
 @{
@@ -23,14 +25,14 @@
 </style>
 
 <div class="float-right">
-    <h2>@CatalogViewModel.CurrentUser.MoneyString</h2>
+    <h2>@Userbase.CurrentAppUser?.MoneyString</h2>
 </div>
 <h1>Buying</h1>
 <br>
 @{
     var product = CatalogViewModel.GetSelectedBuyProduct(_repository);
 
-    @if (product.OwnerID == CatalogViewModel.CurrentUser.ID)
+    @if (product.OwnerID == Userbase.CurrentAppUser?.Id)
     {
         <div style="padding-bottom:1em"></div>
         <form class="d-inline" asp-controller="Product" asp-action="OpenEditProduct" method="post">

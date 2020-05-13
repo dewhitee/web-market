@@ -70,7 +70,7 @@ namespace WebMarket.Models
 
         public bool IsBought(IMainRepository repository)
         {
-            var boughtProductIds = repository.GetBoughtProductsByUserId(CatalogViewModel.CurrentUser.ID);
+            var boughtProductIds = repository.GetBoughtProductsByUserId(Userbase.CurrentAppUser?.Id);
             if (boughtProductIds.Any())
             {
                 return (from bp in boughtProductIds where bp.ProductRefId == ID select bp.ProductRefId).Contains(ID);
@@ -133,14 +133,14 @@ namespace WebMarket.Models
             if (OwnerID != null)
                 return Userbase.GetUsername(OwnerID);
 
-            foreach (var userName in Userbase.Usernames)
-            {
-                var user = Userbase.GetUser(userName);
-                if (user.BoughtProductIDs.Contains(Name))
-                {
-                    return user.Username;
-                }
-            }
+            //foreach (var userName in Userbase.Usernames)
+            //{
+            //    var user = Userbase.GetUser(userName);
+            //    if (user.BoughtProductIDs.Contains(Name))
+            //    {
+            //        return user.Username;
+            //    }
+            //}
             return "NO_OWNER";
         }
 
@@ -250,7 +250,7 @@ namespace WebMarket.Models
 
         public string GetAddToCartButtonString(IMainRepository repo)
         {
-            if (OwnerID == CatalogViewModel.CurrentUser.ID)
+            if (OwnerID == Userbase.CurrentAppUser?.Id)
                 return "Yours";
             else if (IsBought(repo))
                 return "Bought";
@@ -341,7 +341,7 @@ namespace WebMarket.Models
 
         public string GetPriceTableClassString(IMainRepository repo)
         {
-            if (AddedToCart || CatalogViewModel.ChoosenProductID == this.ID || OwnerID == CatalogViewModel.CurrentUser.ID)
+            if (AddedToCart || CatalogViewModel.ChoosenProductID == this.ID || OwnerID == Userbase.CurrentAppUser?.Id)
                 return "bg-dark text-white";
             if (IsBought(repo))
                 return "bg-primary text-dark";
@@ -356,7 +356,7 @@ namespace WebMarket.Models
 
         public string GetProductTableLinkClassString(IMainRepository repo)
         {
-            if (AddedToCart || IsBought(repo) || CatalogViewModel.ChoosenProductID == this.ID || OwnerID == CatalogViewModel.CurrentUser.ID)
+            if (AddedToCart || IsBought(repo) || CatalogViewModel.ChoosenProductID == this.ID || OwnerID == Userbase.CurrentAppUser?.Id)
                 return "text-white";
             else
                 return "text-dark";
@@ -364,7 +364,7 @@ namespace WebMarket.Models
 
         public string GetAddToCartButtonClassString(IMainRepository repo)
         {
-            if (AddedToCart || CatalogViewModel.ChoosenProductID == this.ID || OwnerID == CatalogViewModel.CurrentUser.ID)
+            if (AddedToCart || CatalogViewModel.ChoosenProductID == this.ID || OwnerID == Userbase.CurrentAppUser?.Id)
             {
                 //if (ViewVariant != CatalogViewVariant.Main)
                 return "btn btn-outline-light";
@@ -379,7 +379,7 @@ namespace WebMarket.Models
 
         public string GetTableHeaderClassString(IMainRepository repo)
         {
-            if (AddedToCart || CatalogViewModel.ChoosenProductID == this.ID || OwnerID == CatalogViewModel.CurrentUser.ID)
+            if (AddedToCart || CatalogViewModel.ChoosenProductID == this.ID || OwnerID == Userbase.CurrentAppUser?.Id)
             {
                 //if ()
                 return "bg-dark text-white";

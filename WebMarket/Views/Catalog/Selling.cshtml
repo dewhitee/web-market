@@ -1,4 +1,6 @@
-﻿@model CatalogViewModel
+﻿@using WebMarket.Data; 
+
+@model CatalogViewModel
 @inject IMainRepository _repository 
 @{
     ViewData["Title"] = "Selling";
@@ -7,7 +9,7 @@
 <link href="~/css/comments.css" rel="stylesheet" type="text/css" />
 
 <div class="float-right">
-    <h2>@CatalogViewModel.CurrentUser.MoneyString</h2>
+    <h2>@Userbase.CurrentAppUser?.MoneyString</h2>
 </div>
 <h1>Selling</h1>
 <br>
