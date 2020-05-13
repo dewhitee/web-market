@@ -37,7 +37,7 @@ namespace WebMarket.Controllers
         public IActionResult Catalog()
         {
             //LoadProducts();
-            LoadUser();
+            ///LoadUser();
             //if (!/*_productsListInitialized*/ProductsInitialized())
             //{
                 CatalogViewModel.ListOfProducts = mainRepository.GetAllProducts().ToList();
@@ -45,9 +45,11 @@ namespace WebMarket.Controllers
             //}
             //CatalogViewModel.LoadFindTags();
             List<string> listOfProductTypes = new List<string>();
-            listOfProductTypes = (from pt in mainRepository.GetAllProductTypes() select pt.Name).ToList();
+            listOfProductTypes = (from pt in mainRepository.GetAllProductTypes() orderby pt.Name select pt.Name).ToList();
 
             ViewBag.ListOfProductTypes = listOfProductTypes;
+
+            CatalogViewModel.ListOfProductTypes = (from pt in mainRepository.GetAllProductTypes() orderby pt.Name select pt.Name);
 
             return View();
         }
@@ -354,31 +356,31 @@ namespace WebMarket.Controllers
         public IActionResult SortByName()
         {
             CatalogViewModel.ListOfProducts.Sort(Product.CompareByName);
-            SaveProducts();
+            ///SaveProducts();
             return RedirectToAction("Sorted");
         }
         public IActionResult SortByType()
         {
             CatalogViewModel.ListOfProducts.Sort(Product.CompareByType);
-            SaveProducts();
+            ///SaveProducts();
             return RedirectToAction("Sorted");
         }
         public IActionResult SortByPrice()
         {
             CatalogViewModel.ListOfProducts.Sort(Product.CompareByPrice);
-            SaveProducts();
+            ///SaveProducts();
             return RedirectToAction("Sorted");
         }
         public IActionResult SortByDiscount()
         {
             CatalogViewModel.ListOfProducts.Sort(Product.CompareByDiscount);
-            SaveProducts();
+            ///SaveProducts();
             return RedirectToAction("Sorted");
         }
         public IActionResult SortByFinalPrice()
         {
             CatalogViewModel.ListOfProducts.Sort(Product.CompareByFinalPrice);
-            SaveProducts();
+            ///SaveProducts();
             return RedirectToAction("Sorted");
         }
 

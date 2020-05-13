@@ -37,7 +37,7 @@ namespace WebMarket.Controllers
             //LoadProducts();
             //LoadUser();
             List<string> listOfProductTypes = new List<string>();
-            listOfProductTypes = (from pt in mainRepository.GetAllProductTypes() select pt.Name).ToList();
+            listOfProductTypes = (from pt in mainRepository.GetAllProductTypes() orderby pt.Name select pt.Name).ToList();
 
             ViewBag.ListOfProductTypes = listOfProductTypes;
 

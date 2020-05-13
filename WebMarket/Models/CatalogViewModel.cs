@@ -30,6 +30,7 @@ namespace WebMarket.Models
         }
 
         public static List<Product> ListOfProducts = new List<Product>();
+        public static IEnumerable<string> ListOfProductTypes { get; set; }
         public static List<User> ListOfUsers = new List<User>();
         public static List<Product> AddedToCartProducts = new List<Product>();
         public static Product ChoosenProduct = new Product();
@@ -196,7 +197,7 @@ namespace WebMarket.Models
         public static string GetSelectedSellProductPriceSentence(IMainRepository repository, AppUser user)
         {
             var product = GetSelectedSellProduct(repository);
-            if (!string.IsNullOrWhiteSpace(product.Name))
+            if (!string.IsNullOrWhiteSpace(product.Name) && user != null)
                 return user.MoneyString + " + " + product.FinalPriceString + string.Format(" = {0}€", (user.Money + product.FinalPrice).ToString("0.##"));
             else
                 return "You have not selected any product to sell!";
@@ -213,9 +214,9 @@ namespace WebMarket.Models
         public static string GetSelectedBuyProductPriceSentence(IMainRepository repository, AppUser user)
         {
             var product = GetSelectedBuyProduct(repository);
-            var finalCost = /*CurrentUser.Money*/user.Money - product.FinalPrice;
-            if (!string.IsNullOrWhiteSpace(product.Name))
-                return user.MoneyString + " - " + product.FinalPriceString + string.Format(" = {0}€", finalCost.ToString("0.##")) + (finalCost < 0 ? " (You don't have enough money!)" : "");
+            var finalCost = /*CurrentUser.Money*/user?.Money - product.FinalPrice;
+            if (!string.IsNullOrWhiteSpace(product.Name) && user != null)
+                return user.MoneyString + " - " + product.FinalPriceString + string.Format(" = {0}€", finalCost?.ToString("0.##")) + (finalCost < 0 ? " (You don't have enough money!)" : "");
             else
                 return "You have not selected any product to buy!";
         }
@@ -234,7 +235,7 @@ namespace WebMarket.Models
         public static string GetBuyProductButtonClassString(IMainRepository repository, AppUser user, bool outline = true)
         {
             var product = GetSelectedBuyProduct(repository);
-            var finalCost = user.Money - product.FinalPrice;
+            var finalCost = user?.Money - product.FinalPrice;
             if (!string.IsNullOrWhiteSpace(product.Name))
             {
                 if (finalCost < 0)
@@ -256,7 +257,7 @@ namespace WebMarket.Models
         public static string GetSubmitBuyingButtonClassString(IMainRepository repository, AppUser user)
         {
             var product = GetSelectedBuyProduct(repository);
-            var finalCost = user.Money - product.FinalPrice;
+            var finalCost = user?.Money - product.FinalPrice;
             if (!string.IsNullOrWhiteSpace(product.Name))
             {
                 if (finalCost < 0)

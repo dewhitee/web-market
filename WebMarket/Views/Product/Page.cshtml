@@ -37,14 +37,14 @@
     {
         <div class="float-right">
             @*<h2>@CatalogViewModel.CurrentUser.MoneyString</h2>*@
-            <h2>@currentUser.MoneyString</h2>
+            <h2>@currentUser?.MoneyString</h2>
         </div>
     }
     <h1>@product.Name</h1>
     <br>
 
 
-    @if (product.OwnerID == ProductPageViewModel.CurrentAppUser.Id)
+    @if (product.OwnerID == ProductPageViewModel.CurrentAppUser?.Id)
     {
         <div style="padding-bottom:1em"></div>
         <form class="d-inline" asp-controller="Product" asp-action="OpenEditProduct" method="post">
@@ -65,7 +65,7 @@
             @*<div class="card-header">About</div>*@
             <div class="card-body">
                 <h5 class="card-title">About</h5>
-                @if (product.OwnerID == ProductPageViewModel.CurrentAppUser.Id)
+                @if (product.OwnerID == ProductPageViewModel.CurrentAppUser?.Id)
                 {
                     <p class="card-text">Owner: <b>You</b></p>
                 }
@@ -77,7 +77,7 @@
                 <hr />
                 <p class="card-text"><b>Current version: 1.0.0</b></p>
                 <p></p>
-                @if ((product.IsBought(_repository) || product.OwnerID == ProductPageViewModel.CurrentAppUser.Id) && product.FileName?.Length > 0)
+                @if ((product.IsBought(_repository) || product.OwnerID == ProductPageViewModel.CurrentAppUser?.Id) && product.FileName?.Length > 0)
                 {
                     <p class="card-text float-right">Size: @product.FormatFileSize(_hostingEnvironment)</p>
                     <a class="card-link btn btn-primary" href="~/file/@product.FileName" download>Download</a>
@@ -157,7 +157,7 @@
                 </sup>
             </h3>
 
-            @if (product.OwnerID == CatalogViewModel.CurrentUser.ID)
+            @if (product.OwnerID == CatalogViewModel.CurrentUser?.ID)
             {
                 <small class="text-warning @product.GetProductTableLinkClassString(_repository)">
                     Added @product.AddedDate.ToShortDateString()

@@ -633,7 +633,7 @@ else
                         @*<p class="card-text text-center">Tags</p>*@
                         <div class="input-group col-md-12">
                             @*<label for="findTag">Tags</label>*@
-                            <select name="findTag" id="findTag" class="custom-select form-control form-control-sm" asp-items="@(new SelectList(ViewBag.ListOfProductTypes))">
+                            <select name="findTag" id="findTag" class="custom-select form-control form-control-sm" asp-items="@(new SelectList(CatalogViewModel.ListOfProductTypes))">
                                 @*<option selected>Choose type</option>
                                     <option>Software</option>
                                     <option>Game</option>
