@@ -44,7 +44,7 @@
     <br>
 
 
-    @if (product.OwnerID == ProductPageViewModel.CurrentAppUser?.Id)
+    @if (product.OwnerID == currentUser?.Id)
     {
         <div style="padding-bottom:1em"></div>
         <form class="d-inline" asp-controller="Product" asp-action="OpenEditProduct" method="post">
@@ -65,7 +65,7 @@
             @*<div class="card-header">About</div>*@
             <div class="card-body">
                 <h5 class="card-title">About</h5>
-                @if (product.OwnerID == ProductPageViewModel.CurrentAppUser?.Id)
+                @if (product.OwnerID == currentUser?.Id)
                 {
                     <p class="card-text">Owner: <b>You</b></p>
                 }
@@ -77,7 +77,7 @@
                 <hr />
                 <p class="card-text"><b>Current version: 1.0.0</b></p>
                 <p></p>
-                @if ((product.IsBought(_repository) || product.OwnerID == ProductPageViewModel.CurrentAppUser?.Id) && product.FileName?.Length > 0)
+                @if ((product.IsBought(_repository, currentUser) || product.OwnerID == currentUser?.Id) && product.FileName?.Length > 0)
                 {
                     <p class="card-text float-right">Size: @product.FormatFileSize(_hostingEnvironment)</p>
                     <a class="card-link btn btn-primary" href="~/file/@product.FileName" download>Download</a>
@@ -88,7 +88,7 @@
     </div>
 
     <div class="card h-100 hoverable-card" id="card_on_transaction">
-        <div class="card-header @product.GetTableHeaderClassString(_repository)" id="card_on_transaction_header">
+        <div class="card-header @product.GetTableHeaderClassString(_repository, currentUser)" id="card_on_transaction_header">
             <h5 style="font-weight:300">@product.Type</h5>
         </div>
         <div style="transform:rotate(0);">
@@ -144,7 +144,7 @@
             @*<a href="@product.Link" class="stretched-link"></a>*@
         </div>
 
-        <div class="card-footer @product.GetTableHeaderClassString(_repository)" id="card_on_transaction_footer">
+        <div class="card-footer @product.GetTableHeaderClassString(_repository, currentUser)" id="card_on_transaction_footer">
 
             @*<div class="float-right">*@
             <h3>
@@ -157,32 +157,32 @@
                 </sup>
             </h3>
 
-            @if (product.OwnerID == Userbase.CurrentAppUser?.Id || Userbase.CurrentAppUser == null)
+            @if (product.OwnerID == currentUser?.Id || currentUser == null)
             {
-                <small class="text-warning @product.GetProductTableLinkClassString(_repository)">
+                <small class="text-warning @product.GetProductTableLinkClassString(_repository, currentUser)">
                     Added @product.AddedDate.ToShortDateString()
                 </small>
             }
-            else if (!/*CatalogViewModel.CurrentUser.HasProductBought(product.ID, _repository)*/product.IsBought(_repository) && Userbase.CurrentAppUser != null)
+            else if (!/*CatalogViewModel.CurrentUser.HasProductBought(product.ID, _repository)*/product.IsBought(_repository, currentUser) && currentUser != null)
             {
                 <div class="float-right">
                     <form asp-controller="Catalog" asp-action="BuyProduct" method="post">
                         <input type="hidden" class="form-control" name="productName" id="productName" value=@product.Name />
                         <input type="hidden" class="form-control" name="productID" id="productID" value=@product.ID />
-                        <button class="@CatalogViewModel.GetBuyProductButtonClassString(_repository, ProductPageViewModel.CurrentAppUser, false) btn-lg" type="submit" id="card_on_transaction_buy_button">Buy</button>
+                        <button class="@CatalogViewModel.GetBuyProductButtonClassString(_repository, currentUser, false) btn-lg" type="submit" id="card_on_transaction_buy_button">Buy</button>
                     </form>
                 </div>
 
                 <br>
                 <p class="text-md-left">
                     You will have:
-                    <mark>@CatalogViewModel.GetSelectedBuyProductPriceSentence(_repository, ProductPageViewModel.CurrentAppUser)</mark>
+                    <mark>@CatalogViewModel.GetSelectedBuyProductPriceSentence(_repository, currentUser)</mark>
                 </p>
-                <small class="text-warning @product.GetProductTableLinkClassString(_repository)">
+                <small class="text-warning @product.GetProductTableLinkClassString(_repository, currentUser)">
                     Added @product.AddedDate.ToShortDateString()
                 </small>
             }
-            else if (Userbase.CurrentAppUser != null)
+            else if (currentUser != null)
             {
                 <div class="float-right">
                     <form asp-controller="Catalog" asp-action="SellProduct" method="post">
@@ -195,15 +195,15 @@
                 <br>
                 <p class="text-md-left">
                     You will have:
-                    <mark>@CatalogViewModel.GetSelectedSellProductPriceSentence(_repository, ProductPageViewModel.CurrentAppUser)</mark>
+                    <mark>@CatalogViewModel.GetSelectedSellProductPriceSentence(_repository, currentUser)</mark>
                 </p>
-                <small class="text-warning @product.GetProductTableLinkClassString(_repository)">
+                <small class="text-warning @product.GetProductTableLinkClassString(_repository, currentUser)">
                     Added @product.AddedDate.ToShortDateString()
                 </small>
             }
         </div>
     </div>
-    if (!product.OnlyRegisteredCanComment && product.OwnerID != Userbase.CurrentAppUser?.Id)
+    if (!product.OnlyRegisteredCanComment && product.OwnerID != currentUser?.Id)
     {
         <form asp-controller="Catalog" asp-action="AddComment" method="post">
             <div class="form-group">
@@ -234,7 +234,7 @@
     }
     <div class="col col-sm-12 col-md-12 col-lg-6" style="padding-top: 2rem;">
         <div class="card h-100 hoverable-card" id="card_on_transaction">
-            <div class="card-header @product.GetTableHeaderClassString(_repository)" id="card_on_transaction_header">
+            <div class="card-header @product.GetTableHeaderClassString(_repository, currentUser)" id="card_on_transaction_header">
                 <h5 style="font-weight:300">What people think about <strong>@product.Name</strong></h5>
                 <p>RATE: @product.GetRate(_repository)</p>
                 @for (int i = 0; i < 5; i++)

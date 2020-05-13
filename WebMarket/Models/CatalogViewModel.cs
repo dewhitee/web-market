@@ -136,21 +136,21 @@ namespace WebMarket.Models
         //    return null;
         //}
 
-        public static string GetSelectedBuyProductName(IMainRepository repo)
+        public static string GetSelectedBuyProductName(IMainRepository repo, AppUser user)
         {
             foreach (var product in ListOfProducts)
             {
-                if (product.AddedToCart && !product.IsBought(repo))
+                if (product.AddedToCart && !product.IsBought(repo, user))
                     return product.Name;
             }
             return "";
         }
 
-        public static string GetSelectedSellProductName(IMainRepository repo)
+        public static string GetSelectedSellProductName(IMainRepository repo, AppUser user)
         {
             foreach (var product in ListOfProducts)
             {
-                if (product.IsBought(repo) && product.AddedToCart)
+                if (product.IsBought(repo, user) && product.AddedToCart)
                     return product.Name;
             }
             return "";
@@ -158,59 +158,21 @@ namespace WebMarket.Models
 
         public static Product GetSelectedBuyProduct(IMainRepository repo)
         {
-            //foreach (var product in ListOfProducts)
-            //{
-            //    if (product.AddedToCart && !product.IsBought(repo))
-            //        return product;
-            //}
-            //return new Product();
             return ChoosenProduct ?? new Product();
         }
-        //public static Product GetSelectedBuyProduct(IMainRepository repository)
-        //{
-        //    return ChoosenProduct ?? new Product();
-        //}
 
-        //public static Product GetSelectedSellProduct(IMainRepository repo)
-        //{
-        //    foreach (var product in ListOfProducts)
-        //    {
-        //        if (product.IsBought(repo) && product.AddedToCart)
-        //            return product;
-        //    }
-        //    return new Product();
-        //}
-
-        public static Product GetSelectedSellProduct(IMainRepository repository)
+        public static Product GetSelectedSellProduct(IMainRepository repository, AppUser user)
         {
-            return ChoosenProduct != null && ChoosenProduct.IsBought(repository) ? ChoosenProduct : new Product();
+            return ChoosenProduct != null && ChoosenProduct.IsBought(repository, user) ? ChoosenProduct : new Product();
         }
-
-        //public static string GetSelectedSellProductPriceSentence()
-        //{
-        //    var product = GetSelectedSellProduct();
-        //    if (!string.IsNullOrWhiteSpace(product.Name))
-        //        return CurrentUser.MoneyString + " + " + product.FinalPriceString + string.Format(" = {0}€", (CurrentUser.Money + product.FinalPrice).ToString("0.##"));
-        //    else
-        //        return "You have not selected any product to sell!";
-        //}
         public static string GetSelectedSellProductPriceSentence(IMainRepository repository, AppUser user)
         {
-            var product = GetSelectedSellProduct(repository);
+            var product = GetSelectedSellProduct(repository, user);
             if (!string.IsNullOrWhiteSpace(product.Name) && user != null)
                 return user.MoneyString + " + " + product.FinalPriceString + string.Format(" = {0}€", (user.Money + product.FinalPrice).ToString("0.##"));
             else
                 return "You have not selected any product to sell!";
         }
-        //public static string GetSelectedBuyProductPriceSentence()
-        //{
-        //    var product = GetSelectedBuyProduct();
-        //    var finalCost = CurrentUser.Money - product.FinalPrice;
-        //    if (!string.IsNullOrWhiteSpace(product.Name))
-        //        return CurrentUser.MoneyString + " - " + product.FinalPriceString + string.Format(" = {0}€", finalCost.ToString("0.##")) + (finalCost < 0 ? " (You don't have enough money!)" : "");
-        //    else
-        //        return "You have not selected any product to buy!";
-        //}
         public static string GetSelectedBuyProductPriceSentence(IMainRepository repository, AppUser user)
         {
             var product = GetSelectedBuyProduct(repository);
@@ -220,18 +182,6 @@ namespace WebMarket.Models
             else
                 return "You have not selected any product to buy!";
         }
-
-        //public static string GetBuyProductButtonClassString(bool outline = true)
-        //{
-        //    var product = GetSelectedBuyProduct();
-        //    var finalCost = CurrentUser.Money - product.FinalPrice;
-        //    if (!string.IsNullOrWhiteSpace(product.Name))
-        //    {
-        //        if (finalCost < 0)
-        //            return "btn btn-danger";
-        //    }
-        //    return outline ? "btn btn-outline-primary" : "btn btn-primary";
-        //}
         public static string GetBuyProductButtonClassString(IMainRepository repository, AppUser user, bool outline = true)
         {
             var product = GetSelectedBuyProduct(repository);
@@ -243,17 +193,6 @@ namespace WebMarket.Models
             }
             return outline ? "btn btn-outline-primary" : "btn btn-primary";
         }
-        //public static string GetSubmitBuyingButtonClassString()
-        //{
-        //    var product = GetSelectedBuyProduct();
-        //    var finalCost = CurrentUser.Money - product.FinalPrice;
-        //    if (!string.IsNullOrWhiteSpace(product.Name))
-        //    {
-        //        if (finalCost < 0)
-        //            return "btn btn-danger disabled";
-        //    }
-        //    return "btn btn-success";
-        //}
         public static string GetSubmitBuyingButtonClassString(IMainRepository repository, AppUser user)
         {
             var product = GetSelectedBuyProduct(repository);
@@ -265,15 +204,6 @@ namespace WebMarket.Models
             }
             return "btn btn-success";
         }
-
-        //public static string GetSubmitBuyingButtonText()
-        //{
-        //    var product = GetSelectedBuyProduct();
-        //    if (!string.IsNullOrWhiteSpace(product.Name))
-        //        return "Submit buying product";
-
-        //    return "Find";
-        //}
         public static string GetSubmitBuyingButtonText(IMainRepository repository)
         {
             var product = GetSelectedBuyProduct(repository);
@@ -282,17 +212,9 @@ namespace WebMarket.Models
 
             return "Find";
         }
-        //public static string GetSubmitSellingButtonText()
-        //{
-        //    var product = GetSelectedSellProduct();
-        //    if (!string.IsNullOrWhiteSpace(product.Name))
-        //        return "Submit selling product";
-
-        //    return "Find";
-        //}
-        public static string GetSubmitSellingButtonText(IMainRepository repository)
+        public static string GetSubmitSellingButtonText(IMainRepository repository, AppUser user)
         {
-            var product = GetSelectedSellProduct(repository);
+            var product = GetSelectedSellProduct(repository, user);
             if (!string.IsNullOrWhiteSpace(product.Name))
                 return "Submit selling product";
 

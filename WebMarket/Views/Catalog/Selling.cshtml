@@ -14,7 +14,7 @@
 <h1>Selling</h1>
 <br>
 @{
-    var product = CatalogViewModel.GetSelectedSellProduct(_repository);
+    var product = CatalogViewModel.GetSelectedSellProduct(_repository, Userbase.CurrentAppUser);
 
     <div class="float-left" style="padding-right:2em">
         <div class="card bg-light mb-3" style="max-width: 18rem;">
@@ -45,7 +45,7 @@
     </div>
 
     <div class="card h-100 hoverable-card" id="card_on_transaction">
-        <div class="card-header @product.GetTableHeaderClassString(_repository)" id="card_on_transaction_header">
+        <div class="card-header @product.GetTableHeaderClassString(_repository, Userbase.CurrentAppUser)" id="card_on_transaction_header">
             <h5 style="font-weight:300">@product.Type</h5>
         </div>
         <div style="transform:rotate(0);">
@@ -62,7 +62,7 @@
             </div>
         </div>
 
-        <div class="card-footer @product.GetTableHeaderClassString(_repository)" id="card_on_transaction_footer">
+        <div class="card-footer @product.GetTableHeaderClassString(_repository, Userbase.CurrentAppUser)" id="card_on_transaction_footer">
 
             @*<div class="float-right">*@
             <h3>
@@ -89,7 +89,7 @@
                 You will have:
                 <mark>@CatalogViewModel.GetSelectedSellProductPriceSentence(_repository, CatalogViewModel.CurrentAppUser)</mark>
             </p>
-            <small class="text-warning @product.GetProductTableLinkClassString(_repository)">
+            <small class="text-warning @product.GetProductTableLinkClassString(_repository, Userbase.CurrentAppUser)">
                 Added @product.AddedDate.ToShortDateString()
             </small>
 

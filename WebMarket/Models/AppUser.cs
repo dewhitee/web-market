@@ -18,7 +18,7 @@ namespace WebMarket.Data
 
         public void BuyProduct(Product product, IMainRepository repository)
         {
-            if (Money >= product.FinalPrice && !product.IsBought(repository))
+            if (Money >= product.FinalPrice && !product.IsBought(repository, this))
             {
                 Money -= product.FinalPrice;
 
@@ -38,7 +38,7 @@ namespace WebMarket.Data
         }
         public void SellProduct(Product product, IMainRepository repo)
         {
-            if (product.IsBought(repo))
+            if (product.IsBought(repo, this))
             {
                 Money += product.FinalPrice;
 

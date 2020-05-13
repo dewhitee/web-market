@@ -1,4 +1,8 @@
-﻿@model ComparisonViewModel
+﻿@using Microsoft.AspNetCore.Identity
+@using WebMarket.Data
+
+@model ComparisonViewModel
+@inject UserManager<AppUser> _userManager
 @inject IMainRepository _repository
 @{
     ViewData["Title"] = "Comparison";
@@ -33,7 +37,7 @@
     //function onHoveredRightImgOut(index) {
     //    $("img-rigth-" + index).addClass(".")
     //}
-    
+
     function getLeftFinalWidth(index) {
         switch (index) {
             case 1: return @ComparisonViewModel.LeftProduct?.GetStarsPercent(1, _repository);
@@ -44,7 +48,7 @@
         }
     };
     function getRightFinalWidth(index) {
-        
+
         switch (index) {
             case 1: return @ComparisonViewModel.RightProduct?.GetStarsPercent(1, _repository);
             case 2: return @ComparisonViewModel.RightProduct?.GetStarsPercent(2, _repository);
@@ -84,11 +88,13 @@
             var leftProduct = ComparisonViewModel.LeftProduct;
             var rightProduct = ComparisonViewModel.RightProduct;
 
+            var user = _userManager.GetUserAsync(User).Result;
+
             if (leftProduct != null && rightProduct != null)
             {
                 <div class="col col-xs-12 col-sm-12 col-md-4 col-lg-4" style="padding-bottom: 2rem;">
                     <div class="card h-100 hoverable-card" id="card_on_transaction">
-                        <div class="card-header @leftProduct.GetTableHeaderClassString(_repository)" id="card_on_transaction_header">
+                        <div class="card-header @leftProduct.GetTableHeaderClassString(_repository, user)" id="card_on_transaction_header">
                             <h5 style="font-weight:300">@leftProduct.Type</h5>
                         </div>
                         <div style="transform:rotate(0);">
@@ -145,7 +151,7 @@
                             @*<a href="@product.Link" class="stretched-link"></a>*@
                         </div>
 
-                        <div class="card-footer @leftProduct.GetTableHeaderClassString(_repository)" id="card_on_transaction_footer">
+                        <div class="card-footer @leftProduct.GetTableHeaderClassString(_repository, user)" id="card_on_transaction_footer">
 
                             @*<div class="float-right">*@
                             <h3>
@@ -158,7 +164,7 @@
                                 </sup>
                             </h3>
                             <br>
-                            <small class="text-warning @leftProduct.GetProductTableLinkClassString(_repository)">
+                            <small class="text-warning @leftProduct.GetProductTableLinkClassString(_repository, user)">
                                 Added @leftProduct.AddedDate.ToShortDateString()
                             </small>
 
@@ -184,7 +190,7 @@
                 </div>
                 <div class="col col-xs-12 col-sm-12 col-md-4 col-lg-4" style="padding-bottom: 2rem;">
                     <div class="card h-100 hoverable-card" id="card_on_transaction">
-                        <div class="card-header @rightProduct.GetTableHeaderClassString(_repository)" id="card_on_transaction_header">
+                        <div class="card-header @rightProduct.GetTableHeaderClassString(_repository, user)" id="card_on_transaction_header">
                             <h5 style="font-weight:300">@rightProduct.Type</h5>
                         </div>
                         <div style="transform:rotate(0);">
@@ -241,7 +247,7 @@
                             @*<a href="@rightProduct.Link" class="stretched-link"></a>*@
                         </div>
 
-                        <div class="card-footer @rightProduct.GetTableHeaderClassString(_repository)" id="card_on_transaction_footer">
+                        <div class="card-footer @rightProduct.GetTableHeaderClassString(_repository, user)" id="card_on_transaction_footer">
 
                             @*<div class="float-right">*@
                             <h3>
@@ -254,7 +260,7 @@
                                 </sup>
                             </h3>
                             <br>
-                            <small class="text-warning @rightProduct.GetProductTableLinkClassString(_repository)">
+                            <small class="text-warning @rightProduct.GetProductTableLinkClassString(_repository, user)">
                                 Added @rightProduct.AddedDate.ToShortDateString()
                             </small>
 
@@ -264,7 +270,7 @@
                 <hr>
                 <div class="col col-sm-12 col-md-12 col-lg-6" style="padding-top: 2rem;">
                     <div class="card h-100 hoverable-card" id="card_on_transaction">
-                        <div class="card-header @leftProduct.GetTableHeaderClassString(_repository)" id="card_on_transaction_header">
+                        <div class="card-header @leftProduct.GetTableHeaderClassString(_repository, user)" id="card_on_transaction_header">
                             <h5 style="font-weight:300">What people think about <strong>@leftProduct.Name</strong></h5>
                             <p>RATE: @leftProduct.GetRate(_repository)</p>
                             @for (int i = 0; i < 5; i++)
@@ -375,7 +381,7 @@
                 </div>
                 <div class="col col-sm-12 col-md-12 col-lg-6" style="padding-top: 2rem;">
                     <div class="card h-100 hoverable-card" id="card_on_transaction">
-                        <div class="card-header @rightProduct.GetTableHeaderClassString(_repository)" id="card_on_transaction_header">
+                        <div class="card-header @rightProduct.GetTableHeaderClassString(_repository, user)" id="card_on_transaction_header">
                             <h5 style="font-weight:300">What people think about <strong>@rightProduct.Name</strong></h5>
                             <p>RATE: @rightProduct.GetRate(_repository)</p>
                             @for (int i = 0; i < 5; i++)
@@ -464,11 +470,11 @@
                                             {
                                                 if (comment.Rate >= i + 1)
                                                 {
-                                                <i class="fa fa-star checked"></i>
+                                                    <i class="fa fa-star checked"></i>
                                                 }
                                                 else
                                                 {
-                                                <i class="fa fa-star not-checked"></i>
+                                                    <i class="fa fa-star not-checked"></i>
                                                 }
 
                                             }
