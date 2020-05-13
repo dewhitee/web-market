@@ -22,7 +22,7 @@ namespace WebMarket.Controllers
             IHttpContextAccessor contextAccessor)
         {
             _logger = logger;
-            Userbase.LoadData();
+            ///Userbase.LoadData();
             Userbase.Set(signInManager, userManager, contextAccessor.HttpContext.User);
         }
 

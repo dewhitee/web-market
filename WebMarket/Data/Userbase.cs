@@ -49,8 +49,9 @@ namespace WebMarket.Data
             User = user;
             Console.WriteLine($"SignInManager = {SignInManager != null}, " +
                 $"UserManager = {UserManager != null}, User = {User != null}");
-            if (!File.Exists(MoneyFilePath))
-                File.Create(MoneyFilePath);
+            //if (!File.Exists(MoneyFilePath))
+            //    File.Create(MoneyFilePath);
+            LoadData();
             InitCurrentUser();
         }
         public static /*async */void LoadData()
@@ -61,15 +62,15 @@ namespace WebMarket.Data
         }
         public static async void InitCurrentUser()
         {
-            if (User != null)
+            if (User != null && User.Identity.Name != null)
             {
                 var id = UserManager.GetUserId(User);
-                CatalogViewModel.CurrentUser = new User
-                {
-                    Username = User.Identity.Name,
-                    ID = id,
-                    Money = GetMoney()
-                };
+                //CatalogViewModel.CurrentUser = new User
+                //{
+                //    Username = User.Identity.Name,
+                //    ID = id,
+                //    Money = GetMoney()
+                //};
                 //LoadUser();
                 AddUserNameIDBinding(User.Identity.Name, id);
                 IsInitialized = true;

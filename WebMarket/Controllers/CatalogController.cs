@@ -23,27 +23,24 @@ namespace WebMarket.Controllers
         //CatalogViewModel.ListOfProducts.OrderBy(t => t));
         //mainRepository.GetAllProducts().All(CatalogViewModel.ListOfProducts.Contains);
 
+        private static int _catalogLength = 0;
+
         public CatalogController(
             UserManager<AppUser> userManager,
             SignInManager<AppUser> signInManager,
             IHttpContextAccessor contextAccessor,
             IMainRepository productRepository)
         {
-            Userbase.LoadData();
+            ///Userbase.LoadData();
             Userbase.Set(signInManager, userManager, contextAccessor.HttpContext.User);
             this.mainRepository = productRepository;
         }
 
         public IActionResult Catalog()
         {
-            //LoadProducts();
-            ///LoadUser();
-            //if (!/*_productsListInitialized*/ProductsInitialized())
-            //{
-                CatalogViewModel.ListOfProducts = mainRepository.GetAllProducts().ToList();
-            ///_productsListInitialized = true;
-            //}
-            //CatalogViewModel.LoadFindTags();
+            var products = mainRepository.GetAllProducts();
+            CatalogViewModel.ListOfProducts = products.Take(_catalogLength > 0 ? _catalogLength : products.Count()).ToList();
+
             List<string> listOfProductTypes = new List<string>();
             listOfProductTypes = (from pt in mainRepository.GetAllProductTypes() orderby pt.Name select pt.Name).ToList();
 
@@ -162,71 +159,29 @@ namespace WebMarket.Controllers
             //    return RedirectToAction("Catalog");
             //}
             Buy(productName, productID);
-            SaveUser();
-            SaveProducts();
+            ///SaveUser();
+            ///SaveProducts();
             return RedirectToAction("Catalog");
 
         }
         private void Buy(string productName, int productID)
         {
-            //foreach (var product in /*CatalogViewModel.ListOfProducts*/mainRepository.GetAllProducts())
-            //{
-            //    if (product.ID == productID || product.Name == productName)
-            //    {
-            //        LoadUser();
-            //        CatalogViewModel.CurrentUser.BuyProduct(product, mainRepository);
-            //        break;
-            //    }
-            //}
             var product = from p in mainRepository.GetAllProducts() where p.ID == productID select p;
             if (product.Any())
             {
                 ///CatalogViewModel.CurrentUser.BuyProduct(product.FirstOrDefault(), mainRepository);
-                Userbase.CurrentAppUser.BuyProduct(product.FirstOrDefault(), mainRepository);
+                Userbase.CurrentAppUser?.BuyProduct(product.FirstOrDefault(), mainRepository);
             }
         }
-
-        //[Obsolete]
-        //private void FindAndBuyProduct(string productName)
-        //{
-        //    foreach (var product in CatalogViewModel.ListOfProducts)
-        //    {
-        //        //product.AddedToCart = false;
-        //        if (product.Name == productName && !product.IsBought)
-        //        {
-        //            //product.AddedToCart = true;
-        //            CatalogViewModel.ChoosenProductID = product.ID;
-        //            Buy(product.Name, product.ID);
-        //            break;
-        //        }
-        //    }
-        //    //SaveUser();
-        //    //SaveProducts();
-        //}
 
         [Obsolete]
         public IActionResult SellProduct(string productName, int productID)
         {
-            Console.WriteLine("Selling Product...");
-            Product toSell = new Product();
-            //foreach (var product in /*CatalogViewModel.ListOfProducts*/mainRepository.GetAllProducts())
-            //{
-            //    if (product.ID == productID || product.Name == productName)
-            //    {
-            //        toSell = product;
-            //        LoadUser();
-            //        CatalogViewModel.CurrentUser.SellProduct(toSell, mainRepository);
-            //        break;
-            //    }
-            //}
-            ///SaveUser();
-            ///SaveProducts();
-
             var product = from p in mainRepository.GetAllProducts() where p.ID == productID select p;
             if (product.Any())
             {
                 ///CatalogViewModel.CurrentUser.SellProduct(product.FirstOrDefault(), mainRepository);
-                Userbase.CurrentAppUser.SellProduct(product.FirstOrDefault(), mainRepository);
+                Userbase.CurrentAppUser?.SellProduct(product.FirstOrDefault(), mainRepository);
             }
 
             return RedirectToAction("Catalog");
@@ -236,8 +191,6 @@ namespace WebMarket.Controllers
         {
             Console.WriteLine("Adding comment");
             var product = /*CatalogViewModel.GetProduct(productID)*/mainRepository.GetProduct(productID);
-            ///if (product.Comments == null) // is needed for old products that do not have comments list instantiated
-            ///    product.Comments = new List<UserComment>();
 
             bool canAdd = product.OnlyOneCommentPerUser ? mainRepository.GetUserCommentsByProdID(product.ID).FirstOrDefault() == null : true;
             if (canAdd)
@@ -253,15 +206,8 @@ namespace WebMarket.Controllers
                 mainRepository.AddUserComment(newComment);
             }
 
-            SaveProducts();
-            ///if (!product.IsBought)
-            ///{
-                return RedirectToAction("Page", "Product");
-            ///}
-            ///else
-            ///{
-            ///    return RedirectToAction("Selling");
-            ///}
+            ///SaveProducts();
+            return RedirectToAction("Page", "Product");
         }
 
         public IActionResult SaveProducts()
@@ -398,6 +344,14 @@ namespace WebMarket.Controllers
                 CatalogViewModel.FindTags = new List<string>(findTags);
             else return View("Error");
             //CatalogViewModel.SaveFindTags();
+            return RedirectToAction("Catalog");
+        }
+
+        public IActionResult SubmitShowProducts(int catalogLength)
+        {
+            ///var products = mainRepository.GetAllProducts();
+            ///CatalogViewModel.ListOfProducts = (from p in products select p).Take(catalogLength > 0 ? catalogLength : products.Count()).ToList();
+            _catalogLength = catalogLength;
             return RedirectToAction("Catalog");
         }
 

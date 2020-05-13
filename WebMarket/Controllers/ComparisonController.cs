@@ -21,7 +21,7 @@ namespace WebMarket.Controllers
             IHttpContextAccessor contextAccessor,
             IMainRepository mainRepository)
         {
-            Userbase.LoadData();
+            ///Userbase.LoadData();
             Userbase.Set(signInManager, userManager, contextAccessor.HttpContext.User);
             this.mainRepository = mainRepository;
         }
@@ -29,7 +29,7 @@ namespace WebMarket.Controllers
         [HttpGet]
         public IActionResult Comparison()
         {
-            CatalogViewModel.LoadProducts();
+            ///CatalogViewModel.LoadProducts();
             return View();
         }
 

@@ -157,13 +157,13 @@
                 </sup>
             </h3>
 
-            @if (product.OwnerID == CatalogViewModel.CurrentUser?.ID)
+            @if (product.OwnerID == CatalogViewModel.CurrentUser?.ID || Userbase.CurrentAppUser == null)
             {
                 <small class="text-warning @product.GetProductTableLinkClassString(_repository)">
                     Added @product.AddedDate.ToShortDateString()
                 </small>
             }
-            else if (!/*CatalogViewModel.CurrentUser.HasProductBought(product.ID, _repository)*/product.IsBought(_repository))
+            else if (!/*CatalogViewModel.CurrentUser.HasProductBought(product.ID, _repository)*/product.IsBought(_repository) && Userbase.CurrentAppUser != null)
             {
                 <div class="float-right">
                     <form asp-controller="Catalog" asp-action="BuyProduct" method="post">
@@ -182,7 +182,7 @@
                     Added @product.AddedDate.ToShortDateString()
                 </small>
             }
-            else
+            else if (Userbase.CurrentAppUser != null)
             {
                 <div class="float-right">
                     <form asp-controller="Catalog" asp-action="SellProduct" method="post">
