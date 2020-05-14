@@ -56,8 +56,11 @@ namespace WebMarket.Models
 
         public Tag AddTag(Tag tag)
         {
-            context.Tags.Add(tag);
-            context.SaveChanges();
+            if (!context.Tags.Contains(tag))
+            {
+                context.Tags.Add(tag);
+                context.SaveChanges();
+            }
             return tag;
         }
 

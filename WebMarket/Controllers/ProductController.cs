@@ -8,6 +8,7 @@ using WebMarket.Models;
 using WebMarket.Data;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
+using Microsoft.AspNetCore.Identity;
 
 namespace WebMarket.Controllers
 {
@@ -15,6 +16,8 @@ namespace WebMarket.Controllers
     {
         private static List<string> _tags = null;
         private static Product _addedProduct = null;
+        private readonly UserManager<AppUser> userManager;
+
         //private static Product _editProduct = null;
 
         private readonly IMainRepository mainRepository;
@@ -23,9 +26,11 @@ namespace WebMarket.Controllers
 
         [Obsolete]
         public ProductController(
+            UserManager<AppUser> userManager,
             IMainRepository mainRepository,
             IHostingEnvironment hostingEnvironment)
         {
+            this.userManager = userManager;
             this.mainRepository = mainRepository;
             this.hostingEnvironment = hostingEnvironment;
         }
@@ -85,7 +90,7 @@ namespace WebMarket.Controllers
                     Discount = model.Discount,
                     Description = model.Description,
                     FirstImage = new Product.Image
-                    { 
+                    {
                         Link = (model.FirstImageLink != null && model.FirstImageLink.Length > 0) ? model.FirstImageLink
                         : "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg",
                         Description = model.FirstImageDescription
@@ -103,7 +108,7 @@ namespace WebMarket.Controllers
                     Link = model.Link,
                     FileName = uniqueFileName,
                     AddedDate = DateTime.Today,
-                    OwnerID = Userbase.CurrentAppUser.Id
+                    OwnerID = /*Userbase.CurrentAppUser.Id*/userManager.GetUserId(User)
                 };
 
                 mainRepository.AddProduct(newProduct);

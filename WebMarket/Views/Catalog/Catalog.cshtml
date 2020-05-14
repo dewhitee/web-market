@@ -325,7 +325,7 @@
     </div>*@
 
 <div class="float-right">
-    <h2>@*@CatalogViewModel.CurrentUser.MoneyString*@@Userbase.CurrentAppUser?.MoneyString</h2>
+    <h2>@*@CatalogViewModel.CurrentUser.MoneyString*@@_userManager.GetUserAsync(User).Result?.MoneyString</h2>
 </div>
 <div style="padding-bottom:1em"></div>
 <div class="d-inline">
