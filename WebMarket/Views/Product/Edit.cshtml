@@ -6,6 +6,21 @@
 
 <h1>Edit</h1>
 
+<div class="float-right">
+    <div class="d-inline">
+        <a type="button" class="btn btn-outline-primary" asp-area="" asp-controller="Product" asp-action="OpenEditProduct"
+           asp-route-prodid="@Model.ID">Info</a>
+    </div>
+    <div class="d-inline">
+        <a type="button" class="btn btn-outline-primary" asp-area="" asp-controller="Product" asp-action="EditImages"
+           asp-route-prodid="@Model.ID">Images</a>
+    </div>
+    <div class="d-inline">
+        <a type="button" class="btn btn-outline-primary" asp-area="" asp-controller="Product" asp-action="EditTags"
+           asp-route-prodid="@Model.ID">Tags</a>
+    </div>
+    <div style="padding-bottom:1em"></div>
+</div>
 <h4>Product</h4>
 <hr />
 <div class="row">

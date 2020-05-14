@@ -27,6 +27,7 @@
 
 
   <ItemGroup>
+    <Folder Include="Data\Queries\" />
     <Folder Include="wwwroot\file\" />
   </ItemGroup>
 

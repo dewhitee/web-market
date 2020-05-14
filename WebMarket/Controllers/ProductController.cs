@@ -61,6 +61,53 @@ namespace WebMarket.Controllers
         //    return View();
         //}
 
+        public IActionResult EditImages(int prodId)
+        {
+            var images = mainRepository.GetImagesByProductID(prodId).ToList();
+            return View("EditImagesView", new EditImagesViewModel
+            {
+                ProductId = prodId,
+                FirstImageLink = images[0].Link,
+                FirstImageDescription = images[0].Description,
+                SecondImageLink = images[1].Link,
+                SecondImageDescription = images[1].Description,
+                ThirdImageLink = images[2].Link,
+                ThirdImageDescription = images[2].Description
+            });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditImages([FromForm]EditImagesViewModel model, int prodid)
+        {
+            try
+            {
+                var images = mainRepository.GetImagesByProductID(prodid).ToList();
+
+                var firstImage = mainRepository.GetImageByOrderIndex(prodid, 0);
+                firstImage.Link = model.FirstImageLink;
+                firstImage.Description = model.FirstImageDescription;
+
+                var secondImage = mainRepository.GetImageByOrderIndex(prodid, 1);
+                secondImage.Link = model.SecondImageLink;
+                secondImage.Description = model.SecondImageDescription;
+
+                var thirdImage = mainRepository.GetImageByOrderIndex(prodid, 2);
+                thirdImage.Link = model.ThirdImageLink;
+                thirdImage.Description = model.ThirdImageDescription;
+
+                mainRepository.UpdateImage(firstImage);
+                mainRepository.UpdateImage(secondImage);
+                mainRepository.UpdateImage(thirdImage);
+                ///mainRepository.UpdateProduct(product);
+                return RedirectToAction("Catalog", "Catalog");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Add([FromForm]AddProductViewModel model)
