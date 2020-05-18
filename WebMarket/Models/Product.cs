@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
@@ -15,28 +16,6 @@ namespace WebMarket.Models
     [Serializable]
     public class Product : IComparable<Product>
     {
-        public enum Tag
-        {
-            None,
-            Software,
-            Game,
-            GameEngine,
-            Modeling3D,
-            Texturing3D,
-            Scanning3D,
-            Sculpting3D,
-            Photogrammetry,
-            DAW,
-            AudioRecording,
-            VideoCapture,
-        }
-
-        [Serializable]
-        public struct Image
-        {
-            public string Link;
-            public string Description;
-        }
         public int ID { get; set; }
         [Required]
         [StringLength(32)]
@@ -54,14 +33,14 @@ namespace WebMarket.Models
         public string Description { get; set; }
         [StringLength(128)]
         public string Link { get; set; }
-        public string CardImageLink { get; set; }
+        ///public string CardImageLink { get; set; }
 
-        [NotMapped]
-        public Image FirstImage { get; set; }
-        [NotMapped]
-        public Image SecondImage { get; set; }
-        [NotMapped]
-        public Image ThirdImage { get; set; }
+        ///[NotMapped]
+        ///public Image FirstImage { get; set; }
+        ///[NotMapped]
+        ///public Image SecondImage { get; set; }
+        ///[NotMapped]
+        ///public Image ThirdImage { get; set; }
         //public string FirstImageLink { get => CardImageLink; }
         //public string SecondImageLink { get; set; }
         //public string ThirdImageLink { get; set; }
@@ -78,7 +57,9 @@ namespace WebMarket.Models
             return false;
         }
 
+        [DisplayName("Only registered user can comment")]
         public bool OnlyRegisteredCanComment { get; set; }
+        [DisplayName("Only one comment per user")]
         public bool OnlyOneCommentPerUser { get; set; }
         [NotMapped]
         public bool AddedToCart { get; set; }
@@ -133,14 +114,6 @@ namespace WebMarket.Models
             if (OwnerID != null)
                 return Userbase.GetUsername(OwnerID);
 
-            //foreach (var userName in Userbase.Usernames)
-            //{
-            //    var user = Userbase.GetUser(userName);
-            //    if (user.BoughtProductIDs.Contains(Name))
-            //    {
-            //        return user.Username;
-            //    }
-            //}
             return "NO_OWNER";
         }
 
@@ -258,33 +231,12 @@ namespace WebMarket.Models
                 return "Selected";
             else return "+";
         }
-
-        public string GetCardImageSrc()
-        {
-            if (CardImageLink != null)
-            {
-                return CardImageLink.Length > 0 ? CardImageLink : "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg";
-            }
-            else if (FirstImage.Link?.Length > 0)
-            {
-                return FirstImage.Link;
-            }
-            else return "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg";
-        }
         public string GetCardImageSrc(IMainRepository repository)
         {
             Models.Image image = repository.GetImagesByProductID(ID).FirstOrDefault();
             if (image != null)
             {
                 return image.Link.Length > 0 ? image.Link : "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg";
-            }
-            else return "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg";
-        }
-        public string GetFirstImageSrc()
-        {
-            if (FirstImage.Link != null)
-            {
-                return FirstImage.Link.Length > 0 ? FirstImage.Link : "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg";
             }
             else return "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg";
         }
@@ -297,28 +249,12 @@ namespace WebMarket.Models
             }
             else return "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg";
         }
-        public string GetSecondImageSrc()
-        {
-            if (SecondImage.Link != null)
-            {
-                return SecondImage.Link.Length > 0 ? SecondImage.Link : "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg";
-            }
-            else return "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg";
-        }
         public string GetSecondImageSrc(IMainRepository repository)
         {
             Models.Image image = repository.GetImageByOrderIndex(ID, 1);
             if (image != null)
             {
                 return image.Link.Length > 0 ? image.Link : "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg";
-            }
-            else return "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg";
-        }
-        public string GetThirdImageSrc()
-        {
-            if (ThirdImage.Link != null)
-            {
-                return ThirdImage.Link.Length > 0 ? ThirdImage.Link : "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg";
             }
             else return "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg";
         }

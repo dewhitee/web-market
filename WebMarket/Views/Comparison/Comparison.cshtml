@@ -15,59 +15,6 @@
 
 
 <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
-@*<link href="~/js/ratingtable.js" type="text/javascript" />*@
-<script>
-    //$(document).ready(function () {
-    //    alert("HELLO");
-    //});
-    $(document).ready(function() {
-        //if ($("lproductName").val().length == 0 || $("rproductName").val().length == 0) return;
-        //alert("Doc is ready!");
-        $($(".lbar").get().reverse()).each(function (index, element) {
-            $(element).width(getLeftFinalWidth(index+1)*100 + '%');
-        });
-        $($(".rbar").get().reverse()).each(function (index, element) {
-            $(element).width(getRightFinalWidth(index+1)*100 + '%');
-        });
-    });
-
-    //function onHoveredRightImg(index) {
-    //    $("img-right-" + index).
-    //}
-    //function onHoveredRightImgOut(index) {
-    //    $("img-rigth-" + index).addClass(".")
-    //}
-
-    function getLeftFinalWidth(index) {
-        switch (index) {
-            case 1: return @ComparisonViewModel.LeftProduct?.GetStarsPercent(1, _repository);
-            case 2: return @ComparisonViewModel.LeftProduct?.GetStarsPercent(2, _repository);
-            case 3: return @ComparisonViewModel.LeftProduct?.GetStarsPercent(3, _repository);
-            case 4: return @ComparisonViewModel.LeftProduct?.GetStarsPercent(4, _repository);
-            case 5: return @ComparisonViewModel.LeftProduct?.GetStarsPercent(5, _repository);
-        }
-    };
-    function getRightFinalWidth(index) {
-
-        switch (index) {
-            case 1: return @ComparisonViewModel.RightProduct?.GetStarsPercent(1, _repository);
-            case 2: return @ComparisonViewModel.RightProduct?.GetStarsPercent(2, _repository);
-            case 3: return @ComparisonViewModel.RightProduct?.GetStarsPercent(3, _repository);
-            case 4: return @ComparisonViewModel.RightProduct?.GetStarsPercent(4, _repository);
-            case 5: return @ComparisonViewModel.RightProduct?.GetStarsPercent(5, _repository);
-        }
-    };
-
-</script>
-<style>
-    .checked {
-        color: orange;
-    }
-
-    .not-checked {
-        color: #ddd;
-    }
-</style>
 
 <form asp-controller="Comparison" asp-area="" asp-action="FindProducts" method="post">
     <div class="form-group">
@@ -270,225 +217,20 @@
                 <hr>
                 <div class="col col-sm-12 col-md-12 col-lg-6" style="padding-top: 2rem;">
                     <div class="card h-100 hoverable-card" id="card_on_transaction">
-                        <div class="card-header @leftProduct.GetTableHeaderClassString(_repository, user)" id="card_on_transaction_header">
-                            <h5 style="font-weight:300">What people think about <strong>@leftProduct.Name</strong></h5>
-                            <p>RATE: @leftProduct.GetRate(_repository)</p>
-                            @for (int i = 0; i < 5; i++)
-                            {
-                                if (ComparisonViewModel.GetStarsValue(leftProduct, _repository) >= i + 1)
-                                {
-                                    <i class="fa fa-star checked"></i>
-                                }
-                                else
-                                {
-                                    <i class="fa fa-star not-checked"></i>
-                                }
-                            }
-                            <div id="left-rating-table">
-                                <div class="row">
-                                    <div class="side left">
-                                        <div>5 star</div>
-                                    </div>
-                                    <div class="middle">
-                                        <div class="bar-container">
-                                            <div class="bar-5 lbar" id="lbar-5"></div>
-                                        </div>
-                                    </div>
-                                    <div class="side right">
-                                        <div>@leftProduct.GetStarsCount(5, _repository)</div>
-                                    </div>
-                                    <div class="side left">
-                                        <div>4 star</div>
-                                    </div>
-                                    <div class="middle">
-                                        <div class="bar-container">
-                                            <div class="bar-4 lbar" id="lbar-4"></div>
-                                        </div>
-                                    </div>
-                                    <div class="side right">
-                                        <div>@leftProduct.GetStarsCount(4, _repository)</div>
-                                    </div>
-                                    <div class="side left">
-                                        <div>3 star</div>
-                                    </div>
-                                    <div class="middle">
-                                        <div class="bar-container">
-                                            <div class="bar-3 lbar" id="lbar-3"></div>
-                                        </div>
-                                    </div>
-                                    <div class="side right">
-                                        <div>@leftProduct.GetStarsCount(3, _repository)</div>
-                                    </div>
-                                    <div class="side left">
-                                        <div>2 star</div>
-                                    </div>
-                                    <div class="middle">
-                                        <div class="bar-container">
-                                            <div class="bar-2 lbar" id="lbar-2"></div>
-                                        </div>
-                                    </div>
-                                    <div class="side right">
-                                        <div>@leftProduct.GetStarsCount(2, _repository)</div>
-                                    </div>
-                                    <div class="side left">
-                                        <div>1 star</div>
-                                    </div>
-                                    <div class="middle">
-                                        <div class="bar-container">
-                                            <div class="bar-1 lbar" id="lbar-1"></div>
-                                        </div>
-                                    </div>
-                                    <div class="side right">
-                                        <div>@leftProduct.GetStarsCount(1, _repository)</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <p class="text-center text-muted"><small><i>from total amount of <b>@leftProduct.GetTotalCountOfNotNulledComments(_repository)</b> rated comments</i></small></p>
-                        </div>
-                        <div class="card-body" style="transform:rotate(0);">
-                            @{
-                                if (/*leftProduct.Comments*/_repository.GetUserCommentsByProdID(leftProduct.ID) != null)
-                                {
-                                    foreach (var comment in _repository.GetUserCommentsByProdID(leftProduct.ID))
-                                    {
-                                        <p><strong>@WebMarket.Data.Userbase.GetUsername(comment.UserID)</strong></p>
-                                        <p>@comment.Text</p>
-                                        if (comment.Rate > 0f)
-                                        {
-                                            for (int i = 0; i < 5; i++)
-                                            {
-                                                if (Math.Truncate((decimal)comment.Rate) > i)
-                                                {
-                                                    <i class="fa fa-star checked"></i>
-                                                }
-                                                else
-                                                {
-                                                    <i class="fa fa-star not-checked"></i>
-                                                }
-                                            }
-                                        }
-                                        <hr />
-                                    }
-                                }
-                                else
-                                {
-                                    <p><strong>We can't render comments as this product don't have any...</strong></p>
-                                }
-                            }
-                        </div>
-
+                        @{
+                            var lProduct = new ProductRatingTableViewModel(leftProduct, false);
+                            <partial name="~/Views/Shared/_RatingTablePartial.cshtml" model="@lProduct" />
+                            <partial name="~/Views/Shared/_CommentSectionPartial.cshtml" for="@lProduct" />
+                        }
                     </div>
                 </div>
                 <div class="col col-sm-12 col-md-12 col-lg-6" style="padding-top: 2rem;">
                     <div class="card h-100 hoverable-card" id="card_on_transaction">
-                        <div class="card-header @rightProduct.GetTableHeaderClassString(_repository, user)" id="card_on_transaction_header">
-                            <h5 style="font-weight:300">What people think about <strong>@rightProduct.Name</strong></h5>
-                            <p>RATE: @rightProduct.GetRate(_repository)</p>
-                            @for (int i = 0; i < 5; i++)
-                            {
-                                if (ComparisonViewModel.GetStarsValue(rightProduct, _repository) >= i + 1)
-                                {
-                                    <i class="fa fa-star checked"></i>
-                                }
-                                else
-                                {
-                                    <i class="fa fa-star not-checked"></i>
-                                }
-                            }
-                            <div id="right-rating-table">
-                                <div class="row">
-                                    <div class="side left">
-                                        <div>5 star</div>
-                                    </div>
-                                    <div class="middle">
-                                        <div class="bar-container">
-                                            <div class="bar-5 rbar" id="rbar-5"></div>
-                                        </div>
-                                    </div>
-                                    <div class="side right">
-                                        <div>@rightProduct.GetStarsCount(5, _repository)</div>
-                                    </div>
-                                    <div class="side left">
-                                        <div>4 star</div>
-                                    </div>
-                                    <div class="middle">
-                                        <div class="bar-container">
-                                            <div class="bar-4 rbar" id="rbar-4"></div>
-                                        </div>
-                                    </div>
-                                    <div class="side right">
-                                        <div>@rightProduct.GetStarsCount(4, _repository)</div>
-                                    </div>
-                                    <div class="side left">
-                                        <div>3 star</div>
-                                    </div>
-                                    <div class="middle">
-                                        <div class="bar-container">
-                                            <div class="bar-3 rbar" id="rbar-3"></div>
-                                        </div>
-                                    </div>
-                                    <div class="side right">
-                                        <div>@rightProduct.GetStarsCount(3, _repository)</div>
-                                    </div>
-                                    <div class="side left">
-                                        <div>2 star</div>
-                                    </div>
-                                    <div class="middle">
-                                        <div class="bar-container">
-                                            <div class="bar-2 rbar" id="rbar-2"></div>
-                                        </div>
-                                    </div>
-                                    <div class="side right">
-                                        <div>@rightProduct.GetStarsCount(2, _repository)</div>
-                                    </div>
-                                    <div class="side left">
-                                        <div>1 star</div>
-                                    </div>
-                                    <div class="middle">
-                                        <div class="bar-container">
-                                            <div class="bar-1 rbar" id="rbar-1"></div>
-                                        </div>
-                                    </div>
-                                    <div class="side right">
-                                        <div>@rightProduct.GetStarsCount(1, _repository)</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <p class="text-center text-muted"><small><i>from total amount of <b>@rightProduct.GetTotalCountOfNotNulledComments(_repository)</b> rated comments</i></small></p>
-                        </div>
-                        <div class="card-body" style="transform:rotate(0);">
-                            @{
-                                if (/*rightProduct.Comments*/_repository.GetUserCommentsByProdID(rightProduct.ID) != null)
-                                {
-                                    foreach (var comment in _repository.GetUserCommentsByProdID(rightProduct.ID))
-                                    {
-                                        <p><strong>@WebMarket.Data.Userbase.GetUsername(comment.UserID)</strong></p>
-                                        <p>@comment.Text</p>
-                                        if (comment.Rate > 0f)
-                                        {
-                                            for (int i = 0; i < 5; i++)
-                                            {
-                                                if (comment.Rate >= i + 1)
-                                                {
-                                                    <i class="fa fa-star checked"></i>
-                                                }
-                                                else
-                                                {
-                                                    <i class="fa fa-star not-checked"></i>
-                                                }
-
-                                            }
-                                        }
-                                        <hr />
-                                    }
-                                }
-                                else
-                                {
-                                    <p><strong>We can't render comments as this product don't have any...</strong></p>
-                                }
-                            }
-                        </div>
-
+                        @{
+                            var rProduct = new ProductRatingTableViewModel(rightProduct, true);
+                            <partial name="~/Views/Shared/_RatingTablePartial.cshtml" model="@rProduct" />
+                            <partial name="~/Views/Shared/_CommentSectionPartial.cshtml" for="@rProduct" />
+                        }
                     </div>
                 </div>
             }
@@ -504,5 +246,36 @@
                 source: 'api/postapi/search'
             });
         });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $($(".l-bar").get().reverse()).each(function (index, element) {
+                $(element).width(getLeftFinalWidth(index+1)*100 + '%');
+            });
+            $($(".r-bar").get().reverse()).each(function (index, element) {
+                $(element).width(getRightFinalWidth(index + 1) * 100 + '%');
+            });
+        });
+
+        function getLeftFinalWidth(index) {
+            switch (index) {
+                case 1: return @leftProduct?.GetStarsPercent(1, _repository);
+                case 2: return @leftProduct?.GetStarsPercent(2, _repository);
+                case 3: return @leftProduct?.GetStarsPercent(3, _repository);
+                case 4: return @leftProduct?.GetStarsPercent(4, _repository);
+                case 5: return @leftProduct?.GetStarsPercent(5, _repository);
+            }
+        };
+
+        function getRightFinalWidth(index) {
+            switch (index) {
+                case 1: return @rightProduct?.GetStarsPercent(1, _repository);
+                case 2: return @rightProduct?.GetStarsPercent(2, _repository);
+                case 3: return @rightProduct?.GetStarsPercent(3, _repository);
+                case 4: return @rightProduct?.GetStarsPercent(4, _repository);
+                case 5: return @rightProduct?.GetStarsPercent(5, _repository);
+            }
+        };
     </script>
 }

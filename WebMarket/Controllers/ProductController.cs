@@ -136,22 +136,22 @@ namespace WebMarket.Controllers
                     Price = model.Price,
                     Discount = model.Discount,
                     Description = model.Description,
-                    FirstImage = new Product.Image
-                    {
-                        Link = (model.FirstImageLink != null && model.FirstImageLink.Length > 0) ? model.FirstImageLink
-                        : "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg",
-                        Description = model.FirstImageDescription
-                    },
-                    SecondImage = new Product.Image
-                    {
-                        Link = model.SecondImageLink,
-                        Description = model.SecondImageDescription
-                    },
-                    ThirdImage = new Product.Image
-                    {
-                        Link = model.ThirdImageLink,
-                        Description = model.ThirdImageDescription
-                    },
+                    //FirstImage = new Product.Image
+                    //{
+                    //    Link = (model.FirstImageLink != null && model.FirstImageLink.Length > 0) ? model.FirstImageLink
+                    //    : "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg",
+                    //    Description = model.FirstImageDescription
+                    //},
+                    //SecondImage = new Product.Image
+                    //{
+                    //    Link = model.SecondImageLink,
+                    //    Description = model.SecondImageDescription
+                    //},
+                    //ThirdImage = new Product.Image
+                    //{
+                    //    Link = model.ThirdImageLink,
+                    //    Description = model.ThirdImageDescription
+                    //},
                     Link = model.Link,
                     FileName = uniqueFileName,
                     AddedDate = DateTime.Today,

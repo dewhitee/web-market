@@ -15,14 +15,10 @@ namespace WebMarket.Controllers
 {
     public class CatalogController : Controller
     {
-        //private string saveUserFilePath { get => @"D:\ASP.NET PROJECTS\WebMarket\data\user_" + CatalogViewModel.CurrentUser.Username + "_.dew"; }
-        //System.Security.Claims.ClaimsPrincipal currentUser = User;
-        ///private static List<string> _tags = null;
-        private readonly IMainRepository mainRepository;
-        //private bool _productsListInitialized => //Enumerable.SequenceEqual(mainRepository.GetAllProducts().OrderBy(p => p),
-        //CatalogViewModel.ListOfProducts.OrderBy(t => t));
-        //mainRepository.GetAllProducts().All(CatalogViewModel.ListOfProducts.Contains);
+        private readonly UserManager<AppUser> userManager;
+        private readonly SignInManager<AppUser> signInManager;
 
+        private readonly IMainRepository mainRepository;
         private static int _catalogLength = 0;
 
         public CatalogController(
@@ -33,6 +29,8 @@ namespace WebMarket.Controllers
         {
             ///Userbase.LoadData();
             Userbase.Set(signInManager, userManager, contextAccessor.HttpContext.User);
+            this.userManager = userManager;
+            this.signInManager = signInManager;
             this.mainRepository = productRepository;
         }
 
@@ -70,118 +68,91 @@ namespace WebMarket.Controllers
             return RedirectToAction("Catalog");
         }
 
-        [Obsolete]
-        public IActionResult AddProduct(
-            string productName,
-            string productType,
-            string[] tags,
-            decimal productCost,
-            float productDiscount,
-            string productDescription,
-            string productImageLink,
-            string productImageDescription,
-            string secondImageLink,
-            string secondImageDescription,
-            string thirdImageLink,
-            string thirdImageDescription,
-            string productLink,
-            string productFileName,
-            byte[] productZipFile,
-            int condition)
-        {
-            //int integralCost = (int)Math.Truncate(productCost);
-            //int fractionalCost = (int)(productCost - integralCost);
-
-            //if (!CatalogViewModel.ContainsName(productName) && productName != null && condition != 0)
-            //{
-            //    CatalogViewModel.ListOfProducts.Add(new Product
-            //    {
-            //        ID = Product.MakeNewID(),
-            //        Name = productName,
-            //        Type = Product.CheckTypeString(productType),
-            //        //Tags = _tags,
-            //        Price = productCost,
-            //        //CostIntegral = integralCost,
-            //        //CostFractional = fractionalCost,
-            //        Discount = productDiscount,
-            //        Description = (productDescription != null && productDescription.Length > 0) ? productDescription : "test description",
-            //        //CardImageLink = (productImageLink != null && productImageLink.Length > 0) ? productImageLink : "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg",
-            //        //SecondImageLink = secondImageLink,
-            //        //ThirdImageLink = thirdImageLink,
-            //        FirstImage = new Product.Image {
-            //            Link = (productImageLink != null && productImageLink.Length > 0) ? productImageLink
-            //            : "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg",
-            //            Description = productImageDescription
-            //        },
-            //        SecondImage = new Product.Image {
-            //            Link = secondImageLink,
-            //            Description = secondImageDescription
-            //        },
-            //        ThirdImage = new Product.Image {
-            //            Link = thirdImageLink,
-            //            Description = thirdImageDescription
-            //        },
-            //        Link = productLink,
-            //        //OldFileName = productFileName,
-            //        AddedDate = DateTime.Today,
-            //        OwnerID = CatalogViewModel.CurrentUser.ID
-            //    });
-            //    //_tags = null;
-            //}
-            //else if (/*CatalogViewModel.ContainsName(productName) && Userbase.UserModel.HasProductBought(productName)*/condition == 0)
-            //{
-            //    //var prod = CatalogViewModel.GetProduct(productName);
-            //    //prod.ID = prod.HasValidID() ? prod.ID : Product.MakeNewID();
-            //    //prod.Name = productName ?? prod.Name;
-            //    //prod.Type = productType ?? prod.Type;
-            //    //prod.Tags = prod.Tags.Count < 0 ? new List<string>(tags) : prod.Tags;
-            //    //prod.Discount = productDiscount;
-            //    ///if (!CatalogViewModel.ContainsName(productName))
-            //    ///{
-            //        ///_tags = new List<string>(tags);
-            //    ///}
-            //    ///else
-            //    ///{
-            //        ///CatalogViewModel.GetProduct(productName).Tags = new List<string>(_tags);
-            //        ///_tags = null;
-            //    ///}
-            //}
-            //SaveProducts();
-            return RedirectToAction("Catalog");
-        }
-
         public IActionResult BuyProduct(string productName, int productID)
         {
             Console.WriteLine("Buying Product...");
-            //if (CatalogViewModel.GetSubmitBuyingButtonText() == "Find")
-            //{
-            //    FindAndBuyProduct(productName);
-            //    return RedirectToAction("Catalog");
-            //}
-            Buy(productName, productID);
-            ///SaveUser();
-            ///SaveProducts();
-            return RedirectToAction("Catalog");
-
-        }
-        private void Buy(string productName, int productID)
-        {
             var product = from p in mainRepository.GetAllProducts() where p.ID == productID select p;
             if (product.Any())
             {
-                ///CatalogViewModel.CurrentUser.BuyProduct(product.FirstOrDefault(), mainRepository);
-                Userbase.CurrentAppUser?.BuyProduct(product.FirstOrDefault(), mainRepository);
-            }
-        }
+                ///userManager.GetUserAsync(User).Result?.BuyProduct(product.FirstOrDefault(), mainRepository);
 
-        [Obsolete]
+                var user = userManager.GetUserAsync(User).Result;
+                var productToBuy = product.FirstOrDefault();
+                if (user != null)
+                {
+                    if (user.Money >= productToBuy.FinalPrice && !productToBuy.IsBought(mainRepository, user))
+                    {
+                        user.Money -= productToBuy.FinalPrice;
+
+                        userManager.UpdateAsync(user);
+
+                        mainRepository.AddBoughtProduct(new BoughtProduct
+                        {
+                            AppUserRefId = user.Id,
+                            ProductRefId = productToBuy.ID
+                        });
+                        Console.WriteLine($"{productToBuy.Name} is bought!");
+                    }
+                    else
+                    {
+                        Console.WriteLine("User don't have enough money or product is already bought!");
+                    }
+                }
+            }
+            return RedirectToAction("Catalog");
+
+        }
+        //private void Buy(string productName, int productID)
+        //{
+        //    var product = from p in mainRepository.GetAllProducts() where p.ID == productID select p;
+        //    if (product.Any())
+        //    {
+        //        ///userManager.GetUserAsync(User).Result?.BuyProduct(product.FirstOrDefault(), mainRepository);
+
+        //        var user = userManager.GetUserAsync(User).Result;
+        //        var productToBuy = product.FirstOrDefault();
+        //        if (user != null)
+        //        {
+        //            if (user.Money >= productToBuy.FinalPrice && !productToBuy.IsBought(mainRepository, user))
+        //            {
+        //                user.Money -= productToBuy.FinalPrice;
+
+        //                userManager.UpdateAsync(user);
+
+        //                mainRepository.AddBoughtProduct(new BoughtProduct
+        //                {
+        //                    AppUserRefId = user.Id,
+        //                    ProductRefId = productToBuy.ID
+        //                });
+        //                Console.WriteLine($"{productToBuy.Name} is bought!");
+        //            }
+        //            else
+        //            {
+        //                Console.WriteLine("User don't have enough money or product is already bought!");
+        //            }
+        //        }
+        //    }
+        //}
+
         public IActionResult SellProduct(string productName, int productID)
         {
             var product = from p in mainRepository.GetAllProducts() where p.ID == productID select p;
             if (product.Any())
             {
                 ///CatalogViewModel.CurrentUser.SellProduct(product.FirstOrDefault(), mainRepository);
-                Userbase.CurrentAppUser?.SellProduct(product.FirstOrDefault(), mainRepository);
+                ///userManager.GetUserAsync(User).Result?.SellProduct(product.FirstOrDefault(), mainRepository);
+
+                var user = userManager.GetUserAsync(User).Result;
+                var productToSell = product.FirstOrDefault();
+                if (user != null && productToSell.IsBought(mainRepository, user))
+                {
+                    user.Money += productToSell.FinalPrice;
+
+                    userManager.UpdateAsync(user);
+
+                    mainRepository.DeleteBoughtProduct(user.Id, productToSell.ID);
+                    Console.WriteLine($"{productToSell.Name} is sold!");
+                }
             }
 
             return RedirectToAction("Catalog");
@@ -199,7 +170,7 @@ namespace WebMarket.Controllers
                 {
                     Text = commentSection,
                     ProductID = product.ID.ToString(),
-                    UserID = Userbase.CurrentAppUser?.Id,
+                    UserID = userManager.GetUserId(User),
                     Rate = rating
                 };
                 //product.Comments.Add(newComment);
@@ -265,17 +236,7 @@ namespace WebMarket.Controllers
 
             CatalogViewModel.ChoosenProduct = product;
             CatalogViewModel.ChoosenProductID = product.ID;
-
-            ///if (!product.IsBought)
-            ///{
-            ///    SaveProducts();
-                return RedirectToAction("Page", "Product");
-            ///}
-            ///else
-            ///{
-            ///    SaveProducts();
-            ///    return RedirectToAction("Selling");
-            ///}
+            return RedirectToAction("Page", "Product");
         }
 
         public IActionResult SortProducts(int sortOptionIndex)

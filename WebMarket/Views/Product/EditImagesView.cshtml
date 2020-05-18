@@ -27,63 +27,74 @@
     <div class="col-md-4">
         <form asp-action="EditImages" asp-route-prodid="@Model.ProductId">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <h5>1st Image</h5>
             <div class="form-group">
-                <label asp-for="FirstImageLink" class="control-label"></label>
+                <label asp-for="FirstImageLink" class="control-label">Link</label>
                 <input asp-for="FirstImageLink" class="form-control" />
                 <span asp-validation-for="FirstImageLink" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="FirstImageDescription" class="control-label"></label>
+                <label asp-for="FirstImageDescription" class="control-label">Description</label>
                 <input asp-for="FirstImageDescription" class="form-control" />
                 <span asp-validation-for="FirstImageDescription" class="text-danger"></span>
             </div>
+            <br />
+            <h5>2nd Image</h5>
             <div class="form-group">
-                <label asp-for="SecondImageLink" class="control-label"></label>
+                <label asp-for="SecondImageLink" class="control-label">Link</label>
                 <input asp-for="SecondImageLink" class="form-control" />
                 <span asp-validation-for="SecondImageLink" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="SecondImageDescription" class="control-label"></label>
+                <label asp-for="SecondImageDescription" class="control-label">Description</label>
                 <input asp-for="SecondImageDescription" class="form-control" />
                 <span asp-validation-for="SecondImageDescription" class="text-danger"></span>
             </div>
+            <br />
+            <h5>3rd Image</h5>
             <div class="form-group">
-                <label asp-for="ThirdImageLink" class="control-label"></label>
+                <label asp-for="ThirdImageLink" class="control-label">Link</label>
                 <input asp-for="ThirdImageLink" class="form-control" />
                 <span asp-validation-for="ThirdImageLink" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ThirdImageDescription" class="control-label"></label>
+                <label asp-for="ThirdImageDescription" class="control-label">Description</label>
                 <input asp-for="ThirdImageDescription" class="form-control" />
                 <span asp-validation-for="ThirdImageDescription" class="text-danger"></span>
             </div>
+            <br />
+            <h5>4th Image</h5>
             <div class="form-group">
-                <label asp-for="FourthImageLink" class="control-label"></label>
+                <label asp-for="FourthImageLink" class="control-label">Link</label>
                 <input asp-for="FourthImageLink" class="form-control" />
                 <span asp-validation-for="FourthImageLink" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="FourthImageDescription" class="control-label"></label>
+                <label asp-for="FourthImageDescription" class="control-label">Description</label>
                 <input asp-for="FourthImageDescription" class="form-control" />
                 <span asp-validation-for="FourthImageDescription" class="text-danger"></span>
             </div>
+            <br />
+            <h5>5th Image</h5>
             <div class="form-group">
-                <label asp-for="FifthImageLink" class="control-label"></label>
+                <label asp-for="FifthImageLink" class="control-label">Link</label>
                 <input asp-for="FifthImageLink" class="form-control" />
                 <span asp-validation-for="FifthImageLink" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="FifthImageDescription" class="control-label"></label>
+                <label asp-for="FifthImageDescription" class="control-label">Description</label>
                 <input asp-for="FifthImageDescription" class="form-control" />
                 <span asp-validation-for="FifthImageDescription" class="text-danger"></span>
             </div>
+            <br />
+            <h5>6th Image</h5>
             <div class="form-group">
-                <label asp-for="SixthImageLink" class="control-label"></label>
+                <label asp-for="SixthImageLink" class="control-label">Link</label>
                 <input asp-for="SixthImageLink" class="form-control" />
                 <span asp-validation-for="SixthImageLink" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="SixthImageDescription" class="control-label"></label>
+                <label asp-for="SixthImageDescription" class="control-label">Description</label>
                 <input asp-for="SixthImageDescription" class="form-control" />
                 <span asp-validation-for="SixthImageDescription" class="text-danger"></span>
             </div>
@@ -95,6 +106,6 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-controller="Product" asp-action="Page">Back to List</a>
 </div>
 

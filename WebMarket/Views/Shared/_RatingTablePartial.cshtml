@@ -1,0 +1,115 @@
+﻿@using WebMarket.Models
+
+@model WebMarket.Models.ProductRatingTableViewModel
+
+@inject IMainRepository _repository
+@inject Microsoft.AspNetCore.Identity.UserManager<AppUser> userManager
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="~/css/ratingtable.css" rel="stylesheet" type="text/css" />
+
+
+<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+
+<style>
+    .checked {
+        color: orange;
+    }
+
+    .not-checked {
+        color: #ddd;
+    }
+</style>
+
+<div class="card-header @Model.GetTableHeaderClassString(_repository, userManager.GetUserAsync(User).Result)" id="card_on_transaction_header">
+    <h5 style="font-weight:300">What people think about <strong>@Model.Name</strong></h5>
+    @*<p>RATE: @Model.GetRate(_repository)</p>*@
+    @for (int i = 0; i < 5; i++)
+    {
+        if (ComparisonViewModel.GetStarsValue(Model, _repository) >= i + 1)
+        {
+            <i class="fa fa-star checked"></i>
+        }
+        else
+        {
+            <i class="fa fa-star not-checked"></i>
+        }
+    }
+    <div id="left-rating-table">
+        <div class="row">
+            <div class="side left">
+                <div>5 star</div>
+            </div>
+            <div class="middle">
+                <div class="bar-container">
+                    <div class="bar-5 bar @Model.Position-bar" id="bar-5"></div>
+                </div>
+            </div>
+            <div class="side right">
+                <div>@Model.GetStarsCount(5, _repository)</div>
+            </div>
+            <div class="side left">
+                <div>4 star</div>
+            </div>
+            <div class="middle">
+                <div class="bar-container">
+                    <div class="bar-4 bar @Model.Position-bar" id="bar-4"></div>
+                </div>
+            </div>
+            <div class="side right">
+                <div>@Model.GetStarsCount(4, _repository)</div>
+            </div>
+            <div class="side left">
+                <div>3 star</div>
+            </div>
+            <div class="middle">
+                <div class="bar-container">
+                    <div class="bar-3 bar @Model.Position-bar" id="bar-3"></div>
+                </div>
+            </div>
+            <div class="side right">
+                <div>@Model.GetStarsCount(3, _repository)</div>
+            </div>
+            <div class="side left">
+                <div>2 star</div>
+            </div>
+            <div class="middle">
+                <div class="bar-container">
+                    <div class="bar-2 bar @Model.Position-bar" id="bar-2"></div>
+                </div>
+            </div>
+            <div class="side right">
+                <div>@Model.GetStarsCount(2, _repository)</div>
+            </div>
+            <div class="side left">
+                <div>1 star</div>
+            </div>
+            <div class="middle">
+                <div class="bar-container">
+                    <div class="bar-1 bar @Model.Position-bar" id="bar-1"></div>
+                </div>
+            </div>
+            <div class="side right">
+                <div>@Model.GetStarsCount(1, _repository)</div>
+            </div>
+        </div>
+    </div>
+    <p class="text-center text-muted"><small><i>from total amount of <b>@Model.GetTotalCountOfNotNulledComments(_repository)</b> rated comments</i></small></p>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $($(".@Model.Position-bar").get().reverse()).each(function (index, element) {
+            $(element).width(getFinalWidth(index+1)*100 + '%');
+        });
+    });
+
+    function getFinalWidth(index) {
+        switch (index) {
+            case 1: return @Model.GetStarsPercent(1, _repository);
+            case 2: return @Model.GetStarsPercent(2, _repository);
+            case 3: return @Model.GetStarsPercent(3, _repository);
+            case 4: return @Model.GetStarsPercent(4, _repository);
+            case 5: return @Model.GetStarsPercent(5, _repository);
+        }
+    };
+</script>

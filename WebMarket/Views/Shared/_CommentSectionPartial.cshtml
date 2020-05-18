@@ -1,0 +1,35 @@
+﻿@model WebMarket.Models.Product
+@inject IMainRepository _repository
+
+<div class="card-body" style="transform:rotate(0);">
+    @{
+        if (/*rightProduct.Comments*/_repository.GetUserCommentsByProdID(Model.ID) != null)
+        {
+            foreach (var comment in _repository.GetUserCommentsByProdID(Model.ID))
+            {
+                <p><strong>@WebMarket.Data.Userbase.GetUsername(comment.UserID)</strong></p>
+                <p>@comment.Text</p>
+                if (comment.Rate > 0f)
+                {
+                    for (int i = 0; i < 5; i++)
+                    {
+                        if (comment.Rate >= i + 1)
+                        {
+                            <i class="fa fa-star checked"></i>
+                        }
+                        else
+                        {
+                            <i class="fa fa-star not-checked"></i>
+                        }
+
+                    }
+                }
+                <hr />
+            }
+        }
+        else
+        {
+            <p><strong>We can't render comments as this product don't have any...</strong></p>
+        }
+    }
+</div>
