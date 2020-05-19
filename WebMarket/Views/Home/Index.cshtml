@@ -1,8 +1,17 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+@inject UserManager<AppUser> UserManager
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
+<link href="~/css/mainpage.css" rel="stylesheet" type="text/css" />
+
+<!-- Font Awesome (icons) -->
+<script src="https://kit.fontawesome.com/37c897dddf.js" crossorigin="anonymous"></script>
+
+
+@*<div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
@@ -11,4 +20,124 @@
     <h3 class="display-4">Hello, @User.Identity.Name</h3>
     <p>there is a little paragraph</p>
     <p>Current time is @DateTime.Now</p>
-</div>
+</div>*@
+
+<section id="title">
+    <div class="container-fluid gradient">
+        <!-- Title -->
+        <div class="row">
+            @*<div class="col-lg-6">
+                <img class="title-image" src="images/iphone6.png" alt="iphone-mockup">
+            </div>*@
+        </div>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <div class="col-lg-6">
+                <h1>Welcome, @User.Identity.Name.</h1>
+                <a type="button" class="btn btn-outline-light btn-lg download-button"
+                   asp-area="" asp-controller="Catalog" asp-action="Catalog"><i class="fas fa-play"></i> To Catalog</a>
+            </div>
+        }
+        else
+        {
+            <div class="col-lg-6">
+                <h1>Find new software with ease.</h1>
+                @*<button type="button" class="btn btn-dark btn-lg download-button"><i class="fab fa-apple"></i> Download</button>
+                <button type="button" class="btn btn-outline-light btn-lg download-button"><i class="fab fa-google-play"></i> Download</button>*@
+                <a type="button" class="btn btn-dark btn-lg download-button"
+                    asp-area="" asp-controller="Catalog" asp-action="Catalog"><i class="fas fa-play"></i> Get started</a>
+                <a type="button" class="btn btn-outline-light btn-lg download-button ml-2"
+                    asp-area="Identity" asp-page="/Account/Login"><i class="fas fa-play"></i> Log In</a>
+            </div>
+        }
+    </div>
+</section>
+
+<!-- Features -->
+
+<section id="features">
+    <div class="row">
+        <div class="feature-box col-lg-4">
+            <i class="icon fas fa-check-circle fa-4x"></i>
+            <h3>Easy to use.</h3>
+            <p>You can search and discover new software with ease.</p>
+        </div>
+        <div class="feature-box col-lg-4">
+            <i class="icon fas fa-bullseye fa-4x"></i>
+            <h3>Free</h3>
+            <p>You can upload your own software with no cost.</p>
+        </div>
+        <div class="feature-box col-lg-4">
+            <i class="icon fas fa-thumbs-up fa-4x"></i>
+            <h3>Guaranteed to work.</h3>
+            <p>There can nothing go wrong.</p>
+        </div>
+    </div>
+</section>
+
+
+<!-- Testimonials -->
+
+<section id="testimonials">
+
+    <div id="testimonial-carousel" class="carousel slide" data-ride="false">
+        <div class="carousel-inner gradient">
+            <div class="carousel-item active">
+                <h2>I'm so happy to have such a beautiful place to find a new software and upload my own!</h2>
+                <img class="testimonial-image" src="images/happy-man-23639.jpg" alt="1st-profile">
+                <em>Ivan, St. Petersburg</em>
+            </div>
+            <div class="carousel-item">
+                <h2 class="testimonial-text">Even though I am a cat, I've got more money from WebMarket than you would on your human's work.</h2>
+                <img class="testimonial-image" src="~/images/cat_caviar.jpg" alt="2nd-profile">
+                <em>Nikolay, Atlanta</em>
+            </div>
+            <div class="carousel-item">
+                <h2 class="testimonial-text">Исенмесез хаярле малайлар. Сезнең сайт бик зур яхшы. Алтын эш.</h2>
+                <img class="testimonial-image" src="~/images/3-zthwsXD-w.jpg" alt="3nd-profile">
+                <em>Алия, Татарстан</em>
+            </div>
+        </div>
+        <a class="carousel-control-prev" href="#testimonial-carousel" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        </a>
+        <a class="carousel-control-next" href="#testimonial-carousel" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        </a>
+    </div>
+
+</section>
+
+
+<!-- Press -->
+
+<section id="press">
+    <img class="press-logo" src="~/images/unreal.png" alt="unreal-logo">
+    <img class="press-logo" src="~/images/12-unity.png" alt="unity-logo">
+    <img class="press-logo" src="~/images/16-naughty-dog.png" alt="naughtydog-logo">
+    <img class="press-logo" src="~/images/5-dice.png" alt="dice-logo">
+    <img class="press-logo" src="~/images/3-warner-brothers.png" alt="warnerbrothers-logo">
+    <img class="press-logo" src="~/images/8-mpc.png" alt="mpc-logo">
+    <img class="press-logo" src="~/images/9-crystal-dynamics.png" alt="crystaldynamics-logo">
+    <img class="press-logo" src="~/images/11-bungie.png" alt="bungie-logo">
+</section>
+
+<section id="notification-form">
+    <div class="container align-content-lg-center">
+        <form>
+            <div class="form-group row">
+                <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
+                <div class="col-sm-10">
+                    <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-10 offset-sm-2">
+                    <button type="submit" class="btn btn-primary">Sign Up</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</section>
+

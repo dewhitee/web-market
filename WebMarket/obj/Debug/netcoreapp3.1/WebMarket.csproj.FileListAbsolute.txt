@@ -151,5 +151,8 @@ D:\ASP.NET PROJECTS\WebMarket\WebMarket\obj\Debug\netcoreapp3.1\Razor\Views\Prod
 D:\ASP.NET PROJECTS\WebMarket\WebMarket\obj\Debug\netcoreapp3.1\Razor\Views\Product\Page.cshtml.g.cs
 D:\ASP.NET PROJECTS\WebMarket\WebMarket\obj\Debug\netcoreapp3.1\Razor\Views\Product\PageEdit.cshtml.g.cs
 D:\ASP.NET PROJECTS\WebMarket\WebMarket\obj\Debug\netcoreapp3.1\Razor\Views\Product\EditImagesView.cshtml.g.cs
-D:\ASP.NET PROJECTS\WebMarket\WebMarket\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_RatingTablePartial.cshtml.g.cs
-D:\ASP.NET PROJECTS\WebMarket\WebMarket\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_CommentSectionPartial.cshtml.g.cs
+D:\ASP.NET PROJECTS\WebMarket\WebMarket\obj\Debug\netcoreapp3.1\Razor\Views\Product\_CommentSectionPartial.cshtml.g.cs
+D:\ASP.NET PROJECTS\WebMarket\WebMarket\obj\Debug\netcoreapp3.1\Razor\Views\Product\_ProductImageCarouselPartial.cshtml.g.cs
+D:\ASP.NET PROJECTS\WebMarket\WebMarket\obj\Debug\netcoreapp3.1\Razor\Views\Product\_RatingTablePartial.cshtml.g.cs
+D:\ASP.NET PROJECTS\WebMarket\WebMarket\obj\Debug\netcoreapp3.1\Razor\Views\Product\_CardFooterPartial.cshtml.g.cs
+D:\ASP.NET PROJECTS\WebMarket\WebMarket\obj\Debug\netcoreapp3.1\Razor\Views\Product\_CardBodyPartial.cshtml.g.cs

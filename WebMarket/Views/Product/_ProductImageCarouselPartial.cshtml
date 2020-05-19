@@ -1,0 +1,43 @@
+﻿@model WebMarket.Models.ProductImageCarouselViewModel
+@inject IMainRepository _repository 
+
+<div style="transform:rotate(0);">
+    <div id="carouselExampleIndicators-@Model.carouselIndex" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#carouselExampleIndicators-@Model.carouselIndex" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselExampleIndicators-@Model.carouselIndex" data-slide-to="1"></li>
+            <li data-target="#carouselExampleIndicators-@Model.carouselIndex" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner">
+            <div class="carousel-item active hoverable-img">
+                <div class="carousel-caption d-none d-md-block">
+                    <p class="hoverable-img-p">@_repository.GetImageByOrderIndex(Model.ID, 0)?.Description</p>
+                </div>
+                <img class="d-block w-100 img-fluid catalog-img @Model.carouselImageClass" id="@Model.carouselImageId-0"
+                     src="@Model.GetFirstImageSrc(_repository)" alt="First slide">
+            </div>
+            <div class="carousel-item hoverable-img">
+                <div class="carousel-caption d-none d-md-block">
+                    <p class="hoverable-img-p">@_repository.GetImageByOrderIndex(Model.ID, 1)?.Description</p>
+                </div>
+                <img class="d-block w-100 img-fluid catalog-img @Model.carouselImageClass" id="@Model.carouselImageId-1"
+                     src="@Model.GetSecondImageSrc(_repository)" alt="Second slide">
+            </div>
+            <div class="carousel-item hoverable-img">
+                <div class="carousel-caption d-none d-md-block">
+                    <p class="hoverable-img-p">@_repository.GetImageByOrderIndex(Model.ID, 2)?.Description</p>
+                </div>
+                <img class="d-block w-100 img-fluid catalog-img @Model.carouselImageClass" id="@Model.carouselImageId-2"
+                     src="@Model.GetThirdImageSrc(_repository)" alt="Third slide">
+            </div>
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleIndicators-@Model.carouselIndex" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators-@Model.carouselIndex" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+</div>

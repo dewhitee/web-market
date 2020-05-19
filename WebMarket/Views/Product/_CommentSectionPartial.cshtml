@@ -3,11 +3,19 @@
 
 <div class="card-body" style="transform:rotate(0);">
     @{
-        if (/*rightProduct.Comments*/_repository.GetUserCommentsByProdID(Model.ID) != null)
+        if (_repository.GetUserCommentsByProdID(Model.ID) != null)
         {
             foreach (var comment in _repository.GetUserCommentsByProdID(Model.ID))
             {
-                <p><strong>@WebMarket.Data.Userbase.GetUsername(comment.UserID)</strong></p>
+                var username = WebMarket.Data.Userbase.GetUsername(comment.UserID);
+                if (username?.Length > 0)
+                {
+                    <p><strong>@WebMarket.Data.Userbase.GetUsername(comment.UserID)</strong></p>
+                }
+                else
+                {
+                    <p><strong>Anonymous</strong></p>
+                }
                 <p>@comment.Text</p>
                 if (comment.Rate > 0f)
                 {

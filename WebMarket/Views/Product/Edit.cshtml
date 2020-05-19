@@ -58,11 +58,6 @@
                 <input asp-for="Link" class="form-control" />
                 <span asp-validation-for="Link" class="text-danger"></span>
             </div>
-            @*<div class="form-group">
-                <label asp-for="CardImageLink" class="control-label"></label>
-                <input asp-for="CardImageLink" class="form-control" />
-                <span asp-validation-for="CardImageLink" class="text-danger"></span>
-            </div>*@
             <div class="form-group form-check">
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="OnlyRegisteredCanComment" /> @Html.DisplayNameFor(model => model.OnlyRegisteredCanComment)
@@ -73,11 +68,6 @@
                     <input class="form-check-input" asp-for="OnlyOneCommentPerUser" /> @Html.DisplayNameFor(model => model.OnlyOneCommentPerUser)
                 </label>
             </div>
-            @*<div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="AddedToCart" /> @Html.DisplayNameFor(model => model.AddedToCart)
-                </label>
-            </div>*@
             <div class="form-group">
                 <label asp-for="FileName" class="control-label"></label>
                 <input asp-for="FileName" class="form-control" />
@@ -89,7 +79,6 @@
                 <span asp-validation-for="AddedDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                @*<label asp-for="OwnerID" class="control-label"></label>*@
                 <input type="hidden" asp-for="OwnerID" class="form-control" />
                 <span asp-validation-for="OwnerID" class="text-danger"></span>
             </div>

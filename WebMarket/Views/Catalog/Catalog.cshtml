@@ -673,7 +673,7 @@ else
             </div>
             <div class="container-fluid">
                 <div class="row row-cols-1 row-cols-md-3">
-                    @for (int i = 0; i <@*_repository.GetAllProducts()*@CatalogViewModel.ListOfProducts.Count(); i++)
+                    @for (int i = 0; i < CatalogViewModel.ListOfProducts.Count(); i++)
                     {
                     var product = CatalogViewModel.ListOfProducts.ElementAt(i);   //_repository.GetAllProducts().ElementAt(i);
                     string tdClassString = product.GetPriceTableClassString(_repository, CatalogViewModel.CurrentAppUser);
@@ -690,9 +690,6 @@ else
                     
                     <div class="col col-xs-12 col-sm-12 col-md-6 col-lg-4" style="padding-bottom: 2rem;">
                         <div class="card h-100 hoverable-card" id="card_@i" onmouseover="onHoveredCard(@i)" onmouseout="onHoveredCardOut(@i)">
-                            @*<div class="card-header @product.GetTableHeaderClassString()" id="card_header_@i" onclick="onClickedCard(@i)">
-                          <h5 style="font-weight:300">@product.Type</h5>
-                          </div>*@
                             <div style="transform:rotate(0);">
                                 <a href="@product.Link" class="stretched-link">
                                     <img class="d-block w-100 img-fluid catalog-img catalog-main card-img-top" src="@product.GetCardImageSrc(_repository)" alt="Cat Lawyer Is Real And He Is Everything Right Now | Above the Law">
@@ -710,7 +707,7 @@ else
                                 </div>
                                 <div>
                                     @{
-                                        foreach (var tag in /*product.Tags*/_repository.GetTagNamesByProductId(product.ID))
+                                        foreach (var tag in _repository.GetTagNamesByProductId(product.ID))
                                         {
                                             <span class="badge badge-pill badge-primary">@tag@*.Text*@</span>
                                         }
@@ -731,8 +728,6 @@ else
                                 </h3>
                                 <div class="float-right">
                                     <form asp-controller="Catalog" asp-action="AddToCart" method="post">
-                                        @*<input type="hidden" class="form-control" name="productName" id="productName" value=@product.Name />
-                                      <input type="hidden" class="form-control" name="productIndex" id="productIndex" value=@i />*@
                                         <input type="hidden" class="form-control" name="productId" id="productId" value=@product.ID />
                                         <button class="@product.GetAddToCartButtonClassString(_repository, CatalogViewModel.CurrentAppUser) hoverable-btn" type="submit" id="card_addtocart_button_@i" onmouseover="onHoveredButton(@i)" onmouseout="onHoveredButtonOut(@i)">@product.GetAddToCartButtonString(_repository, CatalogViewModel.CurrentAppUser)</button>
                                     </form>
@@ -800,16 +795,13 @@ else
     </div>*@
 <!-- END TEST -->
 
-<div style="padding-bottom:1em"></div>
-<div class="d-inline" @*style="padding-bottom:1em"*@>
+@*<div style="padding-bottom:1em"></div>
+<div class="d-inline">
     <form asp-controller="Catalog" asp-action="ChangeView" method="post">
         <input type="hidden" class="form-control" name="viewVariant" id="viewVariant" value=@CatalogViewModel.ViewVariant />
-        @*<a class="text-dark" name="productName" asp-area="" asp-controller="Catalog" asp-action="AddToCart">
-                @CatalogViewModel.ListOfProducts[i].IsBoughtString
-            </a>*@
         <button type="submit" class="btn btn-outline-primary">Change View</button>
     </form>
 </div>
 
-Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
+Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>*@
 

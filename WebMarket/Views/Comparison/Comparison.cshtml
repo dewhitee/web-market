@@ -44,10 +44,7 @@
                         <div class="card-header @leftProduct.GetTableHeaderClassString(_repository, user)" id="card_on_transaction_header">
                             <h5 style="font-weight:300">@leftProduct.Type</h5>
                         </div>
-                        <div style="transform:rotate(0);">
-                            @*<a href="@product.Link" class="stretched-link">
-                                    <img src="@product.GetCardImageSrc()" alt="Cat Lawyer Is Real And He Is Everything Right Now | Above the Law" class="card-img-top">
-                                </a>*@
+                        @*<div style="transform:rotate(0);">
                             <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                                 <ol class="carousel-indicators">
                                     <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -86,7 +83,8 @@
                                     <span class="sr-only">Next</span>
                                 </a>
                             </div>
-                        </div>
+                        </div>*@
+                        <partial name="~/Views/Product/_ProductImageCarouselPartial.cshtml" model='@new ProductImageCarouselViewModel(leftProduct, "catalog-comp", "img-left")' />
                         <div class="card-body" style="transform:rotate(0);">
                             <h4 class="card-title">
                                 @leftProduct.Name
@@ -94,13 +92,9 @@
                             <div class="overflower" aria-hidden="true">
                                 <p class="card-text card-description">@leftProduct.Description</p>
                             </div>
-
-                            @*<a href="@product.Link" class="stretched-link"></a>*@
                         </div>
 
                         <div class="card-footer @leftProduct.GetTableHeaderClassString(_repository, user)" id="card_on_transaction_footer">
-
-                            @*<div class="float-right">*@
                             <h3>
                                 @leftProduct.FinalPriceString
                                 <sup>
@@ -140,10 +134,7 @@
                         <div class="card-header @rightProduct.GetTableHeaderClassString(_repository, user)" id="card_on_transaction_header">
                             <h5 style="font-weight:300">@rightProduct.Type</h5>
                         </div>
-                        <div style="transform:rotate(0);">
-                            @*<a href="@rightProduct.Link" class="stretched-link">
-                                    <img src="@rightProduct.GetCardImageSrc()" alt="Cat Lawyer Is Real And He Is Everything Right Now | Above the Law" class="card-img-top">
-                                </a>*@
+                        @*<div style="transform:rotate(0);">
                             <div id="carouselExampleIndicators2" class="carousel slide" data-ride="carousel">
                                 <ol class="carousel-indicators">
                                     <li data-target="#carouselExampleIndicators2" data-slide-to="0" class="active"></li>
@@ -182,7 +173,8 @@
                                     <span class="sr-only">Next</span>
                                 </a>
                             </div>
-                        </div>
+                        </div>*@
+                        <partial name="~/Views/Product/_ProductImageCarouselPartial.cshtml" model='@new ProductImageCarouselViewModel(rightProduct, "catalog-comp", "img-right", 1)' />
                         <div class="card-body" style="transform:rotate(0);">
                             <h4 class="card-title">
                                 @rightProduct.Name
@@ -219,8 +211,8 @@
                     <div class="card h-100 hoverable-card" id="card_on_transaction">
                         @{
                             var lProduct = new ProductRatingTableViewModel(leftProduct, false);
-                            <partial name="~/Views/Shared/_RatingTablePartial.cshtml" model="@lProduct" />
-                            <partial name="~/Views/Shared/_CommentSectionPartial.cshtml" for="@lProduct" />
+                            <partial name="~/Views/Product/_RatingTablePartial.cshtml" model="@lProduct" />
+                            <partial name="~/Views/Product/_CommentSectionPartial.cshtml" for="@lProduct" />
                         }
                     </div>
                 </div>
@@ -228,8 +220,8 @@
                     <div class="card h-100 hoverable-card" id="card_on_transaction">
                         @{
                             var rProduct = new ProductRatingTableViewModel(rightProduct, true);
-                            <partial name="~/Views/Shared/_RatingTablePartial.cshtml" model="@rProduct" />
-                            <partial name="~/Views/Shared/_CommentSectionPartial.cshtml" for="@rProduct" />
+                            <partial name="~/Views/Product/_RatingTablePartial.cshtml" model="@rProduct" />
+                            <partial name="~/Views/Product/_CommentSectionPartial.cshtml" for="@rProduct" />
                         }
                     </div>
                 </div>

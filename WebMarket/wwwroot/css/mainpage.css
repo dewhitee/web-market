@@ -1,0 +1,110 @@
+﻿
+h1 {
+    font-weight: 900;
+    font-size: 3.5rem;
+    line-height: 1.5;
+}
+
+h2 {
+    font-weight: bold;
+    font-size: 3rem;
+    line-height: 1.5;
+}
+
+h3 {
+    font-weight: bold;
+}
+
+p {
+    color: #8f8f8f;
+}
+
+.container-fluid {
+    padding: 3% 15%;
+}
+
+#body-container {
+    max-width: 100%;
+    margin-right: 0;
+    margin-left: 0;
+    padding-right: 0;
+    padding-left: 0;
+}
+
+nav {
+    padding-bottom: 0;
+}
+
+#title {
+    background-color: #230444;
+    color: #fff;
+    margin-top: -2rem;
+}
+
+/* Features Section */
+#features {
+    padding: 7% 15%;
+}
+
+.feature-box {
+    text-align: center;
+    padding: 5%;
+}
+
+.icon {
+    color: #230444;
+    margin-bottom: 1rem;
+}
+
+    .icon:hover {
+        color: #0094ff;
+    }
+
+/* Testimonial Section */
+#testimonials {
+    text-align: center;
+    background-color: #230444;
+    color: #fff;
+}
+
+.testimonial-image {
+    max-height: 200px;
+    min-height: 200px;
+    max-width: 200px;
+    min-width: 200px;
+    width: 20%;
+    height: 20%;
+    border-radius: 100%;
+    margin: 20px;
+}
+
+.carousel-item {
+    padding: 7% 15%;
+}
+
+/* Press Section */
+#press {
+    background-color: #0778c3;
+    text-align: center;
+    padding-bottom: 3%;
+}
+
+.press-logo {
+    max-height: 200px;
+    min-width: 200px;
+    width: 15%;
+    margin: 6px 6px 20px;
+}
+
+.gradient {
+    height: 100%;
+    background: #43cea2;
+    background: -webkit-linear-gradient(to bottom, #230444, #0778c3);
+    background: linear-gradient(to bottom, #230444, #0778c3);
+}
+
+/* Notification form section */
+#notification-form {
+    padding: 14% 30%;
+
+}

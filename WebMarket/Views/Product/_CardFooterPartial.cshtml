@@ -1,0 +1,66 @@
+﻿@model WebMarket.Models.Product
+@inject IMainRepository _repository
+@inject Microsoft.AspNetCore.Identity.UserManager<AppUser> _userManager
+
+@{
+    var currentUser = _userManager.GetUserAsync(User).Result;
+
+<div class="card-footer @Model.GetTableHeaderClassString(_repository, currentUser)" id="card_on_transaction_footer">
+
+    <h3>
+        @Model.FinalPriceString
+        <sup>
+            @if (Model.Price != Model.FinalPrice)
+            {
+                <font color="red" style="font-weight:400"><del>@Model.PriceString</del></font><sup> -@Model.DiscountSupString</sup>
+            }
+        </sup>
+    </h3>
+
+    @if (Model.OwnerID == currentUser?.Id || currentUser == null)
+    {
+        <small class="text-warning @Model.GetProductTableLinkClassString(_repository, currentUser)">
+            Added @Model.AddedDate.ToShortDateString()
+        </small>
+    }
+    else if (!Model.IsBought(_repository, currentUser) && currentUser != null)
+    {
+        <div class="float-right">
+            <form asp-controller="Catalog" asp-action="BuyProduct" method="post">
+                <input type="hidden" class="form-control" name="ModelName" id="ModelName" value=@Model.Name />
+                <input type="hidden" class="form-control" name="ModelID" id="ModelID" value=@Model.ID />
+                <button class="@CatalogViewModel.GetBuyProductButtonClassString(_repository, currentUser, false) btn-lg" type="submit" id="card_on_transaction_buy_button">Buy</button>
+            </form>
+        </div>
+
+        <br>
+        <p class="text-md-left">
+            You will have:
+            <mark>@CatalogViewModel.GetSelectedBuyProductPriceSentence(_repository, currentUser)</mark>
+        </p>
+        <small class="text-warning @Model.GetProductTableLinkClassString(_repository, currentUser)">
+            Added @Model.AddedDate.ToShortDateString()
+        </small>
+    }
+    else if (currentUser != null)
+    {
+        <div class="float-right">
+            <form asp-controller="Catalog" asp-action="SellProduct" method="post">
+                <input type="hidden" class="form-control" name="ModelName" id="ModelName" value=@Model.Name />
+                <input type="hidden" class="form-control" name="ModelID" id="ModelID" value=@Model.ID />
+                <button class="btn btn-primary btn-lg" type="submit" id="card_on_transaction_sell_button">Sell</button>
+            </form>
+        </div>
+
+        <br>
+        <p class="text-md-left">
+            You will have:
+            <mark>@CatalogViewModel.GetSelectedSellProductPriceSentence(_repository, currentUser)</mark>
+        </p>
+        <small class="text-warning @Model.GetProductTableLinkClassString(_repository, currentUser)">
+            Added @Model.AddedDate.ToShortDateString()
+        </small>
+    }
+</div>
+
+}

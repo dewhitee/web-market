@@ -7,7 +7,7 @@ namespace WebMarket.Models
 {
     public class ProductRatingTableViewModel : Product
     {
-        public ProductRatingTableViewModel(Product product, bool positionRight)
+        public ProductRatingTableViewModel(Product product, bool positionRight = false)
         {
             ID = product.ID;
             Name = product.Name;

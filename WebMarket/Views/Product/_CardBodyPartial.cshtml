@@ -1,0 +1,17 @@
+﻿@model WebMarket.Models.Product
+@inject IMainRepository _repository
+
+<div class="card-body" style="transform:rotate(0);">
+    <h4 class="card-title">
+        @Model.Name
+    </h4>
+    <div class="overflower" aria-hidden="true">
+        <p class="card-text card-description">@Model.Description</p>
+        @{
+            foreach (var i in _repository.GetTagNamesByProductId(Model.ID))
+            {
+                <span class="badge badge-pill badge-primary">@i</span>
+            }
+        }
+    </div>
+</div>

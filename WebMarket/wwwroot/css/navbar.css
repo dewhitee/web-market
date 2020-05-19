@@ -1,0 +1,11 @@
+﻿
+/* Navigation bar
+---------------------------------------------- */
+
+.navbar-brand {
+    
+}
+/* change the color of active or hovered links */
+.nav-item:hover .nav-link:hover {
+    color: gray !important;
+}
