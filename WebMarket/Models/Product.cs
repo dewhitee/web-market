@@ -223,7 +223,7 @@ namespace WebMarket.Models
 
         public string GetAddToCartButtonString(IMainRepository repo, AppUser user)
         {
-            if (OwnerID == Userbase.CurrentAppUser?.Id)
+            if (OwnerID == user?.Id)
                 return "Yours";
             else if (IsBought(repo, user))
                 return "Bought";
@@ -277,7 +277,7 @@ namespace WebMarket.Models
 
         public string GetPriceTableClassString(IMainRepository repo, AppUser user)
         {
-            if (AddedToCart || CatalogViewModel.ChoosenProductID == this.ID || OwnerID == Userbase.CurrentAppUser?.Id)
+            if (AddedToCart || CatalogViewModel.ChoosenProductID == this.ID || OwnerID == user?.Id)
                 return "bg-dark text-white";
             if (IsBought(repo, user))
                 return "bg-primary text-dark";
@@ -292,7 +292,7 @@ namespace WebMarket.Models
 
         public string GetProductTableLinkClassString(IMainRepository repo, AppUser user)
         {
-            if (AddedToCart || IsBought(repo, user) || CatalogViewModel.ChoosenProductID == this.ID || OwnerID == Userbase.CurrentAppUser?.Id)
+            if (AddedToCart || IsBought(repo, user) || CatalogViewModel.ChoosenProductID == this.ID || OwnerID == user?.Id)
                 return "text-white";
             else
                 return "text-dark";
@@ -300,7 +300,7 @@ namespace WebMarket.Models
 
         public string GetAddToCartButtonClassString(IMainRepository repo, AppUser user)
         {
-            if (AddedToCart || CatalogViewModel.ChoosenProductID == this.ID || OwnerID == Userbase.CurrentAppUser?.Id)
+            if (AddedToCart || CatalogViewModel.ChoosenProductID == this.ID || OwnerID == user?.Id)
             {
                 //if (ViewVariant != CatalogViewVariant.Main)
                 return "btn btn-outline-light";
@@ -315,7 +315,7 @@ namespace WebMarket.Models
 
         public string GetTableHeaderClassString(IMainRepository repo, AppUser user)
         {
-            if (AddedToCart || CatalogViewModel.ChoosenProductID == this.ID || OwnerID == Userbase.CurrentAppUser?.Id)
+            if (AddedToCart || CatalogViewModel.ChoosenProductID == this.ID || OwnerID == user?.Id)
             {
                 //if ()
                 return "bg-dark text-white";

@@ -11,6 +11,7 @@ namespace WebMarket.Models
         Product GetProductByIndex(int index);
         IEnumerable<Product> GetProductsByName(string name);
         IEnumerable<Product> GetAllProducts();
+        IEnumerable<Product> GetAllProductsOfUser(string id);
         IEnumerable<Product> Search(string searchTerm);
         Product AddProduct(Product product);
         Product UpdateProduct(Product productChanges);

@@ -6,8 +6,23 @@
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
 {
-    <li class="nav-item">
+    @*<li class="nav-item">
         <a  class="nav-link text-white" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity.Name!</a>
+    </li>*@
+        <li class="nav-item">
+        <div class="dropdown show">
+            <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                @User.Identity.Name
+            </a>
+    
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <a class="dropdown-item" asp-area="" asp-controller="AppUser" asp-action="Stats" title="Manage">Profile</a>
+                <a class="dropdown-item" asp-area="" asp-controller="Product" asp-action="Add">Upload</a>
+                <a class="dropdown-item" href="#">Download</a>
+                <hr class="dropdown-divider" />
+                <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Settings</a>
+            </div>
+        </div>
     </li>
     <li class="nav-item">
         <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">

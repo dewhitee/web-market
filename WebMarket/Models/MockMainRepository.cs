@@ -104,6 +104,11 @@ namespace WebMarket.Models
             return _productList;
         }
 
+        public IEnumerable<Product> GetAllProductsOfUser(string id)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<ProductType> GetAllProductTypes()
         {
             throw new NotImplementedException();

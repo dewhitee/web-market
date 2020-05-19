@@ -1,0 +1,58 @@
+﻿@inject IMainRepository _repository
+@inject Microsoft.AspNetCore.Identity.UserManager<AppUser> _userManager
+@{
+    ViewData["Title"] = "AddedProducts";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<link href="~/css/images.css" rel="stylesheet" type="text/css" />
+
+<h1>Added Products</h1>
+@{
+
+    <div class="card">
+        <div class="card-header">
+            <ul class="nav nav-tabs card-header-tabs">
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="AppUser" asp-action="Stats">Stats</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Added Products</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#">Disabled</a>
+                </li>
+            </ul>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">Here are the products that you have added:</h5>
+            <div class="container-fluid">
+                <div class="row row-cols-1 row-cols-md-3">
+                    @{
+                        var products = _repository.GetAllProductsOfUser(_userManager.GetUserId(User)).ToList();
+                        if (products.Count() > 0)
+                        {
+                            foreach (var product in products)
+                            {
+                                        <div class="col col-xs-12 col-sm-12 col-md-6 col-lg-4" style="padding-bottom: 2rem;">
+                                            <div class="card h-100 hoverable-card" id="card_on_transaction">
+                                                <div class="card-header @product.GetTableHeaderClassString(_repository, _userManager.GetUserAsync(User).Result)" id="card_on_transaction_header">
+                                                    <h5 style="font-weight:300">@product.Type</h5>
+                                                </div>
+                                                <partial name="~/Views/Product/_ProductImageCarouselPartial.cshtml" model='@new ProductImageCarouselViewModel(product, "catalog-comp", carouselIndex: product.ID)' />
+                                                <partial name="~/Views/Product/_CardBodyPartial.cshtml" model="@product" />
+                                                <partial name="~/Views/Product/_CardFooterPartial.cshtml" model="@product" />
+                                            </div>
+                                        </div>
+                            }
+                        }
+                     }
+                     </div>
+                </div>
+            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+    </div>
+
+}

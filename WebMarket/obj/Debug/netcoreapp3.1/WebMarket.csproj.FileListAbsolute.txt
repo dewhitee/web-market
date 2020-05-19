@@ -156,3 +156,5 @@ D:\ASP.NET PROJECTS\WebMarket\WebMarket\obj\Debug\netcoreapp3.1\Razor\Views\Prod
 D:\ASP.NET PROJECTS\WebMarket\WebMarket\obj\Debug\netcoreapp3.1\Razor\Views\Product\_RatingTablePartial.cshtml.g.cs
 D:\ASP.NET PROJECTS\WebMarket\WebMarket\obj\Debug\netcoreapp3.1\Razor\Views\Product\_CardFooterPartial.cshtml.g.cs
 D:\ASP.NET PROJECTS\WebMarket\WebMarket\obj\Debug\netcoreapp3.1\Razor\Views\Product\_CardBodyPartial.cshtml.g.cs
+D:\ASP.NET PROJECTS\WebMarket\WebMarket\obj\Debug\netcoreapp3.1\Razor\Views\AppUser\Added.cshtml.g.cs
+D:\ASP.NET PROJECTS\WebMarket\WebMarket\obj\Debug\netcoreapp3.1\Razor\Views\AppUser\Stats.cshtml.g.cs

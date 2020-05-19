@@ -165,6 +165,13 @@ namespace WebMarket.Models
             return context.Products;
         }
 
+        public IEnumerable<Product> GetAllProductsOfUser(string id)
+        {
+            return from p in context.Products
+                   where p.OwnerID == id
+                   select p;
+        }
+
         public IEnumerable<ProductType> GetAllProductTypes()
         {
             return context.ProductTypes;
