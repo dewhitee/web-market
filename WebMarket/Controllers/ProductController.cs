@@ -348,5 +348,79 @@ namespace WebMarket.Controllers
             Userbase.LoadUser();
             return Ok();
         }
+
+        public IActionResult Buy(int productId)
+        {
+            var product = from p in mainRepository.GetAllProducts() where p.ID == productId select p;
+            if (product.Any())
+            {
+                var user = userManager.GetUserAsync(User).Result;
+                var productToBuy = product.FirstOrDefault();
+                if (user != null)
+                {
+                    if (user.Money >= productToBuy.FinalPrice && !productToBuy.IsBought(mainRepository, user))
+                    {
+                        var transaction = mainRepository.GetDbContext().Database.BeginTransaction();
+                        try
+                        {
+                            user.Money -= productToBuy.FinalPrice;
+                            userManager.UpdateAsync(user).Wait();
+
+                            mainRepository.AddBoughtProduct(new BoughtProduct
+                            {
+                                AppUserRefId = user.Id,
+                                ProductRefId = productToBuy.ID
+                            });
+                            Console.WriteLine($"{productToBuy.Name} is bought!");
+                            transaction.Commit();
+                        }
+                        catch (Exception)
+                        {
+                            Console.WriteLine("Something went wrong!");
+                            transaction.Rollback();
+                            throw;
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("User don't have enough money or product is already bought!");
+                    }
+                }
+                CatalogViewModel.ChoosenProduct = mainRepository.GetProduct(productId);
+            }
+            return RedirectToAction("Page");
+
+        }
+
+        public IActionResult Sell(int productId)
+        {
+            var product = from p in mainRepository.GetAllProducts() where p.ID == productId select p;
+            if (product.Any())
+            {
+                var user = userManager.GetUserAsync(User).Result;
+                var productToSell = product.FirstOrDefault();
+                if (user != null && productToSell.IsBought(mainRepository, user))
+                {
+                    var transaction = mainRepository.GetDbContext().Database.BeginTransaction();
+                    try
+                    {
+                        user.Money += productToSell.FinalPrice;
+                        userManager.UpdateAsync(user).Wait();
+
+                        mainRepository.DeleteBoughtProduct(user.Id, productToSell.ID);
+                        Console.WriteLine($"{productToSell.Name} is sold!");
+                        transaction.Commit();
+                    }
+                    catch (Exception)
+                    {
+                        Console.WriteLine("Something went wrong!");
+                        transaction.Rollback();
+                        throw;
+                    }
+                }
+                CatalogViewModel.ChoosenProduct = mainRepository.GetProduct(productId);
+            }
+            return RedirectToAction("Page");
+        }
     }
 }

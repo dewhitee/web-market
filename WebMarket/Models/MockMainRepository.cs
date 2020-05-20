@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -134,6 +135,11 @@ namespace WebMarket.Models
             throw new NotImplementedException();
         }
 
+        public DbContext GetDbContext()
+        {
+            throw new NotImplementedException();
+        }
+
         public Image GetImage(int id)
         {
             throw new NotImplementedException();
@@ -155,6 +161,11 @@ namespace WebMarket.Models
         }
 
         public Product GetProductByIndex(int index)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Product> GetProductsByBought(IEnumerable<BoughtProduct> boughtProducts)
         {
             throw new NotImplementedException();
         }

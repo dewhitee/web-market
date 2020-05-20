@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WebMarket.Models
+namespace WebMarket.Models.ProductModels
 {
     public class ProductRatingTableViewModel : Product
     {

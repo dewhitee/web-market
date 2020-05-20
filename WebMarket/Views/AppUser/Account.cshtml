@@ -1,0 +1,64 @@
+﻿@inject Microsoft.AspNetCore.Identity.UserManager<AppUser> _userManager
+@{
+    ViewData["Title"] = "Account";
+}
+
+<h1>Account</h1>
+
+@{
+        var currentUser = _userManager.GetUserAsync(User).Result;
+
+        <div class="card text-center">
+            <div class="card-header">
+                <ul class="nav nav-tabs card-header-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Account</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="AppUser" asp-action="Stats">Stats</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="AppUser" asp-action="Added">Added Products</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="AppUser" asp-action="Bought">Bought Products</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Special title treatment</h5>
+                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                <h2> Your money: @currentUser?.MoneyString</h2>
+                @*<form asp-controller="AppUser" asp-action="AddMoney" method="post">
+                    <div class="form-group">
+                        <label class="col-sm-2 col-form-label">Add Money</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" id="addMoney" name="addMoney" placeholder="Enter money to add" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-10">
+                            <button id="submitMoney" class="btn btn-success" type="submit">Submit</button>
+                        </div>
+                    </div>
+                </form>*@
+                <form asp-controller="AppUser" asp-action="AddMoney" method="post">
+                    <div class="form-row align-items-center">
+                        <div class="col-sm-3 my-1">
+                            <label class="sr-only" for="addMoney">Add money</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="addMoney" name="addMoney" placeholder="Enter money to add">
+                                <div class="input-group-append">
+                                    <div class="input-group-text">€</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-auto my-1">
+                            <button type="submit" id="submitMoney" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </form>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+}

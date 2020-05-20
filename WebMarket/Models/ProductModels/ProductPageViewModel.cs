@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebMarket.Data;
 
-namespace WebMarket.Models
+namespace WebMarket.Models.ProductModels
 {
     public class ProductPageViewModel : Product
     {

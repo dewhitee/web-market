@@ -1,4 +1,4 @@
-﻿@model WebMarket.Models.ProductImageCarouselViewModel
+﻿@model WebMarket.Models.ProductModels.ProductImageCarouselViewModel
 @inject IMainRepository _repository 
 
 <div style="transform:rotate(0);">
@@ -11,7 +11,7 @@
         <div class="carousel-inner">
             <div class="carousel-item active hoverable-img">
                 <div class="carousel-caption d-none d-md-block">
-                    <p class="hoverable-im=g-p">@_repository.GetImageByOrderIndex(Model.ID, 0)?.Description</p>
+                    <p class="hoverable-img-p">@_repository.GetImageByOrderIndex(Model.ID, 0)?.Description</p>
                 </div>
                 <img class="d-block w-100 img-fluid catalog-img @Model.carouselImageClass" id="@Model.carouselImageId-0"
                      src="@Model.GetFirstImageSrc(_repository)" alt="First slide">

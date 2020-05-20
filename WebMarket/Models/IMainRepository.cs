@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,11 +8,13 @@ namespace WebMarket.Models
 {
     public interface IMainRepository
     {
+        DbContext GetDbContext();
         Product GetProduct(int id);
         Product GetProductByIndex(int index);
         IEnumerable<Product> GetProductsByName(string name);
         IEnumerable<Product> GetAllProducts();
         IEnumerable<Product> GetAllProductsOfUser(string id);
+        IEnumerable<Product> GetProductsByBought(IEnumerable<BoughtProduct> boughtProducts);
         IEnumerable<Product> Search(string searchTerm);
         Product AddProduct(Product product);
         Product UpdateProduct(Product productChanges);

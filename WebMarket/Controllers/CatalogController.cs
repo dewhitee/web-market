@@ -102,37 +102,6 @@ namespace WebMarket.Controllers
             return RedirectToAction("Catalog");
 
         }
-        //private void Buy(string productName, int productID)
-        //{
-        //    var product = from p in mainRepository.GetAllProducts() where p.ID == productID select p;
-        //    if (product.Any())
-        //    {
-        //        ///userManager.GetUserAsync(User).Result?.BuyProduct(product.FirstOrDefault(), mainRepository);
-
-        //        var user = userManager.GetUserAsync(User).Result;
-        //        var productToBuy = product.FirstOrDefault();
-        //        if (user != null)
-        //        {
-        //            if (user.Money >= productToBuy.FinalPrice && !productToBuy.IsBought(mainRepository, user))
-        //            {
-        //                user.Money -= productToBuy.FinalPrice;
-
-        //                userManager.UpdateAsync(user);
-
-        //                mainRepository.AddBoughtProduct(new BoughtProduct
-        //                {
-        //                    AppUserRefId = user.Id,
-        //                    ProductRefId = productToBuy.ID
-        //                });
-        //                Console.WriteLine($"{productToBuy.Name} is bought!");
-        //            }
-        //            else
-        //            {
-        //                Console.WriteLine("User don't have enough money or product is already bought!");
-        //            }
-        //        }
-        //    }
-        //}
 
         public IActionResult SellProduct(string productName, int productID)
         {

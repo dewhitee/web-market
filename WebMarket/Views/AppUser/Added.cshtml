@@ -1,12 +1,16 @@
-﻿@inject IMainRepository _repository
+﻿@using WebMarket.Models.ProductModels;
+@model WebMarket.Models.AppUserModels.AddedProductsViewModel
+
+@inject IMainRepository _repository
 @inject Microsoft.AspNetCore.Identity.UserManager<AppUser> _userManager
 @{
-    ViewData["Title"] = "AddedProducts";
+    ViewData["Title"] = "Added";
 }
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <link href="~/css/images.css" rel="stylesheet" type="text/css" />
+<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
 
 <h1>Added Products</h1>
 @{
@@ -15,41 +19,104 @@
         <div class="card-header">
             <ul class="nav nav-tabs card-header-tabs">
                 <li class="nav-item">
+                    <a class="nav-link" asp-controller="AppUser" asp-action="Account">Account</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" asp-controller="AppUser" asp-action="Stats">Stats</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" href="#">Added Products</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link disabled" href="#">Disabled</a>
+                    <a class="nav-link" asp-controller="AppUser" asp-action="Bought">Bought Products</a>
                 </li>
             </ul>
         </div>
         <div class="card-body">
-            <h5 class="card-title">Here are the products that you have added:</h5>
-            <div class="container-fluid">
-                <div class="row row-cols-1 row-cols-md-3">
-                    @{
-                        var products = _repository.GetAllProductsOfUser(_userManager.GetUserId(User)).ToList();
-                        if (products.Count() > 0)
-                        {
-                            foreach (var product in products)
+            <div class="float-right">
+                <a type="button" class="btn btn-outline-primary" asp-controller="AppUser" asp-action="ChangeAddedView">Change View</a>
+            </div>
+            <h5 class="card-title pb-2">Here are the products that you have added:</h5>
+            @if (WebMarket.Models.AppUserModels.AddedProductsViewModel.ViewVariant == CatalogViewModel.CatalogViewVariant.Main)
+            {
+                var products = _repository.GetAllProductsOfUser(_userManager.GetUserId(User)).ToList();
+                if (products.Count() > 0)
+                {
+                    <table class="table table-light table-striped table-hover">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col">
+                                    <a class="text-dark" asp-area="" asp-controller="AppUser" asp-action="SortByName">
+                                        Product Name
+                                        <i class="fas fa-sort ml-1"></i>
+                                    </a>
+                                </th>
+                                <th scope="col">
+                                    <a class="text-dark" asp-area="" asp-controller="AppUser" asp-action="SortByType">
+                                        Type
+                                        <i class="fas fa-sort ml-1"></i>
+                                    </a>
+                                </th>
+                                <th scope="col">
+                                    <a class="text-dark" asp-area="" asp-controller="AppUser" asp-action="SortByAddedDate">
+                                        Added Date
+                                        <i class="fas fa-sort ml-1"></i>
+                                    </a>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var product in products)
                             {
-                                        <div class="col col-xs-12 col-sm-12 col-md-6 col-lg-4" style="padding-bottom: 2rem;">
-                                            <div class="card h-100 hoverable-card" id="card_on_transaction">
-                                                <div class="card-header @product.GetTableHeaderClassString(_repository, _userManager.GetUserAsync(User).Result)" id="card_on_transaction_header">
-                                                    <h5 style="font-weight:300">@product.Type</h5>
-                                                </div>
-                                                <partial name="~/Views/Product/_ProductImageCarouselPartial.cshtml" model='@new ProductImageCarouselViewModel(product, "catalog-comp", carouselIndex: product.ID)' />
-                                                <partial name="~/Views/Product/_CardBodyPartial.cshtml" model="@product" />
-                                                <partial name="~/Views/Product/_CardFooterPartial.cshtml" model="@product" />
-                                            </div>
-                                        </div>
+                                <tr>
+                                    <td class="thead-light">
+                                        @product.Name
+                                    </td>
+                                    <td class="thead-light">
+                                        @product.Type
+                                    </td>
+                                    <td class="thead-light">
+                                        @product.AddedDate
+                                    </td>
+                                </tr>
                             }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <h4 class="text-center">You have not added anything yet!</h4>
+                }
+            }
+            else
+            {
+                var products = _repository.GetAllProductsOfUser(_userManager.GetUserId(User)).ToList();
+                        @if (products.Count() > 0)
+                        {
+                            <div class="container-fluid">
+                                <div class="row row-cols-1 row-cols-md-3">
+                                    @foreach (var product in products)
+                                    {
+                                    <div class="col col-xs-12 col-sm-12 col-md-6 col-lg-4" style="padding-bottom: 2rem;">
+                                        <div class="card h-100 hoverable-card" id="card_on_transaction">
+                                            <div class="card-header @product.GetTableHeaderClassString(_repository, _userManager.GetUserAsync(User).Result)" id="card_on_transaction_header">
+                                                <h5 style="font-weight:300">@product.Type</h5>
+                                            </div>
+                                            <partial name="~/Views/Product/_ProductImageCarouselPartial.cshtml" model='@new ProductImageCarouselViewModel(product, "catalog-comp", carouselIndex: product.ID)' />
+                                            <partial name="~/Views/Product/_CardBodyPartial.cshtml" model="@product" />
+                                            <partial name="~/Views/Product/_CardFooterPartial.cshtml" model="@product" />
+                                        </div>
+                                    </div>
+                                    }
+                                </div>
+                            </div>
                         }
-                     }
-                     </div>
-                </div>
+                        else
+                        {
+                            <h4 class="text-center">You have not added anything yet!</h4>
+                        }
+
+            }
             <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
             <a href="#" class="btn btn-primary">Go somewhere</a>
         </div>

@@ -197,6 +197,11 @@ namespace WebMarket.Models
             return from p in context.BoughtProducts where p.AppUserRefId == id select p;
         }
 
+        public DbContext GetDbContext()
+        {
+            return context;
+        }
+
         public Image GetImage(int id)
         {
             return context.Images.Find(id);
@@ -224,6 +229,13 @@ namespace WebMarket.Models
         public Product GetProductByIndex(int index)
         {
             return context.Products.ToList()[index];
+        }
+
+        public IEnumerable<Product> GetProductsByBought(IEnumerable<BoughtProduct> boughtProducts)
+        {
+            return (from p in context.Products.ToList()
+                    join bp in boughtProducts on p.ID equals bp.ProductRefId
+                    select p);
         }
 
         public IEnumerable<Product> GetProductsByName(string name)
