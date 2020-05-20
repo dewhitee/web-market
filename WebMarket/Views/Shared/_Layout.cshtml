@@ -1,5 +1,9 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<AppUser> signInManager
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,6 +11,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="~/css/navbar.css" />
+    <link rel="stylesheet" href="~/css/logos.css" />
 </head>
 <body>
     <header>
@@ -43,34 +48,53 @@
                                 </div>
                             </div>
                         </li>
-                        @*<li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="ShopCart" asp-action="ShopCart">ShopCart</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="Comparison" asp-action="Comparison">Compare</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Add">Add Product</a>
-        </li>*@
-                    </ul>
+                        @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="" asp-controller="Administration" asp-action="ListRoles">Admin Panel</a>
+                            </li>
+                        }
+                            @*<li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="ShopCart" asp-action="ShopCart">ShopCart</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Comparison" asp-action="Comparison">Compare</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Add">Add Product</a>
+                                </li>*@
+                        </ul>
+                    </div>
                 </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container" id="body-container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-
-    <footer class="border-top footer bg-dark text-white text-muted">
-        <div class="container">
-            &copy; 2020 - WebMarket - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </nav>
+        </header>
+        <div class="container" id="body-container">
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
         </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @RenderSection("Scripts", required: false)
-</body>
+
+        <footer class="border-top footer bg-dark text-white text-muted">
+            <div class="container">
+                &copy; 2020 - WebMarket - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
+            <div class="container-fluid">
+                <h5 class="text-center">Our partners</h5>
+                <section id="logos">
+                    <img class="sm-logo" src="~/images/unreal.png" alt="unreal-logo">
+                    <img class="sm-logo" src="~/images/12-unity.png" alt="unity-logo">
+                    <img class="sm-logo" src="~/images/16-naughty-dog.png" alt="naughtydog-logo">
+                    <img class="sm-logo" src="~/images/5-dice.png" alt="dice-logo">
+                    <img class="sm-logo" src="~/images/3-warner-brothers.png" alt="warnerbrothers-logo">
+                    <img class="sm-logo" src="~/images/8-mpc.png" alt="mpc-logo">
+                    <img class="sm-logo" src="~/images/9-crystal-dynamics.png" alt="crystaldynamics-logo">
+                    <img class="sm-logo" src="~/images/11-bungie.png" alt="bungie-logo">
+                </section>
+            </div>
+        </footer>
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        @RenderSection("Scripts", required: false)
+    </body>
 </html>

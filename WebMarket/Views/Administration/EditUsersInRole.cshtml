@@ -1,0 +1,33 @@
+﻿@model List<WebMarket.Models.AdministrationModels.UserRoleViewModel> 
+@{
+    ViewData["Title"] = "EditUsersInRole";
+
+    var roleId = ViewBag.roleId;
+}
+
+<h1>Edit Users In Role</h1>
+
+<form method="post">
+    <div class="card">
+        <div class="card-header">
+            <h2>Add or remove users from this role</h2>
+        </div>
+        <div class="card-body">
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <div class="form-check m-1">
+                    <input type="hidden" asp-for="@Model[i].UserId" />
+                    <input type="hidden" asp-for="@Model[i].UserName" />
+                    <input asp-for="@Model[i].IsSelected" class="form-check-input" />
+                    <label asp-for="@Model[i].IsSelected" class="form-check-label">
+                        @Model[i].UserName
+                    </label>
+                </div>
+            }
+        </div>
+        <div class="card-footer">
+            <input type="submit" value="Update" class="btn btn-primary"/>
+            <a asp-action="EditRole" class="btn btn-primary" asp-route-id="@roleId">Cancel</a>
+        </div>
+    </div>
+</form>

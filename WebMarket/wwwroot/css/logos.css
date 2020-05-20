@@ -1,0 +1,11 @@
+﻿#logos {
+    text-align: center;
+    padding-bottom: 3%;
+}
+
+.sm-logo {
+    max-height: 70px;
+    min-width: 70px;
+    width: 10%;
+    margin: 2px 2px 8px;
+}
