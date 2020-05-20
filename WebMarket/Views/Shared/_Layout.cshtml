@@ -69,16 +69,26 @@
             </nav>
         </header>
         <div class="container" id="body-container">
-            <main role="main" class="pb-3">
+            <main role="main" class="" style="padding-bottom: 16em">
                 @RenderBody()
             </main>
         </div>
 
-        <footer class="border-top footer bg-dark text-white text-muted">
+        <footer class="footer bg-dark text-white text-muted" style="bottom: 0">
             <div class="container">
                 &copy; 2020 - WebMarket - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
             </div>
-            <div class="container-fluid">
+            <div class="container">
+                <div class="d-inline">
+                    <a class="btn btn-lg btn-dark" asp-controller="Catalog" asp-action="Catalog">Catalog</a>
+                </div>
+                <div class="d-inline">
+                    <a class="btn btn-lg btn-dark" asp-controller="Comparison" asp-action="Comparison">Compare</a>
+                </div>
+                <div class="d-inline">
+                    <a class="btn btn-lg btn-dark" asp-controller="Product" asp-action="Add">Upload</a>
+                </div>
+                <hr/>
                 <h5 class="text-center">Our partners</h5>
                 <section id="logos">
                     <img class="sm-logo" src="~/images/unreal.png" alt="unreal-logo">

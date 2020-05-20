@@ -103,15 +103,3 @@ nav {
     background: linear-gradient(to bottom, #230444, #0778c3);
 }
 
-/* Notification form section */
-#notification-form {
-    padding: 14% 30%;
-   
-}
-
-.gradient2 {
-    height: 100%;
-    background-color: #0778c3;
-    background: -webkit-linear-gradient(to bottom, #0778c3, #43cea2);
-    background: linear-gradient(to bottom, #0778c3, #43cea2);
-}

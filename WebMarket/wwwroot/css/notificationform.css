@@ -1,0 +1,13 @@
+﻿/* Notification form section */
+#notification-form {
+    padding: 14% 30%;
+    margin-bottom: -4em;
+    background-color: #0778c3;
+}
+
+.nform-gradient {
+    height: 100%;
+    background-color: #0778c3;
+    background: -webkit-linear-gradient(to bottom, #0778c3, #43cea2);
+    background: linear-gradient(to bottom, #0778c3, #43cea2);
+}
