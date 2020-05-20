@@ -36,8 +36,9 @@ nav {
 }
 
 #title {
-    background-color: #230444;
+    background-color: #00909e;
     color: #fff;
+    padding-top: 2rem;
     margin-top: -2rem;
 }
 
@@ -103,3 +104,9 @@ nav {
     background: linear-gradient(to bottom, #230444, #0778c3);
 }
 
+.rgradient {
+    height: 100%;
+    background: #43cea2;
+    background: -webkit-linear-gradient(to bottom, #00909e, #230444);
+    background: linear-gradient(to bottom, #00909e, #230444);
+}

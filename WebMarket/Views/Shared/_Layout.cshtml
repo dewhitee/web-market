@@ -41,8 +41,8 @@
                                 </a>
 
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                    <a class="dropdown-item" href="#">Compare software</a>
-                                    <a class="dropdown-item" href="#">Upload new software</a>
+                                    <a class="dropdown-item" asp-controller="Comparison" asp-action="Comparison">Compare software</a>
+                                    <a class="dropdown-item" asp-controller="Product" asp-action="Add">Upload new software</a>
                                     <hr class="dropdown-divider" />
                                     <a class="dropdown-item" href="#">Else</a>
                                 </div>
@@ -76,7 +76,7 @@
 
         <footer class="footer bg-dark text-white text-muted" style="bottom: 0">
             <div class="container">
-                &copy; 2020 - WebMarket - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                &copy; 2020 - WebMarket - <a class="text-muted" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
             </div>
             <div class="container">
                 <div class="d-inline">
