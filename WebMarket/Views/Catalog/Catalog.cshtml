@@ -444,7 +444,7 @@ else
             <div class="float-right">
                 <div class="card bg-light mb-3" style="max-width: 12rem;">
                     <form class="" asp-controller="Catalog" asp-area="" asp-action="SortProducts" method="post">
-                        <div class="card-header">About</div>
+                        <div class="card-header">Filters <a type="button" data-toggle="modal" data-target="#infoFilterModal"><i class="far fa-question-circle"></i></a></div>
                         <div class="card-body pb-0">
                             <h5 class="card-title">Light card title</h5>
                             <p class="card-text">No text.</p>
@@ -582,4 +582,38 @@ else
             break;
         }
 }
+
+
+<div class="modal fade" id="infoFilterModal" tabindex="-1" role="dialog" aria-labelledby="infoFilterModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content bg-dark text-white">
+            <div class="modal-header">
+                <h5 class="modal-title" id="infoFilterModalLongTitle">Help | Filters</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                You can apply filters in the catalog to find everything you need in just few clicks.
+                <p class="pt-4"><b>Sort By</b></p>
+                <ul>
+                    <li>Use "Sort By" section to sort products in the way you like.</li>
+                </ul>
+                <p class=""><b>Find By</b></p>
+                <ul>
+                    <li>Use "Find By" section if you want to see only those products that match your needs.</li>
+                    <li>To apply finding - just select the Product Type, then press the plus button. Add as many types as you want. And then click the Apply button when you ready.</li>
+                    <li>You can also check the "Fully matching" checkbox, in case you want to see only those products that has all the tags you have added.</li>
+                </ul>
+                <p class=""><b>Display</b></p>
+                <ul>
+                    <li>Use "Display" settings to show only specific count of products on page at the same time.</li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
