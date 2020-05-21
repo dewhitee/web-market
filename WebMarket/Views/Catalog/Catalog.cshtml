@@ -335,7 +335,7 @@
 <div style="padding-bottom:1em"></div>
 @if (CatalogViewModel.FindTags?.Count > 0)
 {
-    <p class="text-body text-muted">Showing only products with the following tags:</p>
+    <p class="text-body text-muted">Showing only products with the following tags: <a data-toggle="modal" data-target="#infoCatalogModal"><i class="far fa-question-circle"></i></a></p>
     foreach (var findTag in CatalogViewModel.FindTags)
     {
         <span class="badge badge-pill badge-primary">@findTag</span>
@@ -344,7 +344,7 @@
 }
 else
 {
-    <p class="text-body text-muted">Showing all products.</p>
+    <p class="text-body text-muted">Showing all products. <a data-toggle="modal" data-target="#infoCatalogModal"><i class="far fa-question-circle"></i></a></p>
 }
 
 
@@ -441,14 +441,11 @@ else
         }
     case CatalogViewModel.CatalogViewVariant.Main:
         {
-            <div class="float-right">
+            <div class="float-right mb-5">
                 <div class="card bg-light mb-3" style="max-width: 12rem;">
                     <form class="" asp-controller="Catalog" asp-area="" asp-action="SortProducts" method="post">
-                        <div class="card-header">Filters <a type="button" data-toggle="modal" data-target="#infoFilterModal"><i class="far fa-question-circle"></i></a></div>
+                        <div class="card-header">Filters <a data-toggle="modal" data-target="#infoFilterModal"><i class="far fa-question-circle"></i></a></div>
                         <div class="card-body pb-0">
-                            <h5 class="card-title">Light card title</h5>
-                            <p class="card-text">No text.</p>
-                            <hr />
                             <h6 class="card-title">Sort by</h6>
                         </div>
                         <div class="input-group col-12">
@@ -510,72 +507,72 @@ else
                 <div class="row row-cols-1 row-cols-md-3">
                     @for (int i = 0; i < CatalogViewModel.ListOfProducts.Count(); i++)
                     {
-                    var product = CatalogViewModel.ListOfProducts.ElementAt(i);   //_repository.GetAllProducts().ElementAt(i);
-                    string tdClassString = product.GetPriceTableClassString(_repository, CatalogViewModel.CurrentAppUser);
-                    string buttonClassString = product.GetAddToCartButtonClassString(_repository, CatalogViewModel.CurrentAppUser);
-                    var linkClass = product.GetProductTableLinkClassString(_repository, CatalogViewModel.CurrentAppUser);
-                    var thClass = product.GetTableHeaderClassString(_repository, CatalogViewModel.CurrentAppUser);
-                    
-                    
-                    if (CatalogViewModel.FindTags?.Count > 0)
-                    {
-                    if (!product.ContainsTags(CatalogViewModel.FindTags, _repository))
-                    continue;
-                    }
-                    
-                    <div class="col col-xs-12 col-sm-12 col-md-6 col-lg-4" style="padding-bottom: 2rem;">
-                        <div class="card h-100 hoverable-card" id="card_@i" onmouseover="onHoveredCard(@i)" onmouseout="onHoveredCardOut(@i)">
-                            <div style="transform:rotate(0);">
-                                <a href="@product.Link" class="stretched-link">
-                                    <img class="d-block w-100 img-fluid catalog-img catalog-main card-img-top" src="@product.GetCardImageSrc(_repository)" alt="Cat Lawyer Is Real And He Is Everything Right Now | Above the Law">
-                                </a>
-                                <div class="card-img-overlay">
-                                    <h6 style="font-weight:300">@product.Type</h6>
+                        var product = CatalogViewModel.ListOfProducts.ElementAt(i);   //_repository.GetAllProducts().ElementAt(i);
+                        string tdClassString = product.GetPriceTableClassString(_repository, CatalogViewModel.CurrentAppUser);
+                        string buttonClassString = product.GetAddToCartButtonClassString(_repository, CatalogViewModel.CurrentAppUser);
+                        var linkClass = product.GetProductTableLinkClassString(_repository, CatalogViewModel.CurrentAppUser);
+                        var thClass = product.GetTableHeaderClassString(_repository, CatalogViewModel.CurrentAppUser);
+
+
+                        if (CatalogViewModel.FindTags?.Count > 0)
+                        {
+                            if (!product.ContainsTags(CatalogViewModel.FindTags, _repository))
+                                continue;
+                        }
+
+                        <div class="col col-xs-12 col-sm-12 col-md-6 col-lg-4" style="padding-bottom: 2rem;">
+                            <div class="card h-100 hoverable-card" id="card_@i" onmouseover="onHoveredCard(@i)" onmouseout="onHoveredCardOut(@i)">
+                                <div style="transform:rotate(0);">
+                                    <a href="@product.Link" class="stretched-link">
+                                        <img class="d-block w-100 img-fluid catalog-img catalog-main card-img-top" src="@product.GetCardImageSrc(_repository)" alt="Cat Lawyer Is Real And He Is Everything Right Now | Above the Law">
+                                    </a>
+                                    <div class="card-img-overlay">
+                                        <h6 style="font-weight:300">@product.Type</h6>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="card-body pt-1" style="transform:rotate(0);">
-                                <h5 class="card-title">
-                                    @product.Name
-                                </h5>
-                                <div class="overflower" aria-hidden="true">
-                                    <p class="card-text card-description">@product.Description</p>
-                                </div>
-                                <div>
-                                    @{
-                                        foreach (var tag in _repository.GetTagNamesByProductId(product.ID))
-                                        {
-                                            <span class="badge badge-pill badge-primary">@tag@*.Text*@</span>
+                                <div class="card-body pt-1" style="transform:rotate(0);">
+                                    <h5 class="card-title">
+                                        @product.Name
+                                    </h5>
+                                    <div class="overflower" aria-hidden="true">
+                                        <p class="card-text card-description">@product.Description</p>
+                                    </div>
+                                    <div>
+                                        @{
+                                            foreach (var tag in _repository.GetTagNamesByProductId(product.ID))
+                                            {
+                                                <span class="badge badge-pill badge-primary">@tag@*.Text*@</span>
+                                            }
                                         }
-                                    }
+                                    </div>
+                                    <a href="@product.Link" class="stretched-link"></a>
                                 </div>
-                                <a href="@product.Link" class="stretched-link"></a>
-                            </div>
-                    
-                            <div class="card-footer @product.GetTableHeaderClassString(_repository, CatalogViewModel.CurrentAppUser)" id="card_footer_@i" onclick="onClickedCard(@i)">
-                                <h3>
-                                    @product.FinalPriceString
-                                    <sup>
-                                        @if (product.Price != product.FinalPrice)
-                                        {
-                                            <font color="red" style="font-weight:400"><del>@product.PriceString</del></font><sup> -@product.DiscountSupString</sup>
-                                        }
-                                    </sup>
-                                </h3>
-                                <div class="float-right">
-                                    <form asp-controller="Catalog" asp-action="AddToCart" method="post">
-                                        <input type="hidden" class="form-control" name="productId" id="productId" value=@product.ID />
-                                        <button class="@product.GetAddToCartButtonClassString(_repository, CatalogViewModel.CurrentAppUser) hoverable-btn" type="submit" id="card_addtocart_button_@i" onmouseover="onHoveredButton(@i)" onmouseout="onHoveredButtonOut(@i)">@product.GetAddToCartButtonString(_repository, CatalogViewModel.CurrentAppUser)</button>
-                                    </form>
+
+                                <div class="card-footer @product.GetTableHeaderClassString(_repository, CatalogViewModel.CurrentAppUser)" id="card_footer_@i" onclick="onClickedCard(@i)">
+                                    <h3>
+                                        @product.FinalPriceString
+                                        <sup>
+                                            @if (product.Price != product.FinalPrice)
+                                            {
+                                                <font color="red" style="font-weight:400"><del>@product.PriceString</del></font><sup> -@product.DiscountSupString</sup>
+                                            }
+                                        </sup>
+                                    </h3>
+                                    <div class="float-right">
+                                        <form asp-controller="Catalog" asp-action="AddToCart" method="post">
+                                            <input type="hidden" class="form-control" name="productId" id="productId" value=@product.ID />
+                                            <button class="@product.GetAddToCartButtonClassString(_repository, CatalogViewModel.CurrentAppUser) hoverable-btn" type="submit" id="card_addtocart_button_@i" onmouseover="onHoveredButton(@i)" onmouseout="onHoveredButtonOut(@i)">@product.GetAddToCartButtonString(_repository, CatalogViewModel.CurrentAppUser)</button>
+                                        </form>
+                                    </div>
+                                    <small class="text-warning @product.GetProductTableLinkClassString(_repository, CatalogViewModel.CurrentAppUser)">
+                                        Added @product.AddedDate.ToShortDateString()
+                                    </small>
+
                                 </div>
-                                <small class="text-warning @product.GetProductTableLinkClassString(_repository, CatalogViewModel.CurrentAppUser)">
-                                    Added @product.AddedDate.ToShortDateString()
-                                </small>
-                    
+                                <div id="card_expand_@i"></div>
                             </div>
-                            <div id="card_expand_@i"></div>
+                            @*</a>*@
                         </div>
-                        @*</a>*@
-                    </div>
                     }
                 </div>
             </div>
@@ -584,7 +581,7 @@ else
 }
 
 
-<div class="modal fade" id="infoFilterModal" tabindex="-1" role="dialog" aria-labelledby="infoFilterModalTitle" aria-hidden="true">
+<div class="modal" id="infoFilterModal" tabindex="-1" role="dialog" aria-labelledby="infoFilterModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content bg-dark text-white">
             <div class="modal-header">
@@ -611,9 +608,34 @@ else
                 </ul>
             </div>
             <div class="modal-footer">
+                <a class="btn btn-light float-left" data-dismiss="modal" data-toggle="modal" href="#infoCatalogModal">Next help</a>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
 </div>
 
+<div class="modal" id="infoCatalogModal" tabindex="-1" role="dialog" aria-labelledby="infoCatalogModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content bg-dark text-white">
+            <div class="modal-header">
+                <h5 class="modal-title" id="infoCatalogModalLongTitle">Help | Catalog</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Catalog contains all the products from the database. You can apply settings in the filter section to change the way products appear to you.
+                <p class="pt-4"><b>Color Meanings</b></p>
+                <ul>
+                    <li>Blue - if the product appear with the blue footer it means that you have bought or got it already.</li>
+                    <li>Black - in case the product has black footer it means that you have selected this product, or you are the owner of this product.</li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-light float-left" data-dismiss="modal" data-toggle="modal" href="#infoFilterModal">Next help</a>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

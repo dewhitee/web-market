@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="~/css/navbar.css" />
     <link rel="stylesheet" href="~/css/logos.css" />
+    <link rel="stylesheet" href="~/css/bg.css" />
 </head>
 <body>
     <header>
@@ -54,15 +55,6 @@
                                 <a class="nav-link text-white" asp-area="" asp-controller="Administration" asp-action="ListRoles">Admin Panel</a>
                             </li>
                         }
-                            @*<li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="ShopCart" asp-action="ShopCart">ShopCart</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Comparison" asp-action="Comparison">Compare</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Add">Add Product</a>
-                                </li>*@
                         </ul>
                     </div>
                 </div>
@@ -87,6 +79,9 @@
                 </div>
                 <div class="d-inline">
                     <a class="btn btn-lg btn-dark" asp-controller="Product" asp-action="Add">Upload</a>
+                </div>
+                <div class="d-inline">
+                    <a class="btn btn-lg btn-dark" asp-controller="Home" asp-action="ChangeTheme">Change Theme</a>
                 </div>
                 <hr/>
                 <h5 class="text-center">Our partners</h5>

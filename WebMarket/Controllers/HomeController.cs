@@ -18,6 +18,10 @@ namespace WebMarket.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
+        // background
+        private static bool _backgroundDefault { get; set; }
+        public static string BackgroundClass { get => !_backgroundDefault ? "" : "gradient-background"; }
+
         public HomeController(ILogger<HomeController> logger, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager,
             IHttpContextAccessor contextAccessor)
         {
@@ -40,6 +44,13 @@ namespace WebMarket.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public IActionResult ChangeTheme()
+        {
+            _backgroundDefault = !_backgroundDefault;
+            ViewBag.ErrorMessage = "Theme changing on the web-page is currently in development.";
+            return View("NotFound");
         }
     }
 }
