@@ -316,31 +316,31 @@ else
                         <th scope="col">#</th>
                         <th scope="col">Add</th>
                         <th scope="col">
-                            <a class="text-dark" asp-area="" asp-controller="Catalog" asp-action="SortByName">
+                            <a class="text-dark" asp-area="" asp-controller="Catalog" asp-action="Sorted" asp-route-sortOptionIndex="1">
                                 Product Name
                                 <i class="fas fa-sort ml-1"></i>
                             </a>
                         </th>
                         <th scope="col">
-                            <a class="text-dark" asp-area="" asp-controller="Catalog" asp-action="SortByType">
+                            <a class="text-dark" asp-area="" asp-controller="Catalog" asp-action="Sorted" asp-route-sortOptionIndex="2">
                                 Type
                                 <i class="fas fa-sort ml-1"></i>
                             </a>
                         </th>
                         <th scope="col">
-                            <a class="text-dark" asp-area="" asp-controller="Catalog" asp-action="SortByPrice">
+                            <a class="text-dark" asp-area="" asp-controller="Catalog" asp-action="Sorted" asp-route-sortOptionIndex="3">
                                 Price
                                 <i class="fas fa-sort ml-1"></i>
                             </a>
                         </th>
                         <th scope="col">
-                            <a class="text-dark" asp-area="" asp-controller="Catalog" asp-action="SortByDiscount">
+                            <a class="text-dark" asp-area="" asp-controller="Catalog" asp-action="Sorted" asp-route-sortOptionIndex="4">
                                 Discount
                                 <i class="fas fa-sort ml-1"></i>
                             </a>
                         </th>
                         <th scope="col">
-                            <a class="text-dark" asp-area="" asp-controller="Catalog" asp-action="SortByFinalPrice">
+                            <a class="text-dark" asp-area="" asp-controller="Catalog" asp-action="Sorted" asp-route-sortOptionIndex="5">
                                 Final
                                 <i class="fas fa-sort ml-1"></i>
                             </a>
@@ -363,30 +363,26 @@ else
                             <th scope="row" class="@thClass">@i</th>
                             <th scope="row" class="@thClass">
                                 <form asp-controller="Catalog" asp-action="AddToCart" method="post">
-                                    <input type="hidden" class="form-control" name="productName" id="productName" value=@Model.listOfProducts[i].Name />
-                                    <input type="hidden" class="form-control" name="productIndex" id="productIndex" value=@i />
-                                    @*<a class="text-dark" name="productName" asp-area="" asp-controller="Catalog" asp-action="AddToCart">
-                                            @CatalogViewModel.ListOfProducts[i].IsBoughtString
-                                        </a>*@
+                                    <input type="hidden" class="form-control" name="productId" id="productId" value=@Model.listOfProducts[i].ID />
                                     <button class="@Model.listOfProducts[i].GetAddToCartButtonClassString(_repository, CatalogViewModel.CurrentAppUser)" type="submit">@Model.listOfProducts[i].IsBoughtString(_repository, CatalogViewModel.CurrentAppUser)</button>
                                 </form>
                             </th>
-                            <td class="@tdClassString">
+                            <td class="@thClass">
                                 @Model.listOfProducts[i].Name
                             </td>
-                            <td class="@tdClassString">
+                            <td class="@thClass">
                                 @Model.listOfProducts[i].Type
                             </td>
-                            <td class="@tdClassString">
+                            <td class="@thClass">
                                 @Model.listOfProducts[i].PriceString
                             </td>
-                            <td class="@tdClassString">
+                            <td class="@thClass">
                                 @Model.listOfProducts[i].DiscountString
                             </td>
-                            <td class="@tdClassString">
+                            <td class="@thClass">
                                 @Model.listOfProducts[i].FinalPriceString
                             </td>
-                            <td class="@tdClassString">
+                            <td class="@thClass">
                                 <a href=@Model.listOfProducts[i].Link class="@linkClass">
                                     <ins><strong>@Model.listOfProducts[i].LinkTableString</strong></ins>
                                 </a>
@@ -550,6 +546,7 @@ else
         }
 }
 
+<a type="button" class="btn btn-outline-primary" asp-area="" asp-controller="Catalog" asp-action="ChangeView">Change View</a>
 
 <div class="modal" id="infoFilterModal" tabindex="-1" role="dialog" aria-labelledby="infoFilterModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">

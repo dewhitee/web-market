@@ -62,7 +62,7 @@ namespace WebMarket.Controllers
 
             var model = new CatalogViewModel
             {
-                listOfProducts = /*CatalogViewModel.ListOfProducts != null ? CatalogViewModel.ListOfProducts : new List<Product>()*/listOfProducts,
+                listOfProducts = listOfProducts,
                 listOfProductTypes = listOfProductTypes,
                 findTags = CatalogViewModel.FindTags != null ? CatalogViewModel.FindTags : new List<string>(),
                 fullyMatching = CatalogViewModel.FullyMatching
@@ -72,8 +72,8 @@ namespace WebMarket.Controllers
 
         public IActionResult ChangeView(CatalogViewModel.CatalogViewVariant viewVariant)
         {
-            CatalogViewModel.ViewVariant = viewVariant == CatalogViewModel.CatalogViewVariant.Main ?
-                CatalogViewModel.CatalogViewVariant.Table : CatalogViewModel.CatalogViewVariant.Main;
+            CatalogViewModel.ViewVariant = (CatalogViewModel.ViewVariant == CatalogViewModel.CatalogViewVariant.Main ?
+                CatalogViewModel.CatalogViewVariant.Table : CatalogViewModel.CatalogViewVariant.Main);
 
             return RedirectToAction("Catalog");
         }
