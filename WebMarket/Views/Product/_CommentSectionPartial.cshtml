@@ -2,44 +2,45 @@
 @inject Microsoft.AspNetCore.Identity.UserManager<AppUser> _userManager
 @inject IMainRepository _repository
 
-<div class="card-body" style="transform:rotate(0);">
-    @{
-        if (_repository.GetUserCommentsByProdID(Model.ID) != null)
-        {
-            foreach (var comment in _repository.GetUserCommentsByProdID(Model.ID))
+    <div class="card-body" style="transform:rotate(0);">
+        @{
+            if (_repository.GetUserCommentsByProdID(Model.ID) != null)
             {
-                ///var username = WebMarket.Data.Userbase.GetUsername(comment.UserID);
-                var username = await _userManager.FindByIdAsync(comment.UserID);
-                if (username != null)
+                foreach (var comment in _repository.GetUserCommentsByProdID(Model.ID))
                 {
-                    <p><strong>@WebMarket.Data.Userbase.GetUsername(comment.UserID)</strong></p>
-                }
-                else
-                {
-                    <p><strong>Anonymous</strong></p>
-                }
-                <p>@comment.Text</p>
-                if (comment.Rate > 0f)
-                {
-                    for (int i = 0; i < 5; i++)
+                    ///var username = WebMarket.Data.Userbase.GetUsername(comment.UserID);
+                    var user = await _userManager.FindByIdAsync(comment.UserID);
+                    if (user != null)
                     {
-                        if (comment.Rate >= i + 1)
-                        {
-                            <i class="fa fa-star checked"></i>
-                        }
-                        else
-                        {
-                            <i class="fa fa-star not-checked"></i>
-                        }
-
+                        @*<p><strong>@WebMarket.Data.Userbase.GetUsername(comment.UserID)</strong></p>*@
+                        <p><strong>@user.UserName</strong></p>
                     }
+                    else
+                    {
+                        <p><strong>Anonymous</strong></p>
+                    }
+                    <p>@comment.Text</p>
+                    if (comment.Rate > 0f)
+                    {
+                        for (int i = 0; i < 5; i++)
+                        {
+                            if (comment.Rate >= i + 1)
+                            {
+                                <i class="fa fa-star checked"></i>
+                            }
+                            else
+                            {
+                                <i class="fa fa-star not-checked"></i>
+                            }
+
+                        }
+                    }
+                    <hr />
                 }
-                <hr />
+            }
+            else
+            {
+                <p><strong>We can't render comments as this product don't have any...</strong></p>
             }
         }
-        else
-        {
-            <p><strong>We can't render comments as this product don't have any...</strong></p>
-        }
-    }
-</div>
+    </div>

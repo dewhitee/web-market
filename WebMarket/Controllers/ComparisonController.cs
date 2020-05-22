@@ -22,7 +22,7 @@ namespace WebMarket.Controllers
             IMainRepository mainRepository)
         {
             ///Userbase.LoadData();
-            Userbase.Set(signInManager, userManager, contextAccessor.HttpContext.User);
+            ///Userbase.Set(signInManager, userManager, contextAccessor.HttpContext.User);
             this.mainRepository = mainRepository;
         }
 

@@ -27,7 +27,7 @@ namespace WebMarket.Controllers
         {
             _logger = logger;
             ///Userbase.LoadData();
-            Userbase.Set(signInManager, userManager, contextAccessor.HttpContext.User);
+            ///Userbase.Set(signInManager, userManager, contextAccessor.HttpContext.User);
         }
 
         public IActionResult Index()

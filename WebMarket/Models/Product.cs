@@ -109,13 +109,13 @@ namespace WebMarket.Models
             return true;
         }
 
-        public string GetOwnerName()
-        {
-            if (OwnerID != null)
-                return Userbase.GetUsername(OwnerID);
+        //public string GetOwnerName()
+        //{
+        //    if (OwnerID != null)
+        //        return Userbase.GetUsername(OwnerID);
 
-            return "NO_OWNER";
-        }
+        //    return "NO_OWNER";
+        //}
 
         public float GetRateAvg(IMainRepository repository)
         {
@@ -306,7 +306,7 @@ namespace WebMarket.Models
                 return "btn btn-outline-light";
                 //else return "btn btn-outline-dark";
             }
-            else if (/*CatalogViewModel.CurrentUser.Money*/Userbase.CurrentAppUser?.Money < FinalPrice)
+            else if (/*CatalogViewModel.CurrentUser.Money*/user?.Money < FinalPrice)
                 return "btn btn-outline-danger";
             else if (!IsBought(repo, user))
                 return "btn btn-outline-success";

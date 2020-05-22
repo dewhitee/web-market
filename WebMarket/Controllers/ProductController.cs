@@ -132,30 +132,13 @@ namespace WebMarket.Controllers
                     ID = newID,
                     Name = model.Name,
                     Type = Product.CheckTypeString(model.Type),
-                    //Tags = _tags != null ? _tags : new List<string>(),
                     Price = model.Price,
                     Discount = model.Discount,
                     Description = model.Description,
-                    //FirstImage = new Product.Image
-                    //{
-                    //    Link = (model.FirstImageLink != null && model.FirstImageLink.Length > 0) ? model.FirstImageLink
-                    //    : "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg",
-                    //    Description = model.FirstImageDescription
-                    //},
-                    //SecondImage = new Product.Image
-                    //{
-                    //    Link = model.SecondImageLink,
-                    //    Description = model.SecondImageDescription
-                    //},
-                    //ThirdImage = new Product.Image
-                    //{
-                    //    Link = model.ThirdImageLink,
-                    //    Description = model.ThirdImageDescription
-                    //},
                     Link = model.Link,
                     FileName = uniqueFileName,
                     AddedDate = DateTime.Today,
-                    OwnerID = /*Userbase.CurrentAppUser.Id*/userManager.GetUserId(User)
+                    OwnerID = userManager.GetUserId(User)
                 };
 
                 mainRepository.AddProduct(newProduct);
@@ -197,7 +180,6 @@ namespace WebMarket.Controllers
                     mainRepository.AddTag(new Tag
                     {
                         ProductID = productID.ToString(),
-                        //Text = tag,
                         TypeId = mainRepository.GetProductTypeByName(tag).ID
                     });
                 }
@@ -324,30 +306,30 @@ namespace WebMarket.Controllers
             return View();
         }
 
-        public IActionResult SaveProducts()
-        {
-            CatalogViewModel.SaveProducts();
-            return Ok();
-        }
-        public IActionResult SaveUser()
-        {
-            Userbase.SaveUser();
-            return Ok();
-        }
-        public IActionResult LoadProducts()
-        {
-            while (!Userbase.IsInitialized) { }
-            CatalogViewModel.LoadProducts();
-            LoadUser();
+        //public IActionResult SaveProducts()
+        //{
+        //    ///CatalogViewModel.SaveProducts();
+        //    return Ok();
+        //}
+        //public IActionResult SaveUser()
+        //{
+        //    Userbase.SaveUser();
+        //    return Ok();
+        //}
+        //public IActionResult LoadProducts()
+        //{
+        //    ///while (!Userbase.IsInitialized) { }
+        //    ///CatalogViewModel.LoadProducts();
+        //    ///LoadUser();
 
-            return Ok();
-        }
-        public IActionResult LoadUser()
-        {
-            while (!Userbase.IsInitialized) { }
-            Userbase.LoadUser();
-            return Ok();
-        }
+        //    return Ok();
+        //}
+        //public IActionResult LoadUser()
+        //{
+        //    while (!Userbase.IsInitialized) { }
+        //    Userbase.LoadUser();
+        //    return Ok();
+        //}
 
         public IActionResult Buy(int productId)
         {

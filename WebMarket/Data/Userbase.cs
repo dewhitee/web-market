@@ -10,6 +10,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace WebMarket.Data
 {
+    [Obsolete]
     public static class Userbase
     {
         [Serializable]
