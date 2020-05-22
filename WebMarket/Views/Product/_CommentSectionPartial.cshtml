@@ -1,4 +1,5 @@
 ﻿@model WebMarket.Models.Product
+@inject Microsoft.AspNetCore.Identity.UserManager<AppUser> _userManager
 @inject IMainRepository _repository
 
 <div class="card-body" style="transform:rotate(0);">
@@ -7,8 +8,9 @@
         {
             foreach (var comment in _repository.GetUserCommentsByProdID(Model.ID))
             {
-                var username = WebMarket.Data.Userbase.GetUsername(comment.UserID);
-                if (username?.Length > 0)
+                ///var username = WebMarket.Data.Userbase.GetUsername(comment.UserID);
+                var username = await _userManager.FindByIdAsync(comment.UserID);
+                if (username != null)
                 {
                     <p><strong>@WebMarket.Data.Userbase.GetUsername(comment.UserID)</strong></p>
                 }

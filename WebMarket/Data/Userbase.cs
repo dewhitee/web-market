@@ -10,7 +10,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace WebMarket.Data
 {
-    public class Userbase
+    public static class Userbase
     {
         [Serializable]
         public struct UserNameIDBinding
@@ -51,8 +51,8 @@ namespace WebMarket.Data
                 $"UserManager = {UserManager != null}, User = {User != null}");
             //if (!File.Exists(MoneyFilePath))
             //    File.Create(MoneyFilePath);
-            LoadData();
-            InitCurrentUser();
+            ///LoadData();
+            ///InitCurrentUser();
         }
         public static /*async */void LoadData()
         {

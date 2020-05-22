@@ -68,64 +68,59 @@ namespace WebMarket.Controllers
             return RedirectToAction("Catalog");
         }
 
-        public IActionResult BuyProduct(string productName, int productID)
-        {
-            Console.WriteLine("Buying Product...");
-            var product = from p in mainRepository.GetAllProducts() where p.ID == productID select p;
-            if (product.Any())
-            {
-                ///userManager.GetUserAsync(User).Result?.BuyProduct(product.FirstOrDefault(), mainRepository);
+        //public IActionResult BuyProduct(string productName, int productID)
+        //{
+        //    Console.WriteLine("Buying Product...");
+        //    var product = from p in mainRepository.GetAllProducts() where p.ID == productID select p;
+        //    if (product.Any())
+        //    {
+        //        var user = userManager.GetUserAsync(User).Result;
+        //        var productToBuy = product.FirstOrDefault();
+        //        if (user != null)
+        //        {
+        //            if (user.Money >= productToBuy.FinalPrice && !productToBuy.IsBought(mainRepository, user))
+        //            {
+        //                user.Money -= productToBuy.FinalPrice;
 
-                var user = userManager.GetUserAsync(User).Result;
-                var productToBuy = product.FirstOrDefault();
-                if (user != null)
-                {
-                    if (user.Money >= productToBuy.FinalPrice && !productToBuy.IsBought(mainRepository, user))
-                    {
-                        user.Money -= productToBuy.FinalPrice;
+        //                userManager.UpdateAsync(user);
 
-                        userManager.UpdateAsync(user);
+        //                mainRepository.AddBoughtProduct(new BoughtProduct
+        //                {
+        //                    AppUserRefId = user.Id,
+        //                    ProductRefId = productToBuy.ID
+        //                });
+        //                Console.WriteLine($"{productToBuy.Name} is bought!");
+        //            }
+        //            else
+        //            {
+        //                Console.WriteLine("User don't have enough money or product is already bought!");
+        //            }
+        //        }
+        //    }
+        //    return RedirectToAction("Catalog");
 
-                        mainRepository.AddBoughtProduct(new BoughtProduct
-                        {
-                            AppUserRefId = user.Id,
-                            ProductRefId = productToBuy.ID
-                        });
-                        Console.WriteLine($"{productToBuy.Name} is bought!");
-                    }
-                    else
-                    {
-                        Console.WriteLine("User don't have enough money or product is already bought!");
-                    }
-                }
-            }
-            return RedirectToAction("Catalog");
+        //}
 
-        }
+        //public IActionResult SellProduct(string productName, int productID)
+        //{
+        //    var product = from p in mainRepository.GetAllProducts() where p.ID == productID select p;
+        //    if (product.Any())
+        //    {
+        //        var user = userManager.GetUserAsync(User).Result;
+        //        var productToSell = product.FirstOrDefault();
+        //        if (user != null && productToSell.IsBought(mainRepository, user))
+        //        {
+        //            user.Money += productToSell.FinalPrice;
 
-        public IActionResult SellProduct(string productName, int productID)
-        {
-            var product = from p in mainRepository.GetAllProducts() where p.ID == productID select p;
-            if (product.Any())
-            {
-                ///CatalogViewModel.CurrentUser.SellProduct(product.FirstOrDefault(), mainRepository);
-                ///userManager.GetUserAsync(User).Result?.SellProduct(product.FirstOrDefault(), mainRepository);
+        //            userManager.UpdateAsync(user);
 
-                var user = userManager.GetUserAsync(User).Result;
-                var productToSell = product.FirstOrDefault();
-                if (user != null && productToSell.IsBought(mainRepository, user))
-                {
-                    user.Money += productToSell.FinalPrice;
+        //            mainRepository.DeleteBoughtProduct(user.Id, productToSell.ID);
+        //            Console.WriteLine($"{productToSell.Name} is sold!");
+        //        }
+        //    }
 
-                    userManager.UpdateAsync(user);
-
-                    mainRepository.DeleteBoughtProduct(user.Id, productToSell.ID);
-                    Console.WriteLine($"{productToSell.Name} is sold!");
-                }
-            }
-
-            return RedirectToAction("Catalog");
-        }
+        //    return RedirectToAction("Catalog");
+        //}
 
         public IActionResult AddComment(string commentSection, int productID, float rating)
         {

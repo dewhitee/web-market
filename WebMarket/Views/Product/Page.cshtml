@@ -72,7 +72,11 @@
                 }
                 else
                 {
-                    <p class="catd-text">Owner: <b>@product.GetOwnerName()</b></p>
+                    {
+                        var name = await _userManager.FindByIdAsync(product.OwnerID);
+                        <p class="catd-text">Owner: <b>@name?.UserName</b></p>
+                    }
+                    @*<p class="catd-text">Owner: <b>@product.GetOwnerName()</b></p>*@
                 }
                 <p>Added at: <b>@product.AddedDate.ToShortDateString()</b></p>
                 <hr />
