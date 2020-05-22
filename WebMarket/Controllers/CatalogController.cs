@@ -38,19 +38,36 @@ namespace WebMarket.Controllers
 
             CatalogViewModel.ListOfProducts = products.Take(_catalogLength > 0 ? _catalogLength : products.Count()).ToList();
 
-            List<string> listOfProductTypes = new List<string>();
-            listOfProductTypes = (from pt in mainRepository.GetAllProductTypes() orderby pt.Name select pt.Name).ToList();
+            var listOfProductTypes = (from pt in mainRepository.GetAllProductTypes() orderby pt.Name select pt.Name);
 
-            ViewBag.ListOfProductTypes = listOfProductTypes;
+            var model = new CatalogViewModel
+            {
+                listOfProducts = CatalogViewModel.ListOfProducts != null ? CatalogViewModel.ListOfProducts : new List<Product>(),
+                listOfProductTypes = listOfProductTypes,
+                findTags = CatalogViewModel.FindTags != null ? CatalogViewModel.FindTags : new List<string>(),
+                fullyMatching = CatalogViewModel.FullyMatching
+            };
 
-            CatalogViewModel.ListOfProductTypes = (from pt in mainRepository.GetAllProductTypes() orderby pt.Name select pt.Name);
-
-            return View();
+            return View(model);
         }
 
-        public IActionResult Sorted()
+        public IActionResult Sorted(int sortOptionIndex)
         {
-            return View("Catalog");
+            var products = mainRepository.GetAllProducts();
+            var listOfProducts = products.Take(_catalogLength > 0 ? _catalogLength : products.Count()).ToList();
+
+            SortProducts(sortOptionIndex, ref listOfProducts);
+
+            var listOfProductTypes = (from pt in mainRepository.GetAllProductTypes() orderby pt.Name select pt.Name);
+
+            var model = new CatalogViewModel
+            {
+                listOfProducts = /*CatalogViewModel.ListOfProducts != null ? CatalogViewModel.ListOfProducts : new List<Product>()*/listOfProducts,
+                listOfProductTypes = listOfProductTypes,
+                findTags = CatalogViewModel.FindTags != null ? CatalogViewModel.FindTags : new List<string>(),
+                fullyMatching = CatalogViewModel.FullyMatching
+            };
+            return View("Catalog", model);
         }
 
         public IActionResult ChangeView(CatalogViewModel.CatalogViewVariant viewVariant)
@@ -114,30 +131,56 @@ namespace WebMarket.Controllers
             }
         }
 
+        private void SortProducts(int sortOptionIndex, ref List<Product> products)
+        {
+            switch (sortOptionIndex)
+            {
+                case (int)CatalogViewModel.ProductSort.None:
+                    return;
+                case (int)CatalogViewModel.ProductSort.Name:
+                    products.Sort(Product.CompareByName);
+                    return;
+                case (int)CatalogViewModel.ProductSort.Type:
+                    products.Sort(Product.CompareByType);
+                    return;
+                case (int)CatalogViewModel.ProductSort.Price:
+                    products.Sort(Product.CompareByPrice);
+                    return;
+                case (int)CatalogViewModel.ProductSort.Discount:
+                    products.Sort(Product.CompareByDiscount);
+                    return;
+                case (int)CatalogViewModel.ProductSort.FinalPrice:
+                    products.Sort(Product.CompareByFinalPrice);
+                    return;
+                default:
+                    return;
+            }
+        }
+
         public IActionResult SortByName()
         {
             CatalogViewModel.ListOfProducts.Sort(Product.CompareByName);
-            return RedirectToAction("Sorted");
+            return RedirectToAction("Sorted", new { sortBy = "by Name" });;
         }
         public IActionResult SortByType()
         {
             CatalogViewModel.ListOfProducts.Sort(Product.CompareByType);
-            return RedirectToAction("Sorted");
+            return RedirectToAction("Sorted", new { sortBy = "by Type" });
         }
         public IActionResult SortByPrice()
         {
             CatalogViewModel.ListOfProducts.Sort(Product.CompareByPrice);
-            return RedirectToAction("Sorted");
+            return RedirectToAction("Sorted", new { sortBy = "by Price" });
         }
         public IActionResult SortByDiscount()
         {
             CatalogViewModel.ListOfProducts.Sort(Product.CompareByDiscount);
-            return RedirectToAction("Sorted");
+            return RedirectToAction("Sorted", new { sortBy = "by Discount" });
         }
         public IActionResult SortByFinalPrice()
         {
             CatalogViewModel.ListOfProducts.Sort(Product.CompareByFinalPrice);
-            return RedirectToAction("Sorted");
+            return RedirectToAction("Sorted", new { sortBy = "by Final Price", products = CatalogViewModel.ListOfProducts });
         }
 
         public IActionResult SubmitTags(string[] findTags)
@@ -145,11 +188,12 @@ namespace WebMarket.Controllers
             if (findTags != null)
                 CatalogViewModel.FindTags = new List<string>(findTags);
             else return View("Error");
-            return RedirectToAction("Catalog");
+            return RedirectToAction("Catalog", new { findTags = CatalogViewModel.FindTags });
         }
 
-        public IActionResult SubmitShowProducts(int catalogLength)
+        public IActionResult SubmitShowProducts(int fullyMatching, int catalogLength)
         {
+            CatalogViewModel.FullyMatching = fullyMatching > 0 ? true : false;
             _catalogLength = catalogLength;
             return RedirectToAction("Catalog");
         }

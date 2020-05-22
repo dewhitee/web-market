@@ -11,12 +11,6 @@
     CatalogViewModel.CurrentAppUser = _userManager.GetUserAsync(User).Result;
 }
 
-@*<script>
-        function onCardClick(cardIndex) {
-            const card = document.getElementById("card_" + cardIndex);
-            if (card.click())
-        }
-    </script>*@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link href="~/css/images.css" rel="stylesheet" type="text/css" />
 <link href="~/css/tags.css" rel="stylesheet" type="text/css" />
@@ -113,6 +107,11 @@
             });
         }
 
+        function removeFindTag(el) {
+            var element = el;
+            $(element).parent().remove();
+        }
+
         function countChars(obj) {
             var maxLength = obj.maxLength;
             var strLength = obj.value.length;
@@ -137,17 +136,6 @@
                 tags_array.push($(this).text());
             });
             var prod_name = $('#productName_add').val();
-            //var prod_type = $('#productType_add').val();
-            //var prod_cost = $('#productCost_add').val();
-            //var prod_discount = $('#productDiscount_add').val();
-            //var prod_desc = $('#productDescription_add').val();
-            //var prod_img_link = $('#productImageLink_add').val();
-            //var prod_img_desc = $('#productImageDescription_add').val();
-            //var prod_second_img_link = $('#secondImageLink_add').val();
-            //var prod_second_img_desc = $('#secondImageDescription_add').val();
-            //var prod_third_img_link = $('#thirdImageLink_add').val();
-            //var prod_third_img_desc = $('#thirdImageDescription_add').val();
-            //var prod_link = $('#productLink_add').val();
             var prod_zip = $('#productZipFile').val();
 
             $.ajax({
@@ -157,18 +145,7 @@
                 traditional: true,
                 data: {
                     productName: prod_name,
-                    //productType: prod_type,
                     tags: tags_array,
-                    //productCost: prod_cost,
-                    //productDiscount: prod_discount,
-                    //productDescription: prod_desc,
-                    //productImageLink: prod_img_link,
-                    //productImageDescription: prod_img_desc,
-                    //secondImageLink: prod_second_img_link,
-                    //secondImageDescription: prod_second_img_desc,
-                    //thirdImageLink: prod_third_img_link,
-                    //thirdImageDescription: prod_third_img_desc,
-                    //productLink: prod_link
                     productZipFile: prod_zip
                 },
                 success: function (data) {
@@ -199,32 +176,6 @@
                 },
             });
         });
-
-        //$(document).ready(function () {
-        //    $("#productZipFile").on("change", function () {
-        //        var files = $(this).get(0).files;
-        //        var formData = new FormData();
-        //        for (var i = 0; i < files.length; i++) {
-        //            formData.append(files[i].name, files[i]);
-        //        }
-
-        //        uploadFiles(formData);
-        //    });
-        //});
-
-        //function uploadFiles(formData) {
-        //    $.ajax({
-        //        url: "",
-        //        method: "POST",
-        //        data: formData,
-        //        success: function (data) {
-
-        //        },
-        //        error: function (data) {
-        //            alert("Upload failed!");
-        //        }
-        //    });
-        //}
 
     </script>
 }
@@ -335,7 +286,14 @@
 <div style="padding-bottom:1em"></div>
 @if (CatalogViewModel.FindTags?.Count > 0)
 {
-    <p class="text-body text-muted">Showing only products with the following tags: <a data-toggle="modal" data-target="#infoCatalogModal"><i class="far fa-question-circle"></i></a></p>
+    @if (CatalogViewModel.FullyMatching)
+    {
+        <p class="text-body text-muted">Showing only products with the following tags fully matched: <a data-toggle="modal" data-target="#infoCatalogModal"><i class="far fa-question-circle"></i></a></p>
+    }
+    else
+    {
+        <p class="text-body text-muted">Showing only products with the following tags: <a data-toggle="modal" data-target="#infoCatalogModal"><i class="far fa-question-circle"></i></a></p>
+    }
     foreach (var findTag in CatalogViewModel.FindTags)
     {
         <span class="badge badge-pill badge-primary">@findTag</span>
@@ -395,42 +353,42 @@ else
                     </tr>
                 </thead>
                 <tbody>
-                    @for (int i = 0; i < CatalogViewModel.ListOfProducts.Count; i++)
+                    @for (int i = 0; i < Model.listOfProducts.Count; i++)
                     {
-                        string tdClassString = CatalogViewModel.ListOfProducts[i].GetPriceTableClassString(_repository, CatalogViewModel.CurrentAppUser);
-                        string buttonClassString = CatalogViewModel.ListOfProducts[i].GetAddToCartButtonClassString(_repository, CatalogViewModel.CurrentAppUser);
-                        var linkClass = CatalogViewModel.ListOfProducts[i].GetProductTableLinkClassString(_repository, CatalogViewModel.CurrentAppUser);
-                        var thClass = CatalogViewModel.ListOfProducts[i].GetTableHeaderClassString(_repository, CatalogViewModel.CurrentAppUser);
+                        string tdClassString = Model.listOfProducts[i].GetPriceTableClassString(_repository, CatalogViewModel.CurrentAppUser);
+                        string buttonClassString = Model.listOfProducts[i].GetAddToCartButtonClassString(_repository, CatalogViewModel.CurrentAppUser);
+                        var linkClass = Model.listOfProducts[i].GetProductTableLinkClassString(_repository, CatalogViewModel.CurrentAppUser);
+                        var thClass = Model.listOfProducts[i].GetTableHeaderClassString(_repository, CatalogViewModel.CurrentAppUser);
                         <tr>
                             <th scope="row" class="@thClass">@i</th>
                             <th scope="row" class="@thClass">
                                 <form asp-controller="Catalog" asp-action="AddToCart" method="post">
-                                    <input type="hidden" class="form-control" name="productName" id="productName" value=@CatalogViewModel.ListOfProducts[i].Name />
+                                    <input type="hidden" class="form-control" name="productName" id="productName" value=@Model.listOfProducts[i].Name />
                                     <input type="hidden" class="form-control" name="productIndex" id="productIndex" value=@i />
                                     @*<a class="text-dark" name="productName" asp-area="" asp-controller="Catalog" asp-action="AddToCart">
                                             @CatalogViewModel.ListOfProducts[i].IsBoughtString
                                         </a>*@
-                                    <button class="@CatalogViewModel.ListOfProducts[i].GetAddToCartButtonClassString(_repository, CatalogViewModel.CurrentAppUser)" type="submit">@CatalogViewModel.ListOfProducts[i].IsBoughtString(_repository, CatalogViewModel.CurrentAppUser)</button>
+                                    <button class="@Model.listOfProducts[i].GetAddToCartButtonClassString(_repository, CatalogViewModel.CurrentAppUser)" type="submit">@Model.listOfProducts[i].IsBoughtString(_repository, CatalogViewModel.CurrentAppUser)</button>
                                 </form>
                             </th>
                             <td class="@tdClassString">
-                                @CatalogViewModel.ListOfProducts[i].Name
+                                @Model.listOfProducts[i].Name
                             </td>
                             <td class="@tdClassString">
-                                @CatalogViewModel.ListOfProducts[i].Type
+                                @Model.listOfProducts[i].Type
                             </td>
                             <td class="@tdClassString">
-                                @CatalogViewModel.ListOfProducts[i].PriceString
+                                @Model.listOfProducts[i].PriceString
                             </td>
                             <td class="@tdClassString">
-                                @CatalogViewModel.ListOfProducts[i].DiscountString
+                                @Model.listOfProducts[i].DiscountString
                             </td>
                             <td class="@tdClassString">
-                                @CatalogViewModel.ListOfProducts[i].FinalPriceString
+                                @Model.listOfProducts[i].FinalPriceString
                             </td>
                             <td class="@tdClassString">
-                                <a href=@CatalogViewModel.ListOfProducts[i].Link class="@linkClass">
-                                    <ins><strong>@CatalogViewModel.ListOfProducts[i].LinkTableString</strong></ins>
+                                <a href=@Model.listOfProducts[i].Link class="@linkClass">
+                                    <ins><strong>@Model.listOfProducts[i].LinkTableString</strong></ins>
                                 </a>
                             </td>
                         </tr>
@@ -443,14 +401,14 @@ else
         {
             <div class="float-right mb-5">
                 <div class="card bg-light mb-3" style="max-width: 12rem;">
-                    <form class="" asp-controller="Catalog" asp-area="" asp-action="SortProducts" method="post">
+                    <form class="" asp-controller="Catalog" asp-area="" asp-action="Sorted" method="post">
                         <div class="card-header">Filters <a data-toggle="modal" data-target="#infoFilterModal"><i class="far fa-question-circle"></i></a></div>
                         <div class="card-body pb-0">
                             <h6 class="card-title">Sort by</h6>
                         </div>
                         <div class="input-group col-12">
-                            <select name="sortOptionIndex" id="sortOptionIndex" class="custom-select form-control form-control-sm">
-                                <option value="0" selected>Default</option>
+                            <select asp-for="sortBy" name="sortOptionIndex" id="sortOptionIndex" class="custom-select form-control form-control-sm">
+                                <option value="0">Default</option>
                                 <option value="1">by Name</option>
                                 <option value="2">by Type</option>
                                 <option value="3">by Price</option>
@@ -471,7 +429,7 @@ else
                         @*<p class="card-text text-center">Tags</p>*@
                         <div class="input-group col-md-12">
                             @*<label for="findTag">Tags</label>*@
-                            <select name="findTag" id="findTag" class="custom-select form-control form-control-sm" asp-items="@(new SelectList(CatalogViewModel.ListOfProductTypes))">
+                            <select name="findTag" id="findTag" class="custom-select form-control form-control-sm" asp-items="@(new SelectList(Model.listOfProductTypes))">
                             </select>
                             <div class="input-group-append">
                                 <button class="btn btn-primary btn-sm" type="button" onclick="addFindTag()">+</button>
@@ -479,8 +437,22 @@ else
                         </div>
                         <div id="findTags" class="pt-2 pb-2">
                             <!-- There will be all tags -->
+                            @if (Model.findTags.Any())
+                            {
+                                foreach (var tag in Model.findTags)
+                                {
+                                    <span class="badge badge-pill badge-primary tag" id="@tag" style="margin-left: 12px;">@tag<i class="fas fa-times tag-cross" aria-hidden="true" style="padding-left: 4px;" onclick="removeFindTag(this)"></i></span>
+                                }
+                            }
+                        </div>
+                        <div class="form-check form-check-inline pl-4">
+                            <input class="form-check-input" type="checkbox" id="fullyMatching" name="fullyMatching" asp-for="fullyMatching" value="1">
+                            <label class="form-check-label" for="inlineCheckbox1">Fully matching</label>
                         </div>
                         <hr />
+                        <div class="card-body pt-0 mt-0 pb-0">
+                            <h6 class="card-title">Display</h6>
+                        </div>
                         <div class="ml-3">
                             <div class="custom-control custom-radio custom-control-inline">
                                 <input type="radio" id="catalogLength3" name="catalogLength" class="custom-control-input" value="3">
@@ -495,19 +467,17 @@ else
                                 <label class="custom-control-label" for="catalogLengthAll">Show all items</label>
                             </div>
                         </div>
-                        @*<hr />*@
-                        <div class="pt-2">
+                        <div class="pt-2 pb-3">
                             <button id="applyShowProductsButton" class="btn btn-primary ml-4 mr-4 side-btn" type="submit">Apply</button>
                         </div>
-                        <hr />
                     </form>
                 </div>
             </div>
             <div class="container-fluid">
                 <div class="row row-cols-1 row-cols-md-3">
-                    @for (int i = 0; i < CatalogViewModel.ListOfProducts.Count(); i++)
+                    @for (int i = 0; i < Model.listOfProducts.Count(); i++)
                     {
-                        var product = CatalogViewModel.ListOfProducts.ElementAt(i);   //_repository.GetAllProducts().ElementAt(i);
+                        var product = Model.listOfProducts.ElementAt(i);   //_repository.GetAllProducts().ElementAt(i);
                         string tdClassString = product.GetPriceTableClassString(_repository, CatalogViewModel.CurrentAppUser);
                         string buttonClassString = product.GetAddToCartButtonClassString(_repository, CatalogViewModel.CurrentAppUser);
                         var linkClass = product.GetProductTableLinkClassString(_repository, CatalogViewModel.CurrentAppUser);
@@ -516,7 +486,7 @@ else
 
                         if (CatalogViewModel.FindTags?.Count > 0)
                         {
-                            if (!product.ContainsTags(CatalogViewModel.FindTags, _repository))
+                            if (!product.ContainsTags(CatalogViewModel.FindTags, _repository, CatalogViewModel.FullyMatching))
                                 continue;
                         }
 

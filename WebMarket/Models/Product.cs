@@ -75,15 +75,27 @@ namespace WebMarket.Models
             return ID < 0;
         }
 
-        public bool ContainsTags(List<string> findTags, IMainRepository repository)
+        public bool ContainsTags(List<string> findTags, IMainRepository repository, bool fullyMatching)
         {
             var repoTags = repository.GetTagNamesByProductId(ID);
-            foreach (var tag in findTags)
+            if (fullyMatching)
             {
-                if (!repoTags.Contains(tag))
-                    return false;
+                foreach (var tag in findTags)
+                {
+                    if (!repoTags.Contains(tag))
+                        return false;
+                }
+                return true;
             }
-            return true;
+            else
+            {
+                foreach (var tag in findTags)
+                {
+                    if (repoTags.Contains(tag))
+                        return true;
+                }
+                return false;
+            }
         }
 
         public float GetRateAvg(IMainRepository repository)
