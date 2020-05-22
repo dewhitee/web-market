@@ -33,19 +33,6 @@ namespace WebMarket.Models
         public string Description { get; set; }
         [StringLength(128)]
         public string Link { get; set; }
-        ///public string CardImageLink { get; set; }
-
-        ///[NotMapped]
-        ///public Image FirstImage { get; set; }
-        ///[NotMapped]
-        ///public Image SecondImage { get; set; }
-        ///[NotMapped]
-        ///public Image ThirdImage { get; set; }
-        //public string FirstImageLink { get => CardImageLink; }
-        //public string SecondImageLink { get; set; }
-        //public string ThirdImageLink { get; set; }
-        //[NotMapped]
-        ///public bool IsBought { get => CatalogViewModel.CurrentUser.BoughtProductIDs.Contains(ID.ToString()); }
 
         public bool IsBought(IMainRepository repository, AppUser byUser)
         {
@@ -61,18 +48,11 @@ namespace WebMarket.Models
         public bool OnlyRegisteredCanComment { get; set; }
         [DisplayName("Only one comment per user")]
         public bool OnlyOneCommentPerUser { get; set; }
-        [NotMapped]
-        public bool AddedToCart { get; set; }
-        //public string OldFileName { get; set; }
+        [DisplayName("File Name")]
         public string FileName { get; set; }
 
-        //[Obsolete]
-        //public List<string> Tags = new List<string>();
         [Obsolete]
         public List<UserComment> Comments = new List<UserComment>();
-
-        //[ForeignKey("ProductRefId")]
-        //public ICollection<BoughtProduct> BoughtProducts { get; set; }
 
         [Display(Name = "Added Date")]
         [DataType(DataType.Date)]
@@ -85,12 +65,10 @@ namespace WebMarket.Models
         public string DiscountString { get => Discount > 0 ? Discount.ToString() + "%" : "no"; }
         public string DiscountSupString { get => Discount > 0 ? Discount.ToString() + "%" : ""; }
         public string LinkTableString { get => string.IsNullOrWhiteSpace(Link) ? "no link" : "yes"; }
-        //public string IsBoughtString { get => IsBought ? "Bought" : "+"; }
         public string IsBoughtString(IMainRepository repo, AppUser user)
         {
             return IsBought(repo, user) ? "Bought" : "+";
         }
-        public string IsAddedToCartString { get => AddedToCart || CatalogViewModel.ChoosenProductID == this.ID ? "Added" : "+"; }
 
         public bool HasValidID()
         {
@@ -99,7 +77,6 @@ namespace WebMarket.Models
 
         public bool ContainsTags(List<string> findTags, IMainRepository repository)
         {
-            //var repoTags = (from t in repository.GetTagsByProductID(ID) select t.Text);
             var repoTags = repository.GetTagNamesByProductId(ID);
             foreach (var tag in findTags)
             {
@@ -108,14 +85,6 @@ namespace WebMarket.Models
             }
             return true;
         }
-
-        //public string GetOwnerName()
-        //{
-        //    if (OwnerID != null)
-        //        return Userbase.GetUsername(OwnerID);
-
-        //    return "NO_OWNER";
-        //}
 
         public float GetRateAvg(IMainRepository repository)
         {
@@ -162,7 +131,6 @@ namespace WebMarket.Models
             Console.WriteLine($"Getting stars percent for {stars} stars...");
             if (stars > 5) return 0f;
             float starsCount = GetStarsCount(stars, repository);
-            //float totalStarsCount = GetTotalStarsCount();
             float totalComments = GetTotalCountOfNotNulledComments(repository);
             Console.WriteLine($"Final stars count is {starsCount}. This is {(starsCount <= 0 ? starsCount : starsCount / totalComments)} percent from the total amount of stars.");
             return starsCount <= 0 ? 0f : starsCount / totalComments;
@@ -227,40 +195,19 @@ namespace WebMarket.Models
                 return "Yours";
             else if (IsBought(repo, user))
                 return "Bought";
-            else if (AddedToCart || CatalogViewModel.ChoosenProductID == this.ID)
+            else if (CatalogViewModel.ChoosenProductID == this.ID)
                 return "Selected";
             else return "+";
         }
-        public string GetCardImageSrc(IMainRepository repository)
+
+        public string GetImageSrc(IMainRepository repository, int? index)
         {
-            Models.Image image = repository.GetImagesByProductID(ID).FirstOrDefault();
-            if (image != null)
-            {
-                return image.Link.Length > 0 ? image.Link : "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg";
-            }
-            else return "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg";
-        }
-        public string GetFirstImageSrc(IMainRepository repository)
-        {
-            Models.Image image = repository.GetImagesByProductID(ID).FirstOrDefault();
-            if (image != null)
-            {
-                return image.Link.Length > 0 ? image.Link : "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg";
-            }
-            else return "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg";
-        }
-        public string GetSecondImageSrc(IMainRepository repository)
-        {
-            Models.Image image = repository.GetImageByOrderIndex(ID, 1);
-            if (image != null)
-            {
-                return image.Link.Length > 0 ? image.Link : "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg";
-            }
-            else return "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg";
-        }
-        public string GetThirdImageSrc(IMainRepository repository)
-        {
-            Models.Image image = repository.GetImageByOrderIndex(ID, 2);
+            Image image;
+            if (index == null)
+                image = repository.GetImagesByProductID(ID).FirstOrDefault();
+            else
+                image = repository.GetImageByOrderIndex(ID, index.Value);
+
             if (image != null)
             {
                 return image.Link.Length > 0 ? image.Link : "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg";
@@ -277,7 +224,7 @@ namespace WebMarket.Models
 
         public string GetPriceTableClassString(IMainRepository repo, AppUser user)
         {
-            if (AddedToCart || CatalogViewModel.ChoosenProductID == this.ID || OwnerID == user?.Id)
+            if (CatalogViewModel.ChoosenProductID == this.ID || OwnerID == user?.Id)
                 return "bg-dark text-white";
             if (IsBought(repo, user))
                 return "bg-primary text-dark";
@@ -292,7 +239,7 @@ namespace WebMarket.Models
 
         public string GetProductTableLinkClassString(IMainRepository repo, AppUser user)
         {
-            if (AddedToCart || IsBought(repo, user) || CatalogViewModel.ChoosenProductID == this.ID || OwnerID == user?.Id)
+            if (IsBought(repo, user) || CatalogViewModel.ChoosenProductID == this.ID || OwnerID == user?.Id)
                 return "text-white";
             else
                 return "text-dark";
@@ -300,13 +247,11 @@ namespace WebMarket.Models
 
         public string GetAddToCartButtonClassString(IMainRepository repo, AppUser user)
         {
-            if (AddedToCart || CatalogViewModel.ChoosenProductID == this.ID || OwnerID == user?.Id)
+            if (CatalogViewModel.ChoosenProductID == this.ID || OwnerID == user?.Id)
             {
-                //if (ViewVariant != CatalogViewVariant.Main)
                 return "btn btn-outline-light";
-                //else return "btn btn-outline-dark";
             }
-            else if (/*CatalogViewModel.CurrentUser.Money*/user?.Money < FinalPrice)
+            else if (user?.Money < FinalPrice)
                 return "btn btn-outline-danger";
             else if (!IsBought(repo, user))
                 return "btn btn-outline-success";
@@ -315,7 +260,7 @@ namespace WebMarket.Models
 
         public string GetTableHeaderClassString(IMainRepository repo, AppUser user)
         {
-            if (AddedToCart || CatalogViewModel.ChoosenProductID == this.ID || OwnerID == user?.Id)
+            if (CatalogViewModel.ChoosenProductID == this.ID || OwnerID == user?.Id)
             {
                 //if ()
                 return "bg-dark text-white";

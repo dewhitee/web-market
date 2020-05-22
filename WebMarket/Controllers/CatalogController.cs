@@ -27,8 +27,6 @@ namespace WebMarket.Controllers
             IHttpContextAccessor contextAccessor,
             IMainRepository productRepository)
         {
-            ///Userbase.LoadData();
-            ///Userbase.Set(signInManager, userManager, contextAccessor.HttpContext.User);
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.mainRepository = productRepository;
@@ -37,6 +35,7 @@ namespace WebMarket.Controllers
         public IActionResult Catalog()
         {
             var products = mainRepository.GetAllProducts();
+
             CatalogViewModel.ListOfProducts = products.Take(_catalogLength > 0 ? _catalogLength : products.Count()).ToList();
 
             List<string> listOfProductTypes = new List<string>();
@@ -79,19 +78,12 @@ namespace WebMarket.Controllers
                 };
                 mainRepository.AddUserComment(newComment);
             }
-
-            ///SaveProducts();
             return RedirectToAction("Page", "Product");
         }
 
         public IActionResult AddToCart(int productId)
         {
-            ///Userbase.LoadUser();
             var product = mainRepository.GetProduct(productId);
-            if (product != null)
-            {
-                product.AddedToCart = true;
-            }
 
             if (!CatalogViewModel.AddedToCartProducts.Contains(product))
                 CatalogViewModel.AddedToCartProducts.Add(product);
@@ -153,14 +145,11 @@ namespace WebMarket.Controllers
             if (findTags != null)
                 CatalogViewModel.FindTags = new List<string>(findTags);
             else return View("Error");
-            //CatalogViewModel.SaveFindTags();
             return RedirectToAction("Catalog");
         }
 
         public IActionResult SubmitShowProducts(int catalogLength)
         {
-            ///var products = mainRepository.GetAllProducts();
-            ///CatalogViewModel.ListOfProducts = (from p in products select p).Take(catalogLength > 0 ? catalogLength : products.Count()).ToList();
             _catalogLength = catalogLength;
             return RedirectToAction("Catalog");
         }

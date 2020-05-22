@@ -20,14 +20,11 @@ namespace WebMarket.Controllers
 
         // background
         private static bool _backgroundDefault { get; set; }
-        public static string BackgroundClass { get => !_backgroundDefault ? "" : "gradient-background"; }
+        ///public static string BackgroundClass { get => !_backgroundDefault ? "" : "gradient-background"; }
 
-        public HomeController(ILogger<HomeController> logger, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager,
-            IHttpContextAccessor contextAccessor)
+        public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
-            ///Userbase.LoadData();
-            ///Userbase.Set(signInManager, userManager, contextAccessor.HttpContext.User);
         }
 
         public IActionResult Index()

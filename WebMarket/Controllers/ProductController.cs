@@ -9,6 +9,7 @@ using WebMarket.Data;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebMarket.Controllers
 {
@@ -24,7 +25,6 @@ namespace WebMarket.Controllers
         [Obsolete]
         private readonly IHostingEnvironment hostingEnvironment;
 
-        [Obsolete]
         public ProductController(
             UserManager<AppUser> userManager,
             IMainRepository mainRepository,
@@ -37,6 +37,7 @@ namespace WebMarket.Controllers
 
 
         // GET: AddProduct
+        [Authorize]
         public ActionResult Add()
         {
             //LoadProducts();
@@ -305,31 +306,6 @@ namespace WebMarket.Controllers
         {
             return View();
         }
-
-        //public IActionResult SaveProducts()
-        //{
-        //    ///CatalogViewModel.SaveProducts();
-        //    return Ok();
-        //}
-        //public IActionResult SaveUser()
-        //{
-        //    Userbase.SaveUser();
-        //    return Ok();
-        //}
-        //public IActionResult LoadProducts()
-        //{
-        //    ///while (!Userbase.IsInitialized) { }
-        //    ///CatalogViewModel.LoadProducts();
-        //    ///LoadUser();
-
-        //    return Ok();
-        //}
-        //public IActionResult LoadUser()
-        //{
-        //    while (!Userbase.IsInitialized) { }
-        //    Userbase.LoadUser();
-        //    return Ok();
-        //}
 
         public IActionResult Buy(int productId)
         {

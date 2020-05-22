@@ -8,11 +8,9 @@
             {
                 foreach (var comment in _repository.GetUserCommentsByProdID(Model.ID))
                 {
-                    ///var username = WebMarket.Data.Userbase.GetUsername(comment.UserID);
                     var user = await _userManager.FindByIdAsync(comment.UserID);
                     if (user != null)
                     {
-                        @*<p><strong>@WebMarket.Data.Userbase.GetUsername(comment.UserID)</strong></p>*@
                         <p><strong>@user.UserName</strong></p>
                     }
                     else

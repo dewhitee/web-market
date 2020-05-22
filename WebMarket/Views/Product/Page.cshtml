@@ -31,7 +31,7 @@
 </style>
 
 @{
-    var product = CatalogViewModel.GetSelectedBuyProduct(_repository);
+    var product = CatalogViewModel.GetSelectedBuyProduct();
     var currentUser = _userManager.GetUserAsync(User).Result;
 
     @if (product.OwnerID != currentUser?.Id)
@@ -149,11 +149,11 @@
 
         function getFinalWidth(index) {
             switch (index) {
-                case 1: return @CatalogViewModel.GetSelectedBuyProduct(_repository)?.GetStarsPercent(1, _repository);
-                case 2: return @CatalogViewModel.GetSelectedBuyProduct(_repository)?.GetStarsPercent(2, _repository);
-                case 3: return @CatalogViewModel.GetSelectedBuyProduct(_repository)?.GetStarsPercent(3, _repository);
-                case 4: return @CatalogViewModel.GetSelectedBuyProduct(_repository)?.GetStarsPercent(4, _repository);
-                case 5: return @CatalogViewModel.GetSelectedBuyProduct(_repository)?.GetStarsPercent(5, _repository);
+                case 1: return @CatalogViewModel.GetSelectedBuyProduct()?.GetStarsPercent(1, _repository);
+                case 2: return @CatalogViewModel.GetSelectedBuyProduct()?.GetStarsPercent(2, _repository);
+                case 3: return @CatalogViewModel.GetSelectedBuyProduct()?.GetStarsPercent(3, _repository);
+                case 4: return @CatalogViewModel.GetSelectedBuyProduct()?.GetStarsPercent(4, _repository);
+                case 5: return @CatalogViewModel.GetSelectedBuyProduct()?.GetStarsPercent(5, _repository);
             }
         };
 
