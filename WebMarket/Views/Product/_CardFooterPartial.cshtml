@@ -5,66 +5,71 @@
 @{
     var currentUser = _userManager.GetUserAsync(User).Result;
 
-<div class="card-footer @Model.GetTableHeaderClassString(_repository, currentUser)" id="card_on_transaction_footer">
+    <div class="card-footer @Model.GetTableHeaderClassString(_repository, currentUser)" id="card_on_transaction_footer">
 
-    <h3>
-        @Model.FinalPriceString
-        <sup>
-            @if (Model.Price != Model.FinalPrice)
+        <h3>
+            @Model.FinalPriceString
+            <sup>
+                @if (Model.Price != Model.FinalPrice)
+                {
+                    <font color="red" style="font-weight:400"><del>@Model.PriceString</del></font><sup> -@Model.DiscountSupString</sup>
+                }
+            </sup>
+        </h3>
+
+        @if (Model.OwnerID == currentUser?.Id || currentUser == null)
+        {
+            @if (Model.NonTradableMode)
             {
-                <font color="red" style="font-weight:400"><del>@Model.PriceString</del></font><sup> -@Model.DiscountSupString</sup>
+                <div class="float-right">
+                    <form asp-controller="Catalog" asp-action="AddToCart" method="post">
+                        <input type="hidden" class="form-control" name="productId" id="productId" value=@Model.ID />
+                        <button class="@Model.GetAddToCartButtonClassString(_repository, CatalogViewModel.CurrentAppUser) hoverable-btn" type="submit">@Model.GetAddToCartButtonString(_repository, CatalogViewModel.CurrentAppUser)</button>
+                    </form>
+                </div>
             }
-        </sup>
-    </h3>
-
-    @if (Model.OwnerID == currentUser?.Id || currentUser == null)
-    {
-        <small class="text-warning @Model.GetProductTableLinkClassString(_repository, currentUser)">
-            Added @Model.AddedDate.ToShortDateString()
-        </small>
-    }
-    else if (!Model.IsBought(_repository, currentUser) && currentUser != null)
-    {
-        <div class="float-right">
+            <small class="text-warning @Model.GetProductTableLinkClassString(_repository, currentUser)">
+                Added @Model.AddedDate.ToShortDateString()
+            </small>
+        }
+        else if (!Model.IsBought(_repository, currentUser) && currentUser != null && !Model.NonTradableMode)
+        {
+            <div class="float-right">
                 <button class="@CatalogViewModel.GetBuyProductButtonClassString(currentUser, false) btn-lg" type="submit" data-toggle="modal" data-target="#buyModal"
-                        id="card_on_transaction_buy_button">Buy</button>
-        </div>
-        @*<div class="float-right">
-            <form asp-controller="Product" asp-action="Buy" method="post" asp-route-productId="@Model.ID">
-                <button class="@CatalogViewModel.GetBuyProductButtonClassString(_repository, currentUser, false) btn-lg" type="submit" id="card_on_transaction_buy_button">
-                Buy
+                        id="card_on_transaction_buy_button">
+                    Buy
                 </button>
-            </form>
-        </div>*@
-
-        @*<br>
-        <p class="text-md-left">
-            You will have:
-            <mark>@CatalogViewModel.GetSelectedBuyProductPriceSentence(_repository, currentUser)</mark>
-        </p>*@
-        <small class="text-warning @Model.GetProductTableLinkClassString(_repository, currentUser)">
-            Added @Model.AddedDate.ToShortDateString()
-        </small>
-    }
-    else if (currentUser != null)
-    {
-        <div class="float-right">
+            </div>
+            <small class="text-warning @Model.GetProductTableLinkClassString(_repository, currentUser)">
+                Added @Model.AddedDate.ToShortDateString()
+            </small>
+        }
+        else if (currentUser != null && !Model.NonTradableMode)
+        {
+            <div class="float-right">
                 <button class="btn btn-primary btn-lg" type="submit" data-toggle="modal" data-target="#sellModal"
-                        id="card_on_transaction_sell_button">Sell</button>
-        </div>
-
-        @*<div class="float-right">
-            <form asp-controller="Product" asp-action="Sell" method="post" asp-route-productId="@Model.ID">
-                <button class="btn btn-primary btn-lg" type="submit" id="card_on_transaction_sell_button">Sell</button>
-            </form>
-        </div>*@
-
-        <br>
-        <small class="text-warning @Model.GetProductTableLinkClassString(_repository, currentUser)">
-            Added @Model.AddedDate.ToShortDateString()
-        </small>
-    }
-</div>
+                        id="card_on_transaction_sell_button">
+                    Sell
+                </button>
+            </div>
+            <br>
+            <small class="text-warning @Model.GetProductTableLinkClassString(_repository, currentUser)">
+                Added @Model.AddedDate.ToShortDateString()
+            </small>
+        }
+        else
+        {
+            <div class="float-right">
+                <form asp-controller="Catalog" asp-action="AddToCart" method="post">
+                    <input type="hidden" class="form-control" name="productId" id="productId" value=@Model.ID />
+                    <button class="@Model.GetAddToCartButtonClassString(_repository, CatalogViewModel.CurrentAppUser) hoverable-btn" type="submit">@Model.GetAddToCartButtonString(_repository, CatalogViewModel.CurrentAppUser)</button>
+                </form>
+            </div>
+            <small class="text-warning @Model.GetProductTableLinkClassString(_repository, currentUser)">
+                Added @Model.AddedDate.ToShortDateString()
+            </small>
+        }
+    </div>
 
 <div class="modal fade" id="buyModal" tabindex="-1" role="dialog" aria-labelledby="buyModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -76,9 +81,9 @@
                 </button>
             </div>
             <div class="modal-body">
-                Price: @Model.PriceString
-                Discount: @Model.DiscountString
-                Final Price: @Model.FinalPriceString
+                <p>Price: @Model.PriceString</p>
+                <p>Discount: @Model.DiscountString</p>
+                <p>Final Price: @Model.FinalPriceString</p>
                 <p class="text-md-left pt-3">
                     You will have:
                     <mark>@CatalogViewModel.GetSelectedBuyProductPriceSentence(currentUser)</mark>
@@ -106,9 +111,9 @@
                 </button>
             </div>
             <div class="modal-body">
-                Price: @Model.PriceString<br />
-                Discount: @Model.DiscountString<br />
-                Final Price: @Model.FinalPriceString<br />
+                <p>Price: @Model.PriceString</p>
+                <p>Discount: @Model.DiscountString</p>
+                <p>Final Price: @Model.FinalPriceString</p>
                 <p class="text-md-left pt-3">
                     You will have:
                     <mark>@CatalogViewModel.GetSelectedSellProductPriceSentence(_repository, currentUser)</mark>

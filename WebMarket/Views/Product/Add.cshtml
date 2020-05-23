@@ -2,10 +2,10 @@
 @inject IMainRepository _repository
 
 @{
-    ViewData["Title"] = "AddProductView";
+    ViewData["Title"] = "Add new product";
 }
 
-<h1>AddProductView</h1>
+<h1>Add new product</h1>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link href="~/css/tags.css" rel="stylesheet" type="text/css" />
@@ -58,188 +58,221 @@
 
 
 @*Add a product div container*@
- <h2 class="display-4 text-center">Adding</h2>
-     <form enctype="multipart/form-data" asp-controller="Product" asp-action="Add" method="post">
+<form enctype="multipart/form-data" asp-controller="Product" asp-action="Add" method="post" class="pt-4">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group row">
+        <label asp-for="Name" class="col-sm-2 col-form-label">Product name</label>
+        <div class="col-sm-10">
+            <input asp-for="Name" class="form-control" id="productName_add" placeholder="Enter product name" required/>
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+    </div>
 
-         <div class="form-group">
-             <label asp-for="Name" class="col-sm-2 col-form-label">Product name</label>
-             <div class="col-sm-10">
-                 <input asp-for="Name" class="form-control" id="productName_add" placeholder="Enter product name" />
-                 <span asp-validation-for="Name" class="text-danger"></span>
-             </div>
-         </div>
+    <div class="form-group row">
+        <label asp-for="Type" class="col-sm-2 col-form-label">Product types:</label>
+        <div class="col-sm-5">
+            <div class="input-group mb-2">
+                <select asp-for="Type" id="productType_add" class="custom-select" asp-items="@(new SelectList(ViewBag.ListOfProductTypes))"></select>
+                <div class="input-group-append">
+                    <button class="btn btn-primary btn-sm" type="button" onclick="addTag()">Add new tag</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="tags" class="pb-2">
+        <!-- There will be all tags -->
+    </div>
+    <hr />
+    <div class="form-row">
+        <div class="col-auto">
+            <label asp-for="Price">Cost</label>
+            <div class="input-group mb-2">
+                <input asp-for="Price" class="form-control" placeholder="10.99" required>
+                <div class="input-group-append">
+                    <div class="input-group-text">€</div>
+                </div>
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-auto">
+            <label asp-for="Discount">Discount</label>
+            <div class="input-group mb-2">
+                <input asp-for="Discount" class="form-control" id="productDiscount_add" placeholder="20" required>
+                <div class="input-group-append">
+                    <div class="input-group-text">%</div>
+                </div>
+                <span asp-validation-for="Discount" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
 
-         <div class="input-group col-md-6">
-             <select asp-for="Type" id="productType_add" class="custom-select"  asp-items="@(new SelectList(ViewBag.ListOfProductTypes))"></select>
-             <div class="input-group-append">
-                 <button class="btn btn-outline-primary btn-sm" type="button" onclick="addTag()">Add new tag</button>
-             </div>
-         </div>
-         <div id="tags" class="pb-4">
-             <!-- There will be all tags -->
-         </div>
+    <div class="form-group row">
+        <label asp-for="Description">Product Description</label>
+        <textarea asp-for="Description" class="form-control" maxlength="256" id="productDescription_add" rows="3" placeholder="Enter product description" onkeyup="countChars(this);"></textarea>
+        <p id="descriptionCharCounter_add">256 characters remaining</p>
+    </div>
 
-         <div class="form-row">
-             <div class="col-auto">
-                 <label asp-for="Price">Cost</label>
-                 <div class="input-group mb-2">
-                     <input asp-for="Price" class="form-control" placeholder="10.99" required>
-                     <div class="input-group-append">
-                         <div class="input-group-text">€</div>
-                     </div>
-                 </div>
-             </div>
-             <div class="col-auto">
-                 <label asp-for="Discount">Discount</label>
-                 <div class="input-group mb-2">
-                     <input asp-for="Discount" class="form-control" id="productDiscount_add" placeholder="20" required>
-                     <div class="input-group-append">
-                         <div class="input-group-text">%</div>
-                     </div>
-                 </div>
-             </div>
-         </div>
+    <div class="form-group row">
+        <label asp-for="FirstImageLink" class="col-sm-2 col-form-label">1st Image link:</label>
+        <div class="col-sm-10">
+            <input asp-for="FirstImageLink" class="form-control" id="productImageLink_add" placeholder="Enter product image link" />
+        </div>
+    </div>
 
-         <div class="form-group row">
-             <label asp-for="Description">Product Description</label>
-             <textarea asp-for="Description" class="form-control" maxlength="256" id="productDescription_add" rows="3" placeholder="Enter product description" onkeyup="countChars(this);"></textarea>
-             <p id="descriptionCharCounter_add">256 characters remaining</p>
-         </div>
+    <div class="form-group row">
+        <label asp-for="FirstImageDescription" class="col-sm-2 col-form-label">1st image description:</label>
+        <div class="col-sm-10">
+            <input asp-for="FirstImageDescription" class="form-control" id="productImageDescription_add" placeholder="Enter product image description" />
+        </div>
+    </div>
+    <hr />
+    <div class="form-group row">
+        <label asp-for="SecondImageLink" class="col-sm-2 col-form-label">2nd Image link:</label>
+        <div class="col-sm-10">
+            <input asp-for="SecondImageLink" class="form-control" id="secondImageLink_add" placeholder="Enter product second image link" />
+        </div>
+    </div>
 
-         <div class="form-group row">
-             <label asp-for="FirstImageLink">Product Image link</label>
-             <input asp-for="FirstImageLink" class="form-control" id="productImageLink_add" placeholder="Enter product image link" />
-             <label asp-for="FirstImageDescription">Product Image description</label>
-             <input asp-for="FirstImageDescription" class="form-control" id="productImageDescription_add" placeholder="Enter product image description" />
-         </div>
-         <div class="form-group">
-             <label asp-for="SecondImageLink">Second product Image link</label>
-             <input asp-for="SecondImageLink" class="form-control" id="secondImageLink_add" placeholder="Enter product second image link" />
-             <label asp-for="SecondImageDescription">Second Image description</label>
-             <input asp-for="SecondImageDescription" class="form-control" id="secondImageDescription_add" placeholder="Enter second product image description" />
-         </div>
-         <div class="form-group row">
-             <label asp-for="ThirdImageLink">Third product Image link</label>
-             <input asp-for="ThirdImageLink" class="form-control" id="thirdImageLink_add" placeholder="Enter product third image link" />
-             <label asp-for="ThirdImageDescription">Third Image description</label>
-             <input asp-for="ThirdImageDescription" class="form-control" id="thirdImageDescription_add" placeholder="Enter third product image description" />
-         </div>
+    <div class="form-group row">
+        <label asp-for="SecondImageDescription" class="col-sm-2 col-form-label">2nd image description:</label>
+        <div class="col-sm-10">
+            <input asp-for="SecondImageDescription" class="form-control" id="secondImageDescription_add" placeholder="Enter second product image description" />
+        </div>
+    </div>
+    <hr />
+    <div class="form-group row">
+        <label asp-for="ThirdImageLink" class="col-sm-2 col-form-label">3rd Image link:</label>
+        <div class="col-sm-10">
+            <input asp-for="ThirdImageLink" class="form-control" id="thirdImageLink_add" placeholder="Enter product third image link" />
+        </div>
+    </div>
 
-         <div class="form-group row">
-             <label for="productLink">Product link</label>
-             <input asp-for="Link" class="form-control" id="productLink_add" placeholder="Enter product link" />
-         </div>
+    <div class="form-group row">
+        <label asp-for="ThirdImageDescription" class="col-sm-2 col-form-label">3rd image description:</label>
+        <div class="col-sm-10">
+            <input asp-for="ThirdImageDescription" class="form-control" id="thirdImageDescription_add" placeholder="Enter third product image description" />
+        </div>
+    </div>
+    <hr />
+    <div class="form-group row">
+        <label asp-for="Link" class="col-sm-2 col-form-label">Product link:</label>
+        <div class="col-sm-10">
+            <input asp-for="Link" class="form-control" id="productLink_add" placeholder="Enter product link" />
+        </div>
+    </div>
 
-         <div class="form-group row">
-             <label asp-for="FileName">Product file name</label>
-             <input asp-for="FileName" class="form-control" id="productFileName_add" placeholder="Enter product name" />
-         </div>
+    <div class="form-group row">
+        <label asp-for="FileName" class="col-sm-2 col-form-label">Product file name:</label>
+        <div class="col-sm-10">
+            <input asp-for="FileName" class="form-control" id="productFileName_add" placeholder="Enter product name" />
+        </div>
+    </div>
 
-         <div class="form-group row">
-             <label asp-for="ZipFile" class="col-sm-2 col-form-label">Product zip archive:</label>
-             <div class="col-sm-10">
-                 <div class="custom-file">
-                     <input asp-for="ZipFile" class="form-control custom-file-input">
-                     <label class="custom-file-label">Choose file...</label>
-                 </div>
-             </div>
+    <div class="form-group row">
+        <label asp-for="ZipFile" class="col-sm-2 col-form-label">Product zip archive:</label>
+        <div class="col-sm-10">
+            <div class="custom-file">
+                <input asp-for="ZipFile" class="form-control custom-file-input">
+                <label class="custom-file-label">Choose file...</label>
+            </div>
+        </div>
 
-         </div>
+    </div>
+    <hr />
+    <div class="form-group row">
+        <input type="hidden" class="form-control" name="condition" id="condition_add" value=1 />
+        <div class="col-sm-10">
+            <button id="submitProductButton" class="btn btn-success" type="submit">Submit product</button>
+        </div>
+    </div>
 
-         <div class="form-group row">
-             <input type="hidden" class="form-control" name="condition" id="condition_add" value=1 />
-             <div class="col-sm-10">
-                 <button id="submitProductButton" class="btn btn-success" type="submit">Submit product</button>
-             </div>
-         </div>
+    <div class="form-group row">
+        <div class="col-sm-10">
+            Total products count = @_repository.GetAllProducts().Count();
+        </div>
+    </div>
 
-         <div class="form-group row">
-             <div class="col-sm-10">
-                 Total products count = @_repository.GetAllProducts().Count();
-             </div>
-         </div>
-
-         @section Scripts
+    @section Scripts
          {
-             <script>
-                 $(document).ready(function () {
-                     $('.custom-file-input').on("change", function () {
-                         var fileName = $(this).val().split("\\").pop();
-                         $(this).next('.custom-file-label').html(fileName);
-                     });
-                 });
+        <script>
+            $(document).ready(function () {
+                $('.custom-file-input').on("change", function () {
+                    var fileName = $(this).val().split("\\").pop();
+                    $(this).next('.custom-file-label').html(fileName);
+                });
+            });
 
-                 function addTag() {
-                     let node = document.createElement("SPAN");
-                     node.className += "badge badge-pill badge-primary tag";
-                     node.style.marginLeft = "12px";
-                     node.id = $("#productType_add").val();
-                     let text_node = document.createTextNode($("#productType_add").val());
-                     node.appendChild(text_node);
+            function addTag() {
+                let node = document.createElement("SPAN");
+                node.className += "badge badge-pill badge-primary tag";
+                node.style.marginLeft = "12px";
+                node.id = $("#productType_add").val();
+                let text_node = document.createTextNode($("#productType_add").val());
+                node.appendChild(text_node);
 
-                     //! adding cross for deleting tag
-                     let cross_node = document.createElement("I");
-                     cross_node.className += "fas fa-times tag-cross";
-                     cross_node.style.paddingLeft = "4px";
-                     node.appendChild(cross_node);
+                //! adding cross for deleting tag
+                let cross_node = document.createElement("I");
+                cross_node.className += "fas fa-times tag-cross";
+                cross_node.style.paddingLeft = "4px";
+                node.appendChild(cross_node);
 
-                     if (document.getElementById(node.id) == null) {
-                         document.getElementById("tags").appendChild(node);
-                     }
+                if (document.getElementById(node.id) == null) {
+                    document.getElementById("tags").appendChild(node);
+                }
 
-                     //! binding removing of a tag on click
-                     $(cross_node).on('click', function () {
-                         $(this).parent().remove();
-                     });
-                 }
+                //! binding removing of a tag on click
+                $(cross_node).on('click', function () {
+                    $(this).parent().remove();
+                });
+            }
 
-                 function countChars(obj) {
-                     var maxLength = obj.maxLength;
-                     var strLength = obj.value.length;
-                     var charRemain = (maxLength - strLength);
+            function countChars(obj) {
+                var maxLength = obj.maxLength;
+                var strLength = obj.value.length;
+                var charRemain = (maxLength - strLength);
 
-                     if (charRemain < 0) {
-                         document.getElementById('descriptionCharCounter_add').innerHTML = '<span style="color:red;">You have exceeded the limit of ' + maxLengthZ + ' characters</span>';
-                     }
-                     else {
-                         document.getElementById('descriptionCharCounter_add').innerHTML = charRemain + ' characters remaining';
-                     }
-                 }
+                if (charRemain < 0) {
+                    document.getElementById('descriptionCharCounter_add').innerHTML = '<span style="color:red;">You have exceeded the limit of ' + maxLengthZ + ' characters</span>';
+                }
+                else {
+                    document.getElementById('descriptionCharCounter_add').innerHTML = charRemain + ' characters remaining';
+                }
+            }
 
-                 function sortProducts() {
+            function sortProducts() {
 
-                 }
+            }
 
-                 $("#submitProductButton").on("click", function (e) {
-                     var tags_array = [];
+            $("#submitProductButton").on("click", function (e) {
+                var tags_array = [];
 
-                     $('#tags > span').each(function () {
-                         tags_array.push($(this).text());
-                     });
-                     var prod_name = $('#productName_add').val();
-                     //var prod_zip = $('#productZipFile').val();
+                $('#tags > span').each(function () {
+                    tags_array.push($(this).text());
+                });
+                var prod_name = $('#productName_add').val();
+                //var prod_zip = $('#productZipFile').val();
 
-                     $.ajax({
-                         type: "post",
-                         dataType: "json",
-                         url: "/Product/AddTags",
-                         traditional: true,
-                         data: {
-                             productName: prod_name,
-                             //productType: prod_type,
-                             tags: tags_array,
-                             //productZipFile: prod_zip
-                         },
-                         success: function (data) {
-                             console.log(data.message);
-                         },
-                     });
-                 });
+                $.ajax({
+                    type: "post",
+                    dataType: "json",
+                    url: "/Product/AddTags",
+                    traditional: true,
+                    data: {
+                        productName: prod_name,
+                        //productType: prod_type,
+                        tags: tags_array,
+                        //productZipFile: prod_zip
+                    },
+                    success: function (data) {
+                        console.log(data.message);
+                    },
+                });
+            });
 
-             </script>
-         }
+        </script>
+    }
 
-     </form>
+</form>
 
  @*</div>*@
 

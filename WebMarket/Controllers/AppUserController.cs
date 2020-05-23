@@ -48,7 +48,30 @@ namespace WebMarket.Controllers
         }
         public IActionResult Stats()
         {
-            return View();
+            var userId = userManager.GetUserId(User);
+            var userProducts = mainRepository.GetAllProductsOfUser(userId).ToList();
+
+            int commentsGot = 0;
+            foreach (var p in userProducts)
+            {
+                var productComments = mainRepository.GetUserCommentsByProdID(p.ID).ToList();
+                commentsGot += productComments.Count();
+            }
+
+            var commentsWritten = mainRepository.GetUserCommentsByUserID(userId).Count();
+            var totalAdded = mainRepository.GetAllProductsOfUser(userId).Count();
+            var totalBought = mainRepository.GetBoughtProductsByUserId(userId).Count();
+            var totalStars = (from p in userProducts select p.GetTotalStarsCount(mainRepository)).Sum(x => Convert.ToInt32(x));
+
+            StatsViewModel model = new StatsViewModel
+            {
+                TotalCommentsWritten = commentsWritten,
+                TotalCommentsGot = commentsGot,
+                TotalProductsAdded = totalAdded,
+                TotalProductsBought = totalBought,
+                TotalStarsAmount = totalStars
+            };
+            return View(model);
         }
 
         public IActionResult Added()

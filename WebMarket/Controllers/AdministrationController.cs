@@ -16,13 +16,16 @@ namespace WebMarket.Controllers
     {
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly UserManager<AppUser> userManager;
+        private readonly IMainRepository mainRepository;
 
         public AdministrationController(
             RoleManager<IdentityRole> roleManager,
-            UserManager<AppUser> userManager)
+            UserManager<AppUser> userManager,
+            IMainRepository mainRepository)
         {
             this.roleManager = roleManager;
             this.userManager = userManager;
+            this.mainRepository = mainRepository;
         }
 
         public IActionResult Index()
@@ -30,11 +33,97 @@ namespace WebMarket.Controllers
             return View();
         }
 
+        public async Task<IActionResult> DeleteUser(string id)
+        {
+            var user = await userManager.FindByIdAsync(id);
+
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = $"User with Id = {id} cannot be found";
+                return View("NotFound");
+            }
+            else
+            {
+                var result = await userManager.DeleteAsync(user);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("ListUsers");
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+
+                return View("ListUsers");
+            }
+        }
+
         [HttpGet]
         public IActionResult ListUsers()
         {
             var users = userManager.Users;
             return View(users);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EditUser(string id)
+        {
+            var user = await userManager.FindByIdAsync(id);
+
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = $"User with Id = {id} cannot be found";
+                return View("NotFound");
+            }
+
+            var userClaims = await userManager.GetClaimsAsync(user);
+            var userRoles = await userManager.GetRolesAsync(user);
+
+            var model = new EditUserViewModel
+            {
+                Id = user.Id,
+                Email = user.Email,
+                UserName = user.UserName,
+                Money = user.Money,
+                Claims = userClaims.Select(c => c.Value).ToList(),
+                Roles = userRoles.ToList()
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditUser(EditUserViewModel model)
+        {
+            var user = await userManager.FindByIdAsync(model.Id);
+
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = $"User with Id = {model.Id} cannot be found";
+                return View("NotFound");
+            }
+            else
+            {
+                user.Email = model.Email;
+                user.UserName = model.UserName;
+                user.Money = model.Money;
+
+                var result = await userManager.UpdateAsync(user);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("ListUsers");
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+
+                return View(model);
+            }
         }
 
         [HttpGet]
@@ -209,6 +298,43 @@ namespace WebMarket.Controllers
             }
 
             return RedirectToAction("EditRole", new { Id = roleId });
+        }
+
+
+        [HttpGet]
+        public IActionResult ListProducts()
+        {
+            var products = mainRepository.GetAllProducts();
+            return View(products);
+        }
+
+        [HttpGet]
+        public IActionResult EditProduct(int id)
+        {
+            var product = mainRepository.GetProduct(id);
+
+            if (product == null)
+            {
+                ViewBag.ErrorMessage = $"Product with Id = {id} cannot be found";
+                return View("NotFound");
+            }
+
+            return View(product);
+        }
+
+        [HttpPost]
+        public IActionResult EditProduct(Product model)
+        {
+            try
+            {
+                mainRepository.UpdateProduct(model);
+                return RedirectToAction("ListProducts");
+            }
+            catch
+            {
+                ViewBag.ErrorMessage = $"Product with Id = {model.ID} cannot be found";
+                return View("NotFound");
+            }
         }
     }
 }

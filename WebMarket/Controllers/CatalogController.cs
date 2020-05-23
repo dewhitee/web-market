@@ -36,13 +36,13 @@ namespace WebMarket.Controllers
         {
             var products = mainRepository.GetAllProducts();
 
-            CatalogViewModel.ListOfProducts = products.Take(_catalogLength > 0 ? _catalogLength : products.Count()).ToList();
+            var listOfProducts = products.Take(_catalogLength > 0 ? _catalogLength : products.Count()).ToList();
 
             var listOfProductTypes = (from pt in mainRepository.GetAllProductTypes() orderby pt.Name select pt.Name);
 
             var model = new CatalogViewModel
             {
-                listOfProducts = CatalogViewModel.ListOfProducts != null ? CatalogViewModel.ListOfProducts : new List<Product>(),
+                listOfProducts = listOfProducts != null ? listOfProducts : new List<Product>(),
                 listOfProductTypes = listOfProductTypes,
                 findTags = CatalogViewModel.FindTags != null ? CatalogViewModel.FindTags : new List<string>(),
                 fullyMatching = CatalogViewModel.FullyMatching
@@ -98,37 +98,14 @@ namespace WebMarket.Controllers
             return RedirectToAction("Page", "Product");
         }
 
+        [HttpPost]
         public IActionResult AddToCart(int productId)
         {
             var product = mainRepository.GetProduct(productId);
 
-            if (!CatalogViewModel.AddedToCartProducts.Contains(product))
-                CatalogViewModel.AddedToCartProducts.Add(product);
-
             CatalogViewModel.ChoosenProduct = product;
             CatalogViewModel.ChoosenProductID = product.ID;
             return RedirectToAction("Page", "Product");
-        }
-
-        public IActionResult SortProducts(int sortOptionIndex)
-        {
-            switch (sortOptionIndex)
-            {
-                case (int)CatalogViewModel.ProductSort.None:
-                    return RedirectToAction("Catalog");
-                case (int)CatalogViewModel.ProductSort.Name:
-                    return SortByName();
-                case (int)CatalogViewModel.ProductSort.Type:
-                    return SortByType();
-                case (int)CatalogViewModel.ProductSort.Price:
-                    return SortByPrice();
-                case (int)CatalogViewModel.ProductSort.Discount:
-                    return SortByDiscount();
-                case (int)CatalogViewModel.ProductSort.FinalPrice:
-                    return SortByFinalPrice();
-                default:
-                    return RedirectToAction("Catalog");
-            }
         }
 
         private void SortProducts(int sortOptionIndex, ref List<Product> products)
@@ -157,32 +134,6 @@ namespace WebMarket.Controllers
             }
         }
 
-        public IActionResult SortByName()
-        {
-            CatalogViewModel.ListOfProducts.Sort(Product.CompareByName);
-            return RedirectToAction("Sorted", new { sortBy = "by Name" });;
-        }
-        public IActionResult SortByType()
-        {
-            CatalogViewModel.ListOfProducts.Sort(Product.CompareByType);
-            return RedirectToAction("Sorted", new { sortBy = "by Type" });
-        }
-        public IActionResult SortByPrice()
-        {
-            CatalogViewModel.ListOfProducts.Sort(Product.CompareByPrice);
-            return RedirectToAction("Sorted", new { sortBy = "by Price" });
-        }
-        public IActionResult SortByDiscount()
-        {
-            CatalogViewModel.ListOfProducts.Sort(Product.CompareByDiscount);
-            return RedirectToAction("Sorted", new { sortBy = "by Discount" });
-        }
-        public IActionResult SortByFinalPrice()
-        {
-            CatalogViewModel.ListOfProducts.Sort(Product.CompareByFinalPrice);
-            return RedirectToAction("Sorted", new { sortBy = "by Final Price", products = CatalogViewModel.ListOfProducts });
-        }
-
         public IActionResult SubmitTags(string[] findTags)
         {
             if (findTags != null)
@@ -191,9 +142,9 @@ namespace WebMarket.Controllers
             return RedirectToAction("Catalog", new { findTags = CatalogViewModel.FindTags });
         }
 
-        public IActionResult SubmitShowProducts(int fullyMatching, int catalogLength)
+        public IActionResult SubmitShowProducts(bool fullyMatching, int catalogLength)
         {
-            CatalogViewModel.FullyMatching = fullyMatching > 0 ? true : false;
+            CatalogViewModel.FullyMatching = fullyMatching;
             _catalogLength = catalogLength;
             return RedirectToAction("Catalog");
         }

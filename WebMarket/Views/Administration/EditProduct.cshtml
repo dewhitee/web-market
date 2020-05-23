@@ -1,31 +1,16 @@
 ﻿@model WebMarket.Models.Product
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "EditProduct";
 }
 
-<h1>Edit</h1>
+<h1>Edit product</h1>
 
-<div class="float-right">
-    <div class="d-inline">
-        <a type="button" class="btn btn-outline-primary" asp-area="" asp-controller="Product" asp-action="OpenEditProduct"
-           asp-route-prodid="@Model.ID">Info</a>
-    </div>
-    <div class="d-inline">
-        <a type="button" class="btn btn-outline-primary" asp-area="" asp-controller="Product" asp-action="EditImages"
-           asp-route-prodid="@Model.ID">Images</a>
-    </div>
-    <div class="d-inline">
-        <a type="button" class="btn btn-outline-primary" asp-area="" asp-controller="Product" asp-action="EditTags"
-           asp-route-prodid="@Model.ID">Tags</a>
-    </div>
-    <div style="padding-bottom:1em"></div>
-</div>
 <h4>Product</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit" method="post">
+    <div class="col-md-6">
+        <form asp-action="EditProduct" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="ID" />
             <div class="form-group">
@@ -70,53 +55,27 @@
             </div>
             <div class="form-group">
                 <label asp-for="FileName" class="control-label"></label>
-                <input asp-for="FileName" readonly class="form-control" />
+                <input asp-for="FileName" class="form-control" />
                 <span asp-validation-for="FileName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="AddedDate" class="control-label"></label>
-                <input asp-for="AddedDate" readonly class="form-control" />
+                <input asp-for="AddedDate" class="form-control" />
                 <span asp-validation-for="AddedDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="hidden" asp-for="OwnerID" class="form-control" />
+                <label asp-for="OwnerID" class="control-label"></label>
+                <input asp-for="OwnerID" class="form-control" />
                 <span asp-validation-for="OwnerID" class="text-danger"></span>
             </div>
-            <div class="form-group float-right">
-                <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#deleteModal">
-                    Delete
-                </button>
-            </div>
-            <div class="form-group">
-                <input type="submit" asp-action="Edit" value="Save" class="btn btn-primary" />
+
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <button type="submit" class="btn btn-primary">Update</button>
+                    <a asp-action="ListProducts" class="btn btn-primary">Cancel</a>
+                </div>
             </div>
         </form>
     </div>
-</div>
-
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalLabel">Are you sure you want to delete @Model.Name?</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                You will not have an ability to restore it from database. So think carefully.
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
-                <form asp-controller="Product" asp-action="Delete" asp-route-deleteid="@Model.ID">
-                    <input type="submit" value="Delete" class="btn btn-danger" />
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div>
-    <a asp-controller="Product" asp-action="Page">Back to List</a>
 </div>
 

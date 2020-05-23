@@ -29,10 +29,8 @@ namespace WebMarket.Models
             FinalPrice,
         }
 
-        public static List<Product> ListOfProducts = new List<Product>();
         public List<Product> listOfProducts { get; set; }
         public IEnumerable<string> listOfProductTypes { get; set; }
-        public static List<Product> AddedToCartProducts = new List<Product>();
         public static Product ChoosenProduct = new Product();
         public static int ChoosenProductID { get; set; }
 

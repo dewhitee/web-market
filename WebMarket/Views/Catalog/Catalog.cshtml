@@ -284,7 +284,7 @@
 <div style="padding-bottom:1em"></div>
 
 <div style="padding-bottom:1em"></div>
-@if (CatalogViewModel.FindTags?.Count > 0)
+@if (Model.findTags?.Count > 0)
 {
     @if (CatalogViewModel.FullyMatching)
     {
@@ -294,7 +294,7 @@
     {
         <p class="text-body text-muted">Showing only products with the following tags: <a data-toggle="modal" data-target="#infoCatalogModal"><i class="far fa-question-circle"></i></a></p>
     }
-    foreach (var findTag in CatalogViewModel.FindTags)
+    foreach (var findTag in Model.findTags)
     {
         <span class="badge badge-pill badge-primary">@findTag</span>
     }
@@ -355,6 +355,12 @@ else
                 <tbody>
                     @for (int i = 0; i < Model.listOfProducts.Count; i++)
                     {
+                        if (Model.findTags?.Count > 0)
+                        {
+                            if (!Model.listOfProducts[i].ContainsTags(Model.findTags, _repository, CatalogViewModel.FullyMatching))
+                                continue;
+                        }
+
                         string tdClassString = Model.listOfProducts[i].GetPriceTableClassString(_repository, CatalogViewModel.CurrentAppUser);
                         string buttonClassString = Model.listOfProducts[i].GetAddToCartButtonClassString(_repository, CatalogViewModel.CurrentAppUser);
                         var linkClass = Model.listOfProducts[i].GetProductTableLinkClassString(_repository, CatalogViewModel.CurrentAppUser);
@@ -442,7 +448,7 @@ else
                             }
                         </div>
                         <div class="form-check form-check-inline pl-4">
-                            <input class="form-check-input" type="checkbox" id="fullyMatching" name="fullyMatching" asp-for="fullyMatching" value="1">
+                            <input class="form-check-input" type="checkbox" id="fullyMatching" name="fullyMatching" asp-for="fullyMatching" value="true">
                             <label class="form-check-label" for="inlineCheckbox1">Fully matching</label>
                         </div>
                         <hr />
@@ -480,9 +486,9 @@ else
                         var thClass = product.GetTableHeaderClassString(_repository, CatalogViewModel.CurrentAppUser);
 
 
-                        if (CatalogViewModel.FindTags?.Count > 0)
+                        if (Model.findTags?.Count > 0)
                         {
-                            if (!product.ContainsTags(CatalogViewModel.FindTags, _repository, CatalogViewModel.FullyMatching))
+                            if (!product.ContainsTags(Model.findTags, _repository, CatalogViewModel.FullyMatching))
                                 continue;
                         }
 

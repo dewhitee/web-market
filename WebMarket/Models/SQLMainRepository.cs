@@ -294,10 +294,10 @@ namespace WebMarket.Models
                            select c;
         }
 
-        public IEnumerable<UserComment> GetUserCommentsByUserID(int id)
+        public IEnumerable<UserComment> GetUserCommentsByUserID(string id)
         {
             return from c in context.Comments
-                           where c.UserID == id.ToString()
+                           where c.UserID == id
                            select c;
         }
 

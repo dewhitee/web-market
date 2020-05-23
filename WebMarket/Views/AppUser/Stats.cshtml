@@ -1,11 +1,11 @@
-﻿
+﻿@model WebMarket.Models.AppUserModels.StatsViewModel 
 @{
     ViewData["Title"] = "Stats";
 }
 
 <h1>Stats</h1>
 
-<div class="card text-center">
+<div class="card">
     <div class="card-header">
         <ul class="nav nav-tabs card-header-tabs">
             <li class="nav-item">
@@ -23,8 +23,23 @@
         </ul>
     </div>
     <div class="card-body">
-        <h5 class="card-title">Special title treatment</h5>
-        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
+        <h5 class="card-title">Here are your stats:</h5>
+        <hr />
+        <h6>Products added:</h6>
+        <p>@Model.TotalProductsAdded</p>
+        <hr />
+        <h6>Products bought:</h6>
+        <p>@Model.TotalProductsBought</p>
+        <hr />
+        <h6>Total comments written:</h6>
+        <p>@Model.TotalCommentsWritten</p>
+        <hr />
+        <h6>Total comments got:</h6>
+        <p>@Model.TotalCommentsGot</p>
+        <hr />
+        <h6>Total stars got:</h6>
+        <p>@Model.TotalStarsAmount</p>
+        <hr />
+        <a class="btn btn-primary mt-1" asp-controller="Catalog" asp-action="Catalog">Go to catalog</a>
     </div>
 </div>

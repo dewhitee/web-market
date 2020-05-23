@@ -215,7 +215,7 @@ namespace WebMarket.Models
             throw new NotImplementedException();
         }
 
-        public IEnumerable<UserComment> GetUserCommentsByUserID(int id)
+        public IEnumerable<UserComment> GetUserCommentsByUserID(string id)
         {
             throw new NotImplementedException();
         }

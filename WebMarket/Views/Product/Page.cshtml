@@ -45,7 +45,7 @@
     <br>
 
 
-    @if (product.OwnerID == currentUser?.Id)
+    @if (product.OwnerID == currentUser?.Id || User.IsInRole("Admin"))
     {
         <div style="padding-bottom:1em"></div>
         <form class="d-inline" asp-controller="Product" asp-action="OpenEditProduct" method="post">

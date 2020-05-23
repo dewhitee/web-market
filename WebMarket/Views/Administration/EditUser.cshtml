@@ -1,0 +1,98 @@
+﻿@model WebMarket.Models.AdministrationModels.EditUserViewModel
+
+@{
+    ViewData["Title"] = "EditUser";
+}
+
+<h1>EditUser</h1>
+
+<h4>EditUserViewModel</h4>
+<hr />
+
+<form asp-action="EditUser" method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group row">
+        <label asp-for="Id" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="Id" disabled class="form-control" />
+        </div>
+        <span asp-validation-for="Id" class="text-danger"></span>
+    </div>
+    <div class="form-group row">
+        <label asp-for="UserName" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="UserName" class="form-control" />
+        </div>
+        <span asp-validation-for="UserName" class="text-danger"></span>
+    </div>
+    <div class="form-group row">
+        <label asp-for="Email" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="Email" class="form-control" />
+        </div>
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <div class="form-group row">
+        <label asp-for="Money" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="Money" class="form-control" />
+        </div>
+        <span asp-validation-for="Money" class="text-danger"></span>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-10">
+            <button type="submit" class="btn btn-primary">Update</button>
+            <a asp-action="ListUsers" class="btn btn-dark">Cancel</a>
+        </div>
+    </div>
+</form>
+
+
+<div class="card mt-1">
+    <div class="card-header">
+        <h3>User Roles</h3>
+    </div>
+    <div class="card-body">
+        @if (Model.Roles.Any())
+        {
+            foreach (var role in Model.Roles)
+            {
+                <h5 class="card-title">@role</h5>
+            }
+        }
+        else
+        {
+            <h5 class="card-title">None at the moment</h5>
+        }
+    </div>
+    <div class="card-footer">
+        <a href="#" class="btn btn-primary">
+            Manage Roles
+        </a>
+    </div>
+</div>
+<div class="card mt-3">
+    <div class="card-header">
+        <h3>User Claims</h3>
+    </div>
+    <div class="card-body">
+        @if (Model.Claims.Any())
+        {
+            foreach (var claim in Model.Claims)
+            {
+                <h5 class="card-title">@claim</h5>
+            }
+        }
+        else
+        {
+            <h5 class="card-title">None at the moment</h5>
+        }
+    </div>
+    <div class="card-footer">
+        <a href="#" class="btn btn-primary">
+            Manage Claims
+        </a>
+    </div>
+</div>
+

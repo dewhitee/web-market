@@ -23,7 +23,7 @@ namespace WebMarket.Models
         UserComment GetUserComment(int id);
         UserComment GetUserCommentByIndex(int index);
         IEnumerable<UserComment> GetUserCommentsByProdID(int id);
-        IEnumerable<UserComment> GetUserCommentsByUserID(int id);
+        IEnumerable<UserComment> GetUserCommentsByUserID(string id);
         IEnumerable<UserComment> GetAllUserComments();
         UserComment AddUserComment(UserComment comment);
         UserComment UpdateComment(UserComment commentChanges);

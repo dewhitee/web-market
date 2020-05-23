@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Product>
+@{
+    ViewData["Title"] = "ListProducts";
+}
+
+<h1>All products</h1>
+
+@if (Model.Any())
+{
+    <a class="btn btn-primary mb-3" asp-controller="Product" asp-action="Add">
+        Add new product
+    </a>
+    foreach (var product in Model)
+    {
+        <div class="card mb-3">
+            <div class="card-header">
+                Product Id : @product.ID
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">@product.Name</h5>
+            </div>
+            <div class="card-footer">
+                <a class="btn btn-primary" asp-controller="Administration" asp-action="EditProduct"
+                   asp-route-id="@product.ID">
+                    Edit
+                </a>
+                <a href="#" class="btn btn-danger">Delete</a>
+            </div>
+        </div>
+    }
+}
+else
+{
+    <div class="card">
+        <div class="card-header">
+            No products created yet
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">
+                Use the button below to create a product
+            </h5>
+            <a class="btn btn-primary" asp-controller="Product" asp-action="Add">Create Product</a>
+        </div>
+    </div>
+}

@@ -104,6 +104,7 @@
                                     <div class="card-header @product.GetTableHeaderClassString(_repository, _userManager.GetUserAsync(User).Result)" id="card_on_transaction_header">
                                         <h5 style="font-weight:300">@product.Type</h5>
                                     </div>
+                                    @{ product.NonTradableMode = true; }
                                     <partial name="~/Views/Product/_ProductImageCarouselPartial.cshtml" model='@new ProductImageCarouselViewModel(product, "catalog-comp", carouselIndex: product.ID)' />
                                     <partial name="~/Views/Product/_CardBodyPartial.cshtml" model="@product" />
                                     <partial name="~/Views/Product/_CardFooterPartial.cshtml" model="@product" />
@@ -119,7 +120,7 @@
             }
 
         }
-        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
+        <hr />
+        <a class="btn btn-primary mt-1" asp-controller="Catalog" asp-action="Catalog">Go to catalog</a>
     </div>
 </div>

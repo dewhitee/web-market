@@ -17,37 +17,36 @@ namespace WebMarket.Models
     public class Product : IComparable<Product>
     {
         public int ID { get; set; }
+
         [Required]
         [StringLength(32)]
         public string Name { get; set; }
+
         [Required, StringLength(32)]
         public string Type { get; set; }
+
         [Required, Column(TypeName = "decimal(18,2)")]
         public decimal Price { get; set; }
+
         [NotMapped]
         public int CostIntegral { get => (int)Math.Truncate(Price); }
+
         [NotMapped]
         public decimal CostFractional { get => Price - CostIntegral; }
         public float Discount { get; set; }
+
         [StringLength(512)]
         public string Description { get; set; }
+
         [StringLength(128)]
         public string Link { get; set; }
 
-        public bool IsBought(IMainRepository repository, AppUser byUser)
-        {
-            var boughtProductIds = repository.GetBoughtProductsByUserId(byUser?.Id);
-            if (boughtProductIds.Any())
-            {
-                return (from bp in boughtProductIds where bp.ProductRefId == ID select bp.ProductRefId).Contains(ID);
-            }
-            return false;
-        }
-
         [DisplayName("Only registered user can comment")]
         public bool OnlyRegisteredCanComment { get; set; }
+
         [DisplayName("Only one comment per user")]
         public bool OnlyOneCommentPerUser { get; set; }
+
         [DisplayName("File Name")]
         public string FileName { get; set; }
 
@@ -65,9 +64,24 @@ namespace WebMarket.Models
         public string DiscountString { get => Discount > 0 ? Discount.ToString() + "%" : "no"; }
         public string DiscountSupString { get => Discount > 0 ? Discount.ToString() + "%" : ""; }
         public string LinkTableString { get => string.IsNullOrWhiteSpace(Link) ? "no link" : "yes"; }
+
+        // Property for disabling buying/selling actions on product page
+        [NotMapped]
+        public bool NonTradableMode { get; set; }
+
         public string IsBoughtString(IMainRepository repo, AppUser user)
         {
             return IsBought(repo, user) ? "Bought" : "+";
+        }
+
+        public bool IsBought(IMainRepository repository, AppUser byUser)
+        {
+            var boughtProductIds = repository.GetBoughtProductsByUserId(byUser?.Id);
+            if (boughtProductIds.Any())
+            {
+                return (from bp in boughtProductIds where bp.ProductRefId == ID select bp.ProductRefId).Contains(ID);
+            }
+            return false;
         }
 
         public bool HasValidID()
@@ -150,25 +164,25 @@ namespace WebMarket.Models
         public uint GetTotalStarsCount(IMainRepository repository)
         {
             uint count = 0;
-            foreach (var i in repository.GetAllUserComments())
+            foreach (var i in repository.GetUserCommentsByProdID(ID))
             {
                 count += i.Stars;
             }
             return count;
         }
         
-        public static int MakeNewID()
-        {
-            Random random = new Random();
-            int newID;
-            bool success;
-            do
-            {
-                newID = random.Next(1, int.MaxValue);
-                success = CatalogViewModel.ListOfProducts.Find(x => x.ID == newID) == null;
-            } while (!success);
-            return newID;
-        }
+        //public static int MakeNewID()
+        //{
+        //    Random random = new Random();
+        //    int newID;
+        //    bool success;
+        //    do
+        //    {
+        //        newID = random.Next(1, int.MaxValue);
+        //        success = CatalogViewModel.ListOfProducts.Find(x => x.ID == newID) == null;
+        //    } while (!success);
+        //    return newID;
+        //}
 
         public static int MakeNewID(IMainRepository repository)
         {

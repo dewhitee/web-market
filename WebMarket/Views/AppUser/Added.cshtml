@@ -91,34 +91,35 @@
             else
             {
                 var products = _repository.GetAllProductsOfUser(_userManager.GetUserId(User)).ToList();
-                        @if (products.Count() > 0)
-                        {
-                            <div class="container-fluid">
-                                <div class="row row-cols-1 row-cols-md-3">
-                                    @foreach (var product in products)
-                                    {
-                                    <div class="col col-xs-12 col-sm-12 col-md-6 col-lg-4" style="padding-bottom: 2rem;">
-                                        <div class="card h-100 hoverable-card" id="card_on_transaction">
-                                            <div class="card-header @product.GetTableHeaderClassString(_repository, _userManager.GetUserAsync(User).Result)" id="card_on_transaction_header">
-                                                <h5 style="font-weight:300">@product.Type</h5>
-                                            </div>
-                                            <partial name="~/Views/Product/_ProductImageCarouselPartial.cshtml" model='@new ProductImageCarouselViewModel(product, "catalog-comp", carouselIndex: product.ID)' />
-                                            <partial name="~/Views/Product/_CardBodyPartial.cshtml" model="@product" />
-                                            <partial name="~/Views/Product/_CardFooterPartial.cshtml" model="@product" />
+                @if (products.Count() > 0)
+                {
+                    <div class="container-fluid">
+                        <div class="row row-cols-1 row-cols-md-3">
+                            @foreach (var product in products)
+                            {
+                                <div class="col col-xs-12 col-sm-12 col-md-6 col-lg-4" style="padding-bottom: 2rem;">
+                                    <div class="card h-100 hoverable-card" id="card_on_transaction">
+                                        <div class="card-header @product.GetTableHeaderClassString(_repository, _userManager.GetUserAsync(User).Result)" id="card_on_transaction_header">
+                                            <h5 style="font-weight:300">@product.Type</h5>
                                         </div>
+                                        @{ product.NonTradableMode = true; }
+                                        <partial name="~/Views/Product/_ProductImageCarouselPartial.cshtml" model='@new ProductImageCarouselViewModel(product, "catalog-comp", carouselIndex: product.ID)' />
+                                        <partial name="~/Views/Product/_CardBodyPartial.cshtml" model="@product" />
+                                        <partial name="~/Views/Product/_CardFooterPartial.cshtml" model="@product" />
                                     </div>
-                                    }
                                 </div>
-                            </div>
-                        }
-                        else
-                        {
-                            <h4 class="text-center">You have not added anything yet!</h4>
-                        }
+                            }
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <h4 class="text-center">You have not added anything yet!</h4>
+                }
 
             }
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
+            <hr />
+            <a class="btn btn-primary mt-1" asp-controller="Catalog" asp-action="Catalog">Go to catalog</a>
         </div>
     </div>
 
