@@ -20,16 +20,12 @@
     }
 </style>
 
-@{ 
-    var comments = _repository.GetUserCommentsByProdID(Model.ID);
-}
-
 <div class="card-header @Model.GetTableHeaderClassString(_repository, userManager.GetUserAsync(User).Result)" id="card_on_transaction_header">
     <h5 style="font-weight:300">What people think about <strong>@Model.Name</strong></h5>
-    @*<p>RATE: @Model.GetRate(_repository)</p>*@
+    <p class="text-muted">RATE: @Model.GetRate(_repository)</p>
     @for (int i = 0; i < 5; i++)
     {
-        if (ComparisonViewModel.GetStarsValue(Model, _repository.GetUserCommentsByProdID(Model.ID)) >= i + 1)
+        if (ComparisonViewModel.GetStarsValue(Model, _repository) >= i + 1)
         {
             <i class="fa fa-star checked"></i>
         }
@@ -38,7 +34,6 @@
             <i class="fa fa-star not-checked"></i>
         }
     }
-    
     <div id="left-rating-table">
         <div class="row">
             <div class="side left">
@@ -50,7 +45,7 @@
                 </div>
             </div>
             <div class="side right">
-                <div>@Model.GetStarsCount(5, comments)</div>
+                <div>@Model.GetStarsCount(5, _repository)</div>
             </div>
             <div class="side left">
                 <div>4 star</div>
@@ -61,7 +56,7 @@
                 </div>
             </div>
             <div class="side right">
-                <div>@Model.GetStarsCount(4, comments)</div>
+                <div>@Model.GetStarsCount(4, _repository)</div>
             </div>
             <div class="side left">
                 <div>3 star</div>
@@ -72,7 +67,7 @@
                 </div>
             </div>
             <div class="side right">
-                <div>@Model.GetStarsCount(3, comments)</div>
+                <div>@Model.GetStarsCount(3, _repository)</div>
             </div>
             <div class="side left">
                 <div>2 star</div>
@@ -83,7 +78,7 @@
                 </div>
             </div>
             <div class="side right">
-                <div>@Model.GetStarsCount(2, comments)</div>
+                <div>@Model.GetStarsCount(2, _repository)</div>
             </div>
             <div class="side left">
                 <div>1 star</div>
@@ -94,11 +89,11 @@
                 </div>
             </div>
             <div class="side right">
-                <div>@Model.GetStarsCount(1, comments)</div>
+                <div>@Model.GetStarsCount(1, _repository)</div>
             </div>
         </div>
     </div>
-    <p class="text-center text-muted"><small><i>from total amount of <b>@Model.GetTotalCountOfNotNulledComments(comments)</b> rated comments</i></small></p>
+    <p class="text-center text-muted"><small><i>from total amount of <b>@Model.GetTotalCountOfNotNulledComments(_repository)</b> rated comments</i></small></p>
 </div>
 
 <script>
@@ -110,11 +105,11 @@
 
     function getFinalWidth(index) {
         switch (index) {
-            case 1: return @Model.GetStarsPercent(1, comments);
-            case 2: return @Model.GetStarsPercent(2, comments);
-            case 3: return @Model.GetStarsPercent(3, comments);
-            case 4: return @Model.GetStarsPercent(4, comments);
-            case 5: return @Model.GetStarsPercent(5, comments);
+            case 1: return @Model.GetStarsPercent(1, _repository);
+            case 2: return @Model.GetStarsPercent(2, _repository);
+            case 3: return @Model.GetStarsPercent(3, _repository);
+            case 4: return @Model.GetStarsPercent(4, _repository);
+            case 5: return @Model.GetStarsPercent(5, _repository);
         }
     };
 </script>

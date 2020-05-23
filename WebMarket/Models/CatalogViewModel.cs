@@ -33,14 +33,8 @@ namespace WebMarket.Models
         public IEnumerable<string> listOfProductTypes { get; set; }
         public static Product ChoosenProduct = new Product();
         public static int ChoosenProductID { get; set; }
-
-        public static AppUser CurrentAppUser { get; set; }
         public static bool FullyMatching { get; set; }
         public bool fullyMatching { get; set; }
-
-        ///private static string addedToCartProductsFilePath { get => @"D:\ASP.NET PROJECTS\WebMarket\data\addedtocartproducts_" + CurrentUser.Username + "_.dew"; }
-        ///private static string saveProductsFilePath { get => @"D:\ASP.NET PROJECTS\WebMarket\data\products.dew"; }
-        ///private static string findTagsFilePath { get => @"D:\ASP.NET PROJECTS\WebMarket\data\findtags.dew"; }
 
         public static List<string> FindTags { get; set; }
         public List<string> findTags { get; set; }

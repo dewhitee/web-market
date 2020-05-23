@@ -22,13 +22,12 @@ namespace WebMarket.Controllers
         //private static Product _editProduct = null;
 
         private readonly IMainRepository mainRepository;
-        [Obsolete]
-        private readonly IHostingEnvironment hostingEnvironment;
+        private readonly IWebHostEnvironment hostingEnvironment;
 
         public ProductController(
             UserManager<AppUser> userManager,
             IMainRepository mainRepository,
-            IHostingEnvironment hostingEnvironment)
+            IWebHostEnvironment hostingEnvironment)
         {
             this.userManager = userManager;
             this.mainRepository = mainRepository;

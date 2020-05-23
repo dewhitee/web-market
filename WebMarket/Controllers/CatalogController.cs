@@ -20,6 +20,7 @@ namespace WebMarket.Controllers
 
         private readonly IMainRepository mainRepository;
         private static int _catalogLength = 0;
+        private static bool _fullyMatching;
 
         public CatalogController(
             UserManager<AppUser> userManager,
@@ -45,7 +46,7 @@ namespace WebMarket.Controllers
                 listOfProducts = listOfProducts != null ? listOfProducts : new List<Product>(),
                 listOfProductTypes = listOfProductTypes,
                 findTags = CatalogViewModel.FindTags != null ? CatalogViewModel.FindTags : new List<string>(),
-                fullyMatching = CatalogViewModel.FullyMatching
+                fullyMatching = _fullyMatching
             };
 
             return View(model);
@@ -65,7 +66,7 @@ namespace WebMarket.Controllers
                 listOfProducts = listOfProducts,
                 listOfProductTypes = listOfProductTypes,
                 findTags = CatalogViewModel.FindTags != null ? CatalogViewModel.FindTags : new List<string>(),
-                fullyMatching = CatalogViewModel.FullyMatching
+                fullyMatching = _fullyMatching
             };
             return View("Catalog", model);
         }
@@ -144,7 +145,7 @@ namespace WebMarket.Controllers
 
         public IActionResult SubmitShowProducts(bool fullyMatching, int catalogLength)
         {
-            CatalogViewModel.FullyMatching = fullyMatching;
+            _fullyMatching = fullyMatching;
             _catalogLength = catalogLength;
             return RedirectToAction("Catalog");
         }

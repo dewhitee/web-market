@@ -7,17 +7,6 @@
 @inject IMainRepository _repository
 @{
     ViewData["Title"] = "Comparison";
-    var leftProduct = ComparisonViewModel.LeftProduct;
-    var rightProduct = ComparisonViewModel.RightProduct;
-
-    IEnumerable<UserComment> leftComments = null;
-    IEnumerable<UserComment> rightComments = null;
-    if (leftProduct != null && rightProduct != null)
-    {
-        leftComments = _repository.GetUserCommentsByProdID(leftProduct.ID);
-        rightComments = _repository.GetUserCommentsByProdID(rightProduct.ID);
-    }
-    var user = _userManager.GetUserAsync(User).Result;
 }
 
 
@@ -44,6 +33,11 @@
     <div class="row row-cols-1 row-cols-md-3">
         <br>
         @{
+            var leftProduct = ComparisonViewModel.LeftProduct;
+            var rightProduct = ComparisonViewModel.RightProduct;
+
+            var user = _userManager.GetUserAsync(User).Result;
+
             if (leftProduct != null && rightProduct != null)
             {
                 <div class="col col-xs-12 col-sm-12 col-md-4 col-lg-4" style="padding-bottom: 2rem;">
@@ -51,6 +45,46 @@
                         <div class="card-header @leftProduct.GetTableHeaderClassString(_repository, user)" id="card_on_transaction_header">
                             <h5 style="font-weight:300">@leftProduct.Type</h5>
                         </div>
+                        @*<div style="transform:rotate(0);">
+                            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                                <ol class="carousel-indicators">
+                                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                                </ol>
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active hoverable-img">
+                                        <div class="carousel-caption d-none d-md-block">
+                                            <p class="hoverable-img-p">@_repository.GetImageByOrderIndex(leftProduct.ID, 0)?.Description</p>
+                                        </div>
+                                        <img class="d-block w-100 img-fluid catalog-img catalog-comp" id="img-left-0"
+                                             onmouseover="onHoveredLeftImg(0)" onmouseout="onHoveredLeftImgOut(0)" src="@leftProduct.GetFirstImageSrc(_repository)" alt="First slide">
+                                    </div>
+                                    <div class="carousel-item hoverable-img">
+                                        <div class="carousel-caption d-none d-md-block">
+                                            <p class="hoverable-img-p">@_repository.GetImageByOrderIndex(leftProduct.ID, 1)?.Description</p>
+                                        </div>
+                                        <img class="d-block w-100 img-fluid catalog-img catalog-comp" id="img-left-1"
+                                             onmouseover="onHoveredLeftImg(1)" onmouseout="onHoveredLeftImgOut(1)" src="@leftProduct.GetSecondImageSrc(_repository)" alt="Second slide">
+                                    </div>
+                                    <div class="carousel-item hoverable-img">
+                                        <div class="carousel-caption d-none d-md-block">
+                                            <p class="hoverable-img-p">@_repository.GetImageByOrderIndex(leftProduct.ID, 0)?.Description</p>
+                                        </div>
+                                        <img class="d-block w-100 img-fluid catalog-img catalog-comp" id="img-left-2"
+                                             onmouseover="onHoveredLeftImg(2)" onmouseout="onHoveredLeftImgOut(2)" src="@leftProduct.GetThirdImageSrc(_repository)" alt="Third slide">
+                                    </div>
+                                </div>
+                                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </div>
+                        </div>*@
                         <partial name="~/Views/Product/_ProductImageCarouselPartial.cshtml" model='@new ProductImageCarouselViewModel(leftProduct, "catalog-comp", "img-left")' />
                         <div class="card-body" style="transform:rotate(0);">
                             <h4 class="card-title">
@@ -101,6 +135,46 @@
                         <div class="card-header @rightProduct.GetTableHeaderClassString(_repository, user)" id="card_on_transaction_header">
                             <h5 style="font-weight:300">@rightProduct.Type</h5>
                         </div>
+                        @*<div style="transform:rotate(0);">
+                            <div id="carouselExampleIndicators2" class="carousel slide" data-ride="carousel">
+                                <ol class="carousel-indicators">
+                                    <li data-target="#carouselExampleIndicators2" data-slide-to="0" class="active"></li>
+                                    <li data-target="#carouselExampleIndicators2" data-slide-to="1"></li>
+                                    <li data-target="#carouselExampleIndicators2" data-slide-to="2"></li>
+                                </ol>
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active hoverable-img">
+                                        <div class="carousel-caption d-none d-md-block">
+                                            <p class="hoverable-img-p">@_repository.GetImageByOrderIndex(rightProduct.ID, 0)?.Description</p>
+                                        </div>
+                                        <img class="d-block w-100 img-fluid catalog-img catalog-comp" id="img-right-0"
+                                             onmouseover="onHoveredRightImg(0)" onmouseout="onHoveredRightImgOut(0)" src="@rightProduct.GetFirstImageSrc(_repository)" alt="First slide">
+                                    </div>
+                                    <div class="carousel-item hoverable-img">
+                                        <div class="carousel-caption d-none d-md-block">
+                                            <p class="hoverable-img-p">@_repository.GetImageByOrderIndex(rightProduct.ID, 1)?.Description</p>
+                                        </div>
+                                        <img class="d-block w-100 img-fluid catalog-img catalog-comp" id="img-right-1"
+                                             onmouseover="onHoveredRightImg(1)" onmouseout="onHoveredRightImgOut(1)" src="@rightProduct.GetSecondImageSrc(_repository)" alt="Second slide">
+                                    </div>
+                                    <div class="carousel-item hoverable-img">
+                                        <div class="carousel-caption d-none d-md-block">
+                                            <p class="hoverable-img-p">@_repository.GetImageByOrderIndex(rightProduct.ID, 2)?.Description</p>
+                                        </div>
+                                        <img class="d-block w-100 img-fluid catalog-img catalog-comp" id="img-right-2"
+                                             onmouseover="onHoveredRightImg(2)" onmouseout="onHoveredRightImgOut(2)" src="@rightProduct.GetThirdImageSrc(_repository)" alt="Third slide">
+                                    </div>
+                                </div>
+                                <a class="carousel-control-prev" href="#carouselExampleIndicators2" role="button" data-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                                <a class="carousel-control-next" href="#carouselExampleIndicators2" role="button" data-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </div>
+                        </div>*@
                         <partial name="~/Views/Product/_ProductImageCarouselPartial.cshtml" model='@new ProductImageCarouselViewModel(rightProduct, "catalog-comp", "img-right", 1)' />
                         <div class="card-body" style="transform:rotate(0);">
                             <h4 class="card-title">
@@ -109,9 +183,13 @@
                             <div class="overflower" aria-hidden="true">
                                 <p class="card-text card-description">@rightProduct.Description</p>
                             </div>
+
+                            @*<a href="@rightProduct.Link" class="stretched-link"></a>*@
                         </div>
 
                         <div class="card-footer @rightProduct.GetTableHeaderClassString(_repository, user)" id="card_on_transaction_footer">
+
+                            @*<div class="float-right">*@
                             <h3>
                                 @rightProduct.FinalPriceString
                                 <sup>
@@ -175,21 +253,21 @@
 
         function getLeftFinalWidth(index) {
             switch (index) {
-                case 1: return @leftProduct?.GetStarsPercent(1, leftComments);
-                case 2: return @leftProduct?.GetStarsPercent(2, leftComments);
-                case 3: return @leftProduct?.GetStarsPercent(3, leftComments);
-                case 4: return @leftProduct?.GetStarsPercent(4, leftComments);
-                case 5: return @leftProduct?.GetStarsPercent(5, leftComments);
+                case 1: return @leftProduct?.GetStarsPercent(1, _repository);
+                case 2: return @leftProduct?.GetStarsPercent(2, _repository);
+                case 3: return @leftProduct?.GetStarsPercent(3, _repository);
+                case 4: return @leftProduct?.GetStarsPercent(4, _repository);
+                case 5: return @leftProduct?.GetStarsPercent(5, _repository);
             }
         };
 
         function getRightFinalWidth(index) {
             switch (index) {
-                case 1: return @rightProduct?.GetStarsPercent(1, rightComments);
-                case 2: return @rightProduct?.GetStarsPercent(2, rightComments);
-                case 3: return @rightProduct?.GetStarsPercent(3, rightComments);
-                case 4: return @rightProduct?.GetStarsPercent(4, rightComments);
-                case 5: return @rightProduct?.GetStarsPercent(5, rightComments);
+                case 1: return @rightProduct?.GetStarsPercent(1, _repository);
+                case 2: return @rightProduct?.GetStarsPercent(2, _repository);
+                case 3: return @rightProduct?.GetStarsPercent(3, _repository);
+                case 4: return @rightProduct?.GetStarsPercent(4, _repository);
+                case 5: return @rightProduct?.GetStarsPercent(5, _repository);
             }
         };
     </script>

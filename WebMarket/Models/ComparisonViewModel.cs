@@ -18,8 +18,6 @@ namespace WebMarket.Models
         [BindProperty(SupportsGet = true)]
         public string LeftSearchTerm { get; set; }
 
-        ///private static List<string> ProductNames;
-
         public static string PriceComparisonText()
         {
             return (LeftProduct.Price > RightProduct.Price) ? $"{LeftProduct.Name} is more expensive than {RightProduct.Name}"
@@ -38,26 +36,14 @@ namespace WebMarket.Models
                 : LeftProduct.AddedDate < RightProduct.AddedDate ? $"{LeftProduct.Name} was added earlier than {RightProduct.Name}"
                 : $"{LeftProduct.Name} was added at the same day with {RightProduct.Name}";
         }
-        //public static string[] GetProductNames()
-        //{
-        //    if (ProductNames == null || ProductNames.Count() == 0)
-        //    {
-        //        ProductNames = new List<string>();
-        //        foreach (var i in CatalogViewModel.ListOfProducts)
-        //        {
-        //            ProductNames.Add(i.Name);
-        //        }
-        //    }
-        //    return ProductNames.ToArray();
-        //}
 
-        //public static float GetStarsValue(Product product, IMainRepository repository)
-        //{
-        //    return product.GetRate(repository) * 5f;
-        //}
-        public static float GetStarsValue(Product product, IEnumerable<UserComment> userComments)
+        public static float GetStarsValue(Product product, IMainRepository repository)
         {
-            return product.GetRate(userComments) * 5f;
+            return product.GetRate(repository);
+        }
+        public static float GetStarsValue(IEnumerable<UserComment> userComments)
+        {
+            return Product.GetRate(userComments);
         }
     }
 }

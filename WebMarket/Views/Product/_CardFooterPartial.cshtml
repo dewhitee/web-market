@@ -2,6 +2,9 @@
 @inject IMainRepository _repository
 @inject Microsoft.AspNetCore.Identity.UserManager<AppUser> _userManager
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://kit.fontawesome.com/37c897dddf.js" crossorigin="anonymous"></script>
+
 @{
     var currentUser = _userManager.GetUserAsync(User).Result;
 
@@ -24,8 +27,18 @@
                 <div class="float-right">
                     <form asp-controller="Catalog" asp-action="AddToCart" method="post">
                         <input type="hidden" class="form-control" name="productId" id="productId" value=@Model.ID />
-                        <button class="@Model.GetAddToCartButtonClassString(_repository, CatalogViewModel.CurrentAppUser) hoverable-btn" type="submit">@Model.GetAddToCartButtonString(_repository, CatalogViewModel.CurrentAppUser)</button>
+                        <button class="@Model.GetAddToCartButtonClassString(_repository, currentUser) hoverable-btn" type="submit">@Model.GetAddToCartButtonString(_repository, currentUser)</button>
                     </form>
+                </div>
+            }
+            else
+            {
+                <div class="float-right">
+                    <button class="@CatalogViewModel.GetBuyProductButtonClassString(currentUser, false) btn-lg" type="submit" data-toggle="modal" data-target="#buyModal"
+                            disabled id="card_on_transaction_buy_button">
+                        Buy
+                    </button>
+                    <a data-toggle="modal" data-target="#infoTransactionModal"><i class="far fa-question-circle" style="color: white;"></i></a>
                 </div>
             }
             <small class="text-warning @Model.GetProductTableLinkClassString(_repository, currentUser)">
@@ -62,7 +75,7 @@
             <div class="float-right">
                 <form asp-controller="Catalog" asp-action="AddToCart" method="post">
                     <input type="hidden" class="form-control" name="productId" id="productId" value=@Model.ID />
-                    <button class="@Model.GetAddToCartButtonClassString(_repository, CatalogViewModel.CurrentAppUser) hoverable-btn" type="submit">@Model.GetAddToCartButtonString(_repository, CatalogViewModel.CurrentAppUser)</button>
+                    <button class="@Model.GetAddToCartButtonClassString(_repository, currentUser) hoverable-btn" type="submit">@Model.GetAddToCartButtonString(_repository, currentUser)</button>
                 </form>
             </div>
             <small class="text-warning @Model.GetProductTableLinkClassString(_repository, currentUser)">
@@ -126,6 +139,30 @@
                         <button class="btn btn-warning" type="submit" id="card_on_transaction_sell_button">Sell</button>
                     </form>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="infoTransactionModal" tabindex="-1" role="dialog" aria-labelledby="infoTransactionModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content bg-dark text-white">
+            <div class="modal-header">
+                <h5 class="modal-title" id="infoTransactionModalLongTitle">Help | Transactions</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Only authorized users can buy products. Please register on our web-page to make transactions.
+                <p class="pt-4"><b>Free products:</b></p>
+                <ul>
+                    <li>If you want to get a free product - you can do it without authorizing, but only in case product's owner enabled that.</li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                @*<a class="btn btn-light float-left" data-dismiss="modal" data-toggle="modal" href="#infoCatalogModal">Next help</a>*@
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>

@@ -8,7 +8,7 @@
 @{
     ViewData["Title"] = "Catalog";
 
-    CatalogViewModel.CurrentAppUser = _userManager.GetUserAsync(User).Result;
+    var currentUser = _userManager.GetUserAsync(User).Result;
 }
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -361,16 +361,16 @@ else
                                 continue;
                         }
 
-                        ///string tdClassString = Model.listOfProducts[i].GetPriceTableClassString(_repository, CatalogViewModel.CurrentAppUser);
-                        string buttonClassString = Model.listOfProducts[i].GetAddToCartButtonClassString(_repository, CatalogViewModel.CurrentAppUser);
-                        var linkClass = Model.listOfProducts[i].GetProductTableLinkClassString(_repository, CatalogViewModel.CurrentAppUser);
-                        var thClass = Model.listOfProducts[i].GetTableHeaderClassString(_repository, CatalogViewModel.CurrentAppUser);
+                        string tdClassString = Model.listOfProducts[i].GetPriceTableClassString(_repository, currentUser);
+                        string buttonClassString = Model.listOfProducts[i].GetAddToCartButtonClassString(_repository, currentUser);
+                        var linkClass = Model.listOfProducts[i].GetProductTableLinkClassString(_repository, currentUser);
+                        var thClass = Model.listOfProducts[i].GetTableHeaderClassString(_repository, currentUser);
                         <tr>
                             <th scope="row" class="@thClass">@i</th>
                             <th scope="row" class="@thClass">
                                 <form asp-controller="Catalog" asp-action="AddToCart" method="post">
                                     <input type="hidden" class="form-control" name="productId" id="productId" value=@Model.listOfProducts[i].ID />
-                                    <button class="@Model.listOfProducts[i].GetAddToCartButtonClassString(_repository, CatalogViewModel.CurrentAppUser)" type="submit">@Model.listOfProducts[i].IsBoughtString(_repository, CatalogViewModel.CurrentAppUser)</button>
+                                    <button class="@Model.listOfProducts[i].GetAddToCartButtonClassString(_repository, currentUser)" type="submit">@Model.listOfProducts[i].IsBoughtString(_repository, currentUser)</button>
                                 </form>
                             </th>
                             <td class="@thClass">
@@ -479,16 +479,16 @@ else
                 <div class="row row-cols-1 row-cols-md-3">
                     @for (int i = 0; i < Model.listOfProducts.Count(); i++)
                     {
-                        var product = Model.listOfProducts.ElementAt(i);   //_repository.GetAllProducts().ElementAt(i);
-                        ///string tdClassString = product.GetPriceTableClassString(_repository, CatalogViewModel.CurrentAppUser);
-                        string buttonClassString = product.GetAddToCartButtonClassString(_repository, CatalogViewModel.CurrentAppUser);
-                        var linkClass = product.GetProductTableLinkClassString(_repository, CatalogViewModel.CurrentAppUser);
-                        var thClass = product.GetTableHeaderClassString(_repository, CatalogViewModel.CurrentAppUser);
+                        var product = Model.listOfProducts.ElementAt(i);
+                        string tdClassString = product.GetPriceTableClassString(_repository, currentUser);
+                        string buttonClassString = product.GetAddToCartButtonClassString(_repository, currentUser);
+                        var linkClass = product.GetProductTableLinkClassString(_repository, currentUser);
+                        var thClass = product.GetTableHeaderClassString(_repository, currentUser);
 
 
                         if (Model.findTags?.Count > 0)
                         {
-                            if (!product.ContainsTags(Model.findTags, _repository, CatalogViewModel.FullyMatching))
+                            if (!product.ContainsTags(Model.findTags, _repository, Model.fullyMatching))
                                 continue;
                         }
 
@@ -520,7 +520,7 @@ else
                                     <a href="@product.Link" class="stretched-link"></a>
                                 </div>
 
-                                <div class="card-footer @product.GetTableHeaderClassString(_repository, CatalogViewModel.CurrentAppUser)" id="card_footer_@i" onclick="onClickedCard(@i)">
+                                <div class="card-footer @product.GetTableHeaderClassString(_repository, currentUser)" id="card_footer_@i" onclick="onClickedCard(@i)">
                                     <h3>
                                         @product.FinalPriceString
                                         <sup>
@@ -533,10 +533,10 @@ else
                                     <div class="float-right">
                                         <form asp-controller="Catalog" asp-action="AddToCart" method="post">
                                             <input type="hidden" class="form-control" name="productId" id="productId" value=@product.ID />
-                                            <button class="@product.GetAddToCartButtonClassString(_repository, CatalogViewModel.CurrentAppUser) hoverable-btn" type="submit" id="card_addtocart_button_@i" onmouseover="onHoveredButton(@i)" onmouseout="onHoveredButtonOut(@i)">@product.GetAddToCartButtonString(_repository, CatalogViewModel.CurrentAppUser)</button>
+                                            <button class="@product.GetAddToCartButtonClassString(_repository, currentUser) hoverable-btn" type="submit" id="card_addtocart_button_@i" onmouseover="onHoveredButton(@i)" onmouseout="onHoveredButtonOut(@i)">@product.GetAddToCartButtonString(_repository, currentUser)</button>
                                         </form>
                                     </div>
-                                    <small class="text-warning @product.GetProductTableLinkClassString(_repository, CatalogViewModel.CurrentAppUser)">
+                                    <small class="text-warning @product.GetProductTableLinkClassString(_repository, currentUser)">
                                         Added @product.AddedDate.ToShortDateString()
                                     </small>
 
