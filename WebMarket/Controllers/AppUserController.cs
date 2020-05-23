@@ -61,7 +61,8 @@ namespace WebMarket.Controllers
             var commentsWritten = mainRepository.GetUserCommentsByUserID(userId).Count();
             var totalAdded = mainRepository.GetAllProductsOfUser(userId).Count();
             var totalBought = mainRepository.GetBoughtProductsByUserId(userId).Count();
-            var totalStars = (from p in userProducts select p.GetTotalStarsCount(mainRepository)).Sum(x => Convert.ToInt32(x));
+            var totalStars = (from p in userProducts select p.GetTotalStarsCount(mainRepository.GetUserCommentsByProdID(p.ID)))
+                .Sum(x => Convert.ToInt32(x));
 
             StatsViewModel model = new StatsViewModel
             {

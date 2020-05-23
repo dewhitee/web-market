@@ -10,7 +10,19 @@
 @{
     ViewData["Title"] = "Product page";
 
-    ProductPageViewModel.CurrentAppUser = _userManager.GetUserAsync(User).Result;
+    var product = CatalogViewModel.GetSelectedBuyProduct();
+    var currentUser = _userManager.GetUserAsync(User).Result;
+
+    IEnumerable<BoughtProduct> boughtProducts = null;
+    if (currentUser != null)
+    {
+        boughtProducts = _repository.GetBoughtProductsByUserId(currentUser.Id);
+    }
+    IEnumerable<UserComment> comments = null;
+    if (product != null)
+    {
+        comments = _repository.GetUserCommentsByProdID(product.ID);
+    }
 }
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -31,9 +43,6 @@
 </style>
 
 @{
-    var product = CatalogViewModel.GetSelectedBuyProduct();
-    var currentUser = _userManager.GetUserAsync(User).Result;
-
     @if (product.OwnerID != currentUser?.Id)
     {
         <div class="float-right">
@@ -82,7 +91,7 @@
                 <hr />
                 <p class="card-text"><b>Current version: 1.0.0</b></p>
                 <p></p>
-                @if ((product.IsBought(_repository, currentUser) || product.OwnerID == currentUser?.Id) && product.FileName?.Length > 0)
+                @if ((product.IsBought(boughtProducts) || product.OwnerID == currentUser?.Id) && product.FileName?.Length > 0)
                 {
                     <p class="card-text float-right">Size: @product.FormatFileSize(_hostingEnvironment)</p>
                     <a class="card-link btn btn-primary" href="~/file/@product.FileName" download>Download</a>
@@ -149,11 +158,11 @@
 
         function getFinalWidth(index) {
             switch (index) {
-                case 1: return @CatalogViewModel.GetSelectedBuyProduct()?.GetStarsPercent(1, _repository);
-                case 2: return @CatalogViewModel.GetSelectedBuyProduct()?.GetStarsPercent(2, _repository);
-                case 3: return @CatalogViewModel.GetSelectedBuyProduct()?.GetStarsPercent(3, _repository);
-                case 4: return @CatalogViewModel.GetSelectedBuyProduct()?.GetStarsPercent(4, _repository);
-                case 5: return @CatalogViewModel.GetSelectedBuyProduct()?.GetStarsPercent(5, _repository);
+                case 1: return @CatalogViewModel.GetSelectedBuyProduct()?.GetStarsPercent(1, comments);
+                case 2: return @CatalogViewModel.GetSelectedBuyProduct()?.GetStarsPercent(2, comments);
+                case 3: return @CatalogViewModel.GetSelectedBuyProduct()?.GetStarsPercent(3, comments);
+                case 4: return @CatalogViewModel.GetSelectedBuyProduct()?.GetStarsPercent(4, comments);
+                case 5: return @CatalogViewModel.GetSelectedBuyProduct()?.GetStarsPercent(5, comments);
             }
         };
 

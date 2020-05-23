@@ -112,83 +112,103 @@ namespace WebMarket.Models
             }
         }
 
-        public float GetRateAvg(IMainRepository repository)
+        public float GetRateAvg(IEnumerable<UserComment> userComments)
         {
-            return GetRateSum(repository) / repository.GetUserCommentsByProdID(ID).Count();
+            return GetRateSum(userComments) / userComments.Count();
         }
-        public float GetRate(IMainRepository repository)
+
+        public float GetRate(IEnumerable<UserComment> userComments)
         {
-            float sum = GetRateSum(repository);
-            float max = repository.GetUserCommentsByProdID(ID).Count() * 5f;
+            float sum = GetRateSum(userComments);
+            float max = userComments.Count() * 5f;
             return sum / max;
         }
-        public float GetRateSum(IMainRepository repository)
+
+        public float GetRateSum(IEnumerable<UserComment> userComments)
         {
             float sum = 0;
-            foreach (var i in repository.GetUserCommentsByProdID(ID))
+            foreach (var i in userComments)
             {
                 sum += i.Rate;
             }
             return sum;
         }
-        public int GetStarsCount(int stars, IMainRepository repository)
+        //public int GetStarsCount(int stars, IMainRepository repository)
+        //{
+        //    if (stars > 5) return -1;
+        //    int count = 0;
+        //    foreach (var i in repository.GetUserCommentsByProdID(ID))
+        //    {
+        //        if (Math.Truncate((decimal)i.Rate) == stars)
+        //            count++;
+        //    }
+        //    return count;
+        //}
+        public int GetStarsCount(int stars, IEnumerable<UserComment> userComments)
         {
             if (stars > 5) return -1;
             int count = 0;
-            foreach (var i in repository.GetUserCommentsByProdID(ID))
+            foreach (var i in userComments)
             {
                 if (Math.Truncate((decimal)i.Rate) == stars)
                     count++;
             }
             return count;
         }
-        public uint GetTotalCountOfNotNulledComments(IMainRepository repository)
+        //public uint GetTotalCountOfNotNulledComments(IMainRepository repository)
+        //{
+        //    uint count = 0;
+        //    foreach (var i in repository.GetUserCommentsByProdID(ID))
+        //    {
+        //        if (i.Rate != 0f)
+        //            count++;
+        //    }
+        //    return count;
+        //}
+        public uint GetTotalCountOfNotNulledComments(IEnumerable<UserComment> userComments)
         {
             uint count = 0;
-            foreach (var i in repository.GetUserCommentsByProdID(ID))
+            foreach (var i in userComments)
             {
                 if (i.Rate != 0f)
                     count++;
             }
             return count;
         }
-        public float GetStarsPercent(int stars, IMainRepository repository)
+        //public float GetStarsPercent(int stars, IMainRepository repository)
+        //{
+        //    Console.WriteLine($"Getting stars percent for {stars} stars...");
+        //    if (stars > 5) return 0f;
+        //    float starsCount = GetStarsCount(stars, repository.GetUserCommentsByProdID(ID));
+        //    float totalComments = GetTotalCountOfNotNulledComments(repository);
+        //    Console.WriteLine($"Final stars count is {starsCount}. This is {(starsCount <= 0 ? starsCount : starsCount / totalComments)} percent from the total amount of stars.");
+        //    return starsCount <= 0 ? 0f : starsCount / totalComments;
+        //}
+
+        public float GetStarsPercent(int stars, IEnumerable<UserComment> userComments)
         {
             Console.WriteLine($"Getting stars percent for {stars} stars...");
             if (stars > 5) return 0f;
-            float starsCount = GetStarsCount(stars, repository);
-            float totalComments = GetTotalCountOfNotNulledComments(repository);
+            float starsCount = GetStarsCount(stars, userComments);
+            float totalComments = GetTotalCountOfNotNulledComments(userComments);
             Console.WriteLine($"Final stars count is {starsCount}. This is {(starsCount <= 0 ? starsCount : starsCount / totalComments)} percent from the total amount of stars.");
             return starsCount <= 0 ? 0f : starsCount / totalComments;
         }
-        public uint GetTotalStarsCount(IMainRepository repository)
+ 
+        public uint GetTotalStarsCount(IEnumerable<UserComment> userComments)
         {
             uint count = 0;
-            foreach (var i in repository.GetUserCommentsByProdID(ID))
+            foreach (var i in userComments)
             {
                 count += i.Stars;
             }
             return count;
         }
-        
-        //public static int MakeNewID()
-        //{
-        //    Random random = new Random();
-        //    int newID;
-        //    bool success;
-        //    do
-        //    {
-        //        newID = random.Next(1, int.MaxValue);
-        //        success = CatalogViewModel.ListOfProducts.Find(x => x.ID == newID) == null;
-        //    } while (!success);
-        //    return newID;
-        //}
 
-        public static int MakeNewID(IMainRepository repository)
+        public static int MakeNewID(IEnumerable<Product> allProducts)
         {
-            int newID = repository.GetAllProducts().Count() + 1;
-            Random random = new Random();
-            while (repository.GetAllProducts().Any(p => p.ID == newID))
+            int newID = allProducts.Count() + 1;
+            while (allProducts.Any(p => p.ID == newID))
             {
                 newID++;
             }
@@ -248,20 +268,20 @@ namespace WebMarket.Models
             else return type;
         }
 
-        public string GetPriceTableClassString(IMainRepository repo, AppUser user)
-        {
-            if (CatalogViewModel.ChoosenProductID == this.ID || OwnerID == user?.Id)
-                return "bg-dark text-white";
-            if (IsBought(repo, user))
-                return "bg-primary text-dark";
-            if (Price == 0 || FinalPrice == 0)
-                return "bg-success text-dark";
-            if (Price < 10 || FinalPrice < 10 || Discount > 50)
-                return "bg-success text-dark";
-            if (Price > 250 || FinalPrice > 250)
-                return "bg-danger text-dark";
-            return "";
-        }
+        //public string GetPriceTableClassString(IMainRepository repo, AppUser user)
+        //{
+        //    if (CatalogViewModel.ChoosenProductID == this.ID || OwnerID == user?.Id)
+        //        return "bg-dark text-white";
+        //    if (IsBought(repo, user))
+        //        return "bg-primary text-dark";
+        //    if (Price == 0 || FinalPrice == 0)
+        //        return "bg-success text-dark";
+        //    if (Price < 10 || FinalPrice < 10 || Discount > 50)
+        //        return "bg-success text-dark";
+        //    if (Price > 250 || FinalPrice > 250)
+        //        return "bg-danger text-dark";
+        //    return "";
+        //}
 
         public string GetProductTableLinkClassString(IMainRepository repo, AppUser user)
         {

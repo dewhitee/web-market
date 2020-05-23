@@ -361,7 +361,7 @@ else
                                 continue;
                         }
 
-                        string tdClassString = Model.listOfProducts[i].GetPriceTableClassString(_repository, CatalogViewModel.CurrentAppUser);
+                        ///string tdClassString = Model.listOfProducts[i].GetPriceTableClassString(_repository, CatalogViewModel.CurrentAppUser);
                         string buttonClassString = Model.listOfProducts[i].GetAddToCartButtonClassString(_repository, CatalogViewModel.CurrentAppUser);
                         var linkClass = Model.listOfProducts[i].GetProductTableLinkClassString(_repository, CatalogViewModel.CurrentAppUser);
                         var thClass = Model.listOfProducts[i].GetTableHeaderClassString(_repository, CatalogViewModel.CurrentAppUser);
@@ -480,7 +480,7 @@ else
                     @for (int i = 0; i < Model.listOfProducts.Count(); i++)
                     {
                         var product = Model.listOfProducts.ElementAt(i);   //_repository.GetAllProducts().ElementAt(i);
-                        string tdClassString = product.GetPriceTableClassString(_repository, CatalogViewModel.CurrentAppUser);
+                        ///string tdClassString = product.GetPriceTableClassString(_repository, CatalogViewModel.CurrentAppUser);
                         string buttonClassString = product.GetAddToCartButtonClassString(_repository, CatalogViewModel.CurrentAppUser);
                         var linkClass = product.GetProductTableLinkClassString(_repository, CatalogViewModel.CurrentAppUser);
                         var thClass = product.GetTableHeaderClassString(_repository, CatalogViewModel.CurrentAppUser);

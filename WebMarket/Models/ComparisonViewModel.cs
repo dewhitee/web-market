@@ -18,7 +18,7 @@ namespace WebMarket.Models
         [BindProperty(SupportsGet = true)]
         public string LeftSearchTerm { get; set; }
 
-        private static List<string> ProductNames;
+        ///private static List<string> ProductNames;
 
         public static string PriceComparisonText()
         {
@@ -51,9 +51,13 @@ namespace WebMarket.Models
         //    return ProductNames.ToArray();
         //}
 
-        public static float GetStarsValue(Product product, IMainRepository repository)
+        //public static float GetStarsValue(Product product, IMainRepository repository)
+        //{
+        //    return product.GetRate(repository) * 5f;
+        //}
+        public static float GetStarsValue(Product product, IEnumerable<UserComment> userComments)
         {
-            return product.GetRate(repository) * 5f;
+            return product.GetRate(userComments) * 5f;
         }
     }
 }
