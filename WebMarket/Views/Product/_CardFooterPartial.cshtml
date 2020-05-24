@@ -2,8 +2,8 @@
 @inject IMainRepository _repository
 @inject Microsoft.AspNetCore.Identity.UserManager<AppUser> _userManager
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<script src="https://kit.fontawesome.com/37c897dddf.js" crossorigin="anonymous"></script>
+@*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://kit.fontawesome.com/37c897dddf.js" crossorigin="anonymous"></script>*@
 
 @{
     var currentUser = _userManager.GetUserAsync(User).Result;
@@ -38,7 +38,7 @@
                             disabled id="card_on_transaction_buy_button">
                         Buy
                     </button>
-                    <a data-toggle="modal" data-target="#infoTransactionModal"><i class="far fa-question-circle" style="color: white;"></i></a>
+                    <a data-toggle="modal" data-target="#infoTransactionModal"><img src="~/images/question-circle-regular.svg" style="color:white; width:16px; height:16px"></a>
                 </div>
             }
             <small class="text-warning @Model.GetProductTableLinkClassString(_repository, currentUser)">

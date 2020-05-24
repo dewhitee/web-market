@@ -92,26 +92,54 @@ namespace WebMarket.Models
         public bool ContainsTags(List<string> findTags, IMainRepository repository, bool fullyMatching)
         {
             var repoTags = repository.GetTagNamesByProductId(ID);
-            if (fullyMatching)
+            if (findTags != null && repoTags != null)
             {
-                foreach (var tag in findTags)
+                if (fullyMatching)
                 {
-                    if (!repoTags.Contains(tag))
-                        return false;
+                    foreach (var tag in findTags)
+                    {
+                        if (!repoTags.Contains(tag))
+                            return false;
+                    }
+                    return true;
                 }
-                return true;
-            }
-            else
-            {
-                foreach (var tag in findTags)
+                else
                 {
-                    if (repoTags.Contains(tag))
-                        return true;
+                    foreach (var tag in findTags)
+                    {
+                        if (repoTags.Contains(tag))
+                            return true;
+                    }
+                    return false;
                 }
-                return false;
             }
+            return false;
         }
-
+        public static bool ContainsTags(List<string> findTags, IEnumerable<string> repoTags, bool fullyMatching)
+        {
+            if (findTags != null && repoTags != null)
+            {
+                if (fullyMatching)
+                {
+                    foreach (var tag in findTags)
+                    {
+                        if (!repoTags.Contains(tag))
+                            return false;
+                    }
+                    return true;
+                }
+                else
+                {
+                    foreach (var tag in findTags)
+                    {
+                        if (repoTags.Contains(tag))
+                            return true;
+                    }
+                    return false;
+                }
+            }
+            return false;
+        }
         public float GetRateAvg(IMainRepository repository)
         {
             return GetRateSum(repository) / repository.GetUserCommentsByProdID(ID).Count();
@@ -157,6 +185,17 @@ namespace WebMarket.Models
             }
             return count;
         }
+        public static int GetStarsCount(int stars, IEnumerable<UserComment> userComments)
+        {
+            if (stars > 5 || stars <= 0) return -1;
+            int count = 0;
+            foreach (var i in userComments)
+            {
+                if (Math.Truncate((decimal)i.Rate) == stars)
+                    count++;
+            }
+            return count;
+        }
         public uint GetTotalCountOfNotNulledComments(IMainRepository repository)
         {
             uint count = 0;
@@ -195,24 +234,10 @@ namespace WebMarket.Models
             }
             return count;
         }
-        
-        //public static int MakeNewID()
-        //{
-        //    Random random = new Random();
-        //    int newID;
-        //    bool success;
-        //    do
-        //    {
-        //        newID = random.Next(1, int.MaxValue);
-        //        success = CatalogViewModel.ListOfProducts.Find(x => x.ID == newID) == null;
-        //    } while (!success);
-        //    return newID;
-        //}
 
         public static int MakeNewID(IMainRepository repository)
         {
             int newID = repository.GetAllProducts().Count() + 1;
-            Random random = new Random();
             while (repository.GetAllProducts().Any(p => p.ID == newID))
             {
                 newID++;
@@ -234,11 +259,23 @@ namespace WebMarket.Models
         public string FormatFileSize(IWebHostEnvironment hostingEnvironment)
         {
             var fileSize = GetFileSize(hostingEnvironment);
-            if (fileSize > 1000000000) return new string((fileSize / 1000000000f).ToString() + " Gb");
-            if (fileSize > 1000000) return new string((fileSize / 1000000f).ToString() + " Mb");
-            if (fileSize > 1000) return new string((fileSize / 1000f).ToString() + " Kb");
+            if (fileSize < 0) return "";
+            if (fileSize >= 1000000000) return new string(Math.Round(fileSize / 1000000000f, 4).ToString() + " Gb");
+            if (fileSize >= 1000000) return new string(Math.Round(fileSize / 1000000f, 4).ToString() + " Mb");
+            if (fileSize >= 1000) return new string(Math.Round(fileSize / 1000f, 4).ToString() + " Kb");
+            if (fileSize == 0) return "Empty file";
             return new string(fileSize.ToString() + " bytes");
         }
+        public static string FormatFileSize(long fileSize)
+        {
+            if (fileSize < 0) return "";
+            if (fileSize >= 1000000000) return new string(Math.Round(fileSize / 1000000000f, 4).ToString() + " Gb");
+            if (fileSize >= 1000000) return new string(Math.Round(fileSize / 1000000f, 4).ToString() + " Mb");
+            if (fileSize >= 1000) return new string(Math.Round(fileSize / 1000f, 4).ToString() + " Kb");
+            if (fileSize == 0) return "Empty file";
+            return new string(fileSize.ToString() + " bytes");
+        }
+
 
         public string GetAddToCartButtonString(IMainRepository repo, AppUser user)
         {
