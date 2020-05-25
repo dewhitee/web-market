@@ -251,7 +251,7 @@ namespace WebMarket.Models
 
         public long GetFileSize(IWebHostEnvironment hostingEnvironment)
         {
-            if (FileName.Length > 0)
+            if (FileName?.Length > 0)
             {
                 string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "file");
                 string filePath = Path.Combine(uploadsFolder, FileName);

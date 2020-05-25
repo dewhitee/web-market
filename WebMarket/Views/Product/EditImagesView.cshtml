@@ -15,8 +15,8 @@
            asp-route-prodid="@Model.ProductId">Info</a>
     </div>
     <div class="d-inline">
-        <a type="button" class="btn btn-outline-primary" asp-area="" asp-controller="Product" asp-action="EditImages"
-           asp-route-prodid="@Model.ProductId">Images</a>
+        <button type="button" class="btn btn-outline-primary" asp-area="" asp-controller="Product" asp-action="EditImages"
+           asp-route-prodid="@Model.ProductId" disabled>Images</button>
     </div>
     <div class="d-inline">
         <a type="button" class="btn btn-outline-primary" asp-area="" asp-controller="Product" asp-action="EditTags"
@@ -109,7 +109,7 @@
                     <p>You will be able to add more images later. Stay tuned!</p>
                 </div>
             </div>
-            <h5>4th Image</h5>
+            @*<h5>4th Image</h5>
             <div class="form-group">
                 <label asp-for="FourthImageLink" class="control-label">Link</label>
                 <input asp-for="FourthImageLink" readonly class="form-control" />
@@ -143,7 +143,7 @@
                 <label asp-for="SixthImageDescription" class="control-label">Description</label>
                 <input asp-for="SixthImageDescription" readonly class="form-control" />
                 <span asp-validation-for="SixthImageDescription" class="text-danger"></span>
-            </div>
+            </div>*@
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
@@ -152,7 +152,7 @@
 </div>
 
 <div>
-    <a asp-controller="Product" asp-action="Page">Back to List</a>
+    <a asp-controller="Product" asp-action="Page">Back to product page</a>
 </div>
 
 <script>

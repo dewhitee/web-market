@@ -10,31 +10,77 @@ namespace WebMarket.Models
     public class ComparisonViewModel
     {
         public List<Product> Products { get; set; }
-        public static Product LeftProduct;
-        public static Product RightProduct;
+        public Product LeftProduct { get; set; }
+        public Product RightProduct { get; set; }
         [BindProperty(SupportsGet = true)]
         public string RightSearchTerm { get; set; }
 
         [BindProperty(SupportsGet = true)]
         public string LeftSearchTerm { get; set; }
 
-        public static string PriceComparisonText()
+        public bool RightProductNotFound { get; set; }
+        public string RightProductName { get; set; }
+        public bool LeftProductNotFound { get; set; }
+        public string LeftProductName { get; set; }
+
+        public int RightProductTagsCount { get; set; }
+        public int LeftProductTagsCount { get; set; }
+
+        public int RightProductBoughtTimes { get; set; }
+        public int LeftProductBoughtTimes { get; set; }
+
+        public long LeftProductFileSize { get; set; }
+        public long RightProductFileSize { get; set; }
+
+        public string PriceComparisonText()
         {
-            return (LeftProduct.Price > RightProduct.Price) ? $"{LeftProduct.Name} is more expensive than {RightProduct.Name}"
-                : LeftProduct.Price < RightProduct.Price ? $"{LeftProduct.Name} is cheaper than {RightProduct.Name}"
-                : $"{LeftProduct.Name} and {RightProduct.Name} are equal in terms of price ";
+            return TextHelper(LeftProduct.Price, RightProduct.Price,
+                "is more expensive than",
+                "is cheaper than",
+                "are equal in terms of price", true);
         }
-        public static string DiscountComparisonText()
+        public string DiscountComparisonText()
         {
-            return (LeftProduct.Discount > RightProduct.Discount) ? $"{LeftProduct.Name} has larger discount than {RightProduct.Name}"
-                : LeftProduct.Discount < RightProduct.Discount ? $"{LeftProduct.Name} has smaller discount than {RightProduct.Name}"
-                : $"{LeftProduct.Name} has same discount as {RightProduct.Name}";
+            return TextHelper(LeftProduct.Discount, RightProduct.Discount,
+                "has larger discount than",
+                "has smaller discount than",
+                "has same discount as");
         }
-        public static string AddedDateComparisonText()
+        public string AddedDateComparisonText()
         {
-            return (LeftProduct.AddedDate > RightProduct.AddedDate) ? $"{LeftProduct.Name} was added later than {RightProduct.Name}"
-                : LeftProduct.AddedDate < RightProduct.AddedDate ? $"{LeftProduct.Name} was added earlier than {RightProduct.Name}"
-                : $"{LeftProduct.Name} was added at the same day with {RightProduct.Name}";
+            return TextHelper(LeftProduct.AddedDate, RightProduct.AddedDate,
+                "was added later than",
+                "was added earlier than",
+                "was added at the same day with");
+        }
+        public string TagsText()
+        {
+            return TextHelper(LeftProductTagsCount, RightProductTagsCount,
+                "has more tags than",
+                "has less tags than",
+                "has same amount of tags as");
+        }
+        public string PopularityText()
+        {
+            return TextHelper(LeftProductBoughtTimes, RightProductBoughtTimes,
+                "is more popular than",
+                "is less popular then",
+                "are equally popular",
+                true);
+        }
+        public string FileSizeText()
+        {
+            return TextHelper(LeftProductFileSize, RightProductFileSize,
+                "file size is larger than of",
+                "file size is smaller than of",
+                "file sizes are equal", true);
+        }
+
+        private string TextHelper<T>(T left, T right, string leftMoreText, string rightMoreText, string equalText, bool and = false)
+        {
+            return (Comparer<T>.Default.Compare(left, right) < 0) ? $"{LeftProduct.Name} {leftMoreText} {RightProduct.Name}"
+                : Comparer<T>.Default.Compare(left, right) > 0 ? $"{LeftProduct.Name} {rightMoreText} {RightProduct.Name}"
+                : (and ? $"{LeftProduct.Name} and {RightProduct.Name} {equalText}" : $"{LeftProduct.Name} {equalText} {RightProduct.Name}");
         }
 
         public static float GetStarsValue(Product product, IMainRepository repository)

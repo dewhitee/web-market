@@ -11,8 +11,8 @@
 
 <div class="float-right">
     <div class="d-inline">
-        <a type="button" class="btn btn-outline-primary" asp-area="" asp-controller="Product" asp-action="OpenEditProduct"
-           asp-route-prodid="@Model.ID">Info</a>
+        <button type="button" class="btn btn-outline-primary" asp-area="" asp-controller="Product" asp-action="OpenEditProduct"
+           asp-route-prodid="@Model.ID" disabled>Info</button>
     </div>
     <div class="d-inline">
         <a type="button" class="btn btn-outline-primary" asp-area="" asp-controller="Product" asp-action="EditImages"
@@ -147,7 +147,6 @@
                 When editing your product be aware, that changes you apply may not be applied instantly. To be sure everything was set correctly - just enter your product page from Catalog or Profile.
             </div>
             <div class="modal-footer">
-                <a class="btn btn-light float-left" data-dismiss="modal" data-toggle="modal" href="#infoCatalogModal">Next help</a>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         </div>

@@ -1,6 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using WebMarket.Data
-@using WebMarket.Models.ProductModels 
+@using WebMarket.Models.ProductModels
 
 @model ComparisonViewModel
 @inject UserManager<AppUser> _userManager
@@ -29,45 +29,56 @@
     <button class="btn btn-primary" type="submit">Find</button>
 </form>
 <br>
+
+@if (Model.RightProductNotFound && Model.LeftProductNotFound)
+{
+    <p class="text-danger">None of the products (@Model.LeftProductName or @Model.RightProductName) has been found...</p>
+}
+else if (Model.RightProductNotFound)
+{
+    <p class="text-danger">Right product (@Model.RightProductName) was not found...</p>
+}
+else if (Model.LeftProductNotFound)
+{
+    <p class="text-danger">Left product (@Model.LeftProductName) was not found...</p>
+}
+
 <div class="container-fluid">
     <div class="row row-cols-1 row-cols-md-3">
         <br>
         @{
-            var leftProduct = ComparisonViewModel.LeftProduct;
-            var rightProduct = ComparisonViewModel.RightProduct;
-
             var user = _userManager.GetUserAsync(User).Result;
 
-            if (leftProduct != null && rightProduct != null)
+            if (Model.LeftProduct != null && Model.RightProduct != null)
             {
                 <div class="col col-xs-12 col-sm-12 col-md-4 col-lg-4" style="padding-bottom: 2rem;">
                     <div class="card h-100 hoverable-card" id="card_on_transaction">
-                        <div class="card-header @leftProduct.GetTableHeaderClassString(_repository, user)" id="card_on_transaction_header">
-                            <h5 style="font-weight:300">@leftProduct.Type</h5>
+                        <div class="card-header @Model.LeftProduct.GetTableHeaderClassString(_repository, user)" id="card_on_transaction_header">
+                            <h5 style="font-weight:300">@Model.LeftProduct.Type</h5>
                         </div>
-                        <partial name="~/Views/Product/_ProductImageCarouselPartial.cshtml" model='@new ProductImageCarouselViewModel(leftProduct, "catalog-comp", "img-left")' />
+                        <partial name="~/Views/Product/_ProductImageCarouselPartial.cshtml" model='@new ProductImageCarouselViewModel(Model.LeftProduct, "catalog-comp", "img-left")' />
                         <div class="card-body" style="transform:rotate(0);">
                             <h4 class="card-title">
-                                @leftProduct.Name
+                                @Model.LeftProduct.Name
                             </h4>
                             <div class="overflower" aria-hidden="true">
-                                <p class="card-text card-description">@leftProduct.Description</p>
+                                <p class="card-text card-description">@Model.LeftProduct.Description</p>
                             </div>
                         </div>
 
-                        <div class="card-footer @leftProduct.GetTableHeaderClassString(_repository, user)" id="card_on_transaction_footer">
+                        <div class="card-footer @Model.LeftProduct.GetTableHeaderClassString(_repository, user)" id="card_on_transaction_footer">
                             <h3>
-                                @leftProduct.FinalPriceString
+                                @Model.LeftProduct.FinalPriceString
                                 <sup>
-                                    @if (leftProduct.Price != leftProduct.FinalPrice)
+                                    @if (Model.LeftProduct.Price != Model.LeftProduct.FinalPrice)
                                     {
-                                        <font color="red" style="font-weight:400"><del>@leftProduct.PriceString</del></font><sup> -@leftProduct.DiscountSupString</sup>
+                                        <font color="red" style="font-weight:400"><del>@Model.LeftProduct.PriceString</del></font><sup> -@Model.LeftProduct.DiscountSupString</sup>
                                     }
                                 </sup>
                             </h3>
                             <br>
-                            <small class="text-warning @leftProduct.GetProductTableLinkClassString(_repository, user)">
-                                Added @leftProduct.AddedDate.ToShortDateString()
+                            <small class="text-warning @Model.LeftProduct.GetProductTableLinkClassString(_repository, user)">
+                                Added @Model.LeftProduct.AddedDate.ToShortDateString()
                             </small>
 
                         </div>
@@ -78,46 +89,45 @@
                         <div class="card-header">Comparison</div>
                         <div class="card-body">
                             <h5 class="card-title">Briefly</h5>
-                            <p class="card-text">@ComparisonViewModel.PriceComparisonText()</p>
-                            <p class="card-text">@ComparisonViewModel.DiscountComparisonText()</p>
-                            <p class="card-text">@ComparisonViewModel.AddedDateComparisonText()</p>
-                            <h5 class="card-title">Comments</h5>
-                            <p class="card-text">Some comments</p>
-                            <h5 class="card-title">Conclusion</h5>
+                            <p class="card-text">@Model.PriceComparisonText()</p>
+                            <p class="card-text">@Model.DiscountComparisonText()</p>
+                            <p class="card-text">@Model.AddedDateComparisonText()</p>
+                            <p class="card-text">@Model.TagsText()</p>
+                            <p class="card-text">@Model.PopularityText()</p>
+                            <p class="card-text">@Model.FileSizeText()</p>
                             <p class="card-text">
-                               
                             </p>
                         </div>
                     </div>
                 </div>
                 <div class="col col-xs-12 col-sm-12 col-md-4 col-lg-4" style="padding-bottom: 2rem;">
                     <div class="card h-100 hoverable-card" id="card_on_transaction">
-                        <div class="card-header @rightProduct.GetTableHeaderClassString(_repository, user)" id="card_on_transaction_header">
-                            <h5 style="font-weight:300">@rightProduct.Type</h5>
+                        <div class="card-header @Model.RightProduct.GetTableHeaderClassString(_repository, user)" id="card_on_transaction_header">
+                            <h5 style="font-weight:300">@Model.RightProduct.Type</h5>
                         </div>
-                        <partial name="~/Views/Product/_ProductImageCarouselPartial.cshtml" model='@new ProductImageCarouselViewModel(rightProduct, "catalog-comp", "img-right", 1)' />
+                        <partial name="~/Views/Product/_ProductImageCarouselPartial.cshtml" model='@new ProductImageCarouselViewModel(Model.RightProduct, "catalog-comp", "img-right", 1)' />
                         <div class="card-body" style="transform:rotate(0);">
                             <h4 class="card-title">
-                                @rightProduct.Name
+                                @Model.RightProduct.Name
                             </h4>
                             <div class="overflower" aria-hidden="true">
-                                <p class="card-text card-description">@rightProduct.Description</p>
+                                <p class="card-text card-description">@Model.RightProduct.Description</p>
                             </div>
                         </div>
 
-                        <div class="card-footer @rightProduct.GetTableHeaderClassString(_repository, user)" id="card_on_transaction_footer">
+                        <div class="card-footer @Model.RightProduct.GetTableHeaderClassString(_repository, user)" id="card_on_transaction_footer">
                             <h3>
-                                @rightProduct.FinalPriceString
+                                @Model.RightProduct.FinalPriceString
                                 <sup>
-                                    @if (rightProduct.Price != rightProduct.FinalPrice)
+                                    @if (Model.RightProduct.Price != Model.RightProduct.FinalPrice)
                                     {
-                                        <font color="red" style="font-weight:400"><del>@rightProduct.PriceString</del></font><sup> -@rightProduct.DiscountSupString</sup>
+                                        <font color="red" style="font-weight:400"><del>@Model.RightProduct.PriceString</del></font><sup> -@Model.RightProduct.DiscountSupString</sup>
                                     }
                                 </sup>
                             </h3>
                             <br>
-                            <small class="text-warning @rightProduct.GetProductTableLinkClassString(_repository, user)">
-                                Added @rightProduct.AddedDate.ToShortDateString()
+                            <small class="text-warning @Model.RightProduct.GetProductTableLinkClassString(_repository, user)">
+                                Added @Model.RightProduct.AddedDate.ToShortDateString()
                             </small>
 
                         </div>
@@ -127,7 +137,7 @@
                 <div class="col col-sm-12 col-md-12 col-lg-6" style="padding-top: 2rem;">
                     <div class="card h-100 hoverable-card" id="card_on_transaction">
                         @{
-                            var lProduct = new ProductRatingTableViewModel(leftProduct, false);
+                            var lProduct = new ProductRatingTableViewModel(Model.LeftProduct, false);
                             <partial name="~/Views/Product/_RatingTablePartial.cshtml" model="@lProduct" />
                             <partial name="~/Views/Product/_CommentSectionPartial.cshtml" for="@lProduct" />
                         }
@@ -136,7 +146,7 @@
                 <div class="col col-sm-12 col-md-12 col-lg-6" style="padding-top: 2rem;">
                     <div class="card h-100 hoverable-card" id="card_on_transaction">
                         @{
-                            var rProduct = new ProductRatingTableViewModel(rightProduct, true);
+                            var rProduct = new ProductRatingTableViewModel(Model.RightProduct, true);
                             <partial name="~/Views/Product/_RatingTablePartial.cshtml" model="@rProduct" />
                             <partial name="~/Views/Product/_CommentSectionPartial.cshtml" for="@rProduct" />
                         }
@@ -169,21 +179,21 @@
 
         function getLeftFinalWidth(index) {
             switch (index) {
-                case 1: return @leftProduct?.GetStarsPercent(1, _repository);
-                case 2: return @leftProduct?.GetStarsPercent(2, _repository);
-                case 3: return @leftProduct?.GetStarsPercent(3, _repository);
-                case 4: return @leftProduct?.GetStarsPercent(4, _repository);
-                case 5: return @leftProduct?.GetStarsPercent(5, _repository);
+                case 1: return @Model.LeftProduct?.GetStarsPercent(1, _repository);
+                case 2: return @Model.LeftProduct?.GetStarsPercent(2, _repository);
+                case 3: return @Model.LeftProduct?.GetStarsPercent(3, _repository);
+                case 4: return @Model.LeftProduct?.GetStarsPercent(4, _repository);
+                case 5: return @Model.LeftProduct?.GetStarsPercent(5, _repository);
             }
         };
 
         function getRightFinalWidth(index) {
             switch (index) {
-                case 1: return @rightProduct?.GetStarsPercent(1, _repository);
-                case 2: return @rightProduct?.GetStarsPercent(2, _repository);
-                case 3: return @rightProduct?.GetStarsPercent(3, _repository);
-                case 4: return @rightProduct?.GetStarsPercent(4, _repository);
-                case 5: return @rightProduct?.GetStarsPercent(5, _repository);
+                case 1: return @Model.RightProduct?.GetStarsPercent(1, _repository);
+                case 2: return @Model.RightProduct?.GetStarsPercent(2, _repository);
+                case 3: return @Model.RightProduct?.GetStarsPercent(3, _repository);
+                case 4: return @Model.RightProduct?.GetStarsPercent(4, _repository);
+                case 5: return @Model.RightProduct?.GetStarsPercent(5, _repository);
             }
         };
     </script>

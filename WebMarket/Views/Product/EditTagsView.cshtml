@@ -1,0 +1,84 @@
+﻿@model WebMarket.Models.EditTagsViewModel
+
+@{
+    ViewData["Title"] = "EditTagsView";
+}
+
+<h1>Edit</h1>
+
+<div class="float-right">
+    <div class="d-inline">
+        <a type="button" class="btn btn-outline-primary" asp-area="" asp-controller="Product" asp-action="OpenEditProduct"
+           asp-route-prodid="@Model.ProductId">Info</a>
+    </div>
+    <div class="d-inline">
+        <a type="button" class="btn btn-outline-primary" asp-area="" asp-controller="Product" asp-action="EditImages"
+           asp-route-prodid="@Model.ProductId">Images</a>
+    </div>
+    <div class="d-inline">
+        <button type="button" class="btn btn-outline-primary" asp-area="" asp-controller="Product" asp-action="EditTags"
+           asp-route-prodid="@Model.ProductId" disabled>Tags</button>
+    </div>
+    <div style="padding-bottom:1em"></div>
+</div>
+<h4>Tags</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="EditTagsView">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <input type="hidden" asp-for="ProductId" class="form-control" />
+                <span asp-validation-for="ProductId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FirstTag" class="control-label"></label>
+                <input asp-for="FirstTag" class="form-control" />
+                <span asp-validation-for="FirstTag" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SecondTag" class="control-label"></label>
+                <input asp-for="SecondTag" class="form-control" />
+                <span asp-validation-for="SecondTag" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ThirdTag" class="control-label"></label>
+                <input asp-for="ThirdTag" class="form-control" />
+                <span asp-validation-for="ThirdTag" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FourthTag" class="control-label"></label>
+                <input asp-for="FourthTag" class="form-control" />
+                <span asp-validation-for="FourthTag" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FifthTag" class="control-label"></label>
+                <input asp-for="FifthTag" class="form-control" />
+                <span asp-validation-for="FifthTag" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SixthTag" class="control-label"></label>
+                <input asp-for="SixthTag" class="form-control" />
+                <span asp-validation-for="SixthTag" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SeventhTag" class="control-label"></label>
+                <input asp-for="SeventhTag" class="form-control" />
+                <span asp-validation-for="SeventhTag" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EighthTag" class="control-label"></label>
+                <input asp-for="EighthTag" class="form-control" />
+                <span asp-validation-for="EighthTag" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
