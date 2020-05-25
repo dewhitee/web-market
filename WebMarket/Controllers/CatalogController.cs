@@ -21,6 +21,7 @@ namespace WebMarket.Controllers
         private readonly IMainRepository mainRepository;
         private static int _catalogLength = 0;
         private static bool _fullyMatching;
+        private static List<string> _findTags;
 
         public CatalogController(
             UserManager<AppUser> userManager,
@@ -43,10 +44,11 @@ namespace WebMarket.Controllers
 
             var model = new CatalogViewModel
             {
-                listOfProducts = listOfProducts != null ? listOfProducts : new List<Product>(),
-                listOfProductTypes = listOfProductTypes,
-                findTags = CatalogViewModel.FindTags != null ? CatalogViewModel.FindTags : new List<string>(),
-                fullyMatching = _fullyMatching
+                ListOfProducts = listOfProducts != null ? listOfProducts : new List<Product>(),
+                ListOfProductTypes = listOfProductTypes,
+                findTags = _findTags != null ? _findTags : new List<string>(),
+                FullyMatching = _fullyMatching,
+                CatalogLength = _catalogLength
             };
 
             return View(model);
@@ -63,10 +65,11 @@ namespace WebMarket.Controllers
 
             var model = new CatalogViewModel
             {
-                listOfProducts = listOfProducts,
-                listOfProductTypes = listOfProductTypes,
-                findTags = CatalogViewModel.FindTags != null ? CatalogViewModel.FindTags : new List<string>(),
-                fullyMatching = _fullyMatching
+                ListOfProducts = listOfProducts,
+                ListOfProductTypes = listOfProductTypes,
+                findTags = _findTags != null ? _findTags : new List<string>(),
+                FullyMatching = _fullyMatching,
+                CatalogLength = _catalogLength
             };
             return View("Catalog", model);
         }
@@ -139,9 +142,10 @@ namespace WebMarket.Controllers
         public IActionResult SubmitTags(string[] findTags)
         {
             if (findTags != null)
-                CatalogViewModel.FindTags = new List<string>(findTags);
+                //CatalogViewModel.FindTags = new List<string>(findTags);
+                _findTags = new List<string>(findTags);
             else return View("Error");
-            return RedirectToAction("Catalog", new { findTags = CatalogViewModel.FindTags });
+            return RedirectToAction("Catalog"/*, new { findTags = CatalogViewModel.FindTags }*/);
         }
 
         public IActionResult SubmitShowProducts(bool fullyMatching, int catalogLength)

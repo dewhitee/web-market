@@ -89,12 +89,11 @@
                     <p class="card-text"><b>Current version: 1.0.0</b></p>
                 }
                 <p></p>
-                @if ((product.IsBought(_repository, currentUser) || product.OwnerID == currentUser?.Id) && product.FileName?.Length > 0)
+                @if ((product.IsBought(_repository, currentUser) || product.OwnerID == currentUser?.Id || User.IsInRole("Admin")) && product.FileName?.Length > 0)
                 {
-                    <p class="card-text float-right">Size: @product.FormatFileSize(_hostingEnvironment)</p>
                     <a class="card-link btn btn-primary" href="~/file/@product.FileName" download>Download</a>
+                    <p class="card-text pt-2 text-muted">Size: @product.FormatFileSize(_hostingEnvironment)</p>
                 }
-                <p></p>
             </div>
         </div>
     </div>

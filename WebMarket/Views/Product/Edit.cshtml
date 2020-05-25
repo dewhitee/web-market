@@ -4,6 +4,9 @@
     ViewData["Title"] = "Edit";
 }
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://kit.fontawesome.com/37c897dddf.js" crossorigin="anonymous"></script>
+
 <h1>Edit</h1>
 
 <div class="float-right">
@@ -103,6 +106,7 @@
             </div>
             <div class="form-group">
                 <input type="submit" asp-action="Edit" value="Save" class="btn btn-primary" />
+                <a data-toggle="modal" data-target="#infoEditModal"><i class="far fa-question-circle pl-2" style="cursor:pointer;"></i></a>
             </div>
         </form>
     </div>
@@ -130,7 +134,27 @@
     </div>
 </div>
 
+<div class="modal" id="infoEditModal" tabindex="-1" role="dialog" aria-labelledby="infoEditModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content bg-dark text-white">
+            <div class="modal-header">
+                <h5 class="modal-title" id="infoEditModalLongTitle">Help | Editing</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                When editing your product be aware, that changes you apply may not be applied instantly. To be sure everything was set correctly - just enter your product page from Catalog or Profile.
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-light float-left" data-dismiss="modal" data-toggle="modal" href="#infoCatalogModal">Next help</a>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div>
-    <a asp-controller="Product" asp-action="Page">Back to List</a>
+    <a asp-controller="Product" asp-action="Page">Back to product page</a>
 </div>
 

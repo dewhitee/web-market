@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace WebMarket.Controllers
 {
+    [Authorize]
     public class ProductController : Controller
     {
         private static List<string> _tags = null;
@@ -36,7 +37,6 @@ namespace WebMarket.Controllers
 
 
         // GET: AddProduct
-        [Authorize]
         public ActionResult Add()
         {
             //LoadProducts();
@@ -55,25 +55,29 @@ namespace WebMarket.Controllers
             return View();
         }
 
-        // GET: AddProduct/Create
-        //public ActionResult AddProductView()
-        //{
-        //    return View();
-        //}
-
         public IActionResult EditImages(int prodId)
         {
             var images = mainRepository.GetImagesByProductID(prodId).ToList();
-            return View("EditImagesView", new EditImagesViewModel
+            if (images.Count() >= 3)
             {
-                ProductId = prodId,
-                FirstImageLink = images[0].Link,
-                FirstImageDescription = images[0].Description,
-                SecondImageLink = images[1].Link,
-                SecondImageDescription = images[1].Description,
-                ThirdImageLink = images[2].Link,
-                ThirdImageDescription = images[2].Description
-            });
+                return View("EditImagesView", new EditImagesViewModel
+                {
+                    ProductId = prodId,
+                    FirstImageLink = images[0].Link,
+                    FirstImageDescription = images[0].Description,
+                    SecondImageLink = images[1].Link,
+                    SecondImageDescription = images[1].Description,
+                    ThirdImageLink = images[2].Link,
+                    ThirdImageDescription = images[2].Description
+                });
+            }
+            else
+            {
+                return View("EditImagesView", new EditImagesViewModel
+                { 
+                    ProductId = prodId
+                });
+            }
         }
 
         [HttpPost]
@@ -340,6 +344,7 @@ namespace WebMarket.Controllers
             }
         }
 
+        [AllowAnonymous]
         public IActionResult Page()
         {
             return View();

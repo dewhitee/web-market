@@ -286,13 +286,13 @@
 <div style="padding-bottom:1em"></div>
 @if (Model.findTags?.Count > 0)
 {
-    @if (CatalogViewModel.FullyMatching)
+    @if (Model.FullyMatching)
     {
-        <p class="text-body text-muted">Showing only products with the following tags fully matched: <a data-toggle="modal" data-target="#infoCatalogModal"><i class="far fa-question-circle"></i></a></p>
+        <p class="text-body text-muted">Showing only products with the following tags fully matched: <a data-toggle="modal" data-target="#infoCatalogModal"><i class="far fa-question-circle" style="cursor:pointer;"></i></a></p>
     }
     else
     {
-        <p class="text-body text-muted">Showing only products with the following tags: <a data-toggle="modal" data-target="#infoCatalogModal"><i class="far fa-question-circle"></i></a></p>
+        <p class="text-body text-muted">Showing only products with the following tags: <a data-toggle="modal" data-target="#infoCatalogModal"><i class="far fa-question-circle" style="cursor:pointer;"></i></a></p>
     }
     foreach (var findTag in Model.findTags)
     {
@@ -302,7 +302,18 @@
 }
 else
 {
-    <p class="text-body text-muted">Showing all products. <a data-toggle="modal" data-target="#infoCatalogModal"><i class="far fa-question-circle"></i></a></p>
+    @if (Model.CatalogLength == 3)
+    {
+        <p class="text-body text-muted">Showing first three products. <a data-toggle="modal" data-target="#infoCatalogModal"><i class="far fa-question-circle" style="cursor:pointer;"></i></a></p>
+    }
+    else if (Model.CatalogLength == 6)
+    {
+        <p class="text-body text-muted">Showing first six products. <a data-toggle="modal" data-target="#infoCatalogModal"><i class="far fa-question-circle" style="cursor:pointer;"></i></a></p>
+    }
+    else
+    {
+        <p class="text-body text-muted">Showing all products. <a data-toggle="modal" data-target="#infoCatalogModal"><i class="far fa-question-circle" style="cursor:pointer;"></i></a></p>
+    }
 }
 
 
@@ -353,44 +364,44 @@ else
                     </tr>
                 </thead>
                 <tbody>
-                    @for (int i = 0; i < Model.listOfProducts.Count; i++)
+                    @for (int i = 0; i < Model.ListOfProducts.Count; i++)
                     {
                         if (Model.findTags?.Count > 0)
                         {
-                            if (!Model.listOfProducts[i].ContainsTags(Model.findTags, _repository, CatalogViewModel.FullyMatching))
+                            if (!Model.ListOfProducts[i].ContainsTags(Model.findTags, _repository, Model.FullyMatching))
                                 continue;
                         }
 
-                        string tdClassString = Model.listOfProducts[i].GetPriceTableClassString(_repository, currentUser);
-                        string buttonClassString = Model.listOfProducts[i].GetAddToCartButtonClassString(_repository, currentUser);
-                        var linkClass = Model.listOfProducts[i].GetProductTableLinkClassString(_repository, currentUser);
-                        var thClass = Model.listOfProducts[i].GetTableHeaderClassString(_repository, currentUser);
+                        string tdClassString = Model.ListOfProducts[i].GetPriceTableClassString(_repository, currentUser);
+                        string buttonClassString = Model.ListOfProducts[i].GetAddToCartButtonClassString(_repository, currentUser);
+                        var linkClass = Model.ListOfProducts[i].GetProductTableLinkClassString(_repository, currentUser);
+                        var thClass = Model.ListOfProducts[i].GetTableHeaderClassString(_repository, currentUser);
                         <tr>
                             <th scope="row" class="@thClass">@i</th>
                             <th scope="row" class="@thClass">
                                 <form asp-controller="Catalog" asp-action="AddToCart" method="post">
-                                    <input type="hidden" class="form-control" name="productId" id="productId" value=@Model.listOfProducts[i].ID />
-                                    <button class="@Model.listOfProducts[i].GetAddToCartButtonClassString(_repository, currentUser)" type="submit">@Model.listOfProducts[i].IsBoughtString(_repository, currentUser)</button>
+                                    <input type="hidden" class="form-control" name="productId" id="productId" value=@Model.ListOfProducts[i].ID />
+                                    <button class="@Model.ListOfProducts[i].GetAddToCartButtonClassString(_repository, currentUser)" type="submit">@Model.ListOfProducts[i].IsBoughtString(_repository, currentUser)</button>
                                 </form>
                             </th>
                             <td class="@thClass">
-                                @Model.listOfProducts[i].Name
+                                @Model.ListOfProducts[i].Name
                             </td>
                             <td class="@thClass">
-                                @Model.listOfProducts[i].Type
+                                @Model.ListOfProducts[i].Type
                             </td>
                             <td class="@thClass">
-                                @Model.listOfProducts[i].PriceString
+                                @Model.ListOfProducts[i].PriceString
                             </td>
                             <td class="@thClass">
-                                @Model.listOfProducts[i].DiscountString
+                                @Model.ListOfProducts[i].DiscountString
                             </td>
                             <td class="@thClass">
-                                @Model.listOfProducts[i].FinalPriceString
+                                @Model.ListOfProducts[i].FinalPriceString
                             </td>
                             <td class="@thClass">
-                                <a href=@Model.listOfProducts[i].Link class="@linkClass">
-                                    <ins><strong>@Model.listOfProducts[i].LinkTableString</strong></ins>
+                                <a href=@Model.ListOfProducts[i].Link class="@linkClass">
+                                    <ins><strong>@Model.ListOfProducts[i].LinkTableString</strong></ins>
                                 </a>
                             </td>
                         </tr>
@@ -404,7 +415,7 @@ else
             <div class="float-right mb-5">
                 <div class="card bg-light mb-3" style="max-width: 12rem;">
                     <form class="" asp-controller="Catalog" asp-area="" asp-action="Sorted" method="post">
-                        <div class="card-header">Filters <a data-toggle="modal" data-target="#infoFilterModal"><i class="far fa-question-circle"></i></a></div>
+                        <div class="card-header">Filters <a data-toggle="modal" data-target="#infoFilterModal"><i class="far fa-question-circle" style="cursor:pointer;"></i></a></div>
                         <div class="card-body pb-0">
                             <h6 class="card-title">Sort by</h6>
                         </div>
@@ -431,7 +442,7 @@ else
                         @*<p class="card-text text-center">Tags</p>*@
                         <div class="input-group col-md-12">
                             @*<label for="findTag">Tags</label>*@
-                            <select name="findTag" id="findTag" class="custom-select form-control form-control-sm" asp-items="@(new SelectList(Model.listOfProductTypes))">
+                            <select name="findTag" id="findTag" class="custom-select form-control form-control-sm" asp-items="@(new SelectList(Model.ListOfProductTypes))">
                             </select>
                             <div class="input-group-append">
                                 <button class="btn btn-primary btn-sm" type="button" onclick="addFindTag()">+</button>
@@ -448,7 +459,7 @@ else
                             }
                         </div>
                         <div class="form-check form-check-inline pl-4">
-                            <input class="form-check-input" type="checkbox" id="fullyMatching" name="fullyMatching" asp-for="fullyMatching" value="true">
+                            <input class="form-check-input" type="checkbox" id="fullyMatching" name="fullyMatching" asp-for="FullyMatching" value="true">
                             <label class="form-check-label" for="inlineCheckbox1">Fully matching</label>
                         </div>
                         <hr />
@@ -477,9 +488,9 @@ else
             </div>
             <div class="container-fluid">
                 <div class="row row-cols-1 row-cols-md-3">
-                    @for (int i = 0; i < Model.listOfProducts.Count(); i++)
+                    @for (int i = 0; i < Model.ListOfProducts.Count(); i++)
                     {
-                        var product = Model.listOfProducts.ElementAt(i);
+                        var product = Model.ListOfProducts.ElementAt(i);
                         string tdClassString = product.GetPriceTableClassString(_repository, currentUser);
                         string buttonClassString = product.GetAddToCartButtonClassString(_repository, currentUser);
                         var linkClass = product.GetProductTableLinkClassString(_repository, currentUser);
@@ -488,7 +499,7 @@ else
 
                         if (Model.findTags?.Count > 0)
                         {
-                            if (!product.ContainsTags(Model.findTags, _repository, Model.fullyMatching))
+                            if (!product.ContainsTags(Model.findTags, _repository, Model.FullyMatching))
                                 continue;
                         }
 

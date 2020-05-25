@@ -29,14 +29,13 @@ namespace WebMarket.Models
             FinalPrice,
         }
 
-        public List<Product> listOfProducts { get; set; }
-        public IEnumerable<string> listOfProductTypes { get; set; }
+        public List<Product> ListOfProducts { get; set; }
+        public IEnumerable<string> ListOfProductTypes { get; set; }
         public static Product ChoosenProduct = new Product();
         public static int ChoosenProductID { get; set; }
-        public static bool FullyMatching { get; set; }
-        public bool fullyMatching { get; set; }
+        public bool FullyMatching { get; set; }
+        public int CatalogLength { get; set; }
 
-        public static List<string> FindTags { get; set; }
         public List<string> findTags { get; set; }
         public string sortBy { get; set; }
 

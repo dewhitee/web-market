@@ -9,21 +9,21 @@
             <li data-target="#carouselExampleIndicators-@Model.carouselIndex" data-slide-to="2"></li>
         </ol>
         <div class="carousel-inner">
-            <div class="carousel-item active hoverable-img">
+            <div class="carousel-item active hoverable-img pop">
                 <div class="carousel-caption d-none d-md-block">
                     <p class="hoverable-img-p">@_repository.GetImageByOrderIndex(Model.ID, 0)?.Description</p>
                 </div>
                 <img class="d-block w-100 img-fluid catalog-img @Model.carouselImageClass" id="@Model.carouselImageId-0"
                      src="@Model.GetImageSrc(_repository, null)" alt="First slide">
             </div>
-            <div class="carousel-item hoverable-img">
+            <div class="carousel-item hoverable-img pop">
                 <div class="carousel-caption d-none d-md-block">
                     <p class="hoverable-img-p">@_repository.GetImageByOrderIndex(Model.ID, 1)?.Description</p>
                 </div>
                 <img class="d-block w-100 img-fluid catalog-img @Model.carouselImageClass" id="@Model.carouselImageId-1"
                      src="@Model.GetImageSrc(_repository, 1)" alt="Second slide">
             </div>
-            <div class="carousel-item hoverable-img">
+            <div class="carousel-item hoverable-img pop">
                 <div class="carousel-caption d-none d-md-block">
                     <p class="hoverable-img-p">@_repository.GetImageByOrderIndex(Model.ID, 2)?.Description</p>
                 </div>
@@ -41,3 +41,24 @@
         </a>
     </div>
 </div>
+
+<div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content bg-dark text-white">
+            <div class="modal-body">
+                <button type="button" class="close mb-2" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <img src="" class="imagepreview" style="width: 100%;">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(".pop").on("click", function () {
+        $('.imagepreview').attr('src', $(this).find('img').attr('src')); // here asign the image to the modal when the user click the enlarge link
+        $('#imagemodal').modal('show'); // imagemodal is the id attribute assigned to the bootstrap modal, then i use the show function
+    });
+</script>
