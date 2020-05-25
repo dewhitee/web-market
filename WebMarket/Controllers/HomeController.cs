@@ -49,5 +49,11 @@ namespace WebMarket.Controllers
             ViewBag.ErrorMessage = "Theme changing on the web-page is currently in development.";
             return View("NotFound");
         }
+
+        public IActionResult SendEmail()
+        {
+            ViewBag.ErrorMessage = "Email notification service on the web-page is currently in development.";
+            return View("NotFound");
+        }
     }
 }

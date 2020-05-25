@@ -1,6 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using WebMarket.Data
-@using WebMarket.Models.ProductModels 
+@using WebMarket.Models.ProductModels
 
 @model ProductPageViewModel
 @inject IMainRepository _repository
@@ -19,7 +19,6 @@
 <link href="~/css/images.css" rel="stylesheet" type="text/css" />
 <link href="~/css/ratingtable.css" rel="stylesheet" type="text/css" />
 
-@*<script src="https://kit.fontawesome.com/37c897dddf.js" crossorigin="anonymous"></script>*@
 <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
 <style>
     .checked {
@@ -38,7 +37,6 @@
     @if (product.OwnerID != currentUser?.Id)
     {
         <div class="float-right">
-            @*<h2>@CatalogViewModel.CurrentUser.MoneyString</h2>*@
             <h2>@currentUser?.MoneyString</h2>
         </div>
     }
@@ -50,13 +48,13 @@
     {
         <div style="padding-bottom:1em"></div>
         <form class="d-inline" asp-controller="Product" asp-action="OpenEditProduct" method="post">
-            <div class="d-inline" @*style="padding-bottom:1em"*@>
+            <div class="d-inline">
                 <input type="hidden" class="form-control" name="prodId" value="@product.ID" />
-                <button asp-controller="Product" asp-action="OpenEditProduct" type="submit" class="btn btn-primary">Edit Product</button>
+                <button type="submit" class="btn btn-primary">Edit Product</button>
             </div>
         </form>
         <div class="d-inline">
-            <button type="button" class="btn btn-primary">Edit Page</button>
+            <a type="button" class="btn btn-primary" asp-controller="Product" asp-action="EditPage">Edit Page</a>
         </div>
     }
     <div style="padding-bottom:1em"></div>
@@ -64,7 +62,6 @@
 
     <div class="float-left" style="padding-right:2em">
         <div class="card bg-light mb-3" style="max-width: 28rem;">
-            @*<div class="card-header">About</div>*@
             <div class="card-body">
                 <h5 class="card-title">About</h5>
                 @if (product.OwnerID == currentUser?.Id)
@@ -73,15 +70,24 @@
                 }
                 else
                 {
-                    {
-                        var name = await _userManager.FindByIdAsync(product.OwnerID);
-                        <p class="catd-text">Owner: <b>@name?.UserName</b></p>
-                    }
-                    @*<p class="catd-text">Owner: <b>@product.GetOwnerName()</b></p>*@
+                    var name = await _userManager.FindByIdAsync(product.OwnerID);
+                    <p class="card-text">Owner: <b>@name?.UserName</b></p>
                 }
                 <p>Added at: <b>@product.AddedDate.ToShortDateString()</b></p>
                 <hr />
-                <p class="card-text"><b>Current version: 1.0.0</b></p>
+                @if (product.Link != null)
+                {
+                    <a href="@product.Link" class="btn btn btn-primary">Link</a>
+                }
+                <hr />
+                @if (product.Version != null)
+                {
+                    <p class="card-text"><b>Current version: @product.Version</b></p>
+                }
+                else
+                {
+                    <p class="card-text"><b>Current version: 1.0.0</b></p>
+                }
                 <p></p>
                 @if ((product.IsBought(_repository, currentUser) || product.OwnerID == currentUser?.Id) && product.FileName?.Length > 0)
                 {

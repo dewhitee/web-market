@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,12 +10,15 @@ namespace WebMarket.Models
     {
         public int ProductId { get; set; }
         public string FirstImageLink { get; set; }
+        public IFormFile FirstImageFile { get; set; }
         public string FirstImageDescription { get; set; }
         //
         public string SecondImageLink { get; set; }
+        public IFormFile SecondImageFile { get; set; }
         public string SecondImageDescription { get; set; }
         //
         public string ThirdImageLink { get; set; }
+        public IFormFile ThirdImageFile { get; set; }
         public string ThirdImageDescription { get; set; }
         // 
         public string FourthImageLink { get; set; }

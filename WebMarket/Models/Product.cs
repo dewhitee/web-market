@@ -56,6 +56,10 @@ namespace WebMarket.Models
         [Display(Name = "Added Date")]
         [DataType(DataType.Date)]
         public DateTime AddedDate { get; set; }
+
+        [Display(Name = "Current Version")]
+        public string Version { get; set; }
+
         public string OwnerID { get; set; }
 
         public decimal FinalPrice { get => Price - (Price * (decimal)Discount * 0.01M); }

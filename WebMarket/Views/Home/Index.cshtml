@@ -27,9 +27,7 @@
     <div class="container-fluid rgradient">
         <!-- Title -->
         <div class="row">
-            @*<div class="col-lg-6">
-                <img class="title-image" src="images/iphone6.png" alt="iphone-mockup">
-            </div>*@
+            <!-- Here will be cool image later -->
         </div>
         @if (User.Identity.IsAuthenticated)
         {
@@ -43,8 +41,6 @@
         {
             <div class="col-lg-6">
                 <h1>Find new software with ease.</h1>
-                @*<button type="button" class="btn btn-dark btn-lg download-button"><i class="fab fa-apple"></i> Download</button>
-                <button type="button" class="btn btn-outline-light btn-lg download-button"><i class="fab fa-google-play"></i> Download</button>*@
                 <a type="button" class="btn btn-dark btn-lg download-button"
                     asp-area="" asp-controller="Catalog" asp-action="Catalog"><i class="fas fa-play"></i> Get started</a>
                 <a type="button" class="btn btn-outline-light btn-lg download-button ml-2"
@@ -125,7 +121,7 @@
 
 <section id="notification-form" class="nform-gradient">
     <div class="container align-content-lg-center">
-        <form>
+        <form asp-controller="Home" asp-action="SendEmail" method="post">
             <h5 class="form-text text-white">Subscribe to our newsletter</h5>
             <hr />
             <div class="form-group row">

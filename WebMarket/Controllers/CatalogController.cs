@@ -79,6 +79,7 @@ namespace WebMarket.Controllers
             return RedirectToAction("Catalog");
         }
 
+        [HttpPost]
         public IActionResult AddComment(string commentSection, int productID, float rating)
         {
             Console.WriteLine("Adding comment");

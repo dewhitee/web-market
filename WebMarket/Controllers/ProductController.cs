@@ -85,22 +85,43 @@ namespace WebMarket.Controllers
                 var images = mainRepository.GetImagesByProductID(prodid).ToList();
 
                 var firstImage = mainRepository.GetImageByOrderIndex(prodid, 0);
-                firstImage.Link = model.FirstImageLink;
+                if (model.FirstImageFile != null)
+                {
+                    firstImage.Link = GetImageFilePath(model.FirstImageFile);
+                }
+                else
+                {
+                    firstImage.Link = model.FirstImageLink;
+                }
                 firstImage.Description = model.FirstImageDescription;
 
                 var secondImage = mainRepository.GetImageByOrderIndex(prodid, 1);
-                secondImage.Link = model.SecondImageLink;
+                if (model.SecondImageFile != null)
+                {
+                    secondImage.Link = GetImageFilePath(model.SecondImageFile);
+                }
+                else
+                {
+                    secondImage.Link = model.SecondImageLink;
+                }
                 secondImage.Description = model.SecondImageDescription;
 
                 var thirdImage = mainRepository.GetImageByOrderIndex(prodid, 2);
-                thirdImage.Link = model.ThirdImageLink;
+                if (model.ThirdImageFile != null)
+                {
+                    thirdImage.Link = GetImageFilePath(model.ThirdImageFile);
+                }
+                else
+                {
+                    thirdImage.Link = model.ThirdImageLink;
+                }
                 thirdImage.Description = model.ThirdImageDescription;
 
                 mainRepository.UpdateImage(firstImage);
                 mainRepository.UpdateImage(secondImage);
                 mainRepository.UpdateImage(thirdImage);
                 ///mainRepository.UpdateProduct(product);
-                return RedirectToAction("Catalog", "Catalog");
+                return RedirectToAction("Page");
             }
             catch
             {
@@ -138,23 +159,41 @@ namespace WebMarket.Controllers
                     Link = model.Link,
                     FileName = uniqueFileName,
                     AddedDate = DateTime.Today,
+                    Version = model.Version,
                     OwnerID = userManager.GetUserId(User)
                 };
 
                 mainRepository.AddProduct(newProduct);
 
+                string firstImageFileName = GetImageFilePath(model.FirstImageFile);
+                string secondImageFileName = GetImageFilePath(model.SecondImageFile);
+                string thirdImageFileName = GetImageFilePath(model.ThirdImageFile);
+
                 AttachImages(newID,
-                    model.FirstImageLink, model.FirstImageDescription,
-                    model.SecondImageLink, model.SecondImageDescription,
-                    model.ThirdImageLink, model.ThirdImageDescription);
+                    firstImageFileName != null ? firstImageFileName : model.FirstImageLink, model.FirstImageDescription,
+                    secondImageFileName != null ? secondImageFileName : model.SecondImageLink, model.SecondImageDescription,
+                    thirdImageFileName != null ? thirdImageFileName : model.ThirdImageLink, model.ThirdImageDescription);
 
                 _tags = null;
                 _addedProduct = !attached ? newProduct : null;
-                //SaveProducts();
 
                 return RedirectToAction("Catalog", "Catalog");
             }
             return View();
+        }
+
+        private string GetImageFilePath(IFormFile formFile)
+        {
+            string outFileName = null;
+            string imageUploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "imguploads");
+            if (formFile != null)
+            {
+                outFileName = Guid.NewGuid().ToString() + "_" + formFile.FileName;
+                string filePath = Path.Combine(imageUploadsFolder, outFileName);
+                formFile.CopyTo(new FileStream(filePath, FileMode.Create));
+                outFileName = "/imguploads/" + outFileName;
+            }
+            return outFileName;
         }
 
         [HttpPost]
@@ -260,7 +299,7 @@ namespace WebMarket.Controllers
             try
             {
                 mainRepository.UpdateProduct(product);
-                return RedirectToAction("Catalog", "Catalog");
+                return RedirectToAction("Page");
             }
             catch
             {
@@ -304,6 +343,12 @@ namespace WebMarket.Controllers
         public IActionResult Page()
         {
             return View();
+        }
+
+        public IActionResult EditPage()
+        {
+            ViewBag.ErrorMessage = "Page editing on the web-page is currently in development.";
+            return View("NotFound");
         }
 
         public IActionResult Buy(int productId)
