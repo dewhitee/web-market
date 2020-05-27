@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
+using WebMarket.Models.ProductModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace WebMarket.Controllers
 {
@@ -201,7 +203,7 @@ namespace WebMarket.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddTags(string productName, string[] tags)
+        public IActionResult AddTags(string[] tags)
         {
             _tags = new List<string>(tags);
             if (_addedProduct != null)
@@ -303,12 +305,82 @@ namespace WebMarket.Controllers
             try
             {
                 mainRepository.UpdateProduct(product);
-                return RedirectToAction("Page");
+                return View("Page", new ProductPageViewModel
+                {
+                    Product = product
+                });
             }
-            catch
+            catch (DbUpdateException e)
             {
-                return View();
+                Console.WriteLine(e);
+                return View("Page");
             }
+        }
+
+        public IActionResult EditTags(int prodId)
+        {
+            var tagNames = mainRepository.GetTagNamesByProductId(prodId).ToList();
+
+            List<string> listOfProductTypes = new List<string>();
+            listOfProductTypes = (from pt in mainRepository.GetAllProductTypes() orderby pt.Name select pt.Name).ToList();
+
+            return View("EditTagsView", new EditTagsViewModel
+            { 
+                ProductId = prodId,
+                Tags = tagNames,
+                ListOfProductTypes = listOfProductTypes
+            });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditTags([FromForm]EditTagsViewModel model)
+        {
+            // waiting the UpdateTags result for properly show the tags in the EditTagsView
+            await Task.Delay(10);
+
+            var tagNames = mainRepository.GetTagNamesByProductId(model.ProductId).ToList();
+
+            List<string> listOfProductTypes = new List<string>();
+            listOfProductTypes = (from pt in mainRepository.GetAllProductTypes() orderby pt.Name select pt.Name).ToList();
+
+            return View("EditTagsView", new EditTagsViewModel
+            {
+                ProductId = model.ProductId,
+                Tags = tagNames,
+                ListOfProductTypes = listOfProductTypes,
+                EditTagsSuccessful = true
+            });
+        }
+
+        [HttpPost]
+        public IActionResult UpdateTags(int prodId, string[] tags)
+        {
+            AttachUpdatedTags(prodId, tags);
+            return Ok();
+        }
+
+        private bool AttachUpdatedTags(int productId, string[] tags)
+        {
+            if (tags != null)
+            {
+                var oldTags = mainRepository.GetTagsByProductID(productId).ToList();
+                foreach (var tag in oldTags)
+                {
+                    mainRepository.DeleteTag(tag.ID);
+                }
+
+                foreach (var tag in tags)
+                {
+                    mainRepository.AddTag(new Tag
+                    {
+                        ProductID = productId.ToString(),
+                        TypeId = mainRepository.GetProductTypeByName(tag).ID
+                    });
+                }
+                return true;
+            }
+            return false;
         }
 
         // GET: AddProduct/Delete/5
@@ -327,7 +399,29 @@ namespace WebMarket.Controllers
                 int id = int.Parse(deleteId);
                 CleanTags(id);
 
+                var imagesOfProduct = mainRepository.GetImagesByProductID(id).ToList();
+
+                foreach (var image in imagesOfProduct)
+                {
+                    mainRepository.DeleteImage(image.ID);
+                }
+
+                var boughtProducts = mainRepository.GetBoughtProductsByProductId(id).ToList();
+
+                foreach (var bp in boughtProducts)
+                {
+                    mainRepository.DeleteBoughtProduct(bp.Id);
+                }
+
+                var comments = mainRepository.GetUserCommentsByProdID(id).ToList();
+
+                foreach (var comment in comments)
+                {
+                    mainRepository.DeleteUserComment(comment.ID);
+                }
+
                 mainRepository.DeleteProduct(int.Parse(deleteId));
+
                 return RedirectToAction("Catalog", "Catalog");
             }
             catch

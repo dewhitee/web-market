@@ -9,8 +9,6 @@
 
 @{
     ViewData["Title"] = "Product page";
-
-    ProductPageViewModel.CurrentAppUser = _userManager.GetUserAsync(User).Result;
 }
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -31,7 +29,7 @@
 </style>
 
 @{
-    var product = CatalogViewModel.GetSelectedBuyProduct();
+    var product = Model?.Product ?? CatalogViewModel.GetSelectedBuyProduct();
     var currentUser = _userManager.GetUserAsync(User).Result;
 
     @if (product.OwnerID != currentUser?.Id)

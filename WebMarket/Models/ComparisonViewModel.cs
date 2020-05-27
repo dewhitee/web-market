@@ -70,16 +70,31 @@ namespace WebMarket.Models
         }
         public string FileSizeText()
         {
-            return TextHelper(LeftProductFileSize, RightProductFileSize,
-                "file size is larger than of",
-                "file size is smaller than of",
-                "file sizes are equal", true);
+            if (LeftProductFileSize <= 0 && RightProductFileSize > 0)
+            {
+                return $"{LeftProduct.Name} don't have files in our database, but {RightProduct.Name} has.";
+            }
+            else if (LeftProductFileSize > 0 && RightProductFileSize <= 0)
+            {
+                return $"{LeftProduct.Name} has files in our database, while {RightProduct.Name} don't.";
+            }
+            else if (LeftProductFileSize <= 0 && RightProductFileSize <= 0)
+            {
+                return $"Nor {LeftProduct.Name}, nor {RightProduct.Name} don't have any files in our database.";
+            }
+            else
+            {
+                return TextHelper(LeftProductFileSize, RightProductFileSize,
+                    "file size is larger than of",
+                    "file size is smaller than of",
+                    "file sizes are equal", true);
+            }
         }
 
         private string TextHelper<T>(T left, T right, string leftMoreText, string rightMoreText, string equalText, bool and = false)
         {
-            return (Comparer<T>.Default.Compare(left, right) < 0) ? $"{LeftProduct.Name} {leftMoreText} {RightProduct.Name}"
-                : Comparer<T>.Default.Compare(left, right) > 0 ? $"{LeftProduct.Name} {rightMoreText} {RightProduct.Name}"
+            return (Comparer<T>.Default.Compare(left, right) > 0) ? $"{LeftProduct.Name} {leftMoreText} {RightProduct.Name}"
+                : Comparer<T>.Default.Compare(left, right) < 0 ? $"{LeftProduct.Name} {rightMoreText} {RightProduct.Name}"
                 : (and ? $"{LeftProduct.Name} and {RightProduct.Name} {equalText}" : $"{LeftProduct.Name} {equalText} {RightProduct.Name}");
         }
 

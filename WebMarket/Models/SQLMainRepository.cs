@@ -26,7 +26,14 @@ namespace WebMarket.Models
         public Image AddImage(Image image)
         {
             context.Images.Add(image);
-            context.SaveChanges();
+            try
+            {
+                context.SaveChanges();
+            }
+            catch (DbUpdateException e)
+            {
+                Console.WriteLine(e);
+            }
             return image;
         }
 
@@ -192,6 +199,11 @@ namespace WebMarket.Models
             return context.BoughtProducts.Find(id);
         }
 
+        public IEnumerable<BoughtProduct> GetBoughtProductsByProductId(int id)
+        {
+            return from p in context.BoughtProducts where p.ProductRefId == id select p;
+        }
+
         public IEnumerable<BoughtProduct> GetBoughtProductsByUserId(string id)
         {
             return from p in context.BoughtProducts where p.AppUserRefId == id select p;
@@ -260,6 +272,13 @@ namespace WebMarket.Models
         public Tag GetTag(int id)
         {
             return context.Tags.Find(id);
+        }
+
+        public string GetTagNameByProductType(int id)
+        {
+            return (from prodType in context.ProductTypes
+                   where prodType.ID == id
+                   select prodType.Name).FirstOrDefault();
         }
 
         public IEnumerable<string> GetTagNamesByProductId(int id)

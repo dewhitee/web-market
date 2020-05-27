@@ -142,7 +142,6 @@ namespace WebMarket.Controllers
         public IActionResult SubmitTags(string[] findTags)
         {
             if (findTags != null)
-                //CatalogViewModel.FindTags = new List<string>(findTags);
                 _findTags = new List<string>(findTags);
             else return View("Error");
             return RedirectToAction("Catalog"/*, new { findTags = CatalogViewModel.FindTags }*/);

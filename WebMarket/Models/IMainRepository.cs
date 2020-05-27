@@ -30,6 +30,7 @@ namespace WebMarket.Models
         UserComment DeleteUserComment(int id);
 
         Tag GetTag(int id);
+        string GetTagNameByProductType(int id);
         IEnumerable<Tag> GetTagsByProductID(int id);
         IEnumerable<string> GetTagNamesByProductId(int id);
         IEnumerable<Tag> GetAllTags();
@@ -54,6 +55,7 @@ namespace WebMarket.Models
 
         BoughtProduct GetBoughtProduct(int id);
         IEnumerable<BoughtProduct> GetBoughtProductsByUserId(string id);
+        IEnumerable<BoughtProduct> GetBoughtProductsByProductId(int id);
         IEnumerable<BoughtProduct> GetAllBoughtProducts();
         BoughtProduct AddBoughtProduct(BoughtProduct boughtProduct);
         BoughtProduct UpdateBoughtProduct(BoughtProduct boughtProductChanges);

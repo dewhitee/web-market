@@ -1,8 +1,13 @@
 ﻿@model WebMarket.Models.EditTagsViewModel
-
+@inject IMainRepository _repository
 @{
     ViewData["Title"] = "EditTagsView";
 }
+
+<link href="~/css/tags.css" rel="stylesheet" type="text/css" />
+
+<script src="https://kit.fontawesome.com/37c897dddf.js" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
 
 <h1>Edit</h1>
 
@@ -17,68 +22,121 @@
     </div>
     <div class="d-inline">
         <button type="button" class="btn btn-outline-primary" asp-area="" asp-controller="Product" asp-action="EditTags"
-           asp-route-prodid="@Model.ProductId" disabled>Tags</button>
+                asp-route-prodid="@Model.ProductId" disabled>
+            Tags
+        </button>
     </div>
     <div style="padding-bottom:1em"></div>
 </div>
 <h4>Tags</h4>
 <hr />
+@if (Model.EditTagsSuccessful)
+{
+    <div class="card text-white bg-success mb-3" style="max-width: 18rem;">
+        <div class="card-body">
+            <p class="card-text">Tags were saved successfully.</p>
+        </div>
+    </div>
+}
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="EditTagsView">
+    <div class="col-md-12">
+        <form asp-action="EditTags">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <input type="hidden" asp-for="ProductId" class="form-control" />
                 <span asp-validation-for="ProductId" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="FirstTag" class="control-label"></label>
-                <input asp-for="FirstTag" class="form-control" />
-                <span asp-validation-for="FirstTag" class="text-danger"></span>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Product types:</label>
+                <div class="col-sm-5">
+                    <div class="input-group mb-2">
+                        <select id="productType" class="custom-select" asp-items="@(new SelectList(Model.ListOfProductTypes))"></select>
+                        <div class="input-group-append">
+                            <button class="btn btn-primary btn-sm" type="button" onclick="addTag()">Add new tag</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="tags" class="pb-4">
+                <!-- There will be all tags -->
+                @foreach (var tag in Model.Tags)
+                {
+                    <span class="badge badge-pill badge-primary tag" id="@tag" style="margin-left: 12px;">@tag<i class="fas fa-times tag-cross" aria-hidden="true" style="padding-left: 4px;" onclick="removeTag(this)"></i></span>
+                }
             </div>
             <div class="form-group">
-                <label asp-for="SecondTag" class="control-label"></label>
-                <input asp-for="SecondTag" class="form-control" />
-                <span asp-validation-for="SecondTag" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ThirdTag" class="control-label"></label>
-                <input asp-for="ThirdTag" class="form-control" />
-                <span asp-validation-for="ThirdTag" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FourthTag" class="control-label"></label>
-                <input asp-for="FourthTag" class="form-control" />
-                <span asp-validation-for="FourthTag" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FifthTag" class="control-label"></label>
-                <input asp-for="FifthTag" class="form-control" />
-                <span asp-validation-for="FifthTag" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SixthTag" class="control-label"></label>
-                <input asp-for="SixthTag" class="form-control" />
-                <span asp-validation-for="SixthTag" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SeventhTag" class="control-label"></label>
-                <input asp-for="SeventhTag" class="form-control" />
-                <span asp-validation-for="SeventhTag" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="EighthTag" class="control-label"></label>
-                <input asp-for="EighthTag" class="form-control" />
-                <span asp-validation-for="EighthTag" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input id="submitTags" type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-controller="Product" asp-action="Page">Back to product page</a>
 </div>
 
+@section Scripts
+         {
+    <script>
+        $(document).ready(function () {
+            $('.custom-file-input').on("change", function () {
+                var fileName = $(this).val().split("\\").pop();
+                $(this).next('.custom-file-label').html(fileName);
+            });
+        });
+
+        function addTag() {
+            let node = document.createElement("SPAN");
+            node.className += "badge badge-pill badge-primary tag";
+            node.style.marginLeft = "12px";
+            node.id = $("#productType").val();
+            let text_node = document.createTextNode($("#productType").val());
+            node.appendChild(text_node);
+
+            //! adding cross for deleting tag
+            let cross_node = document.createElement("I");
+            cross_node.className += "fas fa-times tag-cross";
+            cross_node.style.paddingLeft = "4px";
+            node.appendChild(cross_node);
+
+            if (document.getElementById(node.id) == null) {
+                document.getElementById("tags").appendChild(node);
+            }
+
+            //! binding removing of a tag on click
+            $(cross_node).on('click', function () {
+                $(this).parent().remove();
+            });
+        }
+
+        function removeTag(el) {
+            var element = el;
+            $(element).parent().remove();
+        }
+
+        $("#submitTags").on("click", function (e) {
+            var tags_array = [];
+
+            $('#tags > span').each(function () {
+                tags_array.push($(this).text());
+            });
+
+            prod_id = @Model.ProductId;
+
+            $.ajax({
+                type: "post",
+                dataType: "json",
+                url: "/Product/UpdateTags",
+                traditional: true,
+                data: {
+                    prodId: prod_id,
+                    tags: tags_array,
+                },
+                success: function (data) {
+                    console.log(data.message);
+                },
+            });
+        });
+
+    </script>
+}

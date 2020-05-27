@@ -8,6 +8,6 @@ namespace WebMarket.Models.ProductModels
 {
     public class ProductPageViewModel : Product
     {
-        public static AppUser CurrentAppUser { get; set; }
+        public Product Product { get; set; }
     }
 }

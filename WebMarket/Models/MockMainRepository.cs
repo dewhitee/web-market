@@ -130,6 +130,11 @@ namespace WebMarket.Models
             throw new NotImplementedException();
         }
 
+        public IEnumerable<BoughtProduct> GetBoughtProductsByProductId(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<BoughtProduct> GetBoughtProductsByUserId(string id)
         {
             throw new NotImplementedException();
@@ -186,6 +191,11 @@ namespace WebMarket.Models
         }
 
         public Tag GetTag(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GetTagNameByProductType(int id)
         {
             throw new NotImplementedException();
         }
