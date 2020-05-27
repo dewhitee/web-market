@@ -97,7 +97,7 @@ namespace WebMarket.Controllers
                 }
                 else
                 {
-                    firstImage.Link = model.FirstImageLink;
+                    firstImage.Link = model.FirstImageLink ?? "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg";
                 }
                 firstImage.Description = model.FirstImageDescription;
 
@@ -108,7 +108,7 @@ namespace WebMarket.Controllers
                 }
                 else
                 {
-                    secondImage.Link = model.SecondImageLink;
+                    secondImage.Link = model.SecondImageLink ?? "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg";
                 }
                 secondImage.Description = model.SecondImageDescription;
 
@@ -119,7 +119,7 @@ namespace WebMarket.Controllers
                 }
                 else
                 {
-                    thirdImage.Link = model.ThirdImageLink;
+                    thirdImage.Link = model.ThirdImageLink ?? "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg";
                 }
                 thirdImage.Description = model.ThirdImageDescription;
 
@@ -131,7 +131,7 @@ namespace WebMarket.Controllers
             }
             catch
             {
-                return View();
+                return RedirectToAction("Page");
             }
         }
 
