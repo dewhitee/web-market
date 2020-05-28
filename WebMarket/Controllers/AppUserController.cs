@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using WebMarket.Models;
@@ -10,6 +11,7 @@ using WebMarket.Models.AppUserModels;
 namespace WebMarket.Controllers
 {
     using Variant = Models.CatalogViewModel.CatalogViewVariant;
+    [Authorize]
     public class AppUserController : Controller
     {
         private readonly IMainRepository mainRepository;
