@@ -7,6 +7,12 @@ namespace WebMarket.Models.AppUserModels
 {
     public class AddedProductsViewModel
     {
+        public enum SortOption
+        {
+            None,
+            ByName,
+            ByType,
+        }
         public static CatalogViewModel.CatalogViewVariant ViewVariant { get; set; }
         public List<Product> AddedProducts { get; set; }
     }

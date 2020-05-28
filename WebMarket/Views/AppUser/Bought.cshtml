@@ -1,4 +1,4 @@
-﻿@using WebMarket.Models.ProductModels; 
+﻿@using WebMarket.Models.ProductModels;
 
 @model WebMarket.Models.AppUserModels.BoughtProductsViewModel
 @inject IMainRepository _repository
@@ -9,6 +9,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <link href="~/css/images.css" rel="stylesheet" type="text/css" />
+
+<script src="https://kit.fontawesome.com/37c897dddf.js" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
 
 <h1>Bought Products</h1>
@@ -37,27 +39,25 @@
         <h5 class="card-title pb-2">Here are the products that you have bought:</h5>
         @if (WebMarket.Models.AppUserModels.BoughtProductsViewModel.ViewVariant == CatalogViewModel.CatalogViewVariant.Main)
         {
-            var boughtProducts = _repository.GetBoughtProductsByUserId(_userManager.GetUserId(User)).ToList();
-            var products = _repository.GetProductsByBought(boughtProducts).ToList();
-            if (products.Count() > 0)
+            if (Model.BoughtProducts.Any())
             {
                 <table class="table table-light table-striped table-hover">
                     <thead class="thead-light">
                         <tr>
                             <th scope="col">
-                                <a class="text-dark" asp-area="" asp-controller="AppUser" asp-action="SortByName">
+                                <a class="text-dark" asp-area="" asp-controller="AppUser" asp-action="BoughtSorted" asp-route-sortOptionIndex="1">
                                     Product Name
                                     <i class="fas fa-sort ml-1"></i>
                                 </a>
                             </th>
                             <th scope="col">
-                                <a class="text-dark" asp-area="" asp-controller="AppUser" asp-action="SortByType">
+                                <a class="text-dark" asp-area="" asp-controller="AppUser" asp-action="BoughtSorted" asp-route-sortOptionIndex="2">
                                     Type
                                     <i class="fas fa-sort ml-1"></i>
                                 </a>
                             </th>
                             <th scope="col">
-                                <a class="text-dark" asp-area="" asp-controller="AppUser" asp-action="SortByAddedDate">
+                                <a class="text-dark" asp-area="" asp-controller="AppUser" asp-action="BoughtSorted" asp-route-sortOptionIndex="3">
                                     Added Date
                                     <i class="fas fa-sort ml-1"></i>
                                 </a>
@@ -65,7 +65,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var product in products)
+                        @foreach (var product in Model.BoughtProducts)
                         {
                             <tr>
                                 <td class="thead-light">
@@ -91,13 +91,11 @@
         }
         else
         {
-            var boughtProducts = _repository.GetBoughtProductsByUserId(_userManager.GetUserId(User)).ToList();
-            var products = _repository.GetProductsByBought(boughtProducts).ToList();
-            if (products.Count() > 0)
+            if (Model.BoughtProducts.Any())
             {
                 <div class="container-fluid">
                     <div class="row row-cols-1 row-cols-md-3">
-                        @foreach (var product in products)
+                        @foreach (var product in Model.BoughtProducts)
                         {
                             <div class="col col-xs-12 col-sm-12 col-md-6 col-lg-4" style="padding-bottom: 2rem;">
                                 <div class="card h-100 hoverable-card" id="card_on_transaction">

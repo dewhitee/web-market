@@ -10,6 +10,12 @@ namespace WebMarket.Models
 {
     public class BoughtProduct
     {
+        public enum SortOption
+        {
+            None,
+            BoughtDate
+        }
+
         [Key]
         public int Id { get; set; }
 
@@ -18,5 +24,9 @@ namespace WebMarket.Models
 
         public int ProductRefId { get; set; }
         //public Product Product { get; set; }
+
+        [Display(Name = "Bought Date")]
+        [DataType(DataType.Date)]
+        public DateTime BoughtDate { get; set; }
     }
 }

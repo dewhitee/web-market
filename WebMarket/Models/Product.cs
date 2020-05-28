@@ -16,6 +16,17 @@ namespace WebMarket.Models
     [Serializable]
     public class Product : IComparable<Product>
     {
+        public enum SortOption
+        {
+            None,
+            Name,
+            Type,
+            Price,
+            Discount,
+            FinalPrice,
+            AddedDate
+        }
+
         public int ID { get; set; }
 
         [Required]
@@ -375,6 +386,8 @@ namespace WebMarket.Models
         {
             return x.Price.CompareTo(y.Price);
         }
+
+        // note that this comparison is reversed as we need descending sort
         public static int CompareByDiscount(Product x, Product y)
         {
             return y.Discount.CompareTo(x.Discount);
@@ -384,6 +397,10 @@ namespace WebMarket.Models
             return x.FinalPrice.CompareTo(y.FinalPrice);
         }
 
+        public static int CompareByDate(Product x, Product y)
+        {
+            return x.AddedDate.CompareTo(y.AddedDate);
+        }
         public int CompareTo([AllowNull] Product other)
         {
             if (this.ID < other.ID)

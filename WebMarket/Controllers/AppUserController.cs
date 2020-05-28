@@ -76,24 +76,80 @@ namespace WebMarket.Controllers
 
         public IActionResult Added()
         {
-            return View();
+            var products = mainRepository.GetAllProductsOfUser(userManager.GetUserId(User)).ToList();
+            return View(new AddedProductsViewModel
+            {
+                AddedProducts = products
+            });
         }
         
         public IActionResult ChangeAddedView()
         {
             AddedProductsViewModel.ViewVariant = AddedProductsViewModel.ViewVariant == Variant.Main ? Variant.Table : Variant.Main;
-            return View("Added");
+            return RedirectToAction("Added");
         }
         
         public IActionResult Bought()
         {
-            return View();
+            var boughtProducts = mainRepository.GetBoughtProductsByUserId(userManager.GetUserId(User)).ToList();
+            var products = mainRepository.GetProductsByBought(boughtProducts).ToList();
+            return View(new BoughtProductsViewModel
+            {
+                BoughtProducts = products
+            });
         }
 
         public IActionResult ChangeBoughtView()
         {
             BoughtProductsViewModel.ViewVariant = BoughtProductsViewModel.ViewVariant == Variant.Main ? Variant.Table : Variant.Main;
-            return View("Bought");
+            return RedirectToAction("Bought");
+        }
+
+        public IActionResult AddedSorted(int sortOptionIndex)
+        {
+            var products = mainRepository.GetAllProductsOfUser(userManager.GetUserId(User)).ToList();
+
+            SortProducts(sortOptionIndex, ref products);
+
+            var model = new AddedProductsViewModel
+            {
+                AddedProducts = products
+            };
+            return View("Added", model);
+        }
+
+        public IActionResult BoughtSorted(int sortOptionIndex)
+        {
+            var boughtProducts = mainRepository.GetBoughtProductsByUserId(userManager.GetUserId(User)).ToList();
+            var products = mainRepository.GetProductsByBought(boughtProducts).ToList();
+
+            SortProducts(sortOptionIndex, ref products);
+
+            var model = new BoughtProductsViewModel
+            {
+                BoughtProducts = products
+            };
+            return View("Bought", model);
+        }
+
+        private void SortProducts(int sortOptionIndex, ref List<Product> products)
+        {
+            switch (sortOptionIndex)
+            {
+                case (int)Product.SortOption.None:
+                    return;
+                case (int)Product.SortOption.Name:
+                    products.Sort(Product.CompareByName);
+                    return;
+                case (int)Product.SortOption.Type:
+                    products.Sort(Product.CompareByType);
+                    return;
+                case (int)Product.SortOption.AddedDate:
+                    products.Sort(Product.CompareByDate);
+                    return;
+                default:
+                    return;
+            }
         }
     }
 }

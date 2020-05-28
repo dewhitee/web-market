@@ -19,15 +19,6 @@ namespace WebMarket.Models
             Main,
             Table,
         }
-        public enum ProductSort
-        {
-            None,
-            Name,
-            Type,
-            Price,
-            Discount,
-            FinalPrice,
-        }
 
         public List<Product> ListOfProducts { get; set; }
         public IEnumerable<string> ListOfProductTypes { get; set; }

@@ -117,21 +117,21 @@ namespace WebMarket.Controllers
         {
             switch (sortOptionIndex)
             {
-                case (int)CatalogViewModel.ProductSort.None:
+                case (int)Product.SortOption.None:
                     return;
-                case (int)CatalogViewModel.ProductSort.Name:
+                case (int)Product.SortOption.Name:
                     products.Sort(Product.CompareByName);
                     return;
-                case (int)CatalogViewModel.ProductSort.Type:
+                case (int)Product.SortOption.Type:
                     products.Sort(Product.CompareByType);
                     return;
-                case (int)CatalogViewModel.ProductSort.Price:
+                case (int)Product.SortOption.Price:
                     products.Sort(Product.CompareByPrice);
                     return;
-                case (int)CatalogViewModel.ProductSort.Discount:
+                case (int)Product.SortOption.Discount:
                     products.Sort(Product.CompareByDiscount);
                     return;
-                case (int)CatalogViewModel.ProductSort.FinalPrice:
+                case (int)Product.SortOption.FinalPrice:
                     products.Sort(Product.CompareByFinalPrice);
                     return;
                 default:
