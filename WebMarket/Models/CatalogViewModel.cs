@@ -27,8 +27,8 @@ namespace WebMarket.Models
         public bool FullyMatching { get; set; }
         public int CatalogLength { get; set; }
 
-        public List<string> findTags { get; set; }
-        public string sortBy { get; set; }
+        public List<string> FindTags { get; set; }
+        public string SortBy { get; set; }
 
         public static CatalogViewVariant ViewVariant { get; set; }
 

@@ -284,7 +284,7 @@
 <div style="padding-bottom:1em"></div>
 
 <div style="padding-bottom:1em"></div>
-@if (Model.findTags?.Count > 0)
+@if (Model.FindTags?.Count > 0)
 {
     @if (Model.FullyMatching)
     {
@@ -294,7 +294,7 @@
     {
         <p class="text-body text-muted">Showing only products with the following tags: <a data-toggle="modal" data-target="#infoCatalogModal"><i class="far fa-question-circle" style="cursor:pointer;"></i></a></p>
     }
-    foreach (var findTag in Model.findTags)
+    foreach (var findTag in Model.FindTags)
     {
         <span class="badge badge-pill badge-primary">@findTag</span>
     }
@@ -366,9 +366,9 @@ else
                 <tbody>
                     @for (int i = 0; i < Model.ListOfProducts.Count; i++)
                     {
-                        if (Model.findTags?.Count > 0)
+                        if (Model.FindTags?.Count > 0)
                         {
-                            if (!Model.ListOfProducts[i].ContainsTags(Model.findTags, _repository, Model.FullyMatching))
+                            if (!Model.ListOfProducts[i].ContainsTags(Model.FindTags, _repository, Model.FullyMatching))
                                 continue;
                         }
 
@@ -420,7 +420,7 @@ else
                             <h6 class="card-title">Sort by</h6>
                         </div>
                         <div class="input-group col-12">
-                            <select asp-for="sortBy" name="sortOptionIndex" id="sortOptionIndex" class="custom-select form-control form-control-sm">
+                            <select asp-for="SortBy" name="sortOptionIndex" id="sortOptionIndex" class="custom-select form-control form-control-sm">
                                 <option value="0">Default</option>
                                 <option value="1">by Name</option>
                                 <option value="2">by Type</option>
@@ -450,9 +450,9 @@ else
                         </div>
                         <div id="findTags" class="pt-2 pb-2">
                             <!-- There will be all tags -->
-                            @if (Model.findTags.Any())
+                            @if (Model.FindTags.Any())
                             {
-                                foreach (var tag in Model.findTags)
+                                foreach (var tag in Model.FindTags)
                                 {
                                     <span class="badge badge-pill badge-primary tag" id="@tag" style="margin-left: 12px;">@tag<i class="fas fa-times tag-cross" aria-hidden="true" style="padding-left: 4px;" onclick="removeFindTag(this)"></i></span>
                                 }
@@ -497,9 +497,9 @@ else
                         var thClass = product.GetTableHeaderClassString(_repository, currentUser);
 
 
-                        if (Model.findTags?.Count > 0)
+                        if (Model.FindTags?.Count > 0)
                         {
-                            if (!product.ContainsTags(Model.findTags, _repository, Model.FullyMatching))
+                            if (!product.ContainsTags(Model.FindTags, _repository, Model.FullyMatching))
                                 continue;
                         }
 

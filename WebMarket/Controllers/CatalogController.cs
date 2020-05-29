@@ -46,7 +46,7 @@ namespace WebMarket.Controllers
             {
                 ListOfProducts = listOfProducts != null ? listOfProducts : new List<Product>(),
                 ListOfProductTypes = listOfProductTypes,
-                findTags = _findTags != null ? _findTags : new List<string>(),
+                FindTags = _findTags != null ? _findTags : new List<string>(),
                 FullyMatching = _fullyMatching,
                 CatalogLength = _catalogLength
             };
@@ -67,7 +67,7 @@ namespace WebMarket.Controllers
             {
                 ListOfProducts = listOfProducts,
                 ListOfProductTypes = listOfProductTypes,
-                findTags = _findTags != null ? _findTags : new List<string>(),
+                FindTags = _findTags != null ? _findTags : new List<string>(),
                 FullyMatching = _fullyMatching,
                 CatalogLength = _catalogLength
             };
