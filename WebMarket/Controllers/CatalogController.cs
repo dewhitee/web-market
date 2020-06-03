@@ -26,7 +26,6 @@ namespace WebMarket.Controllers
         public CatalogController(
             UserManager<AppUser> userManager,
             SignInManager<AppUser> signInManager,
-            IHttpContextAccessor contextAccessor,
             IMainRepository productRepository)
         {
             this.userManager = userManager;
@@ -74,7 +73,7 @@ namespace WebMarket.Controllers
             return View("Catalog", model);
         }
 
-        public IActionResult ChangeView(CatalogViewModel.CatalogViewVariant viewVariant)
+        public IActionResult ChangeView()
         {
             CatalogViewModel.ViewVariant = (CatalogViewModel.ViewVariant == CatalogViewModel.CatalogViewVariant.Main ?
                 CatalogViewModel.CatalogViewVariant.Table : CatalogViewModel.CatalogViewVariant.Main);
@@ -144,7 +143,7 @@ namespace WebMarket.Controllers
             if (findTags != null)
                 _findTags = new List<string>(findTags);
             else return View("Error");
-            return RedirectToAction("Catalog"/*, new { findTags = CatalogViewModel.FindTags }*/);
+            return RedirectToAction("Catalog");
         }
 
         public IActionResult SubmitShowProducts(bool fullyMatching, int catalogLength)

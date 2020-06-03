@@ -126,7 +126,6 @@ namespace WebMarket.Controllers
                 mainRepository.UpdateImage(firstImage);
                 mainRepository.UpdateImage(secondImage);
                 mainRepository.UpdateImage(thirdImage);
-                ///mainRepository.UpdateProduct(product);
                 return RedirectToAction("Page");
             }
             catch
@@ -272,24 +271,6 @@ namespace WebMarket.Controllers
             var product = mainRepository.GetProduct(prodId);
             return View("Edit", product);
         }
-
-        // POST: AddProduct/Create
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Create(IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        // TODO: Add insert logic here
-        //        collection.Keys
-
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
 
         // GET: AddProduct/Edit/5
         public ActionResult Edit(int id)

@@ -12,8 +12,6 @@ using WebMarket.Data;
 
 namespace WebMarket.Controllers
 {
-    //using Product = CatalogViewModel.Product;
-
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
