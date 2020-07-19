@@ -18,12 +18,8 @@ namespace WebMarket.Models
 
         [Key]
         public int Id { get; set; }
-
         public string AppUserRefId { get; set; }
-        //public AppUser User { get; set; }
-
         public int ProductRefId { get; set; }
-        //public Product Product { get; set; }
 
         [Display(Name = "Bought Date")]
         [DataType(DataType.Date)]

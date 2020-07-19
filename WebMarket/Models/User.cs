@@ -8,7 +8,7 @@ using WebMarket.Data;
 namespace WebMarket.Models
 {
     [Serializable]
-    [Obsolete]
+    [Obsolete("This class is no longer used in the project.")]
     public class User/* : IdentityUser*/
     {
         public string Username { get; set; }

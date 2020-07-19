@@ -245,9 +245,9 @@ namespace WebMarket.Models
 
         public IEnumerable<Product> GetProductsByBought(IEnumerable<BoughtProduct> boughtProducts)
         {
-            return (from p in context.Products.ToList()
-                    join bp in boughtProducts on p.ID equals bp.ProductRefId
-                    select p);
+            return from p in context.Products.ToList()
+                   join bp in boughtProducts on p.ID equals bp.ProductRefId
+                   select p;
         }
 
         public IEnumerable<Product> GetProductsByName(string name)
@@ -309,15 +309,15 @@ namespace WebMarket.Models
         public IEnumerable<UserComment> GetUserCommentsByProdID(int id)
         {
             return from c in context.Comments
-                           where c.ProductID == id.ToString()
-                           select c;
+                   where c.ProductID == id.ToString()
+                   select c;
         }
 
         public IEnumerable<UserComment> GetUserCommentsByUserID(string id)
         {
             return from c in context.Comments
-                           where c.UserID == id
-                           select c;
+                   where c.UserID == id
+                   select c;
         }
 
         public IEnumerable<Product> Search(string searchTerm)

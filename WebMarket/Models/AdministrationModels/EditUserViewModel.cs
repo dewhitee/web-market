@@ -8,12 +8,6 @@ namespace WebMarket.Models.AdministrationModels
 {
     public class EditUserViewModel
     {
-        public EditUserViewModel()
-        {
-            Claims = new List<string>();
-            Roles = new List<string>();
-        }
-
         public string Id { get; set; }
 
         [Required]
@@ -25,5 +19,11 @@ namespace WebMarket.Models.AdministrationModels
         public decimal Money { get; set; }
         public List<string> Claims { get; set; }
         public List<string> Roles { get; set; }
+
+        public EditUserViewModel()
+        {
+            Claims = new List<string>();
+            Roles = new List<string>();
+        }
     }
 }

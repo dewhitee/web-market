@@ -34,7 +34,7 @@
             else
             {
                 <div class="float-right">
-                    <button class="@CatalogViewModel.GetBuyProductButtonClassString(currentUser, false) btn-lg" type="submit" data-toggle="modal" data-target="#buyModal"
+                    <button class="@Model.GetBuyButtonClassString(currentUser, false) btn-lg" type="submit" data-toggle="modal" data-target="#buyModal"
                             disabled id="card_on_transaction_buy_button">
                         Buy
                     </button>
@@ -48,7 +48,7 @@
         else if (!Model.IsBought(_repository, currentUser) && currentUser != null && !Model.NonTradableMode)
         {
             <div class="float-right">
-                <button class="@CatalogViewModel.GetBuyProductButtonClassString(currentUser, false) btn-lg" type="submit" data-toggle="modal" data-target="#buyModal"
+                <button class="@Model.GetBuyButtonClassString(currentUser, false) btn-lg" type="submit" data-toggle="modal" data-target="#buyModal"
                         id="card_on_transaction_buy_button">
                     Buy
                 </button>
@@ -99,7 +99,7 @@
                 <p>Final Price: @Model.FinalPriceString</p>
                 <p class="text-md-left pt-3">
                     You will have:
-                    <mark>@CatalogViewModel.GetSelectedBuyProductPriceSentence(currentUser)</mark>
+                    <mark>@Model.GetBuyPriceSentence(currentUser)</mark>
                 </p>
             </div>
             <div class="modal-footer">
@@ -129,7 +129,7 @@
                 <p>Final Price: @Model.FinalPriceString</p>
                 <p class="text-md-left pt-3">
                     You will have:
-                    <mark>@CatalogViewModel.GetSelectedSellProductPriceSentence(_repository, currentUser)</mark>
+                    <mark>@Model.GetSellPriceSentence(_repository, currentUser)</mark>
                 </p>
             </div>
             <div class="modal-footer">

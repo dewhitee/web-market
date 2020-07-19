@@ -2,7 +2,7 @@
 @using WebMarket.Data
 @using WebMarket.Models.ProductModels
 
-@model ProductPageViewModel
+@model Product
 @inject IMainRepository _repository
 @inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment _hostingEnvironment
 @inject UserManager<AppUser> _userManager
@@ -29,25 +29,25 @@
 </style>
 
 @{
-    var product = Model?.Product ?? CatalogViewModel.GetSelectedBuyProduct();
+    ///var Model = Model?.Product ?? CatalogViewModel.GetSelectedBuyProduct();
     var currentUser = _userManager.GetUserAsync(User).Result;
 
-    @if (product.OwnerID != currentUser?.Id)
+    @if (Model.OwnerID != currentUser?.Id)
     {
         <div class="float-right">
             <h2>@currentUser?.MoneyString</h2>
         </div>
     }
-    <h1>@product.Name</h1>
+    <h1>@Model.Name</h1>
     <br>
 
 
-    @if (product.OwnerID == currentUser?.Id || User.IsInRole("Admin"))
+    @if (Model.OwnerID == currentUser?.Id || User.IsInRole("Admin"))
     {
         <div style="padding-bottom:1em"></div>
         <form class="d-inline" asp-controller="Product" asp-action="OpenEditProduct" method="post">
             <div class="d-inline">
-                <input type="hidden" class="form-control" name="prodId" value="@product.ID" />
+                <input type="hidden" class="form-control" name="prodId" value="@Model.ID" />
                 <button type="submit" class="btn btn-primary">Edit Product</button>
             </div>
         </form>
@@ -62,55 +62,55 @@
         <div class="card bg-light mb-3" style="max-width: 28rem;">
             <div class="card-body">
                 <h5 class="card-title">About</h5>
-                @if (product.OwnerID == currentUser?.Id)
+                @if (Model.OwnerID == currentUser?.Id)
                 {
                     <p class="card-text">Owner: <b>You</b></p>
                 }
                 else
                 {
-                    var name = await _userManager.FindByIdAsync(product.OwnerID);
+                    var name = await _userManager.FindByIdAsync(Model.OwnerID);
                     <p class="card-text">Owner: <b>@name?.UserName</b></p>
                 }
-                <p>Added at: <b>@product.AddedDate.ToShortDateString()</b></p>
+                <p>Added at: <b>@Model.AddedDate.ToShortDateString()</b></p>
                 <hr />
-                @if (product.Link != null)
+                @if (Model.Link != null)
                 {
-                    <a href="@product.Link" class="btn btn btn-primary">Link</a>
+                    <a href="@Model.Link" class="btn btn btn-primary">Link</a>
                 }
                 <hr />
-                @if (product.Version != null)
+                @if (Model.Version != null)
                 {
-                    <p class="card-text"><b>Current version: @product.Version</b></p>
+                    <p class="card-text"><b>Current version: @Model.Version</b></p>
                 }
                 else
                 {
                     <p class="card-text"><b>Current version: 1.0.0</b></p>
                 }
                 <p></p>
-                @if ((product.IsBought(_repository, currentUser) || product.OwnerID == currentUser?.Id || User.IsInRole("Admin")) && product.FileName?.Length > 0)
+                @if ((Model.IsBought(_repository, currentUser) || Model.OwnerID == currentUser?.Id || User.IsInRole("Admin")) && Model.FileName?.Length > 0)
                 {
-                    <a class="card-link btn btn-primary" href="~/file/@product.FileName" download>Download</a>
-                    <p class="card-text pt-2 text-muted">Size: @product.FormatFileSize(_hostingEnvironment)</p>
+                    <a class="card-link btn btn-primary" href="~/file/@Model.FileName" download>Download</a>
+                    <p class="card-text pt-2 text-muted">Size: @Model.FormatFileSize(_hostingEnvironment)</p>
                 }
             </div>
         </div>
     </div>
 
     <div class="card h-100 hoverable-card" id="card_on_transaction">
-        <div class="card-header @product.GetTableHeaderClassString(_repository, currentUser)" id="card_on_transaction_header">
-            <h5 style="font-weight:300">@product.Type</h5>
+        <div class="card-header @Model.GetTableHeaderClassString(_repository, currentUser)" id="card_on_transaction_header">
+            <h5 style="font-weight:300">@Model.Type</h5>
         </div>
-        <partial name="~/Views/Product/_ProductImageCarouselPartial.cshtml" model='@new ProductImageCarouselViewModel(product, "catalog-buy")' />
-        <partial name="~/Views/Product/_CardBodyPartial.cshtml" model="@product" />
-        <partial name="~/Views/Product/_CardFooterPartial.cshtml" model="@product" />
+        <partial name="~/Views/Product/_ProductImageCarouselPartial.cshtml" model='@new ProductImageCarouselViewModel(Model, "catalog-buy")' />
+        <partial name="~/Views/Product/_CardBodyPartial.cshtml" model="@Model" />
+        <partial name="~/Views/Product/_CardFooterPartial.cshtml" model="@Model" />
     </div>
-    if (!product.OnlyRegisteredCanComment && product.OwnerID != currentUser?.Id)
+    if (!Model.OnlyRegisteredCanComment && Model.OwnerID != currentUser?.Id)
     {
         <form asp-controller="Catalog" asp-action="AddComment" method="post">
             <div class="form-group">
                 <label for="commentSection">Your comment:</label>
                 <textarea class="form-control" maxlength="255" name="commentSection" id="commentSection" rows="3" placeholder="Enter comment"></textarea>
-                <input type="hidden" class="form-control" name="productID" id="productID" value=@product.ID />
+                <input type="hidden" class="form-control" name="ModelID" id="ModelID" value=@Model.ID />
                 <fieldset class="rating" name="rating-field" id="rating-field" style="float:right">
                     <input type="radio" id="star5" name="rating" value="5" /><label class="full" for="star5" title="Awesome - 5 stars"></label>
                     <input type="radio" id="star4half" name="rating" value="4.5" /><label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
@@ -129,8 +129,8 @@
     }
     <div class="col col-sm-12 col-md-12 col-lg-6" style="padding-top: 2rem;">
         <div class="card h-100 hoverable-card" id="card_on_transaction">
-            <partial name="~/Views/Product/_RatingTablePartial.cshtml" model="@new ProductRatingTableViewModel(product)" />
-            <partial name="~/Views/Product/_CommentSectionPartial.cshtml" for="@product" />
+            <partial name="~/Views/Product/_RatingTablePartial.cshtml" model="@new ProductRatingTableViewModel(Model)" />
+            <partial name="~/Views/Product/_CommentSectionPartial.cshtml" for="@Model" />
         </div>
     </div>
 }
@@ -147,11 +147,11 @@
 
         function getFinalWidth(index) {
             switch (index) {
-                case 1: return @CatalogViewModel.GetSelectedBuyProduct()?.GetStarsPercent(1, _repository);
-                case 2: return @CatalogViewModel.GetSelectedBuyProduct()?.GetStarsPercent(2, _repository);
-                case 3: return @CatalogViewModel.GetSelectedBuyProduct()?.GetStarsPercent(3, _repository);
-                case 4: return @CatalogViewModel.GetSelectedBuyProduct()?.GetStarsPercent(4, _repository);
-                case 5: return @CatalogViewModel.GetSelectedBuyProduct()?.GetStarsPercent(5, _repository);
+                case 1: return @Model?.GetStarsPercent(1, _repository);
+                case 2: return @Model?.GetStarsPercent(2, _repository);
+                case 3: return @Model?.GetStarsPercent(3, _repository);
+                case 4: return @Model?.GetStarsPercent(4, _repository);
+                case 5: return @Model?.GetStarsPercent(5, _repository);
             }
         };
 

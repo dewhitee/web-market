@@ -97,11 +97,6 @@ namespace WebMarket.Models
                 : Comparer<T>.Default.Compare(left, right) < 0 ? $"{LeftProduct.Name} {rightMoreText} {RightProduct.Name}"
                 : (and ? $"{LeftProduct.Name} and {RightProduct.Name} {equalText}" : $"{LeftProduct.Name} {equalText} {RightProduct.Name}");
         }
-
-        public static float GetStarsValue(Product product, IMainRepository repository)
-        {
-            return product.GetRate(repository);
-        }
         public static float GetStarsValue(IEnumerable<UserComment> userComments)
         {
             return Product.GetRate(userComments);

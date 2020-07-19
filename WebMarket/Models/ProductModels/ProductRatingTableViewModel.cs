@@ -7,6 +7,9 @@ namespace WebMarket.Models.ProductModels
 {
     public class ProductRatingTableViewModel : Product
     {
+        public bool PositionRight { get; set; }
+        public char Position { get => PositionRight ? 'r' : 'l'; }
+
         public ProductRatingTableViewModel(Product product, bool positionRight = false)
         {
             ID = product.ID;
@@ -14,7 +17,9 @@ namespace WebMarket.Models.ProductModels
             PositionRight = positionRight;
         }
 
-        public bool PositionRight { get; set; }
-        public char Position { get => PositionRight ? 'r' : 'l'; }
+        public float GetStarsValue(IMainRepository repository)
+        {
+            return this.GetRate(repository);
+        }
     }
 }

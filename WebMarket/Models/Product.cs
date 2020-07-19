@@ -40,10 +40,10 @@ namespace WebMarket.Models
         public decimal Price { get; set; }
 
         [NotMapped]
-        public int CostIntegral { get => (int)Math.Truncate(Price); }
+        public int CostIntegral => (int)Math.Truncate(Price);
 
         [NotMapped]
-        public decimal CostFractional { get => Price - CostIntegral; }
+        public decimal CostFractional => Price - CostIntegral;
         public float Discount { get; set; }
 
         [StringLength(512)]
@@ -73,12 +73,12 @@ namespace WebMarket.Models
 
         public string OwnerID { get; set; }
 
-        public decimal FinalPrice { get => Price - (Price * (decimal)Discount * 0.01M); }
-        public string FinalPriceString { get => FinalPrice > 0 ? FinalPrice.ToString("0.##") + "€" : "free"; }
-        public string PriceString { get => Price > 0 ? Price.ToString() + "€" : "free"; }
-        public string DiscountString { get => Discount > 0 ? Discount.ToString() + "%" : "no"; }
-        public string DiscountSupString { get => Discount > 0 ? Discount.ToString() + "%" : ""; }
-        public string LinkTableString { get => string.IsNullOrWhiteSpace(Link) ? "no link" : "yes"; }
+        public decimal FinalPrice       => Price - (Price * (decimal)Discount * 0.01M);
+        public string FinalPriceString  => FinalPrice > 0 ? FinalPrice.ToString("0.##") + "€" : "free";
+        public string PriceString       => Price > 0 ? Price.ToString() + "€" : "free";
+        public string DiscountString    => Discount > 0 ? Discount.ToString() + "%" : "no";
+        public string DiscountSupString => Discount > 0 ? Discount.ToString() + "%" : "";
+        public string LinkTableString   => string.IsNullOrWhiteSpace(Link) ? "no link" : "yes";
 
         // Property for disabling buying/selling actions on product page
         [NotMapped]
@@ -372,6 +372,34 @@ namespace WebMarket.Models
                 return "bg-primary text-white";
             }
             else return "";
+        }
+
+        public string GetBuyButtonClassString(AppUser user, bool outline = true)
+        {
+            var finalCost = user?.Money - FinalPrice;
+            if (!string.IsNullOrWhiteSpace(Name))
+            {
+                if (finalCost < 0)
+                    return "btn btn-danger";
+            }
+            return outline ? "btn btn-outline-primary" : "btn btn-primary";
+        }
+
+        public string GetBuyPriceSentence(AppUser user)
+        {
+            var finalCost = user?.Money - FinalPrice;
+            if (!string.IsNullOrWhiteSpace(Name) && user != null)
+                return user.MoneyString + " - " + FinalPriceString + string.Format(" = {0}€", finalCost?.ToString("0.##")) + (finalCost < 0 ? " (You don't have enough money!)" : "");
+            else
+                return "You have not selected any product to buy!";
+        }
+
+        public string GetSellPriceSentence(IMainRepository repository, AppUser user)
+        {
+            if (!string.IsNullOrWhiteSpace(Name) && user != null)
+                return user.MoneyString + " + " + FinalPriceString + string.Format(" = {0}€", (user.Money + FinalPrice).ToString("0.##"));
+            else
+                return "You have not selected any product to sell!";
         }
 
         public static int CompareByName(Product x, Product y)

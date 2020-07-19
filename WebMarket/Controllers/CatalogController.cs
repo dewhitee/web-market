@@ -99,7 +99,7 @@ namespace WebMarket.Controllers
                 };
                 mainRepository.AddUserComment(newComment);
             }
-            return RedirectToAction("Page", "Product");
+            return RedirectToAction("Page", "Product", product);
         }
 
         [HttpPost]
@@ -109,7 +109,7 @@ namespace WebMarket.Controllers
 
             CatalogViewModel.ChoosenProduct = product;
             CatalogViewModel.ChoosenProductID = product.ID;
-            return RedirectToAction("Page", "Product");
+            return RedirectToAction("Page", "Product", product);
         }
 
         private void SortProducts(int sortOptionIndex, ref List<Product> products)

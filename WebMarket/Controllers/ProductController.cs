@@ -286,15 +286,12 @@ namespace WebMarket.Controllers
             try
             {
                 mainRepository.UpdateProduct(product);
-                return View("Page", new ProductPageViewModel
-                {
-                    Product = product
-                });
+                return View("Page", product);
             }
             catch (DbUpdateException e)
             {
                 Console.WriteLine(e);
-                return View("Page");
+                return View("Page", product);
             }
         }
 
@@ -420,9 +417,14 @@ namespace WebMarket.Controllers
         }
 
         [AllowAnonymous]
-        public IActionResult Page()
+        public IActionResult Page(Product product, int productId)
         {
-            return View();
+            if (product != null && (product.ID == productId || productId == 0))
+            {
+                return View(product);
+            }
+            Product model = mainRepository.GetProduct(productId);
+            return View(model);
         }
 
         public IActionResult EditPage()
@@ -433,11 +435,10 @@ namespace WebMarket.Controllers
 
         public IActionResult Buy(int productId)
         {
-            var products = from p in mainRepository.GetAllProducts() where p.ID == productId select p;
-            if (products.Any())
+            var productToBuy = mainRepository.GetProduct(productId);
+            if (productToBuy != null)
             {
                 var user = userManager.GetUserAsync(User).Result;
-                var productToBuy = products.FirstOrDefault();
                 if (user != null)
                 {
                     if (user.Money >= productToBuy.FinalPrice && !productToBuy.IsBought(mainRepository, user))
@@ -467,17 +468,16 @@ namespace WebMarket.Controllers
                 }
                 CatalogViewModel.ChoosenProduct = productToBuy;
             }
-            return RedirectToAction("Page");
+            return RedirectToAction("Page", productToBuy);
 
         }
 
         public IActionResult Sell(int productId)
         {
-            var products = from p in mainRepository.GetAllProducts() where p.ID == productId select p;
-            if (products.Any())
+            var productToSell = mainRepository.GetProduct(productId);
+            if (productToSell != null)
             {
                 var user = userManager.GetUserAsync(User).Result;
-                var productToSell = products.FirstOrDefault();
                 if (user != null && productToSell.IsBought(mainRepository, user))
                 {
                     try
@@ -496,7 +496,7 @@ namespace WebMarket.Controllers
                 }
                 CatalogViewModel.ChoosenProduct = productToSell;
             }
-            return RedirectToAction("Page");
+            return RedirectToAction("Page", productToSell);
         }
     }
 }
