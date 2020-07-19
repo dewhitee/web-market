@@ -299,8 +299,7 @@ namespace WebMarket.Controllers
         {
             var tagNames = mainRepository.GetTagNamesByProductId(prodId).ToList();
 
-            List<string> listOfProductTypes = new List<string>();
-            listOfProductTypes = (from pt in mainRepository.GetAllProductTypes() orderby pt.Name select pt.Name).ToList();
+            List<string> listOfProductTypes = (from pt in mainRepository.GetAllProductTypes() orderby pt.Name select pt.Name).ToList();
 
             return View("EditTagsView", new EditTagsViewModel
             { 
@@ -314,13 +313,12 @@ namespace WebMarket.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditTags([FromForm]EditTagsViewModel model)
         {
-            // waiting the UpdateTags result for properly show the tags in the EditTagsView
+            // waiting the UpdateTags result to properly show the tags in the EditTagsView
             await Task.Delay(10);
 
             var tagNames = mainRepository.GetTagNamesByProductId(model.ProductId).ToList();
 
-            List<string> listOfProductTypes = new List<string>();
-            listOfProductTypes = (from pt in mainRepository.GetAllProductTypes() orderby pt.Name select pt.Name).ToList();
+            List<string> listOfProductTypes = (from pt in mainRepository.GetAllProductTypes() orderby pt.Name select pt.Name).ToList();
 
             return View("EditTagsView", new EditTagsViewModel
             {
@@ -466,7 +464,6 @@ namespace WebMarket.Controllers
                         Console.WriteLine("User don't have enough money or product is already bought!");
                     }
                 }
-                CatalogViewModel.ChoosenProduct = productToBuy;
             }
             return RedirectToAction("Page", productToBuy);
 
@@ -494,7 +491,6 @@ namespace WebMarket.Controllers
                         throw;
                     }
                 }
-                CatalogViewModel.ChoosenProduct = productToSell;
             }
             return RedirectToAction("Page", productToSell);
         }

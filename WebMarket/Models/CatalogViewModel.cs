@@ -22,7 +22,6 @@ namespace WebMarket.Models
 
         public List<Product> ListOfProducts { get; set; }
         public IEnumerable<string> ListOfProductTypes { get; set; }
-        public static Product ChoosenProduct = new Product();
         public static int ChoosenProductID { get; set; }
         public bool FullyMatching { get; set; }
         public int CatalogLength { get; set; }

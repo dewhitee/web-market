@@ -107,7 +107,6 @@ namespace WebMarket.Controllers
         {
             var product = mainRepository.GetProduct(productId);
 
-            CatalogViewModel.ChoosenProduct = product;
             CatalogViewModel.ChoosenProductID = product.ID;
             return RedirectToAction("Page", "Product", product);
         }
