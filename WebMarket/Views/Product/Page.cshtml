@@ -29,7 +29,6 @@
 </style>
 
 @{
-    ///var Model = Model?.Product ?? CatalogViewModel.GetSelectedBuyProduct();
     var currentUser = _userManager.GetUserAsync(User).Result;
 
     @if (Model.OwnerID != currentUser?.Id)
