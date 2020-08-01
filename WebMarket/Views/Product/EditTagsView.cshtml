@@ -86,9 +86,10 @@
 </div>
 
 @section Scripts
-         {
+{
+    <script src="~/js/product_edit_tags.js"></script>
     <script>
-        $(document).ready(function () {
+        @*$(document).ready(function () {
             $('.custom-file-input').on("change", function () {
                 var fileName = $(this).val().split("\\").pop();
                 $(this).next('.custom-file-label').html(fileName);
@@ -146,7 +147,31 @@
                     console.log(data.message);
                 },
             });
+        });*@
+
+    $("#submitTags").on("click", function (e) {
+        var tags_array = [];
+
+        $('#tags > span').each(function () {
+            tags_array.push($(this).text());
         });
+
+        prod_id = @Model.ProductId;
+
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            url: "/Product/UpdateTags",
+            traditional: true,
+            data: {
+                prodId: prod_id,
+                tags: tags_array,
+            },
+            success: function (data) {
+                console.log(data.message);
+            },
+        });
+    });
 
     </script>
 }
