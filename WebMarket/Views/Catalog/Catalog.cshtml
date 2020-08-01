@@ -364,48 +364,52 @@ else
                     </tr>
                 </thead>
                 <tbody>
-                    @for (int i = 0; i < Model.ListOfProducts.Count; i++)
-                    {
-                        if (Model.FindTags?.Count > 0)
+                    @{
+                        int index = 0;
+                        foreach (var product in Model.ListOfProducts)
                         {
-                            if (!Model.ListOfProducts[i].ContainsTags(Model.FindTags, _repository, Model.FullyMatching))
-                                continue;
-                        }
+                            if (Model.FindTags?.Count > 0)
+                            {
+                                if (!product.ContainsTags(Model.FindTags, _repository, Model.FullyMatching))
+                                    continue;
+                            }
 
-                        string tdClassString = Model.ListOfProducts[i].GetPriceTableClassString(_repository, currentUser);
-                        string buttonClassString = Model.ListOfProducts[i].GetAddToCartButtonClassString(_repository, currentUser);
-                        var linkClass = Model.ListOfProducts[i].GetProductTableLinkClassString(_repository, currentUser);
-                        var thClass = Model.ListOfProducts[i].GetTableHeaderClassString(_repository, currentUser);
-                        <tr>
-                            <th scope="row" class="@thClass">@i</th>
-                            <th scope="row" class="@thClass">
-                                <form asp-controller="Catalog" asp-action="AddToCart" method="post">
-                                    <input type="hidden" class="form-control" name="productId" id="productId" value=@Model.ListOfProducts[i].ID />
-                                    <button class="@Model.ListOfProducts[i].GetAddToCartButtonClassString(_repository, currentUser)" type="submit">@Model.ListOfProducts[i].IsBoughtString(_repository, currentUser)</button>
-                                </form>
-                            </th>
-                            <td class="@thClass">
-                                @Model.ListOfProducts[i].Name
-                            </td>
-                            <td class="@thClass">
-                                @Model.ListOfProducts[i].Type
-                            </td>
-                            <td class="@thClass">
-                                @Model.ListOfProducts[i].PriceString
-                            </td>
-                            <td class="@thClass">
-                                @Model.ListOfProducts[i].DiscountString
-                            </td>
-                            <td class="@thClass">
-                                @Model.ListOfProducts[i].FinalPriceString
-                            </td>
-                            <td class="@thClass">
-                                <a href=@Model.ListOfProducts[i].Link class="@linkClass">
-                                    <ins><strong>@Model.ListOfProducts[i].LinkTableString</strong></ins>
-                                </a>
-                            </td>
-                        </tr>
-                    }
+                            string tdClassString = product.GetPriceTableClassString(_repository, currentUser);
+                            string buttonClassString = product.GetAddToCartButtonClassString(_repository, currentUser);
+                            var linkClass = product.GetProductTableLinkClassString(_repository, currentUser);
+                            var thClass = product.GetTableHeaderClassString(_repository, currentUser);
+                            <tr>
+                                <th scope="row" class="@thClass">@index</th>
+                                <th scope="row" class="@thClass">
+                                    <form asp-controller="Catalog" asp-action="AddToCart" method="post">
+                                        <input type="hidden" class="form-control" name="productId" id="productId" value=@product.ID />
+                                        <button class="@product.GetAddToCartButtonClassString(_repository, currentUser)" type="submit">@product.IsBoughtString(_repository, currentUser)</button>
+                                    </form>
+                                </th>
+                                <td class="@thClass">
+                                    @product.Name
+                                </td>
+                                <td class="@thClass">
+                                    @product.Type
+                                </td>
+                                <td class="@thClass">
+                                    @product.PriceString
+                                </td>
+                                <td class="@thClass">
+                                    @product.DiscountString
+                                </td>
+                                <td class="@thClass">
+                                    @product.FinalPriceString
+                                </td>
+                                <td class="@thClass">
+                                    <a href=@product.Link class="@linkClass">
+                                        <ins><strong>@product.LinkTableString</strong></ins>
+                                    </a>
+                                </td>
+                            </tr>
+                            index++;
+                        }
+                     }
                 </tbody>
             </table>
             break;
