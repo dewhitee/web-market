@@ -394,7 +394,7 @@ namespace WebMarket.Models
                 return "You have not selected any product to buy!";
         }
 
-        public string GetSellPriceSentence(IMainRepository repository, AppUser user)
+        public string GetSellPriceSentence(AppUser user)
         {
             if (!string.IsNullOrWhiteSpace(Name) && user != null)
                 return user.MoneyString + " + " + FinalPriceString + string.Format(" = {0}€", (user.Money + FinalPrice).ToString("0.##"));

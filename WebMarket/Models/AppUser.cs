@@ -14,6 +14,6 @@ namespace WebMarket.Models
 
         [Required, Column(TypeName = "decimal(18,2)")]
         public decimal Money { get; set; }
-        public string MoneyString { get => Money.ToString("0.##") + "€"; }
+        public string MoneyString => Money.ToString("0.##") + "€";
     }
 }
