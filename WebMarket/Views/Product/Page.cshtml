@@ -61,6 +61,7 @@
         <div class="card bg-light mb-3" style="max-width: 28rem;">
             <div class="card-body">
                 <h5 class="card-title">About</h5>
+
                 @if (Model.OwnerID == currentUser?.Id)
                 {
                     <p class="card-text">Owner: <b>You</b></p>
@@ -70,13 +71,17 @@
                     var name = await _userManager.FindByIdAsync(Model.OwnerID);
                     <p class="card-text">Owner: <b>@name?.UserName</b></p>
                 }
+
                 <p>Added at: <b>@Model.AddedDate.ToShortDateString()</b></p>
                 <hr />
+
                 @if (Model.Link != null)
                 {
                     <a href="@Model.Link" class="btn btn btn-primary">Link</a>
                 }
+
                 <hr />
+
                 @if (Model.Version != null)
                 {
                     <p class="card-text"><b>Current version: @Model.Version</b></p>
@@ -85,12 +90,15 @@
                 {
                     <p class="card-text"><b>Current version: 1.0.0</b></p>
                 }
+
                 <p></p>
+
                 @if ((Model.IsBought(_repository, currentUser) || Model.OwnerID == currentUser?.Id || User.IsInRole("Admin")) && Model.FileName?.Length > 0)
                 {
                     <a class="card-link btn btn-primary" href="~/file/@Model.FileName" download>Download</a>
                     <p class="card-text pt-2 text-muted">Size: @Model.FormatFileSize(_hostingEnvironment)</p>
                 }
+
             </div>
         </div>
     </div>
@@ -105,26 +113,6 @@
     </div>
     if (!Model.OnlyRegisteredCanComment && Model.OwnerID != currentUser?.Id)
     {
-        @*<form asp-controller="Catalog" asp-action="AddComment" method="post">
-            <div class="form-group">
-                <label for="commentSection">Your comment:</label>
-                <textarea class="form-control" maxlength="255" name="commentSection" id="commentSection" rows="3" placeholder="Enter comment"></textarea>
-                <input type="hidden" class="form-control" name="ModelID" id="ModelID" value=@Model.ID />
-                <fieldset class="rating" name="rating-field" id="rating-field" style="float:right">
-                    <input type="radio" id="star5" name="rating" value="5" /><label class="full" for="star5" title="Awesome - 5 stars"></label>
-                    <input type="radio" id="star4half" name="rating" value="4.5" /><label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
-                    <input type="radio" id="star4" name="rating" value="4" /><label class="full" for="star4" title="Pretty good - 4 stars"></label>
-                    <input type="radio" id="star3half" name="rating" value="3.5" /><label class="half" for="star3half" title="Meh - 3.5 stars"></label>
-                    <input type="radio" id="star3" name="rating" value="3" /><label class="full" for="star3" title="Meh - 3 stars"></label>
-                    <input type="radio" id="star2half" name="rating" value="2.5" /><label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
-                    <input type="radio" id="star2" name="rating" value="2" /><label class="full" for="star2" title="Kinda bad - 2 stars"></label>
-                    <input type="radio" id="star1half" name="rating" value="1.5" /><label class="half" for="star1half" title="Meh - 1.5 stars"></label>
-                    <input type="radio" id="star1" name="rating" value="1" /><label class="full" for="star1" title="Sucks big time - 1 star"></label>
-                    <input type="radio" id="starhalf" name="rating" value="0.5" /><label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
-                </fieldset>
-            </div>
-            <button class="btn btn-success" type="submit">Submit</button>
-        </form>*@
         <partial name="~/Views/Product/_AddCommentSectionPartial.cshtml" for="@Model" />
     }
     <div class="col col-sm-12 col-md-12 col-lg-6" style="padding-top: 2rem;">
