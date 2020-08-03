@@ -105,7 +105,7 @@
     </div>
     if (!Model.OnlyRegisteredCanComment && Model.OwnerID != currentUser?.Id)
     {
-        <form asp-controller="Catalog" asp-action="AddComment" method="post">
+        @*<form asp-controller="Catalog" asp-action="AddComment" method="post">
             <div class="form-group">
                 <label for="commentSection">Your comment:</label>
                 <textarea class="form-control" maxlength="255" name="commentSection" id="commentSection" rows="3" placeholder="Enter comment"></textarea>
@@ -124,7 +124,8 @@
                 </fieldset>
             </div>
             <button class="btn btn-success" type="submit">Submit</button>
-        </form>
+        </form>*@
+        <partial name="~/Views/Product/_AddCommentSectionPartial.cshtml" for="@Model" />
     }
     <div class="col col-sm-12 col-md-12 col-lg-6" style="padding-top: 2rem;">
         <div class="card h-100 hoverable-card" id="card_on_transaction">
