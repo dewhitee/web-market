@@ -41,9 +41,6 @@
                     <a data-toggle="modal" data-target="#infoTransactionModal"><img src="~/images/question-circle-regular_2.png" style="color:white; cursor:pointer; width:16px; height:16px"></a>
                 </div>
             }
-            <small class="text-warning @Model.GetProductTableLinkClassString(_repository, currentUser)">
-                Added @Model.AddedDate.ToShortDateString()
-            </small>
         }
         else if (!Model.IsBought(_repository, currentUser) && currentUser != null && !Model.NonTradableMode)
         {
@@ -53,9 +50,6 @@
                     Buy
                 </button>
             </div>
-            <small class="text-warning @Model.GetProductTableLinkClassString(_repository, currentUser)">
-                Added @Model.AddedDate.ToShortDateString()
-            </small>
         }
         else if (currentUser != null && !Model.NonTradableMode)
         {
@@ -66,9 +60,6 @@
                 </button>
             </div>
             <br>
-            <small class="text-warning @Model.GetProductTableLinkClassString(_repository, currentUser)">
-                Added @Model.AddedDate.ToShortDateString()
-            </small>
         }
         else
         {
@@ -78,10 +69,10 @@
                     <button class="@Model.GetAddToCartButtonClassString(_repository, currentUser) hoverable-btn" type="submit">@Model.GetAddToCartButtonString(_repository, currentUser)</button>
                 </form>
             </div>
-            <small class="text-warning @Model.GetProductTableLinkClassString(_repository, currentUser)">
-                Added @Model.AddedDate.ToShortDateString()
-            </small>
         }
+        <small class="text-warning @Model.GetProductTableLinkClassString(_repository, currentUser)">
+            Added @Model.AddedDate.ToShortDateString()
+        </small>
     </div>
 
 <div class="modal fade" id="buyModal" tabindex="-1" role="dialog" aria-labelledby="buyModalLabel" aria-hidden="true">
