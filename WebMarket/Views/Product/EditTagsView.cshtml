@@ -31,15 +31,9 @@
 </div>
 <h4>Tags</h4>
 <hr />
-@if (User.IsInRole("Admin") && _repository.GetProduct(Model.ProductId)?.OwnerID != _userManager.GetUserId(User))
-{
-    <div class="card text-white bg-warning mb-3">
-        <div class="card-body">
-            <h5 class="card-title">WARNING</h5>
-            <p class="card-text">You can edit this product as you are in the Admin role. Note that you <b>DO NOT own</b> this product.</p>
-        </div>
-    </div>
-}
+
+<partial name="~/Views/Product/_AdminWarningProductEditPartial.cshtml" for="@Model.ProductId" />
+
 @if (Model.EditTagsSuccessful)
 {
     <div class="card text-white bg-success mb-3" style="max-width: 18rem;">

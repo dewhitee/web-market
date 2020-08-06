@@ -1,0 +1,13 @@
+﻿@model int 
+@inject Microsoft.AspNetCore.Identity.UserManager<AppUser> _userManager
+@inject IMainRepository _repository
+
+@if (User.IsInRole("Admin") && _repository.GetProduct(Model)?.OwnerID != _userManager.GetUserId(User))
+{
+    <div class="card text-white bg-warning mb-3">
+        <div class="card-body">
+            <h5 class="card-title">WARNING</h5>
+            <p class="card-text">You can edit this product as you are in the Admin role. Note that you <b>DO NOT own</b> this product.</p>
+        </div>
+    </div>
+}
