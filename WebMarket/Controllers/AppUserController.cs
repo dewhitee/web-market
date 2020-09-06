@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -10,19 +9,20 @@ using WebMarket.Models.AppUserModels;
 
 namespace WebMarket.Controllers
 {
-    using Variant = Models.CatalogViewModel.CatalogViewVariant;
+    using Variant = CatalogViewModel.CatalogViewVariant;
+
     [Authorize]
     public class AppUserController : Controller
     {
-        private readonly IMainRepository mainRepository;
-        private readonly UserManager<AppUser> userManager;
+        private readonly IMainRepository        _mainRepository;
+        private readonly UserManager<AppUser>   _userManager;
 
         public AppUserController(
             IMainRepository mainRepository,
             UserManager<AppUser> userManager)
         {
-            this.mainRepository = mainRepository;
-            this.userManager = userManager;
+            _mainRepository = mainRepository;
+            _userManager = userManager;
         }
 
         public IActionResult Account()
@@ -32,14 +32,14 @@ namespace WebMarket.Controllers
          
         public IActionResult AddMoney(decimal addMoney)
         {
-            var user = userManager.GetUserAsync(User).Result;
+            var user = _userManager.GetUserAsync(User).Result;
             if (user != null)
             {
                 try
                 {
                     user.Money += addMoney;
 
-                    userManager.UpdateAsync(user).Wait();
+                    _userManager.UpdateAsync(user).Wait();
                 }
                 catch (Exception)
                 {
@@ -50,20 +50,20 @@ namespace WebMarket.Controllers
         }
         public IActionResult Stats()
         {
-            var userId = userManager.GetUserId(User);
-            var userProducts = mainRepository.GetAllProductsOfUser(userId).ToList();
+            var userId = _userManager.GetUserId(User);
+            var userProducts = _mainRepository.GetAllProductsOfUser(userId).ToList();
 
             int commentsGot = 0;
             foreach (var p in userProducts)
             {
-                var productComments = mainRepository.GetUserCommentsByProdID(p.ID).ToList();
+                var productComments = _mainRepository.GetUserCommentsByProdID(p.ID).ToList();
                 commentsGot += productComments.Count();
             }
 
-            var commentsWritten = mainRepository.GetUserCommentsByUserID(userId).Count();
-            var totalAdded = mainRepository.GetAllProductsOfUser(userId).Count();
-            var totalBought = mainRepository.GetBoughtProductsByUserId(userId).Count();
-            var totalStars = (from p in userProducts select p.GetTotalStarsCount(mainRepository)).Sum(x => Convert.ToInt32(x));
+            var commentsWritten = _mainRepository.GetUserCommentsByUserID(userId).Count();
+            var totalAdded = _mainRepository.GetAllProductsOfUser(userId).Count();
+            var totalBought = _mainRepository.GetBoughtProductsByUserId(userId).Count();
+            var totalStars = (from p in userProducts select p.GetTotalStarsCount(_mainRepository)).Sum(x => Convert.ToInt32(x));
 
             StatsViewModel model = new StatsViewModel
             {
@@ -78,7 +78,7 @@ namespace WebMarket.Controllers
 
         public IActionResult Added()
         {
-            var products = mainRepository.GetAllProductsOfUser(userManager.GetUserId(User)).ToList();
+            var products = _mainRepository.GetAllProductsOfUser(_userManager.GetUserId(User)).ToList();
             return View(new AddedProductsViewModel
             {
                 AddedProducts = products
@@ -93,8 +93,8 @@ namespace WebMarket.Controllers
         
         public IActionResult Bought()
         {
-            var boughtProducts = mainRepository.GetBoughtProductsByUserId(userManager.GetUserId(User)).ToList();
-            var products = mainRepository.GetProductsByBought(boughtProducts).ToList();
+            var boughtProducts = _mainRepository.GetBoughtProductsByUserId(_userManager.GetUserId(User)).ToList();
+            var products = _mainRepository.GetProductsByBought(boughtProducts).ToList();
             return View(new BoughtProductsViewModel
             {
                 BoughtProducts = products
@@ -109,7 +109,7 @@ namespace WebMarket.Controllers
 
         public IActionResult AddedSorted(int sortOptionIndex)
         {
-            var products = mainRepository.GetAllProductsOfUser(userManager.GetUserId(User)).ToList();
+            var products = _mainRepository.GetAllProductsOfUser(_userManager.GetUserId(User)).ToList();
 
             SortProducts(sortOptionIndex, ref products);
 
@@ -122,8 +122,8 @@ namespace WebMarket.Controllers
 
         public IActionResult BoughtSorted(int sortOptionIndex)
         {
-            var boughtProducts = mainRepository.GetBoughtProductsByUserId(userManager.GetUserId(User)).ToList();
-            var products = mainRepository.GetProductsByBought(boughtProducts).ToList();
+            var boughtProducts = _mainRepository.GetBoughtProductsByUserId(_userManager.GetUserId(User)).ToList();
+            var products = _mainRepository.GetProductsByBought(boughtProducts).ToList();
 
             SortProducts(sortOptionIndex, ref products);
 

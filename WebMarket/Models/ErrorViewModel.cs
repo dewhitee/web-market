@@ -1,5 +1,3 @@
-using System;
-
 namespace WebMarket.Models
 {
     public class ErrorViewModel

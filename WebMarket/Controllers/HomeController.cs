@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Http;
 using WebMarket.Models;
-using WebMarket.Data;
 
 namespace WebMarket.Controllers
 {
@@ -16,7 +10,6 @@ namespace WebMarket.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        // background
         private static bool _backgroundDefault { get; set; }
         ///public static string BackgroundClass { get => !_backgroundDefault ? "" : "gradient-background"; }
 

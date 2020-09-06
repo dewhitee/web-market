@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Http;
 using WebMarket.Models;
-using WebMarket.Data;
-using System.Web;
 using Microsoft.AspNetCore.Hosting;
 
 namespace WebMarket.Controllers

@@ -25,6 +25,8 @@ namespace WebMarket.Controllers
         private static List<string> _tags = null;
         private static Product      _addedProduct = null;
 
+        private string DefaultImageLink => "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg";
+
         public ProductController(
             UserManager<AppUser> userManager,
             IMainRepository mainRepository,
@@ -95,7 +97,7 @@ namespace WebMarket.Controllers
                 }
                 else
                 {
-                    firstImage.Link = model.FirstImageLink ?? "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg";
+                    firstImage.Link = model.FirstImageLink ?? DefaultImageLink;
                 }
                 firstImage.Description = model.FirstImageDescription;
 
@@ -106,7 +108,7 @@ namespace WebMarket.Controllers
                 }
                 else
                 {
-                    secondImage.Link = model.SecondImageLink ?? "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg";
+                    secondImage.Link = model.SecondImageLink ?? DefaultImageLink;
                 }
                 secondImage.Description = model.SecondImageDescription;
 
@@ -117,7 +119,7 @@ namespace WebMarket.Controllers
                 }
                 else
                 {
-                    thirdImage.Link = model.ThirdImageLink ?? "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg";
+                    thirdImage.Link = model.ThirdImageLink ?? DefaultImageLink;
                 }
                 thirdImage.Description = model.ThirdImageDescription;
 
@@ -244,21 +246,21 @@ namespace WebMarket.Controllers
             _mainRepository.AddImage(new Image
             {
                 ProductID = id,
-                Link = (firstLink != null && firstLink.Length > 0) ? firstLink : "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg",
+                Link = (firstLink != null && firstLink.Length > 0) ? firstLink : DefaultImageLink,
                 Description = firstDesc,
                 OrderIndex = 0
             });
             _mainRepository.AddImage(new Image
             {
                 ProductID = id,
-                Link = secondLink ?? "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg",
+                Link = secondLink ?? DefaultImageLink,
                 Description = secondDesc,
                 OrderIndex = 1
             });
             _mainRepository.AddImage(new Image
             {
                 ProductID = id,
-                Link = thirdLink ?? "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg",
+                Link = thirdLink ?? DefaultImageLink,
                 Description = thirdDesc,
                 OrderIndex = 2
             });

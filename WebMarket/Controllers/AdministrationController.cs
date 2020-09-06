@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -10,8 +9,7 @@ using WebMarket.Models.AdministrationModels;
 
 namespace WebMarket.Controllers
 {
-    [Authorize(Roles = "Admin")]
-    ///[Authorize(Roles = "Moderator")]
+    [Authorize(Roles = "Admin,Moderator")]
     public class AdministrationController : Controller
     {
         private readonly RoleManager<IdentityRole>  _roleManager;

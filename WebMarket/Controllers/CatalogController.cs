@@ -1,45 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Http;
-using System.Security.Claims;
 using WebMarket.Models;
-using WebMarket.Data;
 
 namespace WebMarket.Controllers
 {
     public class CatalogController : Controller
     {
-        private readonly UserManager<AppUser> userManager;
-        private readonly SignInManager<AppUser> signInManager;
+        private readonly UserManager<AppUser> _userManager;
+        private readonly IMainRepository _mainRepository;
 
-        private readonly IMainRepository mainRepository;
         private static int _catalogLength = 0;
         private static bool _fullyMatching;
         private static List<string> _findTags;
 
         public CatalogController(
             UserManager<AppUser> userManager,
-            SignInManager<AppUser> signInManager,
             IMainRepository productRepository)
         {
-            this.userManager = userManager;
-            this.signInManager = signInManager;
-            this.mainRepository = productRepository;
+           _userManager = userManager;
+           _mainRepository = productRepository;
         }
 
         public IActionResult Catalog()
         {
-            var products = mainRepository.GetAllProducts();
+            var products = _mainRepository.GetAllProducts();
 
             var listOfProducts = products.Take(_catalogLength > 0 ? _catalogLength : products.Count()).ToList();
 
-            var listOfProductTypes = (from pt in mainRepository.GetAllProductTypes() orderby pt.Name select pt.Name);
+            var listOfProductTypes = (from pt in _mainRepository.GetAllProductTypes() orderby pt.Name select pt.Name);
 
             var model = new CatalogViewModel
             {
@@ -55,12 +46,12 @@ namespace WebMarket.Controllers
 
         public IActionResult Sorted(int sortOptionIndex)
         {
-            var products = mainRepository.GetAllProducts();
+            var products = _mainRepository.GetAllProducts();
             var listOfProducts = products.Take(_catalogLength > 0 ? _catalogLength : products.Count()).ToList();
 
             SortProducts(sortOptionIndex, ref listOfProducts);
 
-            var listOfProductTypes = (from pt in mainRepository.GetAllProductTypes() orderby pt.Name select pt.Name);
+            var listOfProductTypes = (from pt in _mainRepository.GetAllProductTypes() orderby pt.Name select pt.Name);
 
             var model = new CatalogViewModel
             {
@@ -85,19 +76,19 @@ namespace WebMarket.Controllers
         public IActionResult AddComment(string commentSection, int productID, float rating)
         {
             Console.WriteLine("Adding comment");
-            var product = mainRepository.GetProduct(productID);
+            var product = _mainRepository.GetProduct(productID);
 
-            bool canAdd = product.OnlyOneCommentPerUser ? mainRepository.GetUserCommentsByProdID(product.ID).FirstOrDefault() == null : true;
+            bool canAdd = product.OnlyOneCommentPerUser ? _mainRepository.GetUserCommentsByProdID(product.ID).FirstOrDefault() == null : true;
             if (canAdd)
             {
                 UserComment newComment = new UserComment
                 {
                     Text = commentSection,
                     ProductID = product.ID.ToString(),
-                    UserID = userManager.GetUserId(User),
+                    UserID = _userManager.GetUserId(User),
                     Rate = rating
                 };
-                mainRepository.AddUserComment(newComment);
+                _mainRepository.AddUserComment(newComment);
             }
             return RedirectToAction("Page", "Product", product);
         }
@@ -105,7 +96,7 @@ namespace WebMarket.Controllers
         [HttpPost]
         public IActionResult AddToCart(int productId)
         {
-            var product = mainRepository.GetProduct(productId);
+            var product = _mainRepository.GetProduct(productId);
 
             CatalogViewModel.ChoosenProductID = product.ID;
             return RedirectToAction("Page", "Product", product);
