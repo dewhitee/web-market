@@ -1,11 +1,15 @@
-﻿@model WebMarket.Models.EditImagesViewModel
-@inject Microsoft.AspNetCore.Identity.UserManager<AppUser> _userManager
-@inject IMainRepository _repository  
+﻿@using WebMarket.Models 
+@using Microsoft.AspNetCore.Identity
+
+@model EditImagesViewModel
+@inject UserManager<AppUser> _userManager
+@inject IMainRepository _repository
+
 @{
     ViewData["Title"] = "EditImagesView";
 }
 
-    <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
 
 <h1>Edit</h1>
 
@@ -16,7 +20,9 @@
     </div>
     <div class="d-inline">
         <button type="button" class="btn btn-outline-primary" asp-area="" asp-controller="Product" asp-action="EditImages"
-           asp-route-prodid="@Model.ProductId" disabled>Images</button>
+                asp-route-prodid="@Model.ProductId" disabled>
+            Images
+        </button>
     </div>
     <div class="d-inline">
         <a type="button" class="btn btn-outline-primary" asp-area="" asp-controller="Product" asp-action="EditTags"
@@ -104,40 +110,40 @@
                 </div>
             </div>
             @*<h5>4th Image</h5>
-            <div class="form-group">
-                <label asp-for="FourthImageLink" class="control-label">Link</label>
-                <input asp-for="FourthImageLink" readonly class="form-control" />
-                <span asp-validation-for="FourthImageLink" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FourthImageDescription" class="control-label">Description</label>
-                <input asp-for="FourthImageDescription" readonly class="form-control" />
-                <span asp-validation-for="FourthImageDescription" class="text-danger"></span>
-            </div>
-            <br />
-            <h5>5th Image</h5>
-            <div class="form-group">
-                <label asp-for="FifthImageLink" class="control-label">Link</label>
-                <input asp-for="FifthImageLink" readonly class="form-control" />
-                <span asp-validation-for="FifthImageLink" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FifthImageDescription" class="control-label">Description</label>
-                <input asp-for="FifthImageDescription" readonly class="form-control" />
-                <span asp-validation-for="FifthImageDescription" class="text-danger"></span>
-            </div>
-            <br />
-            <h5>6th Image</h5>
-            <div class="form-group">
-                <label asp-for="SixthImageLink" class="control-label">Link</label>
-                <input asp-for="SixthImageLink" readonly class="form-control" />
-                <span asp-validation-for="SixthImageLink" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SixthImageDescription" class="control-label">Description</label>
-                <input asp-for="SixthImageDescription" readonly class="form-control" />
-                <span asp-validation-for="SixthImageDescription" class="text-danger"></span>
-            </div>*@
+                <div class="form-group">
+                    <label asp-for="FourthImageLink" class="control-label">Link</label>
+                    <input asp-for="FourthImageLink" readonly class="form-control" />
+                    <span asp-validation-for="FourthImageLink" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="FourthImageDescription" class="control-label">Description</label>
+                    <input asp-for="FourthImageDescription" readonly class="form-control" />
+                    <span asp-validation-for="FourthImageDescription" class="text-danger"></span>
+                </div>
+                <br />
+                <h5>5th Image</h5>
+                <div class="form-group">
+                    <label asp-for="FifthImageLink" class="control-label">Link</label>
+                    <input asp-for="FifthImageLink" readonly class="form-control" />
+                    <span asp-validation-for="FifthImageLink" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="FifthImageDescription" class="control-label">Description</label>
+                    <input asp-for="FifthImageDescription" readonly class="form-control" />
+                    <span asp-validation-for="FifthImageDescription" class="text-danger"></span>
+                </div>
+                <br />
+                <h5>6th Image</h5>
+                <div class="form-group">
+                    <label asp-for="SixthImageLink" class="control-label">Link</label>
+                    <input asp-for="SixthImageLink" readonly class="form-control" />
+                    <span asp-validation-for="SixthImageLink" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="SixthImageDescription" class="control-label">Description</label>
+                    <input asp-for="SixthImageDescription" readonly class="form-control" />
+                    <span asp-validation-for="SixthImageDescription" class="text-danger"></span>
+                </div>*@
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>

@@ -1,9 +1,10 @@
-﻿@using WebMarket.Models
+﻿@using WebMarket.Models.ProductModels
+@using Microsoft.AspNetCore.Identity 
 
-@model WebMarket.Models.ProductModels.ProductRatingTableViewModel
+@model ProductRatingTableViewModel
 
 @inject IMainRepository _repository
-@inject Microsoft.AspNetCore.Identity.UserManager<AppUser> userManager
+@inject UserManager<AppUser> _userManager
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link href="~/css/ratingtable.css" rel="stylesheet" type="text/css" />
 
@@ -20,7 +21,7 @@
     }
 </style>
 
-<div class="card-header @Model.GetTableHeaderClassString(_repository, userManager.GetUserAsync(User).Result)" id="card_on_transaction_header">
+<div class="card-header @Model.GetTableHeaderClassString(_repository, _userManager.GetUserAsync(User).Result)" id="card_on_transaction_header">
     <h5 style="font-weight:300">What people think about <strong>@Model.Name</strong></h5>
     <p class="text-muted">RATE: @Model.GetRate(_repository)</p>
     @for (int i = 0; i < 5; i++)

@@ -18,23 +18,21 @@ namespace WebMarket.Controllers
     [Authorize]
     public class ProductController : Controller
     {
+        private readonly UserManager<AppUser>   _userManager;
+        private readonly IMainRepository        _mainRepository;
+        private readonly IWebHostEnvironment    _hostingEnvironment;
+
         private static List<string> _tags = null;
-        private static Product _addedProduct = null;
-        private readonly UserManager<AppUser> userManager;
-
-        //private static Product _editProduct = null;
-
-        private readonly IMainRepository mainRepository;
-        private readonly IWebHostEnvironment hostingEnvironment;
+        private static Product      _addedProduct = null;
 
         public ProductController(
             UserManager<AppUser> userManager,
             IMainRepository mainRepository,
             IWebHostEnvironment hostingEnvironment)
         {
-            this.userManager = userManager;
-            this.mainRepository = mainRepository;
-            this.hostingEnvironment = hostingEnvironment;
+            _userManager = userManager;
+            _mainRepository = mainRepository;
+            _hostingEnvironment = hostingEnvironment;
         }
 
 
@@ -44,7 +42,7 @@ namespace WebMarket.Controllers
             //LoadProducts();
             //LoadUser();
             List<string> listOfProductTypes = new List<string>();
-            listOfProductTypes = (from pt in mainRepository.GetAllProductTypes() orderby pt.Name select pt.Name).ToList();
+            listOfProductTypes = (from pt in _mainRepository.GetAllProductTypes() orderby pt.Name select pt.Name).ToList();
 
             ViewBag.ListOfProductTypes = listOfProductTypes;
 
@@ -59,7 +57,7 @@ namespace WebMarket.Controllers
 
         public IActionResult EditImages(int prodId)
         {
-            var images = mainRepository.GetImagesByProductID(prodId).ToList();
+            var images = _mainRepository.GetImagesByProductID(prodId).ToList();
             if (images.Count() >= 3)
             {
                 return View("EditImagesView", new EditImagesViewModel
@@ -88,9 +86,9 @@ namespace WebMarket.Controllers
         {
             try
             {
-                var images = mainRepository.GetImagesByProductID(prodid).ToList();
+                var images = _mainRepository.GetImagesByProductID(prodid).ToList();
 
-                var firstImage = mainRepository.GetImageByOrderIndex(prodid, 0);
+                var firstImage = _mainRepository.GetImageByOrderIndex(prodid, 0);
                 if (model.FirstImageFile != null)
                 {
                     firstImage.Link = GetImageFilePath(model.FirstImageFile);
@@ -101,7 +99,7 @@ namespace WebMarket.Controllers
                 }
                 firstImage.Description = model.FirstImageDescription;
 
-                var secondImage = mainRepository.GetImageByOrderIndex(prodid, 1);
+                var secondImage = _mainRepository.GetImageByOrderIndex(prodid, 1);
                 if (model.SecondImageFile != null)
                 {
                     secondImage.Link = GetImageFilePath(model.SecondImageFile);
@@ -112,7 +110,7 @@ namespace WebMarket.Controllers
                 }
                 secondImage.Description = model.SecondImageDescription;
 
-                var thirdImage = mainRepository.GetImageByOrderIndex(prodid, 2);
+                var thirdImage = _mainRepository.GetImageByOrderIndex(prodid, 2);
                 if (model.ThirdImageFile != null)
                 {
                     thirdImage.Link = GetImageFilePath(model.ThirdImageFile);
@@ -123,9 +121,9 @@ namespace WebMarket.Controllers
                 }
                 thirdImage.Description = model.ThirdImageDescription;
 
-                mainRepository.UpdateImage(firstImage);
-                mainRepository.UpdateImage(secondImage);
-                mainRepository.UpdateImage(thirdImage);
+                _mainRepository.UpdateImage(firstImage);
+                _mainRepository.UpdateImage(secondImage);
+                _mainRepository.UpdateImage(thirdImage);
                 return RedirectToAction("Page");
             }
             catch
@@ -143,13 +141,13 @@ namespace WebMarket.Controllers
                 string uniqueFileName = null;
                 if (model.ZipFile != null)
                 {
-                    string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "file");
+                    string uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, "file");
                     uniqueFileName = Guid.NewGuid().ToString() + "_" + model.ZipFile.FileName;
                     string filePath = Path.Combine(uploadsFolder, uniqueFileName);
                     model.ZipFile.CopyTo(new FileStream(filePath, FileMode.Create));
                 }
 
-                int newID = Product.MakeNewID(mainRepository);
+                int newID = Product.MakeNewID(_mainRepository);
 
                 bool attached = AttachTags(newID);
 
@@ -165,10 +163,10 @@ namespace WebMarket.Controllers
                     FileName = uniqueFileName,
                     AddedDate = DateTime.Today,
                     Version = model.Version,
-                    OwnerID = userManager.GetUserId(User)
+                    OwnerID = _userManager.GetUserId(User)
                 };
 
-                mainRepository.AddProduct(newProduct);
+                _mainRepository.AddProduct(newProduct);
 
                 string firstImageFileName = GetImageFilePath(model.FirstImageFile);
                 string secondImageFileName = GetImageFilePath(model.SecondImageFile);
@@ -190,7 +188,7 @@ namespace WebMarket.Controllers
         private string GetImageFilePath(IFormFile formFile)
         {
             string outFileName = null;
-            string imageUploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "imguploads");
+            string imageUploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, "imguploads");
             if (formFile != null)
             {
                 outFileName = Guid.NewGuid().ToString() + "_" + formFile.FileName;
@@ -221,10 +219,10 @@ namespace WebMarket.Controllers
             {
                 foreach (var tag in _tags)
                 {
-                    mainRepository.AddTag(new Tag
+                    _mainRepository.AddTag(new Tag
                     {
                         ProductID = productID.ToString(),
-                        TypeId = mainRepository.GetProductTypeByName(tag).ID
+                        TypeId = _mainRepository.GetProductTypeByName(tag).ID
                     });
                 }
                 _tags = null;
@@ -243,21 +241,21 @@ namespace WebMarket.Controllers
             string thirdDesc)
         {
             string id = productID.ToString();
-            mainRepository.AddImage(new Image
+            _mainRepository.AddImage(new Image
             {
                 ProductID = id,
                 Link = (firstLink != null && firstLink.Length > 0) ? firstLink : "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg",
                 Description = firstDesc,
                 OrderIndex = 0
             });
-            mainRepository.AddImage(new Image
+            _mainRepository.AddImage(new Image
             {
                 ProductID = id,
                 Link = secondLink ?? "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg",
                 Description = secondDesc,
                 OrderIndex = 1
             });
-            mainRepository.AddImage(new Image
+            _mainRepository.AddImage(new Image
             {
                 ProductID = id,
                 Link = thirdLink ?? "https://abovethelaw.com/uploads/2019/09/GettyImages-508514140-300x200.jpg",
@@ -268,7 +266,7 @@ namespace WebMarket.Controllers
 
         public IActionResult OpenEditProduct(int prodId)
         {
-            var product = mainRepository.GetProduct(prodId);
+            var product = _mainRepository.GetProduct(prodId);
             return View("Edit", product);
         }
 
@@ -285,7 +283,7 @@ namespace WebMarket.Controllers
         {
             try
             {
-                mainRepository.UpdateProduct(product);
+                _mainRepository.UpdateProduct(product);
                 return View("Page", product);
             }
             catch (DbUpdateException e)
@@ -297,9 +295,9 @@ namespace WebMarket.Controllers
 
         public IActionResult EditTags(int prodId)
         {
-            var tagNames = mainRepository.GetTagNamesByProductId(prodId).ToList();
+            var tagNames = _mainRepository.GetTagNamesByProductId(prodId).ToList();
 
-            List<string> listOfProductTypes = (from pt in mainRepository.GetAllProductTypes() orderby pt.Name select pt.Name).ToList();
+            List<string> listOfProductTypes = (from pt in _mainRepository.GetAllProductTypes() orderby pt.Name select pt.Name).ToList();
 
             return View("EditTagsView", new EditTagsViewModel
             { 
@@ -316,9 +314,9 @@ namespace WebMarket.Controllers
             // waiting the UpdateTags result to properly show the tags in the EditTagsView
             await Task.Delay(10);
 
-            var tagNames = mainRepository.GetTagNamesByProductId(model.ProductId).ToList();
+            var tagNames = _mainRepository.GetTagNamesByProductId(model.ProductId).ToList();
 
-            List<string> listOfProductTypes = (from pt in mainRepository.GetAllProductTypes() orderby pt.Name select pt.Name).ToList();
+            List<string> listOfProductTypes = (from pt in _mainRepository.GetAllProductTypes() orderby pt.Name select pt.Name).ToList();
 
             return View("EditTagsView", new EditTagsViewModel
             {
@@ -340,18 +338,18 @@ namespace WebMarket.Controllers
         {
             if (tags != null)
             {
-                var oldTags = mainRepository.GetTagsByProductID(productId).ToList();
+                var oldTags = _mainRepository.GetTagsByProductID(productId).ToList();
                 foreach (var tag in oldTags)
                 {
-                    mainRepository.DeleteTag(tag.ID);
+                    _mainRepository.DeleteTag(tag.ID);
                 }
 
                 foreach (var tag in tags)
                 {
-                    mainRepository.AddTag(new Tag
+                    _mainRepository.AddTag(new Tag
                     {
                         ProductID = productId.ToString(),
-                        TypeId = mainRepository.GetProductTypeByName(tag).ID
+                        TypeId = _mainRepository.GetProductTypeByName(tag).ID
                     });
                 }
                 return true;
@@ -375,28 +373,28 @@ namespace WebMarket.Controllers
                 int id = int.Parse(deleteId);
                 CleanTags(id);
 
-                var imagesOfProduct = mainRepository.GetImagesByProductID(id).ToList();
+                var imagesOfProduct = _mainRepository.GetImagesByProductID(id).ToList();
 
                 foreach (var image in imagesOfProduct)
                 {
-                    mainRepository.DeleteImage(image.ID);
+                    _mainRepository.DeleteImage(image.ID);
                 }
 
-                var boughtProducts = mainRepository.GetBoughtProductsByProductId(id).ToList();
+                var boughtProducts = _mainRepository.GetBoughtProductsByProductId(id).ToList();
 
                 foreach (var bp in boughtProducts)
                 {
-                    mainRepository.DeleteBoughtProduct(bp.Id);
+                    _mainRepository.DeleteBoughtProduct(bp.Id);
                 }
 
-                var comments = mainRepository.GetUserCommentsByProdID(id).ToList();
+                var comments = _mainRepository.GetUserCommentsByProdID(id).ToList();
 
                 foreach (var comment in comments)
                 {
-                    mainRepository.DeleteUserComment(comment.ID);
+                    _mainRepository.DeleteUserComment(comment.ID);
                 }
 
-                mainRepository.DeleteProduct(int.Parse(deleteId));
+                _mainRepository.DeleteProduct(int.Parse(deleteId));
 
                 return RedirectToAction("Catalog", "Catalog");
             }
@@ -408,9 +406,9 @@ namespace WebMarket.Controllers
 
         private void CleanTags(int id)
         {
-            foreach (var i in mainRepository.GetTagsByProductID(id).ToList())
+            foreach (var i in _mainRepository.GetTagsByProductID(id).ToList())
             {
-                mainRepository.DeleteTag(i.ID);
+                _mainRepository.DeleteTag(i.ID);
             }
         }
 
@@ -421,7 +419,7 @@ namespace WebMarket.Controllers
             {
                 return View(product);
             }
-            Product model = mainRepository.GetProduct(productId);
+            Product model = _mainRepository.GetProduct(productId);
             return View(model);
         }
 
@@ -433,20 +431,20 @@ namespace WebMarket.Controllers
 
         public IActionResult Buy(int productId)
         {
-            var productToBuy = mainRepository.GetProduct(productId);
+            var productToBuy = _mainRepository.GetProduct(productId);
             if (productToBuy != null)
             {
-                var user = userManager.GetUserAsync(User).Result;
+                var user = _userManager.GetUserAsync(User).Result;
                 if (user != null)
                 {
-                    if (user.Money >= productToBuy.FinalPrice && !productToBuy.IsBought(mainRepository, user))
+                    if (user.Money >= productToBuy.FinalPrice && !productToBuy.IsBought(_mainRepository, user))
                     {
                         try
                         {
                             user.Money -= productToBuy.FinalPrice;
-                            userManager.UpdateAsync(user).Wait();
+                            _userManager.UpdateAsync(user).Wait();
 
-                            mainRepository.AddBoughtProduct(new BoughtProduct
+                            _mainRepository.AddBoughtProduct(new BoughtProduct
                             {
                                 AppUserRefId = user.Id,
                                 ProductRefId = productToBuy.ID
@@ -471,18 +469,18 @@ namespace WebMarket.Controllers
 
         public IActionResult Sell(int productId)
         {
-            var productToSell = mainRepository.GetProduct(productId);
+            var productToSell = _mainRepository.GetProduct(productId);
             if (productToSell != null)
             {
-                var user = userManager.GetUserAsync(User).Result;
-                if (user != null && productToSell.IsBought(mainRepository, user))
+                var user = _userManager.GetUserAsync(User).Result;
+                if (user != null && productToSell.IsBought(_mainRepository, user))
                 {
                     try
                     {
                         user.Money += productToSell.FinalPrice;
-                        userManager.UpdateAsync(user).Wait();
+                        _userManager.UpdateAsync(user).Wait();
 
-                        mainRepository.DeleteBoughtProduct(user.Id, productToSell.ID);
+                        _mainRepository.DeleteBoughtProduct(user.Id, productToSell.ID);
                         Console.WriteLine($"{productToSell.Name} is sold!");
                     }
                     catch (DbUpdateException)

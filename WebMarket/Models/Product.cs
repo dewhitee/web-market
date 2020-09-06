@@ -80,6 +80,8 @@ namespace WebMarket.Models
         public string DiscountSupString => Discount > 0 ? Discount.ToString() + "%" : "";
         public string LinkTableString   => string.IsNullOrWhiteSpace(Link) ? "no link" : "yes";
 
+        public bool HasValidId => ID < 0;
+
         // Property for disabling buying/selling actions on product page
         [NotMapped]
         public bool NonTradableMode { get; set; }
@@ -97,11 +99,6 @@ namespace WebMarket.Models
                 return (from bp in boughtProductIds where bp.ProductRefId == ID select bp.ProductRefId).Contains(ID);
             }
             return false;
-        }
-
-        public bool HasValidID()
-        {
-            return ID < 0;
         }
 
         public bool ContainsTags(List<string> findTags, IMainRepository repository, bool fullyMatching)

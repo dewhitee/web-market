@@ -1,5 +1,8 @@
-﻿@model WebMarket.Models.Product
-@inject Microsoft.AspNetCore.Identity.UserManager<AppUser> _userManager
+﻿@using Microsoft.AspNetCore.Identity 
+
+@model WebMarket.Models.Product
+
+@inject UserManager<AppUser> _userManager
 @inject IMainRepository _repository
 
     <div class="card-body" style="transform:rotate(0);">

@@ -1,8 +1,11 @@
-﻿@using WebMarket.Models.ProductModels;
+﻿@using WebMarket.Models.ProductModels
+@using WebMarket.Models.AppUserModels
+@using Microsoft.AspNetCore.Identity  
 
-@model WebMarket.Models.AppUserModels.BoughtProductsViewModel
+@model BoughtProductsViewModel
 @inject IMainRepository _repository
-@inject Microsoft.AspNetCore.Identity.UserManager<AppUser> _userManager
+@inject UserManager<AppUser> _userManager
+
 @{
     ViewData["Title"] = "Bought";
 }

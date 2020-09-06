@@ -1,10 +1,10 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@using WebMarket.Data
 @using WebMarket.Models.ProductModels
+@using Microsoft.AspNetCore.Hosting 
 
 @model Product
 @inject IMainRepository _repository
-@inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment _hostingEnvironment
+@inject IWebHostEnvironment _hostingEnvironment
 @inject UserManager<AppUser> _userManager
 
 @{

@@ -1,5 +1,8 @@
-﻿@model WebMarket.Models.Product
-@inject Microsoft.AspNetCore.Identity.UserManager<AppUser> _userManager
+﻿@using Microsoft.AspNetCore.Identity
+
+@model WebMarket.Models.Product
+
+@inject UserManager<AppUser> _userManager
 @{
     ViewData["Title"] = "Edit";
 }

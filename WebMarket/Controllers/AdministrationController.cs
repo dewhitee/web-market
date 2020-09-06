@@ -14,18 +14,18 @@ namespace WebMarket.Controllers
     ///[Authorize(Roles = "Moderator")]
     public class AdministrationController : Controller
     {
-        private readonly RoleManager<IdentityRole> roleManager;
-        private readonly UserManager<AppUser> userManager;
-        private readonly IMainRepository mainRepository;
+        private readonly RoleManager<IdentityRole>  _roleManager;
+        private readonly UserManager<AppUser>       _userManager;
+        private readonly IMainRepository            _mainRepository;
 
         public AdministrationController(
             RoleManager<IdentityRole> roleManager,
             UserManager<AppUser> userManager,
             IMainRepository mainRepository)
         {
-            this.roleManager = roleManager;
-            this.userManager = userManager;
-            this.mainRepository = mainRepository;
+            _roleManager = roleManager;
+            _userManager = userManager;
+            _mainRepository = mainRepository;
         }
 
         public IActionResult Index()
@@ -35,7 +35,7 @@ namespace WebMarket.Controllers
 
         public async Task<IActionResult> DeleteUser(string id)
         {
-            var user = await userManager.FindByIdAsync(id);
+            var user = await _userManager.FindByIdAsync(id);
 
             if (user == null)
             {
@@ -44,7 +44,7 @@ namespace WebMarket.Controllers
             }
             else
             {
-                var result = await userManager.DeleteAsync(user);
+                var result = await _userManager.DeleteAsync(user);
 
                 if (result.Succeeded)
                 {
@@ -63,14 +63,14 @@ namespace WebMarket.Controllers
         [HttpGet]
         public IActionResult ListUsers()
         {
-            var users = userManager.Users;
+            var users = _userManager.Users;
             return View(users);
         }
 
         [HttpGet]
         public async Task<IActionResult> EditUser(string id)
         {
-            var user = await userManager.FindByIdAsync(id);
+            var user = await _userManager.FindByIdAsync(id);
 
             if (user == null)
             {
@@ -78,8 +78,8 @@ namespace WebMarket.Controllers
                 return View("NotFound");
             }
 
-            var userClaims = await userManager.GetClaimsAsync(user);
-            var userRoles = await userManager.GetRolesAsync(user);
+            var userClaims = await _userManager.GetClaimsAsync(user);
+            var userRoles = await _userManager.GetRolesAsync(user);
 
             var model = new EditUserViewModel
             {
@@ -97,7 +97,7 @@ namespace WebMarket.Controllers
         [HttpPost]
         public async Task<IActionResult> EditUser(EditUserViewModel model)
         {
-            var user = await userManager.FindByIdAsync(model.Id);
+            var user = await _userManager.FindByIdAsync(model.Id);
 
             if (user == null)
             {
@@ -110,7 +110,7 @@ namespace WebMarket.Controllers
                 user.UserName = model.UserName;
                 user.Money = model.Money;
 
-                var result = await userManager.UpdateAsync(user);
+                var result = await _userManager.UpdateAsync(user);
 
                 if (result.Succeeded)
                 {
@@ -142,7 +142,7 @@ namespace WebMarket.Controllers
                     Name = model.RoleName
                 };
 
-                IdentityResult result = await roleManager.CreateAsync(identityRole);
+                IdentityResult result = await _roleManager.CreateAsync(identityRole);
 
                 if (result.Succeeded)
                 {
@@ -160,14 +160,14 @@ namespace WebMarket.Controllers
         [HttpGet]
         public IActionResult ListRoles()
         {
-            var roles = roleManager.Roles;
+            var roles = _roleManager.Roles;
             return View(roles);
         }
 
         [HttpGet]
         public async Task<IActionResult> EditRole(string id)
         {
-            var role = await roleManager.FindByIdAsync(id);
+            var role = await _roleManager.FindByIdAsync(id);
 
             if (role == null)
             {
@@ -181,9 +181,9 @@ namespace WebMarket.Controllers
                 RoleName = role.Name
             };
 
-            foreach (var user in userManager.Users)
+            foreach (var user in _userManager.Users)
             {
-                if (await userManager.IsInRoleAsync(user, role.Name))
+                if (await _userManager.IsInRoleAsync(user, role.Name))
                 {
                     model.Users.Add(user.UserName);
                 }
@@ -195,7 +195,7 @@ namespace WebMarket.Controllers
         [HttpPost]
         public async Task<IActionResult> EditRole(EditRoleViewModel model)
         {
-            var role = await roleManager.FindByIdAsync(model.Id);
+            var role = await _roleManager.FindByIdAsync(model.Id);
 
             if (role == null)
             {
@@ -205,7 +205,7 @@ namespace WebMarket.Controllers
             else
             {
                 role.Name = model.RoleName;
-                var result = await roleManager.UpdateAsync(role);
+                var result = await _roleManager.UpdateAsync(role);
 
                 if (result.Succeeded)
                 {
@@ -226,7 +226,7 @@ namespace WebMarket.Controllers
         {
             ViewBag.roleId = roleId;
 
-            var role = await roleManager.FindByIdAsync(roleId);
+            var role = await _roleManager.FindByIdAsync(roleId);
 
             if (role == null)
             {
@@ -236,7 +236,7 @@ namespace WebMarket.Controllers
 
             var model = new List<UserRoleViewModel>();
 
-            foreach (var user in userManager.Users)
+            foreach (var user in _userManager.Users)
             {
                 var userRoleViewModel = new UserRoleViewModel
                 {
@@ -244,7 +244,7 @@ namespace WebMarket.Controllers
                     UserName = user.UserName
                 };
 
-                if (await userManager.IsInRoleAsync(user, role.Name))
+                if (await _userManager.IsInRoleAsync(user, role.Name))
                 {
                     userRoleViewModel.IsSelected = true;
                 }
@@ -261,7 +261,7 @@ namespace WebMarket.Controllers
         [HttpPost]
         public async Task<IActionResult> EditUsersInRole(List<UserRoleViewModel> model, string roleId)
         {
-            var role = await roleManager.FindByIdAsync(roleId);
+            var role = await _roleManager.FindByIdAsync(roleId);
 
             if (role == null)
             {
@@ -271,17 +271,17 @@ namespace WebMarket.Controllers
 
             for (int i = 0; i < model.Count; i++)
             {
-                var user = await userManager.FindByIdAsync(model[i].UserId);
+                var user = await _userManager.FindByIdAsync(model[i].UserId);
 
                 IdentityResult result = null;
 
-                if (model[i].IsSelected && !(await userManager.IsInRoleAsync(user, role.Name)))
+                if (model[i].IsSelected && !(await _userManager.IsInRoleAsync(user, role.Name)))
                 {
-                    result = await userManager.AddToRoleAsync(user, role.Name);
+                    result = await _userManager.AddToRoleAsync(user, role.Name);
                 }
-                else if (!model[i].IsSelected && await userManager.IsInRoleAsync(user, role.Name))
+                else if (!model[i].IsSelected && await _userManager.IsInRoleAsync(user, role.Name))
                 {
-                    result = await userManager.RemoveFromRoleAsync(user, role.Name);
+                    result = await _userManager.RemoveFromRoleAsync(user, role.Name);
                 }
                 else
                 {
@@ -304,14 +304,14 @@ namespace WebMarket.Controllers
         [HttpGet]
         public IActionResult ListProducts()
         {
-            var products = mainRepository.GetAllProducts();
+            var products = _mainRepository.GetAllProducts();
             return View(products);
         }
 
         [HttpGet]
         public IActionResult EditProduct(int id)
         {
-            var product = mainRepository.GetProduct(id);
+            var product = _mainRepository.GetProduct(id);
 
             if (product == null)
             {
@@ -327,7 +327,7 @@ namespace WebMarket.Controllers
         {
             try
             {
-                mainRepository.UpdateProduct(model);
+                _mainRepository.UpdateProduct(model);
                 return RedirectToAction("ListProducts");
             }
             catch

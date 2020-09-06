@@ -1,7 +1,11 @@
-﻿@model WebMarket.Models.ProductModels.EditDownloadsViewModel
+﻿@using WebMarket.Models.ProductModels 
+@using Microsoft.AspNetCore.Identity 
 
-@inject Microsoft.AspNetCore.Identity.UserManager<AppUser> _userManager
+@model EditDownloadsViewModel
+
+@inject UserManager<AppUser> _userManager
 @inject IMainRepository _repository
+
 @{
     ViewData["Title"] = "EditDownloadsView";
 }
